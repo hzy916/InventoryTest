@@ -23,7 +23,7 @@
 		if($_SESSION['user_role_id'] != 4){?>
 		
 			 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-			  <a class="nav-link" href="#">
+			  <a class="nav-link" href="delivery_request.php">
 				<i class="fa fa-fw fa fa-copy"></i>
 				<span class="nav-link-text">Delivery Requests</span>
 			  </a>
@@ -57,22 +57,11 @@
           </ul>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
+          <a class="nav-link" data-toggle="collapse" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-file"></i>
             <span class="nav-link-text">Components</span>
           </a>
-          <ul class="sidenav-second-level collapse" id="collapseExamplePages">
-            <li>
-              <a href="#">Login Page</a>
-            </li>
-            <li>
-              <a href="#">Page</a>
-            </li>
-            <li>
-              <a href="#">Password Page</a>
-            </li>
-        
-          </ul>
+ 
         </li>
   
 		<?php } ?>
@@ -80,10 +69,18 @@
 		//only visible to admin
 		if($_SESSION['user_role_id'] == 1){?>
 		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
-			<a class="nav-link" href="#">
-				<i class="fa fa-fw fa fa-gear"></i>
-				<span class="nav-link-text">Settings</span>
-			</a>
+      <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseSettings" data-parent="#exampleAccordion">
+        <i class="fa fa-fw fa fa-gear"></i>
+        <span class="nav-link-text">Settings</span>
+      </a>
+      <ul class="sidenav-second-level collapse" id="collapseSettings">
+        <li>
+          <a href="#">Add a user</a>
+        </li>
+        <li>
+          <a href="#">Change Password</a>
+        </li>
+      </ul>
 		</li>
 		
 		<?php

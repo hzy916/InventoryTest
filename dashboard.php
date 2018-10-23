@@ -26,24 +26,27 @@
         <li class="breadcrumb-item">
           <a href="dashboard.php">Dashboard</a>
         </li>
-        
+		<li class="breadcrumb-item active">Inventory</li>
       </ol>
       <h1>Welcome to Dashboard</h1>
       <hr>
       <p>You are login as <strong><?php echo getUserAccessRoleByID($_SESSION['user_role_id']); ?></strong></p>
 	  
+	  <p>You can create a product</p>
+	  <a class="btn btn-primary" id="createBtn" href="create.php">Create</a>
+		<br>
 		<ul>
 			<li><strong>John Doe</strong> has <strong>Administrator</strong> rights so all the left bar items are visible to him</li>
 			<li><strong>Ahsan</strong> has <strong>Sales</strong> rights and he doesn't have access to Settings</li>
 			<li><strong>Sarah</strong> has <strong>Marketing</strong> rights and she can't have access to Settings</li>
 		</ul>	
-
-
 	<!-- DataTables Example -->
 	<div class="card mb-3">
 		<div class="card-header">
 			<i class="fas fa-table"></i>
-			Data Table Example</div>
+			Data Table Example
+		</div>
+
 		<div class="card-body">
 			<div class="table-responsive">
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -86,15 +89,9 @@
 							?>
 					</tbody>
 				</table>
-
-				<a class="btn btn-primary" id="createBtn" href="create.php">Create</a>
-
               </div>
             </div>
-				  </div>
-
-
-
+		</div>
     </div>
     <!-- /.container-fluid-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -104,7 +101,6 @@ if($_SESSION['user_role_id'] == 2 || $_SESSION['user_role_id'] == 3  ) {
 	echo('<script>$("#createBtn").addClass("hidebutton");
 	$(".OperationColumn").addClass("hidebutton");
 	</script>' );
-	
 }
 
 ?>
