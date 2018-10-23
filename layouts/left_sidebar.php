@@ -15,7 +15,7 @@
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
           <a class="nav-link" href="#">
             <i class="fa fa-fw fa fa-wpforms"></i>
-            <span class="nav-link-text">Posts</span>
+            <span class="nav-link-text">Inventory</span>
           </a>
         </li>
 		<?php 
@@ -25,14 +25,14 @@
 			 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
 			  <a class="nav-link" href="#">
 				<i class="fa fa-fw fa fa-copy"></i>
-				<span class="nav-link-text">Pages</span>
+				<span class="nav-link-text">Delivery Requests</span>
 			  </a>
 			</li>
 			
 			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
 			  <a class="nav-link" href="#">
 				<i class="fa fa-fw fa-circle-o-notch"></i>
-				<span class="nav-link-text">Categoris</span>
+				<span class="nav-link-text">Categories</span>
 			  </a>
 			</li>
 		
@@ -66,14 +66,12 @@
               <a href="#">Login Page</a>
             </li>
             <li>
-              <a href="#">Registration Page</a>
+              <a href="#">Page</a>
             </li>
             <li>
-              <a href="#">Forgot Password Page</a>
+              <a href="#">Password Page</a>
             </li>
-            <li>
-              <a href="#">Blank Page</a>
-            </li>
+        
           </ul>
         </li>
   

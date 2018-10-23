@@ -6,15 +6,13 @@
 		header('location:index.php?lmsg=true');
 		exit;
 	}		
-    
 
-
-	require_once('inc/config.php');
+	require 'inc/config.php';
 	require_once('layouts/header.php'); 
 	require_once('layouts/left_sidebar.php'); 
+     //remind user message
+     $msg = "";
 
-
-	
 ?>
 
   <div class="content-wrapper">
@@ -22,7 +20,7 @@
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="#">Dashboard</a>
+          <a href="dashboard.php">Dashboard</a>
         </li>
         
       </ol>
@@ -34,11 +32,11 @@
 	<div class="card mb-3">
 		<div class="card-header">
             <h2>Add an product</h2>
-            <form action="create_item.php" method="post">
+            <form method="post">
                 <table cellspacing="0" cellpadding="0">
                     <tr>
                         <th>Item Name</th>
-                        <td><input type="text" name="itemname" placeholder="Item Name" /></td>
+                        <td><input type="text" name="itemname" placeholder="Item Name" required/></td>
                     </tr>     
                 
                     <tr>
@@ -48,14 +46,13 @@
 
                     <tr>
                         <th>Size</th>
-                        <td><input type="text" name="size" placeholder="Size" /></td>
+                        <td><input type="text" name="size" placeholder="Size"/></td>
                     </tr>
 
                     <tr>
                         <th>Amount</th>
-                        <td><input type="text" name="amount" placeholder="Amount" /></td>
+                        <td><input type="text" name="amount" placeholder="Amount" required /></td>
                     </tr>
-
                     <tr>
                         <td><button type="submit" class="btn btn-success">Save</button></td>
                         <td><a href="dashboard.php"><button type="button" class="btn btn-danger">Back</button></a></td>
@@ -67,5 +64,23 @@
 
     <!-- /.container-fluid-->
 
+<?php
+    if($_POST) {
+        $itemname = $_POST['itemname'];
+        $color = $_POST['color'];
+        $size = $_POST['size'];
+        $amount = $_POST['amount'];
+     
+        $sql = "INSERT INTO pawtrails (itemname, color, size, amount) VALUES ('$itemname', '$color', '$size', '$amount')";
+        if($conn->query($sql) === TRUE) {
+            // $msg = "New Product Successfully Created";
+            echo "New Product Successfully Created";
+        } else {
+            // $msg = "Updating failed.";
+            echo "Error " . $sql . ' ' . $conn->connect_error;
+        }
+        $conn->close();
+    }
+?>
 
 <?php require_once('layouts/footer.php'); ?>	

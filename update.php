@@ -10,9 +10,31 @@
 	require 'inc/config.php';
 	require_once('layouts/header.php'); 
 	require_once('layouts/left_sidebar.php');   
-?>
+    
+    $msg = "";
 
-<?php
+    if($_POST) {
+    //remind message for users
+
+    //validate number input
+      $amount = $_POST['amount'];
+      $id = $_POST['id'];
+  
+      if (is_numeric($amount)) {
+              $sql = "UPDATE pawtrails SET amount = '$amount', date = CURRENT_TIMESTAMP WHERE id = {$id}";
+              if($conn->query($sql) === TRUE) {
+                  $msg = "Succcessfully Updated";
+        
+              } else {
+                  $msg = "Erorr while updating record ";
+             
+              }
+          }
+          else {
+          $msg = "Error: You did not enter numbers only. Please enter only numbers.";
+          }
+    }  
+
     if($_GET['id']) {
         $id = $_GET['id'];
         
@@ -23,7 +45,6 @@
         
         $conn->close();
     }
-    $msg = "";
 ?>
 
 
@@ -42,7 +63,7 @@
 	<div class="card mb-3">
 		<div class="card-header">
         <h2>Edit product inventory</h2>
-        <form action="edit.php" method="post">
+        <form method="post">
             <table cellspacing="0" cellpadding="0">
                 <tr>
                     <th>ID</th>
@@ -62,8 +83,11 @@
                 </tr>
                 <tr>
                     <th>Amount</th>
-                    <td><input type="text" name="amount" id="amountid" placeholder="amount" value="<?php echo $data['amount'] ?>" /><?php echo $msg; ?></td>
+                    <td><input type="text" name="amount" id="amountid" placeholder="amount" value="<?php echo $data['amount'] ?>" /></td>
                 </tr>
+                
+                <tr><?php echo $msg; ?></tr>
+
                 <tr>
                     <input type="hidden" name="id" value="<?php echo $data['id']?>" />
                     <td><button type="submit" class="btn btn-success">Save Changes</button></td>
@@ -78,21 +102,5 @@
     </div>
     <!-- /.container-fluid-->
 
-
-
-<?php
-
-
-
-$number= $_POST['amount'];
-
-if (is_numeric($number)) {
-echo 'The number you entered is ' . $number. '. This is a valid number.';
-}
-else {
-echo 'Error: You did not enter numbers only. Please enter only numbers.';
-}
-
-?>
 
 <?php require_once('layouts/footer.php'); ?>	

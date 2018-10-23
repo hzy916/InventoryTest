@@ -1,4 +1,8 @@
 <?php 
+	// define("HOST","localhost");
+	// define("DB_USER","pawtrails");
+	// define("DB_PASS","attitudetech2018");
+	// define("DB_NAME","Pawtrails_inventory");
 	define("HOST","localhost");
 	define("DB_USER","root");
 	define("DB_PASS","root");
@@ -11,8 +15,6 @@
 	{
 		die(mysqli_error());
 	}
-	
-	
 	
 	function getUserAccessRoleByID($id)
 	{

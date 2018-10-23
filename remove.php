@@ -8,8 +8,20 @@ if($_GET['id']) {
     $sql = "SELECT * FROM pawtrails WHERE id = {$id}";
     $result = $conn->query($sql);
     $data = $result->fetch_assoc();
- 
-    $conn->close();
+
+
+    if($_POST) {
+        $id = $_POST['id'];
+    
+        $sql = "DELETE FROM pawtrails WHERE id = {$id}";
+        if($conn->query($sql) === TRUE) {
+            echo "<p>Successfully removed!!</p>";
+        } else {
+            echo "Error updating record : " . $conn->error;
+        }
+        $conn->close();
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +32,7 @@ if($_GET['id']) {
 <body>
  
 <h3>Do you really want to remove ?</h3>
-<form action="remove_item.php" method="post">
+<form method="post">
  
     <input type="hidden" name="id" value="<?php echo $data['id'] ?>" />
     <button type="submit">Save Changes</button>
@@ -30,6 +42,3 @@ if($_GET['id']) {
 </body>
 </html>
  
-<?php
-}
-?>
