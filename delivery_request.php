@@ -165,7 +165,10 @@
 	//show color and size option only when user select PawTrails all in one product
 			$(document).ready(function(){
 					$("#sel_product").change(function(){
-							var sel_item = $(this).val();
+                        var sel_item=$(this).val();
+							var myData = {};
+                            myData.itemname = sel_item;
+                            
 
 							if (sel_item == "test"){
 								$("#sizeOption").removeClass("hidedisplay");
@@ -174,32 +177,33 @@
 								$("#sizeOption").addClass("hidedisplay");
 								$("#colorOption").addClass("hidedisplay");
 							}
-								alert("0");
+                     
+                            alert(JSON.stringify(myData));
 						//	send user's select to MYSQL commands to get the stock number of the product selected
 							$.ajax({
+                                
+
 							    url: 'getStockNumber.php',
 							    type: 'post',
-							    data: {
-										itemname:sel_item
-									},
+							    data: myData,
 							    dataType: 'json',
-											alert("1");
+                               
+
 							    success:function(response){
-										alert("2");
+									alert(JSON.stringify(response));
+
 										var len = response.length;
 											 $("#sel_number").empty();
 											 for( var i = 0; i<len; i++){
-												 		alert("3");
-													 var id = response[i]['id'];
-													 var amount = response[i]['amount'];
+                                                var id = response[i]['id'];
+                                                var amount = response[i]['amount'];
 
-													 $("#sel_number").append("<option value='"+id+"'>"+amount+"</option>");
-											 }
+                                                $("#sel_number").append("<option value='"+id+"'>"+amount+"</option>");
+										    }
 							    	}
-								});
-
+							});
 					});
-			});
+			    });
 
 					// $("#sel_color").change(function(){
 					// 		var sel_color = $(this).val();
