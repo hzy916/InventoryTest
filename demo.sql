@@ -61,3 +61,92 @@ INSERT INTO `tbl_user_role` (`id`, `user_role`) VALUES
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+
+
+
+/****Set Up delivery request database****/
+
+
+/***Status table creation***/
+CREATE TABLE Request_status (
+    `status_id` int(11) NOT NULL AUTO_INCREMENT,
+    `status_name` varchar(255) DEFAULT NULL,
+     PRIMARY KEY (`status_id`)
+)ENGINE=INNODB;
+
+/**Receiver table creation**/
+
+CREATE TABLE Receiver (
+    `receiver_id` int(11) NOT NULL AUTO_INCREMENT,
+    `company_name` varchar(255) DEFAULT NULL,
+    `first_name` varchar(255) DEFAULT NULL,
+    `last_name` varchar(255) DEFAULT NULL,
+    `phone` varchar(15) DEFAULT NULL,
+    `address` varchar(255) DEFAULT NULL,
+    `city` varchar(255) DEFAULT NULL,
+    `country` varchar(255) DEFAULT NULL,
+    `postalcode` varchar(255) DEFAULT NULL,
+    PRIMARY KEY (`receiver_id`)	 
+)ENGINE=INNODB;
+
+
+
+/**Employee table creation**/
+
+-- CREATE TABLE Employee (
+--     `employee_id` int(11) NOT NULL AUTO_INCREMENT,
+--     `first_name` varchar(255) DEFAULT NULL,
+--     `last_name` varchar(255) DEFAULT NULL,
+--     `email` varchar(255) DEFAULT NULL,
+--     `jobTitle` varchar(255) DEFAULT NULL,
+--     `department` varchar(255) DEFAULT NULL,
+--     PRIMARY KEY (`employee_id`)	 
+-- )ENGINE=INNODB;
+
+
+
+
+
+/**Delivery Request table creation**/
+CREATE TABLE Request (
+    `RequestID` int(11) NOT NULL AUTO_INCREMENT,
+    `ReceiverID` INT(11) NOT NULL ,
+    `RequestDate` date DEFAULT NULL,
+    `ShipDate` date DEFAULT NULL,
+    `RequestStatusID` INT(11)  NOT NULL ,
+    `Comments` varchar(255),
+    `RequestEmployeeID` INT(11) NOT NULL,
+    PRIMARY KEY (`RequestID`), 
+    FOREIGN KEY (`ReceiverID`) REFERENCES Receiver(`receiver_id`) ,
+    FOREIGN KEY (`RequestStatusID`) REFERENCES Request_status(`status_id`) ,
+	  FOREIGN KEY (`RequestEmployeeID`) REFERENCES tbl_users(`id`) 
+)ENGINE=INNODB;
+
+
+/**Product_request junction table creation**/
+
+-- CREATE TABLE Product_Request_junction (
+--     `delivery_id` int(11),
+--     `product_id` INT(11),
+--     `Qty` int(11) DEFAULT NULL,
+--      PRIMARY KEY (`delivery_id`), 
+--      FOREIGN KEY (`product_id`) REFERENCES pawtrails(`id`)
+-- )ENGINE=INNODB;
+
+
+
+create table Pawtrails_Request_junction
+( 
+  `id` int(11) NOT NULL,
+  `request_id` int(11),
+  `pawtrails_id` int(11),
+  `Qty` int(11) DEFAULT NULL,
+
+  PRIMARY KEY(`id`),
+  FOREIGN KEY (`pawtrails_id`) REFERENCES pawtrails (`id`),
+  FOREIGN KEY (`request_id`) REFERENCES Request (`RequestID`)
+  -- CONSTRAINT FK_pawtrails FOREIGN KEY (`pawtrails_id`) REFERENCES pawtrails (`id`),
+  -- CONSTRAINT FK_request FOREIGN KEY (`request_id`) REFERENCES Request (`RequestID`)
+);
+
+

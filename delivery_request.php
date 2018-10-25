@@ -16,8 +16,6 @@
 	.hidedisplay{
 		display: none!important;
 	}
-
-
 </style>
 
     <div class="content-wrapper">
@@ -25,7 +23,7 @@
             <!-- Breadcrumbs-->
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                <a href="dashboard.php">Dashboard</a>
+                    <a href="dashboard.php">Dashboard</a>
                 </li>
                 <li class="breadcrumb-item active">Delivery Requests</li>
             </ol>
@@ -33,7 +31,8 @@
             <hr>
             <p>You are login as <strong><?php echo getUserAccessRoleByID($_SESSION['user_role_id']); ?></strong></p>
             <ul>
-                <li><strong>John Doe</strong> has <strong>Administrator</strong> rights so all the left bar items are visible to him</li>
+                <li><strong>Sales</strong> and <strong>Marketing</strong> can make delivery request by submitting the form. </li>
+            
             </ul>
 
         <!-- DataTables Example -->
@@ -44,7 +43,7 @@
             </div>
             <div class="card-body">
                 <h4>Choose Product</h4>
-                <form action="submit_DeliveryRequest.php">
+                <form action="submit_ProductRequest.php">
                     <div class="form-group row">
                         <div class="col">
                             <label for="deliveryProduct">Product</label>
@@ -69,9 +68,9 @@
                                     // echo "<option value=\"id\">" . $row['color'] . "</option>";
                                     // }
                                 ?>
-																<option value="" selected disabled hidden>Choose here</option>
-																<option value="red">Red</option>
-																<option value="black">Black</option>
+                                    <option value="" selected disabled hidden>Choose here</option>
+                                    <option value="red">Red</option>
+                                    <option value="black">Black</option>
                             </select>
                         </div>
 
@@ -83,24 +82,33 @@
                             <label for="deliverynumber">Size</label>
                             <br>
                             <select name="sel_size" id="sel_size" class="form-control">
-															<option value="" selected disabled hidden>Choose here</option>
-															<option value="small">Small</option>
-															<option value="medium">Medium</option>
-															<option value="big">Big</option>
+                                <option value="" selected disabled hidden>Choose here</option>
+                                <option value="small">Small</option>
+                                <option value="medium">Medium</option>
+                                <option value="big">Big</option>
                             </select>
                         </div>
 
                         <div class="col">
-                            <!-- <label for="deliverynumber">Number of Products</label>
+                            <label for="deliverynumber">Number of Products</label>
                             <input type="number" class="form-control" id="deliverynumber" placeholder="number" required>
-														 -->
-														 <select id="sel_number">
-																 <option value="0">- Select -</option>
-														 </select>
+														
+                            <!-- <select id="sel_number">
+                                    <option value="0">- Select -</option>
+                            </select> -->
                         </div>
                     </div>
-
+                    <button type="submit" class="btn btn-info">Add Product</button>
                 </form>
+
+                <br>
+                <h4>Request Item List</h4>
+                <ul>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+
 
                 <h4>Request Details</h4>
                 <form action="" method="post">
@@ -164,12 +172,13 @@
 
 	//show color and size option only when user select PawTrails all in one product
 			$(document).ready(function(){
-					$("#sel_product").change(function(){
+                    
+             
+                    $("#sel_product").change(function(){
                         var sel_item=$(this).val();
-							var myData = {};
+						    var myData = {};
                             myData.itemname = sel_item;
                             
-
 							if (sel_item == "test"){
 								$("#sizeOption").removeClass("hidedisplay");
 								$("#colorOption").removeClass("hidedisplay");
@@ -177,45 +186,46 @@
 								$("#sizeOption").addClass("hidedisplay");
 								$("#colorOption").addClass("hidedisplay");
 							}
-                     
-                            alert(JSON.stringify(myData));
-						//	send user's select to MYSQL commands to get the stock number of the product selected
-							$.ajax({
-                                
-
-							    url: 'getStockNumber.php',
-							    type: 'post',
-							    data: myData,
-							    dataType: 'json',
-                               
-
-							    success:function(response){
-									alert(JSON.stringify(response));
-
-										var len = response.length;
-											 $("#sel_number").empty();
-											 for( var i = 0; i<len; i++){
-                                                var id = response[i]['id'];
-                                                var amount = response[i]['amount'];
-
-                                                $("#sel_number").append("<option value='"+id+"'>"+amount+"</option>");
-										    }
-							    	}
-							});
-					});
-			    });
-
-					// $("#sel_color").change(function(){
+					// });
+                    
+                    // $("#sel_color").change(function(){
 					// 		var sel_color = $(this).val();
+                    //         myData.color = sel_color;
 					// });
-					//
-					// $("#sel_size").change(function(){
-					// 		var sel_size = $(this).val();
-					// });
+					
 
+                    // $("#sel_size").change(function(){
+                    //     var sel_size = $(this).val();
+                    //     myData.size = sel_size;
+                        
+                        alert(JSON.stringify(myData));
+                    //	send user's select to MYSQL commands to get the stock number of the product selected
+                        $.ajax({
+                            url: 'getStockNumber.php',
+                            type: 'post',
+                            data: myData,
+                            dataType: 'json',
+                            
+                            
+                            success:function(response){
+                               alert(JSON.stringify(response));
+                                    // var len = response.length;
+                                    // // var amount = response[i]['amount'];
+                                    //     $("#sel_number").empty();
+                                    //     for( var i = 0; i < len; i++){
+                                    //         var id = response[i]['id'];
+                                    //         var amount = response[i]['amount'];
+                                    //         $("#sel_number").append("<option value='"+id+"'>"+ amount +"</option>");
+                                    //     }
+                            }
+                        });
 
+					});
 
+			    });
 	</script>
+
+
 <?php
     // IF they are not admin, hide the make delivery request form
     if($_SESSION['user_role_id'] == 1 || $_SESSION['user_role_id'] == 4 ) {

@@ -4,9 +4,11 @@
 //   var_dump($data);
 // exit;
 //   $itemname = $_POST['itemname'];   // department id
-  // $size = $_POST['sel_size'];
+// $size = $_POST['sel_size'];
 
-  $sql = "SELECT id, amount FROM pawtrails WHERE itemname = ".'"'.$data['itemname'].'"';
+   $sql = "SELECT id, amount FROM pawtrails WHERE itemname = ".'"'.$data['itemname'].'"';
+  // $sql = "SELECT id, amount FROM pawtrails WHERE itemname = '$data['itemname']' AND color = '$data['color']' "; 
+
   // echo $sql;
   // exit;
 
