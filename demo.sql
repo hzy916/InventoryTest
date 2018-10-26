@@ -133,20 +133,16 @@ CREATE TABLE Request (
 --      FOREIGN KEY (`product_id`) REFERENCES pawtrails(`id`)
 -- )ENGINE=INNODB;
 
-
-
 create table Pawtrails_Request_junction
 ( 
-  `id` int(11) NOT NULL,
+  `id` int(11)  NOT NULL AUTO_INCREMENT,
   `request_id` int(11),
-  `pawtrails_id` int(11),
+  `pawtrails_id` int(11) UNSIGNED NOT NULL,
   `Qty` int(11) DEFAULT NULL,
 
   PRIMARY KEY(`id`),
   FOREIGN KEY (`pawtrails_id`) REFERENCES pawtrails (`id`),
   FOREIGN KEY (`request_id`) REFERENCES Request (`RequestID`)
-  -- CONSTRAINT FK_pawtrails FOREIGN KEY (`pawtrails_id`) REFERENCES pawtrails (`id`),
-  -- CONSTRAINT FK_request FOREIGN KEY (`request_id`) REFERENCES Request (`RequestID`)
-);
 
+)ENGINE=INNODB;
 

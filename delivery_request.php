@@ -9,8 +9,13 @@
 
 	require 'inc/config.php';
 	require_once('layouts/header.php');
-	require_once('layouts/left_sidebar.php');
+    require_once('layouts/left_sidebar.php');
+    
+    $msg = "";
 ?>
+
+
+
 
 <style>
 	.hidedisplay{
@@ -43,7 +48,7 @@
             </div>
             <div class="card-body">
                 <h4>Choose Product</h4>
-                <form action="submit_ProductRequest.php">
+                <form action="submit_ProductRequest.php" method="POST">
                     <div class="form-group row">
                         <div class="col">
                             <label for="deliveryProduct">Product</label>
@@ -52,7 +57,7 @@
                                 <?php
                                     $sql = mysqli_query($conn, "SELECT id, itemname FROM pawtrails");
                                     while ($row = $sql->fetch_assoc()){
-                                    echo "<option value='$row[itemname]'>" . $row['itemname'] . "</option>";
+                                    echo "<option value='$row[id]'>" . $row['itemname'] . "</option>";
                                     }
                                 ?>
                             </select>
@@ -91,23 +96,65 @@
 
                         <div class="col">
                             <label for="deliverynumber">Number of Products</label>
-                            <input type="number" class="form-control" id="deliverynumber" placeholder="number" required>
+                            <input type="number" class="form-control" name="deliverynumber" id="deliverynumber" placeholder="number" required>
 														
                             <!-- <select id="sel_number">
                                     <option value="0">- Select -</option>
                             </select> -->
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-info">Add Product</button>
+                    <input type="submit" name="AddProduct" class="btn btn-info">
                 </form>
 
                 <br>
                 <h4>Request Item List</h4>
-                <ul>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
+                <p><?php echo $msg ?></p>
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="requestProductTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                              
+                                <th>item id</th>
+                                <th>item Name</th>
+                                <!-- <th>color</th>
+                                <th>size</th> -->
+                                <th>amount</th>
+                       
+                                <th class="OperationColumn">operation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                $sql = "SELECT * FROM Pawtrails_Request_junction";
+                                $result = $conn->query($sql);
+                                
+                               
+
+                                if($result->num_rows > 0) {
+                                    while($row = $result->fetch_assoc()) {
+                                        $sql2 = "SELECT itemname FROM pawtrails WHERE id = " .$row['pawtrails_id'];
+                                        $result2 = $conn->query($sql2);
+                                        if($result2->num_rows > 0) {
+                                            while($row2 = $result2->fetch_assoc()) {
+                                                echo 
+                                                "<tr>
+                                                        <td>".$row['pawtrails_id']."</td>
+                                                        <td>".$row2['itemname']."</td>
+                                                        <td>".$row['Qty']."</td>
+                                                        <td class='OperationColumn'>
+                                                            <a href='delete_request_item.php?id=".$row['id']."'><button class='btn btn-danger' type='button'>Remove</button></a>
+                                                        </td>
+                                                </tr>";
+                                            }
+                                        }
+                                    }
+                                } else {
+                                        echo "<tr><td colspan='5'><center>No Data Avaliable</center></td></tr>";
+                                }
+                                ?>
+                        </tbody>
+                    </table>
+                </div>
 
 
                 <h4>Request Details</h4>
@@ -168,7 +215,13 @@
     <!-- /.container-fluid-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-	<script type="text/javascript">
+    <script type="text/javascript">
+
+    //Delete row of table
+    function deleteRow(btn) {
+       var row = btn.parentNode.parentNode;
+       row.parentNode.removeChild(row);
+    }
 
 	//show color and size option only when user select PawTrails all in one product
 			$(document).ready(function(){
@@ -193,7 +246,6 @@
                     //         myData.color = sel_color;
 					// });
 					
-
                     // $("#sel_size").change(function(){
                     //     var sel_size = $(this).val();
                     //     myData.size = sel_size;
@@ -205,7 +257,6 @@
                             type: 'post',
                             data: myData,
                             dataType: 'json',
-                            
                             
                             success:function(response){
                                alert(JSON.stringify(response));
@@ -225,15 +276,21 @@
 			    });
 	</script>
 
-
 <?php
-    // IF they are not admin, hide the make delivery request form
-    if($_SESSION['user_role_id'] == 1 || $_SESSION['user_role_id'] == 4 ) {
+    
+      // IF they are not admin, hide the make delivery request form
+      if($_SESSION['user_role_id'] == 1 || $_SESSION['user_role_id'] == 4 ) {
         echo('<script>$("#deliveryForm").addClass("hidedisplay");
         </script>' );
     }
+
+?>
+
+<?php
+  
 ?>
 
 
 
 <?php require_once('layouts/footer.php'); ?>
+
