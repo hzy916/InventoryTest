@@ -12,12 +12,14 @@
     
 
     if($_POST) {
-        $sel_product = $_POST['sel_product'];
-        // $sel_color = $_POST['sel_color'];
-        // $sel_size = $_POST['sel_size'];
-        $deliverynumber = $_POST['deliverynumber'];
+        $deliverydate = $_POST['deliverydate'];
+        // $receivercompany = $_POST['receivercompany'];
+        $firstname = $_POST['firstname'];
+        $lastname = $_POST['lastname'];
+        $phonenumber = $_POST['phonenumber'];
+        $inputAddress = $_POST['inputAddress'];
      
-        $sql = "INSERT INTO Pawtrails_Request_junction (pawtrails_id, Qty) VALUES ('$sel_product',  '$deliverynumber')";
+        $sql = "INSERT INTO Receiver (pawtrails_id, Qty) VALUES ('$sel_product',  '$deliverynumber')";
         if($conn->query($sql) === TRUE) {
 
             echo "<script>

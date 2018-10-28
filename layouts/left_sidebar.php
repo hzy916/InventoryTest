@@ -13,7 +13,7 @@
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-          <a class="nav-link" href="#">
+          <a class="nav-link" href="inventory.php">
             <i class="fa fa-fw fa fa-wpforms"></i>
             <span class="nav-link-text">Inventory</span>
           </a>

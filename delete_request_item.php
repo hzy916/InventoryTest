@@ -35,7 +35,7 @@ if($_GET['id']) {
  
     <input type="hidden" name="id" value="<?php echo $data['id'] ?>" />
     <button type="submit">Save Changes</button>
-    <a href="dashboard.php"><button type="button">Back</button></a>
+    <a href="delivery_request.php"><button type="button">Back</button></a>
 </form>
  
 </body>

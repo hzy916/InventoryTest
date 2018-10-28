@@ -157,17 +157,28 @@
                 </div>
 
 
-                <h4>Request Details</h4>
-                <form action="" method="post">
+                <h4>Receiver's Details</h4>
+                <form action="submit_address.php" method="post">
                     <div class="form-group row">
                         <div class="col">
-                            <label for="applicantName">Delivery Date</label>
+                            <label for="applicantName">Shipping Date</label>
                             <input type="date" class="form-control" id="deliverydate" placeholder="Enter date" required>
                         </div>
 
                         <div class="col">
                             <label for="receivercompany">Receiver's Company</label>
                             <input type="text" class="form-control" id="receivercompany" placeholder="receiver company">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col">
+                            <label for="firstname">First name</label>
+                            <input type="text" class="form-control" id="firstname" placeholder="#####" required>
+                        </div>
+                        <div class="col">
+                            <label for="lastname">Last name</label>
+                            <input type="text" class="form-control" id="lastname" placeholder="" required>
                         </div>
                     </div>
 
