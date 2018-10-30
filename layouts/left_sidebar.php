@@ -18,6 +18,13 @@
             <span class="nav-link-text">Inventory</span>
           </a>
         </li>
+
+       <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Delivery List">
+          <a class="nav-link" href="delivery_table.php">
+            <i class="fa fa-fw fa fa-wpforms"></i>
+            <span class="nav-link-text">Delivery List</span>
+          </a>
+        </li>
 		<?php 
 		//only visible to admin and editor
 		if($_SESSION['user_role_id'] != 4){?>

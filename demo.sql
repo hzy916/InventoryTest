@@ -74,6 +74,17 @@ CREATE TABLE Request_status (
      PRIMARY KEY (`status_id`)
 )ENGINE=INNODB;
 
+INSERT INTO `Request_status` (`status_id`, `status_name`) VALUES
+	(1, 'Pending');
+INSERT INTO `Request_status` (`status_id`, `status_name`) VALUES
+	(2, 'Processing');
+INSERT INTO `Request_status` (`status_id`, `status_name`) VALUES
+	(3, 'Delayed');
+INSERT INTO `Request_status` (`status_id`, `status_name`) VALUES
+	(4, 'Cancelled');
+INSERT INTO `Request_status` (`status_id`, `status_name`) VALUES
+  (5, 'Fulfilled');
+
 /**Receiver table creation**/
 
 CREATE TABLE Receiver (
@@ -105,13 +116,11 @@ CREATE TABLE Receiver (
 
 
 
-
-
 /**Delivery Request table creation**/
 CREATE TABLE Request (
     `RequestID` int(11) NOT NULL AUTO_INCREMENT,
-    `ReceiverID` INT(11) NOT NULL ,
-    `RequestDate` date DEFAULT NULL,
+    `ReceiverID` INT(11) Not NULL,
+    `RequestDate` datetime timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     `ShipDate` date DEFAULT NULL,
     `RequestStatusID` INT(11)  NOT NULL ,
     `Comments` varchar(255),

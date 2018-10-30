@@ -8,29 +8,57 @@
     }	
     
     require 'inc/config.php';
-
     
+    echo "<script>
+    alert('post 0');
+    </script>";
+
+    $user_id = $_SESSION['id']; 
 
     if($_POST) {
-        $deliverydate = $_POST['deliverydate'];
-        // $receivercompany = $_POST['receivercompany'];
+      
         $firstname = $_POST['firstname'];
         $lastname = $_POST['lastname'];
         $phonenumber = $_POST['phonenumber'];
         $inputAddress = $_POST['inputAddress'];
-     
-        $sql = "INSERT INTO Receiver (pawtrails_id, Qty) VALUES ('$sel_product',  '$deliverynumber')";
-        if($conn->query($sql) === TRUE) {
+        $inputCity = $_POST['inputCity'];
+        $inputCountry = $_POST['inputCountry'];
+        $inputPostcode = $_POST['inputPostcode'];
+        $deliverydate = $_POST['deliverydate'];
 
-            echo "<script>
-            alert('Item added successfully');
-            window.location.href='./delivery_request.php';
-            </script>";
+        $sql = "INSERT INTO Receiver (first_name, last_name, phone, address, city, country, postalcode) VALUES ('$firstname',  '$lastname', '$phonenumber', '$inputAddress', '$inputCity', '$inputCountry', '$inputPostcode')";
+        if ($conn->query($sql) === TRUE) {
+            $last_id = $conn->insert_id;
+            echo "Receiver id is " .  $last_id . "<br>";
+
+            //update Request details
+            $sql_two= "INSERT INTO Request (ReceiverID, ShipDate, RequestStatusID, RequestEmployeeID) VALUES ('$last_id', '$deliverydate',  '1', '$user_id')";
+           
+            if($conn->query($sql_two) === TRUE) {
+                echo "<script>
+                alert('Delivery Request Submitted successfully');
+                window.location.href='./delivery_table.php';
+                </script>";
+            } else {
+                // $msg = "Updating failed.";
+                echo "Error " . $sql_two . ' ' . $conn->connect_error;
+            }
+            $conn->close();
 
         } else {
-            // $msg = "Updating failed.";
-            echo "Error " . $sql . ' ' . $conn->connect_error;
+            echo "Error: " . $sql . "<br>" . $conn->error;
         }
-        $conn->close();
+
+
+      
+          
+            // $receivercompany = $_POST['receivercompany'];
+            // if(isset($receivercompany)) {
+            //     $sql .= "INSERT INTO Receiver ( company_name, first_name, last_name, phone, address, city, country, postalcode) VALUES ('$receivercompany', '$firstname',  '$lastname', '$phonenumber', '$inputAddress', '$inputCity', '$inputCountry', '$inputPostcode')";
+            // } else {
+              
+ 
+            // }
     }
 ?>
+

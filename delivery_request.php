@@ -128,8 +128,6 @@
                                 $sql = "SELECT * FROM Pawtrails_Request_junction";
                                 $result = $conn->query($sql);
                                 
-                               
-
                                 if($result->num_rows > 0) {
                                     while($row = $result->fetch_assoc()) {
                                         $sql2 = "SELECT itemname FROM pawtrails WHERE id = " .$row['pawtrails_id'];
@@ -162,51 +160,51 @@
                     <div class="form-group row">
                         <div class="col">
                             <label for="applicantName">Shipping Date</label>
-                            <input type="date" class="form-control" id="deliverydate" placeholder="Enter date" required>
+                            <input type="date" class="form-control" name="deliverydate" placeholder="Enter date" required>
                         </div>
 
                         <div class="col">
                             <label for="receivercompany">Receiver's Company</label>
-                            <input type="text" class="form-control" id="receivercompany" placeholder="receiver company">
+                            <input type="text" class="form-control" name="receivercompany" placeholder="receiver company">
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col">
                             <label for="firstname">First name</label>
-                            <input type="text" class="form-control" id="firstname" placeholder="#####" required>
+                            <input type="text" class="form-control" name="firstname" placeholder="#####" required>
                         </div>
                         <div class="col">
                             <label for="lastname">Last name</label>
-                            <input type="text" class="form-control" id="lastname" placeholder="" required>
+                            <input type="text" class="form-control" name="lastname" placeholder="" required>
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col">
                             <label for="phonenumber">Phone Number</label>
-                            <input type="text" class="form-control" id="phonenumber" placeholder="#####" required>
+                            <input type="text" class="form-control" name="phonenumber" placeholder="#####" required>
                         </div>
                         <div class="col">
                             <label for="inputAddress">Address</label>
-                            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" required>
+                            <input type="text" class="form-control" name="inputAddress" placeholder="1234 Main St" required>
                         </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="inputCity">City</label>
-                            <input type="text" class="form-control" id="inputCity" required>
+                            <input type="text" class="form-control" name="inputCity" required>
                         </div>
 
                         <div class="form-group col-md-4">
                             <label for="inputCountry">Country</label>
-                            <input type="text" class="form-control" id="inputCountry" required>
+                            <input type="text" class="form-control" name="inputCountry" required>
                         </div>
 
                         <div class="form-group col-md-2">
                             <label for="inputPostcode">Postcode</label>
-                            <input type="text" class="form-control" id="inputPostcode" required>
+                            <input type="text" class="form-control" name="inputPostcode" required>
                         </div>
                     </div>
                     <div class="form-group">

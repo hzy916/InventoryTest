@@ -30,4 +30,20 @@
 		
 		return $row['user_role'];
 	}
+
+		
+	function getUserID($id)
+	{
+		global $conn;
+		
+		// $query = "select user_role from tbl_user_role where  id = '$id' ";
+		
+		$query = "SELECT user_name FROM tbl_users WHERE id = {$id}";
+	
+		$rs = mysqli_query($conn,$query);
+		$row = mysqli_fetch_assoc($rs);
+		
+		return $row['user_name'];
+	}
+
 ?>
