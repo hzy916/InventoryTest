@@ -120,7 +120,7 @@ CREATE TABLE Receiver (
 CREATE TABLE Request (
     `RequestID` int(11) NOT NULL AUTO_INCREMENT,
     `ReceiverID` INT(11) Not NULL,
-    `RequestDate` datetime timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `RequestDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     `ShipDate` date DEFAULT NULL,
     `RequestStatusID` INT(11)  NOT NULL ,
     `Comments` varchar(255),

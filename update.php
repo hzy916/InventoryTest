@@ -82,7 +82,7 @@
                     <td><?php echo $data['size'] ?></td>
                 </tr>
                 <tr>
-                    <th>Amount</th>
+                    <th>Quantity</th>
                     <td><input type="text" name="amount" id="amountid" placeholder="amount" value="<?php echo $data['amount'] ?>" /></td>
                 </tr>
                 

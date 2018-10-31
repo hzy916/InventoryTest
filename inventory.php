@@ -44,11 +44,12 @@
 	<div class="card mb-3">
 		<div class="card-header">
 			<i class="fas fa-table"></i>
-			Data Table Example
+			Data Table
 		</div>
 
 		<div class="card-body">
 			<div class="table-responsive">
+				<h5>PawTrails All In One GPS Tracker</h5>
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 					<thead>
 						<tr>
@@ -56,7 +57,7 @@
 							<th>item name</th>
 							<th>color</th>
 							<th>size</th>
-							<th>amount</th>
+							<th>Quantity</th>
 							<th>Update date</th>
 							<th class="OperationColumn">operation</th>
 						</tr>
@@ -64,7 +65,7 @@
 		
 						<tbody>
 							<?php
-							$sql = "SELECT * FROM pawtrails";
+							$sql = "SELECT * FROM pawtrails WHERE color != ''";
 							$result = $conn->query($sql);
 	
 							if($result->num_rows > 0) {
@@ -75,6 +76,46 @@
 											<td>".$row['itemname']."</td>
 											<td>".$row['color']."</td>
 											<td>".$row['size']."</td>
+											<td>".$row['amount']."</td>
+											<td>".$row['date']."</td>
+											<td class='OperationColumn'>
+												<a href='update.php?id=".$row['id']."'><button class='btn btn-success' type='button'>Edit</button></a>
+												<a href='remove.php?id=".$row['id']."'><button class='btn btn-danger' type='button'>Remove</button></a>
+											</td>
+										</tr>";
+								}
+							} else {
+									echo "<tr><td colspan='5'><center>No Data Avaliable</center></td></tr>";
+							}
+							?>
+					</tbody>
+				</table>
+              </div>
+
+			  <div class="table-responsive">
+			  	<h5>PawTrails Posters and Flyers</h5>
+				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+					<thead>
+						<tr>
+							<th>ID</th>
+							<th>item name</th>
+							<th>Quantity</th>
+							<th>Update date</th>
+							<th class="OperationColumn">operation</th>
+						</tr>
+					</thead>
+		
+						<tbody>
+							<?php
+							$sql = "SELECT * FROM pawtrails WHERE color = ''";
+							$result = $conn->query($sql);
+	
+							if($result->num_rows > 0) {
+								while($row = $result->fetch_assoc()) {
+									echo 
+									"<tr>
+											<td>".$row['id']."</td>
+											<td>".$row['itemname']."</td>
 											<td>".$row['amount']."</td>
 											<td>".$row['date']."</td>
 											<td class='OperationColumn'>

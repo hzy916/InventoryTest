@@ -24,16 +24,17 @@
         </li>
         
       </ol>
-      <h1>Welcome to Dashboard</h1>
+
       <hr>
       <p>You are login as <strong><?php echo getUserAccessRoleByID($_SESSION['user_role_id']); ?></strong></p>
 	  
 	<!-- DataTables Example -->
 	<div class="card mb-3">
-		<div class="card-header">
-            <h2>Add an product</h2>
-            <form method="post">
-                <table cellspacing="0" cellpadding="0">
+    <h2>Add an product</h2>
+		<div class="card-header row">    
+          <!--add PawTrails form-->
+            <form method="post" class="column">
+                <table cellspacing="0" cellpadding="10">
                     <tr>
                         <th>Item Name</th>
                         <td><input type="text" name="itemname" placeholder="Item Name" required/></td>
@@ -41,16 +42,48 @@
                 
                     <tr>
                         <th>Color</th>
-                        <td><input type="text" name="color" placeholder="color" /></td>
+                        <td>
+                            <select name="color" id="color" class="form-control">
+                                    <option value="" selected disabled hidden>Choose here</option>
+                                    <option value="red">Red</option>
+                                    <option value="black">Black</option>
+                            </select>
+                        </td>
                     </tr>
 
                     <tr>
                         <th>Size</th>
-                        <td><input type="text" name="size" placeholder="Size"/></td>
+                        <td>
+                            <select name="size" id="size" class="form-control">
+                                    <option value="" selected disabled hidden>Choose here</option>
+                                    <option value="small">Small</option>
+                                    <option value="medium">Medium</option>
+                                    <option value="large">Large</option>
+                            </select>
+                        </td>
+                        
                     </tr>
 
                     <tr>
-                        <th>Amount</th>
+                        <th>Quantity</th>
+                        <td><input type="text" name="amount" placeholder="Amount" required /></td>
+                    </tr>
+                    <tr>
+                        <td><button type="submit" class="btn btn-success">Save</button></td>
+                        <td><a href="dashboard.php"><button type="button" class="btn btn-danger">Back</button></a></td>
+                    </tr>
+                </table>
+            </form>
+            <!--add poster or fylers form-->
+            <form method="post" class="column">
+                <table cellspacing="0" cellpadding="10">
+                    <tr>
+                        <th>Item Name</th>
+                        <td><input type="text" name="itemname" placeholder="Item Name" required/></td>
+                    </tr>     
+            
+                    <tr>
+                        <th>Quantity</th>
                         <td><input type="text" name="amount" placeholder="Amount" required /></td>
                     </tr>
                     <tr>
@@ -71,15 +104,27 @@
         $size = $_POST['size'];
         $amount = $_POST['amount'];
      
-        $sql = "INSERT INTO pawtrails (itemname, color, size, amount) VALUES ('$itemname', '$color', '$size', '$amount')";
-        if($conn->query($sql) === TRUE) {
-            // $msg = "New Product Successfully Created";
-            echo "New Product Successfully Created";
+        if (isset($amount) && ctype_digit($amount))
+        {
+        // the get input contains a positive number and is safe
+            $sql = "INSERT INTO pawtrails (itemname, color, size, amount) VALUES ('$itemname', '$color', '$size', '$amount')";
+            if($conn->query($sql) === TRUE) {
+                // $msg = "New Product Successfully Created";
+                echo "<script>
+                alert('New Product Successfully Created.');
+                window.location.href='./inventory.php';
+                </script>";
+            } else {
+                // $msg = "Updating failed.";
+                echo "Error " . $sql . ' ' . $conn->connect_error;
+            }
+            $conn->close();
         } else {
-            // $msg = "Updating failed.";
-            echo "Error " . $sql . ' ' . $conn->connect_error;
+            echo "<script>
+            alert('Number should be positive integers.');
+            window.location.href='./create.php';
+            </script>";
         }
-        $conn->close();
     }
 ?>
 

@@ -15,7 +15,12 @@ if($_GET['id']) {
     
         $sql = "DELETE FROM pawtrails WHERE id = {$id}";
         if($conn->query($sql) === TRUE) {
-            echo "<p>Successfully removed!!</p>";
+        
+            echo "<script>
+            alert('Item is removed successfully !!');
+            window.location.href='./inventory.php';
+            </script>";
+
         } else {
             echo "Error updating record : " . $conn->error;
         }
@@ -27,7 +32,7 @@ if($_GET['id']) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Remove Member</title>
+    <title>Remove Item</title>
 </head>
 <body>
  
@@ -35,8 +40,8 @@ if($_GET['id']) {
 <form method="post">
  
     <input type="hidden" name="id" value="<?php echo $data['id'] ?>" />
-    <button type="submit">Save Changes</button>
-    <a href="dashboard.php"><button type="button">Back</button></a>
+    <button type="submit">Yes</button>
+    <a href="inventory.php"><button type="button">Cancel</button></a>
 </form>
  
 </body>

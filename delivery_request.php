@@ -147,7 +147,7 @@
                                         }
                                     }
                                 } else {
-                                        echo "<tr><td colspan='5'><center>No Data Avaliable</center></td></tr>";
+                                        echo "<tr><td colspan='5'><center>No Item added.</center></td></tr>";
                                 }
                                 ?>
                         </tbody>
