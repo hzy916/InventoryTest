@@ -96,7 +96,7 @@
 
                         <div class="col">
                             <label for="deliverynumber">Number of Products</label>
-                            <input type="number" class="form-control" name="deliverynumber" id="deliverynumber" placeholder="number" required>
+                            <input type="number" class="form-control" name="deliverynumber" id="deliverynumber" placeholder="number"  min="1" required>
 														
                             <!-- <select id="sel_number">
                                     <option value="0">- Select -</option>
@@ -160,12 +160,12 @@
                     <div class="form-group row">
                         <div class="col">
                             <label for="applicantName">Shipping Date</label>
-                            <input type="date" class="form-control" name="deliverydate" placeholder="Enter date" required>
+                            <input id="date" type="date" class="form-control" name="deliverydate" placeholder="Enter date" required>
                         </div>
 
                         <div class="col">
                             <label for="receivercompany">Receiver's Company</label>
-                            <input type="text" class="form-control" name="receivercompany" placeholder="receiver company">
+                            <input type="text" class="form-control" name="receivercompany" placeholder="receiver company" onchange="checkDate()">
                         </div>
                     </div>
 
@@ -208,8 +208,8 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="gridCheck">
+                        <div class="form-check ml-3">
+                            <input class="form-check-input" type="checkbox" id="gridCheck" required>
                             <label class="form-check-label" for="gridCheck">
                                 I confirm all the information above are correct.
                             </label>
@@ -224,18 +224,24 @@
     <!-- /.container-fluid-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+
+
     <script type="text/javascript">
+        //check ship date to be at least one day after today
+        function isFutureDate(idate){
+            var today = new Date().getTime(),
+                idate = idate.split("/");
 
-    //Delete row of table
-    function deleteRow(btn) {
-       var row = btn.parentNode.parentNode;
-       row.parentNode.removeChild(row);
-    }
+            idate = new Date(idate[2], idate[1] - 1, idate[0]).getTime();
+            return (today - idate) < 0;
+        }
 
+        function checkdate(){
+        
+        }
+    
 	//show color and size option only when user select PawTrails all in one product
 			$(document).ready(function(){
-                    
-             
                     $("#sel_product").change(function(){
                         var sel_item=$(this).val();
 						    var myData = {};

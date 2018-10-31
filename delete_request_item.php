@@ -14,7 +14,12 @@ if($_GET['id']) {
     
         $sql = "DELETE FROM Pawtrails_Request_junction WHERE id = {$id}";
         if($conn->query($sql) === TRUE) {
-            echo "<p>Successfully removed!!</p>";
+        
+            echo "<script>
+            alert('Item is removed successfully !!');
+            window.location.href='./delivery_request.php';
+            </script>";
+
         } else {
             echo "Error updating record : " . $conn->error;
         }
@@ -34,8 +39,8 @@ if($_GET['id']) {
 <form method="post">
  
     <input type="hidden" name="id" value="<?php echo $data['id'] ?>" />
-    <button type="submit">Save Changes</button>
-    <a href="delivery_request.php"><button type="button">Back</button></a>
+    <button type="submit">Yes</button>
+    <a href="delivery_request.php"><button type="button">Cancel</button></a>
 </form>
  
 </body>

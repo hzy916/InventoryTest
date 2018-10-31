@@ -35,16 +35,16 @@
 	  <p>You can create a product</p>
 	  <a class="btn btn-primary" id="createBtn" href="create.php">Create</a>
 		<br>
-		<ul>
+		<!-- <ul>
 			<li><strong>John Doe</strong> has <strong>Administrator</strong> rights so all the left bar items are visible to him</li>
 			<li><strong>Ahsan</strong> has <strong>Sales</strong> rights and he doesn't have access to Settings</li>
 			<li><strong>Sarah</strong> has <strong>Marketing</strong> rights and she can't have access to Settings</li>
-		</ul>	
+		</ul>	 -->
 	<!-- DataTables Example -->
-	<div class="card mb-3">
+	<div class="card mb-3 mt-3">
 		<div class="card-header">
 			<i class="fas fa-table"></i>
-			Data Table
+			Inventory Table
 		</div>
 
 		<div class="card-body">
@@ -65,7 +65,7 @@
 		
 						<tbody>
 							<?php
-							$sql = "SELECT * FROM pawtrails WHERE color != ''";
+							$sql = "SELECT * FROM pawtrails WHERE color is NOT NULL";
 							$result = $conn->query($sql);
 	
 							if($result->num_rows > 0) {
@@ -107,7 +107,7 @@
 		
 						<tbody>
 							<?php
-							$sql = "SELECT * FROM pawtrails WHERE color = ''";
+							$sql = "SELECT * FROM pawtrails WHERE color is NULL";
 							$result = $conn->query($sql);
 	
 							if($result->num_rows > 0) {

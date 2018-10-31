@@ -54,21 +54,25 @@
 		
 						<tbody>
 							<?php
-							$sql = "SELECT * FROM pawtrails";
+							$sql = "SELECT * FROM Request";
 							$result = $conn->query($sql);
 	
 							if($result->num_rows > 0) {
 								while($row = $result->fetch_assoc()) {
+									// $sql_two = "SELECT FROM tbl_users WHERE id = " .$row['RequestEmployeeID'].;
+									// $result_two = $conn->query($sql_two);
+									// while($row_two = $result_two->fetch_assoc()) {
 									echo 
 									    "<tr>
-											<td>".$row['id']."</td>
-											<td>".$row['itemname']."</td>
-                                            <td>".$row['date']."</td>
+											<td>".$row['RequestID']."</td>
+											<td>".$row_two['RequestEmployeeID']."</td>
+                                            <td>".$row['RequestDate']."</td>
 											<td><a class='btn btn-primary' data-toggle='collapse' href='#multiCollapseExample1' role='button' aria-expanded='false' aria-controls='multiCollapseExample1'>See request items</a></td>
 											<td>
-                                            ".$row['id']."
+                                            ".$row['RequestStatusID']."
                                             </td>
 										</tr>";
+									// }
 								}
 							} else {
 									echo "<tr><td colspan='5'><center>No Data Avaliable</center></td></tr>";

@@ -27,13 +27,38 @@
 
       <hr>
       <p>You are login as <strong><?php echo getUserAccessRoleByID($_SESSION['user_role_id']); ?></strong></p>
-	  
+   
+   <div class="card mb-5"> 
+      <div class="card-header">    
+           <!--add poster or fylers form-->
+           <form action="create_poster_flyer.php" method="post">
+            <h4>Add an Poster or Flyer</h4>
+                <table cellspacing="0" cellpadding="10">
+                    <tr>
+                        <th>Item Name</th>
+                        <td><input type="text" name="itemname" placeholder="Item Name" required/></td>
+                    </tr>     
+            
+                    <tr>
+                        <th>Quantity</th>
+                        <td><input type="text" name="amount" placeholder="Amount" required /></td>
+                    </tr>
+                    <tr>
+                        <td><button type="submit" class="btn btn-success">Save</button></td>
+                        <td><a href="dashboard.php"><button type="button" class="btn btn-danger">Back</button></a></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+
 	<!-- DataTables Example -->
-	<div class="card mb-3">
-    <h2>Add an product</h2>
-		<div class="card-header row">    
+	<div class="card mb-5">
+
+		<div class="card-header">    
           <!--add PawTrails form-->
-            <form method="post" class="column">
+            <form method="post">
+             <h4>Add an product</h4>
                 <table cellspacing="0" cellpadding="10">
                     <tr>
                         <th>Item Name</th>
@@ -43,7 +68,7 @@
                     <tr>
                         <th>Color</th>
                         <td>
-                            <select name="color" id="color" class="form-control">
+                            <select name="color" id="color" class="form-control" required>
                                     <option value="" selected disabled hidden>Choose here</option>
                                     <option value="red">Red</option>
                                     <option value="black">Black</option>
@@ -54,7 +79,7 @@
                     <tr>
                         <th>Size</th>
                         <td>
-                            <select name="size" id="size" class="form-control">
+                            <select name="size" id="size" class="form-control" required>
                                     <option value="" selected disabled hidden>Choose here</option>
                                     <option value="small">Small</option>
                                     <option value="medium">Medium</option>
@@ -74,25 +99,8 @@
                     </tr>
                 </table>
             </form>
-            <!--add poster or fylers form-->
-            <form method="post" class="column">
-                <table cellspacing="0" cellpadding="10">
-                    <tr>
-                        <th>Item Name</th>
-                        <td><input type="text" name="itemname" placeholder="Item Name" required/></td>
-                    </tr>     
-            
-                    <tr>
-                        <th>Quantity</th>
-                        <td><input type="text" name="amount" placeholder="Amount" required /></td>
-                    </tr>
-                    <tr>
-                        <td><button type="submit" class="btn btn-success">Save</button></td>
-                        <td><a href="dashboard.php"><button type="button" class="btn btn-danger">Back</button></a></td>
-                    </tr>
-                </table>
-            </form>
         </div>
+ 
     </div>
 
     <!-- /.container-fluid-->
