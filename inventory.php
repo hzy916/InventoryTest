@@ -114,15 +114,15 @@
 								while($row = $result->fetch_assoc()) {
 									echo 
 									"<tr>
-											<td>".$row['id']."</td>
-											<td>".$row['itemname']."</td>
-											<td>".$row['amount']."</td>
-											<td>".$row['date']."</td>
-											<td class='OperationColumn'>
-												<a href='update.php?id=".$row['id']."'><button class='btn btn-success' type='button'>Edit</button></a>
-												<a href='remove.php?id=".$row['id']."'><button class='btn btn-danger' type='button'>Remove</button></a>
-											</td>
-										</tr>";
+										<td>".$row['id']."</td>
+										<td>".$row['itemname']."</td>
+										<td>".$row['amount']."</td>
+										<td>".$row['date']."</td>
+										<td class='OperationColumn'>
+											<a href='update.php?id=".$row['id']."'><button class='btn btn-success' type='button'>Edit</button></a>
+											<a href='remove.php?id=".$row['id']."'><button class='btn btn-danger' type='button'>Remove</button></a>
+										</td>
+									</tr>";
 								}
 							} else {
 									echo "<tr><td colspan='5'><center>No Data Avaliable</center></td></tr>";

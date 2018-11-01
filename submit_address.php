@@ -16,17 +16,28 @@
     $user_id = $_SESSION['id']; 
 
     if($_POST) {
-      
+        
+        $receivercompany = $_POST['receivercompany'];
         $firstname = $_POST['firstname'];
         $lastname = $_POST['lastname'];
         $phonenumber = $_POST['phonenumber'];
-        $inputAddress = $_POST['inputAddress'];
+        $inputAddress1 = $_POST['inputAddress1'];
+        $inputAddress2 = $_POST['inputAddress2'];
+        $inputAddress3 = $_POST['inputAddress3'];
         $inputCity = $_POST['inputCity'];
         $inputCountry = $_POST['inputCountry'];
         $inputPostcode = $_POST['inputPostcode'];
         $deliverydate = $_POST['deliverydate'];
 
-        $sql = "INSERT INTO Receiver (first_name, last_name, phone, address, city, country, postalcode) VALUES ('$firstname',  '$lastname', '$phonenumber', '$inputAddress', '$inputCity', '$inputCountry', '$inputPostcode')";
+
+        if (!empty($receivercompany)) {
+            $sql = "INSERT INTO Receiver (company_name, first_name, last_name, phone, address1, address2, address3, city, country, postalcode) VALUES ('$receivercompany', '$firstname',  '$lastname', '$phonenumber', '$inputAddress1', '$inputAddress2','$inputAddress3', '$inputCity', '$inputCountry', '$inputPostcode')";
+       
+        } else {
+            $sql = "INSERT INTO Receiver (first_name, last_name, phone, address1, address2, address3, city, country, postalcode) VALUES ('$firstname',  '$lastname', '$phonenumber', '$inputAddress1', '$inputAddress2','$inputAddress3', '$inputCity', '$inputCountry', '$inputPostcode')";
+        }
+
+       
         if ($conn->query($sql) === TRUE) {
             $last_id = $conn->insert_id;
             echo "Receiver id is " .  $last_id . "<br>";

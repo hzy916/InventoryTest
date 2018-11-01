@@ -59,20 +59,22 @@
 	
 							if($result->num_rows > 0) {
 								while($row = $result->fetch_assoc()) {
-									// $sql_two = "SELECT FROM tbl_users WHERE id = " .$row['RequestEmployeeID'].;
-									// $result_two = $conn->query($sql_two);
-									// while($row_two = $result_two->fetch_assoc()) {
-									echo 
-									    "<tr>
-											<td>".$row['RequestID']."</td>
-											<td>".$row_two['RequestEmployeeID']."</td>
-                                            <td>".$row['RequestDate']."</td>
-											<td><a class='btn btn-primary' data-toggle='collapse' href='#multiCollapseExample1' role='button' aria-expanded='false' aria-controls='multiCollapseExample1'>See request items</a></td>
-											<td>
-                                            ".$row['RequestStatusID']."
-                                            </td>
-										</tr>";
-									// }
+									$sql_two = "SELECT user_name FROM tbl_users WHERE id = " .$row['RequestEmployeeID'];
+									$result_two = $conn->query($sql_two);
+									if($result_two->num_rows > 0) {
+										while($row_two = $result_two->fetch_assoc()) {
+											echo 
+												"<tr>
+													<td>".$row['RequestID']."</td>
+													<td>".$row_two['user_name']."</td>
+													<td>".$row['RequestDate']."</td>
+													<td><a class='btn btn-primary' data-toggle='collapse' href='#multiCollapseExample1' role='button' aria-expanded='false' aria-controls='multiCollapseExample1'>See request items</a></td>
+													<td>
+													".$row['RequestStatusID']."
+													</td>
+												</tr>";
+										}
+									}
 								}
 							} else {
 									echo "<tr><td colspan='5'><center>No Data Avaliable</center></td></tr>";

@@ -21,6 +21,7 @@
 	.hidedisplay{
 		display: none!important;
 	}
+
 </style>
 
     <div class="content-wrapper">
@@ -156,16 +157,45 @@
 
 
                 <h4>Receiver's Details</h4>
-                <form action="submit_address.php" method="post">
+
+                <!-- <button class="btn btn-success" onclick="showOld()">Choose From Old Contacts</button>
+                <button class="btn btn-warning" onclick="showNew()">Fill New Address</button>
+                 -->
+                <!-- <div id="oldReceiver">
+                    <label for="deliveryProduct">Saved Company Contacts</label>
+                    <br>
+                    <select name="sel_receiver" id="sel_receiver" class="form-control" required>
+                        <?php
+                            $sql = mysqli_query($conn, "SELECT receiver_id, company_name FROM Receiver WHERE company_name IS NOT NULL AND company_name != ''");
+                            while ($row = $sql->fetch_assoc()){
+                            echo "<option value='$row[receiver_id]'>" . $row['company_name'] . "</option>";
+                            }
+                        ?>
+                    </select>
+                </div>
+                
+                <div>Show Old address</div>
+ -->
+
+                <form action="submit_address.php" method="post" id="newReceiver">
                     <div class="form-group row">
+               
+
                         <div class="col">
                             <label for="applicantName">Shipping Date</label>
                             <input id="date" type="date" class="form-control" name="deliverydate" placeholder="Enter date" required>
                         </div>
+                    </div>
 
+                            
+                    <div class="form-group row">
                         <div class="col">
                             <label for="receivercompany">Receiver's Company</label>
                             <input type="text" class="form-control" name="receivercompany" placeholder="receiver company" onchange="checkDate()">
+                        </div>
+                        <div class="col">
+                            <label for="phonenumber">Phone Number</label>
+                            <input type="text" class="form-control" name="phonenumber" placeholder="#####" required>
                         </div>
                     </div>
 
@@ -181,18 +211,24 @@
                     </div>
 
                     <div class="form-group row">
-                        <div class="col">
-                            <label for="phonenumber">Phone Number</label>
-                            <input type="text" class="form-control" name="phonenumber" placeholder="#####" required>
+                    
+                        <div class="form-group col-md-4">
+                            <label for="inputAddress">Address1</label>
+                            <input type="text" class="form-control" name="inputAddress1" placeholder="1234 Main St" required>
                         </div>
-                        <div class="col">
-                            <label for="inputAddress">Address</label>
-                            <input type="text" class="form-control" name="inputAddress" placeholder="1234 Main St" required>
+
+                        <div class="form-group col-md-4">
+                            <label for="inputAddress">Address2</label>
+                            <input type="text" class="form-control" name="inputAddress2" placeholder="1234 Main St" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputAddress">Address3</label>
+                            <input type="text" class="form-control" name="inputAddress3" placeholder="1234 Main St" required>
                         </div>
                     </div>
 
                     <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-4">
                             <label for="inputCity">City</label>
                             <input type="text" class="form-control" name="inputCity" required>
                         </div>
@@ -202,7 +238,7 @@
                             <input type="text" class="form-control" name="inputCountry" required>
                         </div>
 
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-4">
                             <label for="inputPostcode">Postcode</label>
                             <input type="text" class="form-control" name="inputPostcode" required>
                         </div>
@@ -236,10 +272,40 @@
             return (today - idate) < 0;
         }
 
-        function checkdate(){
-        
+        //hide/show the contact address div
+        function toggleDiv(){
+            var x = document.getElementById("newReceiver");
+            var y = document.getElementById("oldReceiver");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+                y.style.display = "none";
+            } else {
+                x.style.display = "none";
+                y.style.display = "block";
+            }
         }
-    
+        
+        function showOld(){
+            var y = document.getElementById("oldReceiver");
+            if (y.style.display === "block") {
+                y.style.display = "none";
+                x.style.display = "block";
+            } else {
+                y.style.display = "block";
+                x.style.display = "none";
+            }
+        }
+
+        function showNew(){
+            var x = document.getElementById("newReceiver");
+            if (x.style.display === "block") {
+                x.style.display = "none";
+                y.style.display = "block";
+            } else {
+                x.style.display = "block";
+                y.style.display = "none";
+            }
+        }
 	//show color and size option only when user select PawTrails all in one product
 			$(document).ready(function(){
                     $("#sel_product").change(function(){
