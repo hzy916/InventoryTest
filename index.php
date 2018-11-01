@@ -21,7 +21,7 @@ if(isset($_POST['login']))
 			$getUserRow = mysqli_fetch_assoc($rs);
 			unset($getUserRow['password']);
 			
-			$_SESSION = $getUserRow;
+    $_SESSION = $getUserRow;
 						
 			header('location:dashboard.php');
 			exit;

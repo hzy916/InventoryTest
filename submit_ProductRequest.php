@@ -18,7 +18,8 @@
         
       
 
-        $sql = "INSERT INTO Pawtrails_Request_junction (pawtrails_id, Qty, RequestUserID) VALUES ('$sel_product',  '$deliverynumber', '$requestUserID')";
+        $sql = "INSERT INTO Pawtrails_Request_junction (pawtrails_id, Qty) VALUES ('$sel_product',  '$deliverynumber')";
+
         if($conn->query($sql) === TRUE) {
             $last_junction_id = $_POST['sel_product']."-".$conn->insert_id;
             

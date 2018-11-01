@@ -8,14 +8,26 @@
         $requestUserID = $_SESSION['id'];
 	}
 
-	require 'inc/config.php';
+    $sql_four = '';
+
+    require_once('inc/config.php');
 	require_once('layouts/header.php');
     require_once('layouts/left_sidebar.php');
     
     $msg = "";
+
+    $myPlist='';
+
+    if($_POST) {
+        if($_POST['makeaction']=='product')
+            {
+                $myPlist=$_POST['myPlist'].'@'.$_POST['sel_product'].'-'.$_POST['deliverynumber'];
+           }else{
+                include ('submit_address.php');
+        }
+    }
+ 
 ?>
-
-
 
 
 <style>
@@ -49,7 +61,11 @@
             </div>
             <div class="card-body">
                 <h4>Choose Product</h4>
-                <form action="submit_ProductRequest.php" method="POST">
+                <form action="delivery_request.php" method="POST">
+
+                <input type="hidden"  name="makeaction" value="product">
+                <input type="text" name="myPlist" value="<?php echo $myPlist; ?>">
+
                     <div class="form-group row">
                         <div class="col">
                             <label for="deliveryProduct">Product</label>
@@ -106,6 +122,13 @@
                     </div>
                     <input type="submit" name="AddProduct" class="btn btn-info">
                 </form>
+
+                <textarea>
+                <?php 
+                    echo $sql_four;
+                ?>
+                
+                </textarea>
 
                 <br>
                 <h4>Request Item List</h4>
@@ -177,7 +200,11 @@
                 
                 <div>Show Old address</div>
  -->
-                <form action="submit_address.php" method="post" id="newReceiver">
+                <form action="delivery_request.php" method="POST">
+
+
+                <input type="hidden"  name="makeaction" value="address">
+                <input type="text" name="myPlist" value="<?php echo $myPlist; ?>">
                     <div class="form-group row">
                         <div class="col">
                             <label for="applicantName">Shipping Date</label>
@@ -366,7 +393,7 @@
 ?>
 
 <?php
-  
+  $conn->close();
 ?>
 
 
