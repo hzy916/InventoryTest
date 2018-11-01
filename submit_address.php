@@ -41,15 +41,21 @@
         if ($conn->query($sql) === TRUE) {
             $last_id = $conn->insert_id;
             echo "Receiver id is " .  $last_id . "<br>";
-
             //update Request details
             $sql_two= "INSERT INTO Request (ReceiverID, ShipDate, RequestStatusID, RequestEmployeeID) VALUES ('$last_id', '$deliverydate',  '1', '$user_id')";
            
             if($conn->query($sql_two) === TRUE) {
-                echo "<script>
-                alert('Delivery Request Submitted successfully');
-                window.location.href='./delivery_table.php';
-                </script>";
+                $request_id = $conn->insert_id;
+                $sql_three = "Update Pawtrails_Request_junction (request_id) VALUES ( '$request_id') ";
+                if($conn->query($sql_three) === TRUE) {
+                    echo "<script>
+                    alert('Delivery Request Submitted successfully');
+                    window.location.href='./delivery_table.php';
+                    </script>";
+                } else{
+                    
+                 echo "Error " . $sql_three . ' ' . $conn->connect_error;
+                }
             } else {
                 // $msg = "Updating failed.";
                 echo "Error " . $sql_two . ' ' . $conn->connect_error;
@@ -59,17 +65,6 @@
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
-
-
-      
-          
-            // $receivercompany = $_POST['receivercompany'];
-            // if(isset($receivercompany)) {
-            //     $sql .= "INSERT INTO Receiver ( company_name, first_name, last_name, phone, address, city, country, postalcode) VALUES ('$receivercompany', '$firstname',  '$lastname', '$phonenumber', '$inputAddress', '$inputCity', '$inputCountry', '$inputPostcode')";
-            // } else {
-              
- 
-            // }
     }
 ?>
 

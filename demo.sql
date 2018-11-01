@@ -150,10 +150,12 @@ create table Pawtrails_Request_junction
   `request_id` int(11),
   `pawtrails_id` int(11) UNSIGNED NOT NULL,
   `Qty` int(11) DEFAULT NULL,
+  `RequestUserID` int(11) DEFAULT NULL,
 
   PRIMARY KEY(`id`),
   FOREIGN KEY (`pawtrails_id`) REFERENCES pawtrails (`id`),
-  FOREIGN KEY (`request_id`) REFERENCES Request (`RequestID`)
+  FOREIGN KEY (`request_id`) REFERENCES Request (`RequestID`),
+  FOREIGN KEY (`RequestUserID`) REFERENCES tbl_users (`id`)
 
 )ENGINE=INNODB;
 

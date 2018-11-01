@@ -4,7 +4,8 @@
 	if(!isset($_SESSION['id'],$_SESSION['user_role_id']))
 	{
 		header('location:index.php?lmsg=true');
-		exit;
+        exit;
+        $requestUserID = $_SESSION['id'];
 	}
 
 	require 'inc/config.php';
@@ -38,7 +39,6 @@
             <p>You are login as <strong><?php echo getUserAccessRoleByID($_SESSION['user_role_id']); ?></strong></p>
             <ul>
                 <li><strong>Sales</strong> and <strong>Marketing</strong> can make delivery request by submitting the form. </li>
-            
             </ul>
 
         <!-- DataTables Example -->
@@ -58,7 +58,7 @@
                                 <?php
                                     $sql = mysqli_query($conn, "SELECT id, itemname FROM pawtrails");
                                     while ($row = $sql->fetch_assoc()){
-                                    echo "<option value='$row[id]'>" . $row['itemname'] . "</option>";
+                                        echo "<option value='$row[id]'>" . $row['itemname'] . "</option>";
                                     }
                                 ?>
                             </select>
@@ -126,7 +126,8 @@
                         </thead>
                         <tbody>
                             <?php
-                                $sql = "SELECT * FROM Pawtrails_Request_junction";
+                                $requestUserID = $_SESSION['id'];
+                                $sql = "SELECT * FROM Pawtrails_Request_junction WHERE RequestUserID = " .$requestUserID;
                                 $result = $conn->query($sql);
                                 
                                 if($result->num_rows > 0) {
@@ -137,12 +138,12 @@
                                             while($row2 = $result2->fetch_assoc()) {
                                                 echo 
                                                 "<tr>
-                                                        <td>".$row['pawtrails_id']."</td>
-                                                        <td>".$row2['itemname']."</td>
-                                                        <td>".$row['Qty']."</td>
-                                                        <td class='OperationColumn'>
-                                                            <a href='delete_request_item.php?id=".$row['id']."'><button class='btn btn-danger' type='button'>Remove</button></a>
-                                                        </td>
+                                                    <td>".$row['pawtrails_id']."</td>
+                                                    <td>".$row2['itemname']."</td>
+                                                    <td>".$row['Qty']."</td>
+                                                    <td class='OperationColumn'>
+                                                        <a href='delete_request_item.php?id=".$row['id']."'><button class='btn btn-danger' type='button'>Remove</button></a>
+                                                    </td>
                                                 </tr>";
                                             }
                                         }
@@ -166,21 +167,18 @@
                     <br>
                     <select name="sel_receiver" id="sel_receiver" class="form-control" required>
                         <?php
-                            $sql = mysqli_query($conn, "SELECT receiver_id, company_name FROM Receiver WHERE company_name IS NOT NULL AND company_name != ''");
-                            while ($row = $sql->fetch_assoc()){
-                            echo "<option value='$row[receiver_id]'>" . $row['company_name'] . "</option>";
-                            }
+                            // $sql = mysqli_query($conn, "SELECT receiver_id, company_name FROM Receiver WHERE company_name IS NOT NULL AND company_name != ''");
+                            // while ($row = $sql->fetch_assoc()){
+                            // echo "<option value='$row[receiver_id]'>" . $row['company_name'] . "</option>";
+                            // }
                         ?>
                     </select>
                 </div>
                 
                 <div>Show Old address</div>
  -->
-
                 <form action="submit_address.php" method="post" id="newReceiver">
                     <div class="form-group row">
-               
-
                         <div class="col">
                             <label for="applicantName">Shipping Date</label>
                             <input id="date" type="date" class="form-control" name="deliverydate" placeholder="Enter date" required>
