@@ -19,22 +19,40 @@
     $myPlist='';
 
     if($_POST) {
-        if($_POST['makeaction']=='product')
-            {
-            // $myPlist=$_POST['myPlist'].'@'.$_POST['sel_product'].'-'.$_POST['deliverynumber'];
-      list($pId,$pName)=explode('-', $_POST['sel_product']);
+    //     if($_POST['makeaction']=='product')
+    //         {
+    //         // $myPlist=$_POST['myPlist'].'@'.$_POST['sel_product'].'-'.$_POST['deliverynumber'];
+    //   list($pId,$pName)=explode('-', $_POST['sel_product']);
 
-            $_SESSION['delivery'][] = [
-                'product_id' => $pId,
-                'productname' => $pName,
-                'deliverynumber' => $_POST['deliverynumber']
+    //         $_SESSION['delivery'][] = [
+    //             'product_id' => $pId,
+    //             'productname' => $pName,
+    //             'deliverynumber' => $_POST['deliverynumber']
                 
-            ];
+    //         ];
            
-            echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>';
+    //         echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>';
     
-           }else{
-                include ('submit_address.php');
+    //        }else{
+    //             include ('submit_address.php');
+    //         }
+
+        switch($_POST['makeaction']) {
+            case 'product': 
+                list($pId,$pName)=explode('-', $_POST['sel_product']);
+                $_SESSION['delivery'][] = [
+                    'product_id' => $pId,
+                    'productname' => $pName,
+                    'deliverynumber' => $_POST['deliverynumber'] 
+                ];
+            break;
+
+            case 'productDelete':
+                unset($_SESSION['delivery'][$_POST['prod2del']]);
+            break;
+            
+            // default:
+            //     include ('submit_address.php');
         }
     }
  
@@ -129,6 +147,13 @@
                     <input type="submit" name="AddProduct" class="btn btn-info">
                 </form>
 
+                <form id="productDelete" method="POST">
+
+                    <input type="hidden"  name="makeaction" value="productDelete">
+                    <input id="prod2del" type="hidden"  name="prod2del" value="">
+
+                </form>
+
                 <br>
                 <h4>Request Item List</h4>
                 <p><?php echo $msg ?></p>
@@ -147,19 +172,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php    
-                                if(!empty($_SESSION['delivery'])){
-                                    for($i = 0 ; $i < count($_SESSION['delivery']) ; $i++) {
-                                        echo "<tr>
-                                            <td>".$_SESSION['delivery'][$i]['product_id']."</td>
-                                            <td>".$_SESSION['delivery'][$i]['productname']."</td>
-                                            <td>".$_SESSION['delivery'][$i]['deliverynumber']."</td>
-                                            <td class='OperationColumn'>
-                                                <button class='btn btn-danger removeRowBtn' type='button'>Remove</button>
-                                            </td>
-                                            </tr>";
-                                        }  
-                                }
+                        <?php    
+                            if(!empty($_SESSION['delivery'])){
+                                
+                                foreach($_SESSION['delivery'] as $i=> $k) {
+                                    echo "<tr>
+                                        <td>".$k['product_id']."</td>
+                                        <td>".$k['productname']."</td>
+                                        <td>".$k['deliverynumber']."</td>
+                                        <td class='OperationColumn'>
+                                            <button type='button' class='btn btn-danger' onclick='JavaScript:deleteThisProduct(".$i.");'>Remove</button>
+                                        </td>
+                                        </tr>";
+                                        $i++;
+                                    }  
+                            }
                         ?>
                 </tbody>
             </table>
@@ -190,7 +217,8 @@
 
 
                 <input type="hidden"  name="makeaction" value="address">
-                <input type="text" name="myPlist" value="<?php echo $myPlist; ?>">
+                <!-- <input type="text" name="myPlist" value="<?php echo $myPlist; ?>">
+                 -->
                     <div class="form-group row">
                         <div class="col">
                             <label for="applicantName">Shipping Date</label>
@@ -271,19 +299,7 @@
     <!-- /.container-fluid-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-
-
     <script type="text/javascript">
-       //Remove the request item whhen user click remove button
-        $(document).ready(function(){
-            $('body').on('click', '.removeRowBtn', function(){
-                // to make sure at least one row remains
-                if($('.removeRowBtn').length > 0){
-                    $(this).parents('tr').remove();
-                }
-            });
-        });
-
         //check ship date to be at least one day after today
         function isFutureDate(idate){
             var today = new Date().getTime(),
@@ -327,6 +343,11 @@
                 y.style.display = "none";
             }
         }
+
+        function deleteThisProduct(idP){
+            $("#prod2del").val(idP);
+            $("#productDelete").submit();
+        }
 	//show color and size option only when user select PawTrails all in one product
 			$(document).ready(function(){
                     $("#sel_product").change(function(){
@@ -343,15 +364,6 @@
 							}
 					// });
                     
-                    // $("#sel_color").change(function(){
-					// 		var sel_color = $(this).val();
-                    //         myData.color = sel_color;
-					// });
-					
-                    // $("#sel_size").change(function(){
-                    //     var sel_size = $(this).val();
-                    //     myData.size = sel_size;
-
                     //	send user's select to MYSQL commands to get the stock number of the product selected
                         $.ajax({
                             url: 'getStockNumber.php',

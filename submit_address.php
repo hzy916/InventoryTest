@@ -32,7 +32,6 @@
             if($conn->query($sql_two) === TRUE) {
                 $request_id = $conn->insert_id;
 
-
                 //Grab the value of request items
                 if(!empty($_SESSION['delivery'])){
                     $last=count($_SESSION['delivery']);
@@ -56,29 +55,6 @@
                     }
                 }
 
-                
-    
-                    // $mylist = explode('@', $_POST['myPlist']);
-                    // array_shift($mylist);
-                    // if(!empty($mylist)){
-                    //     $last=count($mylist);
-                    //     $i=1;
-                    //     $sql_four = "INSERT INTO Pawtrails_Request_junction (request_id,pawtrails_id, Qty) VALUES ";
-                    
-                    //     foreach ($mylist as $k){
-                    //         list($sel_product, $deliverynumber) = explode('-', $k);
-                    //         //prepare the insert multiple query 
-                    //         $sql_four .= "('$request_id','$sel_product',  '$deliverynumber')";
-
-                    //     if($i==$last){
-                    //         $sql_four .= ";";
-                    //     }else {
-                    //         $sql_four .= ",";
-                    //     }
-                    //     $i++;
-                    //     }
-                    //     $conn->query($sql_four);
-                    // }
             } else {
                 // $msg = "Updating failed.";
                 echo "Error " . $sql_two . ' ' . $conn->connect_error;
