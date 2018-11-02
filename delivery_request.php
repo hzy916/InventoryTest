@@ -21,7 +21,14 @@
     if($_POST) {
         if($_POST['makeaction']=='product')
             {
-                $myPlist=$_POST['myPlist'].'@'.$_POST['sel_product'].'-'.$_POST['deliverynumber'];
+                // $myPlist=$_POST['myPlist'].'@'.$_POST['sel_product'].'-'.$_POST['deliverynumber'];
+                $_SESSION['delivery'][] = [
+                    'product_id' => '',
+                    'productname' => $_POST['sel_product'],
+                    'deliverynumber' => $_POST['deliverynumber']
+                ];
+
+            
            }else{
                 include ('submit_address.php');
         }
@@ -61,7 +68,7 @@
             </div>
             <div class="card-body">
                 <h4>Choose Product</h4>
-                <form action="delivery_request.php" method="POST">
+                <form method="POST">
 
                 <input type="hidden"  name="makeaction" value="product">
                 <input type="text" name="myPlist" value="<?php echo $myPlist; ?>">
@@ -95,8 +102,6 @@
                                     <option value="black">Black</option>
                             </select>
                         </div>
-
-
                     </div>
 
                     <div class="form-group row">
@@ -115,9 +120,7 @@
                             <label for="deliverynumber">Number of Products</label>
                             <input type="number" class="form-control" name="deliverynumber" id="deliverynumber" placeholder="number"  min="1" required>
 														
-                            <!-- <select id="sel_number">
-                                    <option value="0">- Select -</option>
-                            </select> -->
+               
                         </div>
                     </div>
                     <input type="submit" name="AddProduct" class="btn btn-info">
@@ -149,35 +152,72 @@
                         </thead>
                         <tbody>
                             <?php
-                                $requestUserID = $_SESSION['id'];
-                                $sql = "SELECT * FROM Pawtrails_Request_junction WHERE RequestUserID = " .$requestUserID;
-                                $result = $conn->query($sql);
-                                
-                                if($result->num_rows > 0) {
-                                    while($row = $result->fetch_assoc()) {
-                                        $sql2 = "SELECT itemname FROM pawtrails WHERE id = " .$row['pawtrails_id'];
-                                        $result2 = $conn->query($sql2);
-                                        if($result2->num_rows > 0) {
-                                            while($row2 = $result2->fetch_assoc()) {
-                                                echo 
-                                                "<tr>
-                                                    <td>".$row['pawtrails_id']."</td>
-                                                    <td>".$row2['itemname']."</td>
-                                                    <td>".$row['Qty']."</td>
-                                                    <td class='OperationColumn'>
-                                                        <a href='delete_request_item.php?id=".$row['id']."'><button class='btn btn-danger' type='button'>Remove</button></a>
-                                                    </td>
-                                                </tr>";
-                                            }
-                                        }
-                                    }
-                                } else {
-                                        echo "<tr><td colspan='5'><center>No Item added.</center></td></tr>";
-                                }
-                                ?>
-                        </tbody>
-                    </table>
-                </div>
+
+
+
+// if($result->num_rows > 0) {
+//     while($row = $result->fetch_assoc()) {
+//         echo 
+//         "<tr>
+//             <td>".$row['id']."</td>
+//             <td>".$row['itemname']."</td>
+//             <td>".$row['amount']."</td>
+//             <td>".$row['date']."</td>
+//             <td class='OperationColumn'>
+//                 <a href='update.php?id=".$row['id']."'><button class='btn btn-success' type='button'>Edit</button></a>
+//                 <a href='remove.php?id=".$row['id']."'><button class='btn btn-danger' type='button'>Remove</button></a>
+//             </td>
+//         </tr>";
+//     }
+// } else {
+//         echo "<tr><td colspan='5'><center>No Data Avaliable</center></td></tr>";
+// }    
+                     
+                    if(!empty($_SESSION['delivery'])){
+                        foreach ($_SESSION['delivery'] as $k){
+                            echo
+                                "<td>".$_SESSION['delivery']['productname']."</td>
+                                <td>".$_SESSION['delivery']['deliverynumber']."</td>
+                                <td class='OperationColumn'>
+                                    <a href='delete_request_item.php?id=".$row['id']."'><button class='btn btn-danger' type='button'>Remove</button></a>
+                                </td>
+                            </tr>";
+                        }
+                    }
+
+                        // $mylist = explode('@', $_POST['myPlist']);
+                        // array_shift($mylist);
+                        // if(!empty($mylist)){
+                        //     foreach ($mylist as $k){
+                        //         list($sel_product, $deliverynumber) = explode('-', $k);
+
+                        //         // $sql = "SELECT id FROM pawtrails WHERE itemname = '$sel_product'";
+                        //         // $result = $conn->query($sql);
+
+                        //         // if($result->num_rows > 0) {
+                        //         //     while($row = $result->fetch_assoc()) {
+                        //         //         echo 
+                        //         //             "<tr>
+                        //         //                 <td>".$row['id']."</td>";
+                        //         //     }
+                        //         // }
+                        
+                        // // if(!empty($mylist)){
+                        // //     foreach ($mylist as $k){
+                        // //         list($sel_product, $deliverynumber) = explode('-', $k);
+                        //     //     echo
+                        //     //     "<td>".$sel_product."</td>
+                        //     //     <td>".$deliverynumber."</td>
+                        //     //     <td class='OperationColumn'>
+                        //     //         <a href='delete_request_item.php?id=".$row['id']."'><button class='btn btn-danger' type='button'>Remove</button></a>
+                        //     //     </td>
+                        //     // </tr>";
+                        //     }
+                        // }  
+                        ?>
+                </tbody>
+            </table>
+        </div>
 
 
                 <h4>Receiver's Details</h4>
@@ -355,8 +395,7 @@
                     // $("#sel_size").change(function(){
                     //     var sel_size = $(this).val();
                     //     myData.size = sel_size;
-                        
-                        alert(JSON.stringify(myData));
+
                     //	send user's select to MYSQL commands to get the stock number of the product selected
                         $.ajax({
                             url: 'getStockNumber.php',
@@ -365,7 +404,7 @@
                             dataType: 'json',
                             
                             success:function(response){
-                               alert(JSON.stringify(response));
+                           
                                     // var len = response.length;
                                     // // var amount = response[i]['amount'];
                                     //     $("#sel_number").empty();

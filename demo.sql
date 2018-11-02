@@ -136,21 +136,12 @@ CREATE TABLE Request (
 
 /**Product_request junction table creation**/
 
--- CREATE TABLE Product_Request_junction (
---     `delivery_id` int(11),
---     `product_id` INT(11),
---     `Qty` int(11) DEFAULT NULL,
---      PRIMARY KEY (`delivery_id`), 
---      FOREIGN KEY (`product_id`) REFERENCES pawtrails(`id`)
--- )ENGINE=INNODB;
-
 create table Pawtrails_Request_junction
 ( 
   `id` int(11)  NOT NULL AUTO_INCREMENT,
   `request_id` int(11),
   `pawtrails_id` int(11) UNSIGNED NOT NULL,
   `Qty` int(11) DEFAULT NULL,
-
 
   PRIMARY KEY(`id`),
   FOREIGN KEY (`pawtrails_id`) REFERENCES pawtrails (`id`),
