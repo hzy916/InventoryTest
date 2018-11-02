@@ -42,7 +42,7 @@
                     foreach ($_SESSION['delivery'] as $k){
                         // list($sel_product, $deliverynumber) = explode('-', $k);
                         //prepare the insert multiple query 
-                        $sql_four .= "('$request_id','".$_SESSION['delivery']['productname']."', '".$_SESSION['delivery']['deliverynumber']."')";
+                        $sql_four .= "('$request_id','".$k['productname']."', '".$k['deliverynumber']."')";
 
                     if($i==$last){
                         $sql_four .= ";";
@@ -51,7 +51,9 @@
                     }
                     $i++;
                     }
-                    $conn->query($sql_four);
+                    if($conn->query($sql_four) === TRUE) {
+                        unset($_SESSION['delivery']);
+                    }
                 }
 
                 

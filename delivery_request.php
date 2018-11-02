@@ -21,14 +21,18 @@
     if($_POST) {
         if($_POST['makeaction']=='product')
             {
-                // $myPlist=$_POST['myPlist'].'@'.$_POST['sel_product'].'-'.$_POST['deliverynumber'];
-                $_SESSION['delivery'][] = [
-                    'product_id' => '',
-                    'productname' => $_POST['sel_product'],
-                    'deliverynumber' => $_POST['deliverynumber']
-                ];
+            // $myPlist=$_POST['myPlist'].'@'.$_POST['sel_product'].'-'.$_POST['deliverynumber'];
+      list($pId,$pName)=explode('-', $_POST['sel_product']);
 
-            
+            $_SESSION['delivery'][] = [
+                'product_id' => $pId,
+                'productname' => $pName,
+                'deliverynumber' => $_POST['deliverynumber']
+                
+            ];
+           
+            echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>';
+    
            }else{
                 include ('submit_address.php');
         }
@@ -71,8 +75,7 @@
                 <form method="POST">
 
                 <input type="hidden"  name="makeaction" value="product">
-                <input type="text" name="myPlist" value="<?php echo $myPlist; ?>">
-
+         
                     <div class="form-group row">
                         <div class="col">
                             <label for="deliveryProduct">Product</label>
@@ -81,7 +84,7 @@
                                 <?php
                                     $sql = mysqli_query($conn, "SELECT id, itemname FROM pawtrails");
                                     while ($row = $sql->fetch_assoc()){
-                                        echo "<option value='$row[id]'>" . $row['itemname'] . "</option>";
+                                        echo "<option value='".$row[id]." - ".$row['itemname']."'>" . $row['itemname'] . "</option>";
                                     }
                                 ?>
                             </select>
@@ -126,13 +129,6 @@
                     <input type="submit" name="AddProduct" class="btn btn-info">
                 </form>
 
-                <textarea>
-                <?php 
-                    echo $sql_four;
-                ?>
-                
-                </textarea>
-
                 <br>
                 <h4>Request Item List</h4>
                 <p><?php echo $msg ?></p>
@@ -146,74 +142,24 @@
                                 <!-- <th>color</th>
                                 <th>size</th> -->
                                 <th>amount</th>
-                       
-                                <th class="OperationColumn">operation</th>
+                                <th>Operation</th>
+                                <!-- <th class="OperationColumn">operation</th> -->
                             </tr>
                         </thead>
                         <tbody>
-                            <?php
-
-
-
-// if($result->num_rows > 0) {
-//     while($row = $result->fetch_assoc()) {
-//         echo 
-//         "<tr>
-//             <td>".$row['id']."</td>
-//             <td>".$row['itemname']."</td>
-//             <td>".$row['amount']."</td>
-//             <td>".$row['date']."</td>
-//             <td class='OperationColumn'>
-//                 <a href='update.php?id=".$row['id']."'><button class='btn btn-success' type='button'>Edit</button></a>
-//                 <a href='remove.php?id=".$row['id']."'><button class='btn btn-danger' type='button'>Remove</button></a>
-//             </td>
-//         </tr>";
-//     }
-// } else {
-//         echo "<tr><td colspan='5'><center>No Data Avaliable</center></td></tr>";
-// }    
-                     
-                    if(!empty($_SESSION['delivery'])){
-                        foreach ($_SESSION['delivery'] as $k){
-                            echo
-                                "<td>".$_SESSION['delivery']['productname']."</td>
-                                <td>".$_SESSION['delivery']['deliverynumber']."</td>
-                                <td class='OperationColumn'>
-                                    <a href='delete_request_item.php?id=".$row['id']."'><button class='btn btn-danger' type='button'>Remove</button></a>
-                                </td>
-                            </tr>";
-                        }
-                    }
-
-                        // $mylist = explode('@', $_POST['myPlist']);
-                        // array_shift($mylist);
-                        // if(!empty($mylist)){
-                        //     foreach ($mylist as $k){
-                        //         list($sel_product, $deliverynumber) = explode('-', $k);
-
-                        //         // $sql = "SELECT id FROM pawtrails WHERE itemname = '$sel_product'";
-                        //         // $result = $conn->query($sql);
-
-                        //         // if($result->num_rows > 0) {
-                        //         //     while($row = $result->fetch_assoc()) {
-                        //         //         echo 
-                        //         //             "<tr>
-                        //         //                 <td>".$row['id']."</td>";
-                        //         //     }
-                        //         // }
-                        
-                        // // if(!empty($mylist)){
-                        // //     foreach ($mylist as $k){
-                        // //         list($sel_product, $deliverynumber) = explode('-', $k);
-                        //     //     echo
-                        //     //     "<td>".$sel_product."</td>
-                        //     //     <td>".$deliverynumber."</td>
-                        //     //     <td class='OperationColumn'>
-                        //     //         <a href='delete_request_item.php?id=".$row['id']."'><button class='btn btn-danger' type='button'>Remove</button></a>
-                        //     //     </td>
-                        //     // </tr>";
-                        //     }
-                        // }  
+                            <?php    
+                                if(!empty($_SESSION['delivery'])){
+                                    for($i = 0 ; $i < count($_SESSION['delivery']) ; $i++) {
+                                        echo "<tr>
+                                            <td>".$_SESSION['delivery'][$i]['product_id']."</td>
+                                            <td>".$_SESSION['delivery'][$i]['productname']."</td>
+                                            <td>".$_SESSION['delivery'][$i]['deliverynumber']."</td>
+                                            <td class='OperationColumn'>
+                                                <button class='btn btn-danger removeRowBtn' type='button'>Remove</button>
+                                            </td>
+                                            </tr>";
+                                        }  
+                                }
                         ?>
                 </tbody>
             </table>
@@ -328,6 +274,16 @@
 
 
     <script type="text/javascript">
+       //Remove the request item whhen user click remove button
+        $(document).ready(function(){
+            $('body').on('click', '.removeRowBtn', function(){
+                // to make sure at least one row remains
+                if($('.removeRowBtn').length > 0){
+                    $(this).parents('tr').remove();
+                }
+            });
+        });
+
         //check ship date to be at least one day after today
         function isFutureDate(idate){
             var today = new Date().getTime(),
