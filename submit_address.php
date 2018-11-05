@@ -54,14 +54,23 @@
                     }
                     if($conn->query($sql_four) === TRUE) {
                         unset($_SESSION['delivery']);
+                        echo "<script type=\"text/javascript\">".
+                        "alert('Your Delivery Request was submitted.');".
+                        "</script>";
                     }else{
                         echo "Error " . $sql_four . ' ' . $conn->connect_error;
+                        echo "<script type=\"text/javascript\">".
+                        "alert('Your Delivery Request submit failed.');".
+                        "</script>";
                     }
                 }
 
             } else {
                 // $msg = "Updating failed.";
                 echo "Error " . $sql_two . ' ' . $conn->connect_error;
+                echo "<script type=\"text/javascript\">".
+                "alert('Your Delivery Request submit failed.');".
+                "</script>";
             }
         
 
