@@ -69,7 +69,6 @@
 							while($row_two = $result_two->fetch_assoc()) {
 							echo 
 							"
-						
 							<tr>
 								<td>".$row_two['id']."</td>
 								<td>".$row_two['itemname']."</td>
@@ -105,10 +104,12 @@
 					<thead>
 						<tr>
 							<th>Request ID</th>
+							<th class="EmployeeColumn">Employee</th>
 							<th>Submit date</th>
 							<th>Ship date</th>
                             <th>Request Items</th>
 							<th>Status</th>
+							<th class="OperationColumn">operation</th>
 						</tr>
 					</thead>
 		
@@ -124,9 +125,20 @@
 		
 								if($result->num_rows > 0) {
 									while($row = $result->fetch_assoc()) {
-												echo 
+
+										$employeeID_array[] = $row['RequestEmployeeID'];
+										// var_dump($id_array);
+							
+										$employeeids = join("','",$employeeID_array);   
+										$sql_three = "SELECT user_name FROM tbl_users WHERE id IN ('$employeeids')";
+										$result_three = $conn->query($sql_three);
+											if($result_three->num_rows > 0) {
+												while($row_three = $result_three->fetch_assoc()) {
+													echo 
 													"<tr>
 														<td>".$row['RequestID']."</td>
+														<td>".$row_three['user_name']."</td>
+											
 														<td>".$row['RequestDate']."</td>
 														<td>".$row['ShipDate']."</td>
 														<td>
@@ -135,8 +147,14 @@
 														<td>
 														".$row['RequestStatusID']."
 														</td>
+														<td class='OperationColumn'>
+															<a href='checkRequest.php?id=".$row['RequestID']."'><button class='btn btn-success' type='button'>Approve</button></a>
+														</td>
 													</tr>";
-									
+												}
+											}else {
+												echo "Error " . $sql_three . ' ' . $conn->connect_error;
+											}	
 									}
 								} else {
 										echo "<tr><td colspan='5'><center>You have no related requests.</center></td></tr>";
@@ -149,9 +167,6 @@
 							</form>
 					</tbody>
 				</table>
-
-
-             
               </div>
             </div>
 		</div>
@@ -170,8 +185,16 @@
 
 if($_SESSION['user_role_id'] == 2 || $_SESSION['user_role_id'] == 3  ) {
 	echo('<script>$("#createBtn").addClass("hidebutton");
-
+	$(".OperationColumn").addClass("hidebutton");
+	$(".EmployeeColumn").addClass("hidebutton");
+	
 	</script>' );
+
+
+		
+	
+	
+	
 }
 
 ?>
