@@ -50,9 +50,10 @@
             case 'productDelete':
                 unset($_SESSION['delivery'][$_POST['prod2del']]);
             break;
-            
-            // default:
-            //     include ('submit_address.php');
+
+            case 'address':
+              include ('submit_address.php');
+            break;
         }
     }
  
@@ -348,14 +349,16 @@
             $("#prod2del").val(idP);
             $("#productDelete").submit();
         }
+
 	//show color and size option only when user select PawTrails all in one product
 			$(document).ready(function(){
                     $("#sel_product").change(function(){
                         var sel_item=$(this).val();
 						    var myData = {};
                             myData.itemname = sel_item;
-                            
-							if (sel_item == "test"){
+                            alert( myData.itemname );
+
+							if (sel_item == "fed"){
 								$("#sizeOption").removeClass("hidedisplay");
 								$("#colorOption").removeClass("hidedisplay");
 							}else {

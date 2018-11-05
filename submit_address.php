@@ -32,16 +32,18 @@
             if($conn->query($sql_two) === TRUE) {
                 $request_id = $conn->insert_id;
 
+              
                 //Grab the value of request items
                 if(!empty($_SESSION['delivery'])){
                     $last=count($_SESSION['delivery']);
                     $i=1;
+
                     $sql_four = "INSERT INTO Pawtrails_Request_junction (request_id,pawtrails_id, Qty) VALUES ";
                 
                     foreach ($_SESSION['delivery'] as $k){
                         // list($sel_product, $deliverynumber) = explode('-', $k);
                         //prepare the insert multiple query 
-                        $sql_four .= "('$request_id','".$k['productname']."', '".$k['deliverynumber']."')";
+                        $sql_four .= "('$request_id','".$k['product_id']."', '".$k['deliverynumber']."')";
 
                     if($i==$last){
                         $sql_four .= ";";
@@ -52,6 +54,8 @@
                     }
                     if($conn->query($sql_four) === TRUE) {
                         unset($_SESSION['delivery']);
+                    }else{
+                        echo "Error " . $sql_four . ' ' . $conn->connect_error;
                     }
                 }
 
@@ -65,3 +69,4 @@
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
 ?>
+
