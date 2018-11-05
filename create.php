@@ -38,6 +38,17 @@
                         <th>Item Name</th>
                         <td><input type="text" name="itemname" placeholder="Item Name" required/></td>
                     </tr>     
+
+                    <tr>
+                        <th>Item Type</th>
+                        <td> 
+                            <select name="itemtype" id="itemtype" class="form-control" required>
+                                    <option value="" selected disabled hidden>Choose here</option>
+                                    <option value="flyer">flyer</option>
+                                    <option value="poster">poster</option>
+                            </select>
+                        </td>
+                    </tr>    
             
                     <tr>
                         <th>Quantity</th>
@@ -62,9 +73,10 @@
                 <table cellspacing="0" cellpadding="10">
                     <tr>
                         <th>Item Name</th>
-                        <td><input type="text" name="itemname" placeholder="Item Name" required/></td>
+                        <td><input type="text" name="itemname" value="pawtrails" readonly/></td>
                     </tr>     
-                
+                    <input type="hidden"  name="itemtype" value="pawtrails">
+
                     <tr>
                         <th>Color</th>
                         <td>
@@ -107,7 +119,8 @@
 
 <?php
     if($_POST) {
-        $itemname = $_POST['itemname'];
+        $itemname = 'pawtrails';
+        $itemtype = 'pawtrails';
         $color = $_POST['color'];
         $size = $_POST['size'];
         $amount = $_POST['amount'];
@@ -115,7 +128,7 @@
         if (isset($amount) && ctype_digit($amount))
         {
         // the get input contains a positive number and is safe
-            $sql = "INSERT INTO pawtrails (itemname, color, size, amount) VALUES ('$itemname', '$color', '$size', '$amount')";
+            $sql = "INSERT INTO pawtrails (itemtype ,itemname, color, size, amount) VALUES ('$itemtype','$itemname', '$color', '$size', '$amount')";
             if($conn->query($sql) === TRUE) {
                 // $msg = "New Product Successfully Created";
                 echo "<script>

@@ -54,9 +54,13 @@
                     }
                     if($conn->query($sql_four) === TRUE) {
                         unset($_SESSION['delivery']);
-                        echo "<script type=\"text/javascript\">".
-                        "alert('Your Delivery Request was submitted.');".
-                        "</script>";
+                        echo "<script>
+                        alert('New Request Successfully Submitted.');
+                        window.location.href='./delivery_table.php';
+                        </script>";
+                      
+                     
+              
                     }else{
                         echo "Error " . $sql_four . ' ' . $conn->connect_error;
                         echo "<script type=\"text/javascript\">".

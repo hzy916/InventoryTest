@@ -1,3 +1,4 @@
+
 <?php
 	session_start();
 
@@ -19,36 +20,39 @@
     $myPlist='';
 
     if($_POST) {
-    //     if($_POST['makeaction']=='product')
-    //         {
-    //         // $myPlist=$_POST['myPlist'].'@'.$_POST['sel_product'].'-'.$_POST['deliverynumber'];
-    //   list($pId,$pName)=explode('-', $_POST['sel_product']);
-
-    //         $_SESSION['delivery'][] = [
-    //             'product_id' => $pId,
-    //             'productname' => $pName,
-    //             'deliverynumber' => $_POST['deliverynumber']
-                
-    //         ];
-           
-    //         echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>';
-    
-    //        }else{
-    //             include ('submit_address.php');
-    //         }
-
         switch($_POST['makeaction']) {
             case 'product': 
                 list($pId,$pName)=explode('-', $_POST['sel_product']);
                 $_SESSION['delivery'][] = [
                     'product_id' => $pId,
                     'productname' => $pName,
+                    'sel_color' => '/',
+                    'sel_size' => '/',
                     'deliverynumber' => $_POST['deliverynumber'] 
                 ];
             break;
 
             case 'productDelete':
                 unset($_SESSION['delivery'][$_POST['prod2del']]);
+            break;
+
+            case 'pawtrailsSelect':
+                $sel_color = $_POST['sel_color'];
+                $sel_size = $_POST['sel_size'];
+
+                $sql = "SELECT id FROM pawtrails  WHERE color = '$sel_color' AND size = '$sel_size'";
+                $result = $conn->query($sql);
+                while ($row = $result->fetch_assoc()) {
+                  $sel_id = $row[0]; 
+                }
+                
+                $_SESSION['delivery'][] = [
+                    'product_id' => $sel_id,
+                    'productname' => 'PawTrails',
+                    'sel_color' => $sel_color,
+                    'sel_size' => $sel_size,
+                    'deliverynumber' => $_POST['deliverynumber'] 
+                ];
             break;
 
             case 'address':
@@ -65,6 +69,14 @@
 		display: none!important;
 	}
 
+    /* Style the tab content */
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+        border-top: none;
+    }
+
 </style>
 
     <div class="content-wrapper">
@@ -80,7 +92,7 @@
             <hr>
             <p>You are login as <strong><?php echo getUserAccessRoleByID($_SESSION['user_role_id']); ?></strong></p>
             <ul>
-                <li><strong>Sales</strong> and <strong>Marketing</strong> can make delivery request by submitting the form. </li>
+                <p>Please select the product you request</p>
             </ul>
 
         <!-- DataTables Example -->
@@ -89,72 +101,94 @@
                 <i class="fas fa-form"></i>
                 Delivery Requests Form
             </div>
-            <div class="card-body">
-                <h4>Choose Product</h4>
-                <form method="POST">
 
-                <input type="hidden"  name="makeaction" value="product">
-         
-                    <div class="form-group row">
-                        <div class="col">
-                            <label for="deliveryProduct">Product</label>
-                          <br>
-                            <select name="sel_product" id="sel_product" class="form-control" required>
-                                <?php
-                                    $sql = mysqli_query($conn, "SELECT id, itemname FROM pawtrails");
-                                    while ($row = $sql->fetch_assoc()){
-                                        echo "<option value='".$row[id]." - ".$row['itemname']."'>" . $row['itemname'] . "</option>";
-                                    }
-                                ?>
-                            </select>
-                        </div>
+            <div class="card-body tab-content">
+                <!--button to select which type of product you request-->
+                <div class="tab">
+                    <button class="tablinks btn btn-success" onclick="openSelectionForm(event, 'flyer_poster')">Flyers or Posters</button>
+                    <button class="tablinks btn btn-warning" onclick="openSelectionForm(event, 'pawtrailsProduct')"> PawTrails</button>
+                </div>
 
-                        <div class="col hidedisplay" id="colorOption">
-                            <label for="deliveryProduct">Color</label>
-                          <br>
-                            <select name="sel_color" id="sel_color" class="form-control">
-                                <?php
-                                    // $sql = mysqli_query($conn, "SELECT id, color FROM pawtrails");
-                                    // while ($row = $sql->fetch_assoc()){
-                                    // echo "<option value=\"id\">" . $row['color'] . "</option>";
-                                    // }
-                                ?>
-                                    <option value="" selected disabled hidden>Choose here</option>
-                                    <option value="red">Red</option>
-                                    <option value="black">Black</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <div class="col hidedisplay" id="sizeOption">
-                            <label for="deliverynumber">Size</label>
+                <div id="flyer_poster" class="tabcontent">
+                    <h4>Choose Flyers or Posters</h4> 
+                    <form method="POST">
+                        <input type="hidden"  name="makeaction" value="product">
+                        <div class="form-group row">
+                            <div class="col">
+                                <label for="deliveryProduct">Product</label>
                             <br>
-                            <select name="sel_size" id="sel_size" class="form-control">
-                                <option value="" selected disabled hidden>Choose here</option>
-                                <option value="small">Small</option>
-                                <option value="medium">Medium</option>
-                                <option value="big">Big</option>
-                            </select>
+                                <select name="sel_product" id="sel_product" class="form-control" required>
+                                    <?php
+                                        $sql = mysqli_query($conn, "SELECT id, itemname FROM pawtrails  WHERE itemtype = 'flyer' OR  itemtype =  'poster'");
+                                        while ($row = $sql->fetch_assoc()){
+                                            echo "<option value='".$row[id]." - ".$row['itemname']."'>" . $row['itemname'] . "</option>";
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                       
+                            <div class="col">
+                                <label for="deliverynumber">Number of Products</label>
+                                <input type="number" class="form-control" name="deliverynumber" id="deliverynumber" placeholder="number"  min="1" required>		
+                            </div>
+                        </div>
+                        <input type="submit" name="AddProduct" class="btn btn-info">
+                    </form>
+                </div>
+                
+                <div id="pawtrailsProduct" class="tabcontent">
+                    <h4 class="mt-3">Choose PawTrails Size and Color</h4>
+                    <form method="POST">
+
+                        <input type="hidden"  name="makeaction" value="pawtrailsSelect">
+
+                        <div class="form-group row">
+                            <div class="col">
+                                <label for="deliveryProduct">Color</label>
+                                <br>
+                                <select name="sel_color" id="sel_color" class="form-control">
+                                    <?php
+                                        // $sql = mysqli_query($conn, "SELECT * FROM pawtrails  WHERE itemtype = 'pawtrails'");
+                                        // while ($row = $sql->fetch_assoc()){
+                                        //     echo "<option value='".$row[id]." - ".$row['itemname']."'>" . $row['itemname'] . "</option>";
+                                        // }
+                                    ?>
+                                        <option value="" selected disabled hidden>Choose here</option>
+                                        <option value="red">red</option>
+                                        <option value="black">black</option>
+                                </select>
+                            </div>
+
+                            <div class="col">
+                                <label for="deliverynumber">Size</label>
+                                <br>
+                                <select name="sel_size" id="sel_size" class="form-control">
+                                    <option value="" selected disabled hidden>Choose here</option>
+                                    <option value="small">small</option>
+                                    <option value="medium">medium</option>
+                                    <option value="large">large</option>
+                                </select>
+                            </div>
                         </div>
 
-                        <div class="col">
-                            <label for="deliverynumber">Number of Products</label>
-                            <input type="number" class="form-control" name="deliverynumber" id="deliverynumber" placeholder="number"  min="1" required>
-														
-               
+                        <div class="form-group row">
+                                <div class="col">
+                                    <label for="deliverynumber">Number of Products</label>
+                                    <input type="number" class="form-control" name="deliverynumber" id="deliverynumber" placeholder="number"  min="1" required>		
+                                </div>
                         </div>
-                    </div>
-                    <input type="submit" name="AddProduct" class="btn btn-info">
-                </form>
+                        <input type="submit" name="AddProduct" class="btn btn-info">
+                    </form>
+                </div>
 
+
+                <!-- form to remove selected product from the session -->
                 <form id="productDelete" method="POST">
-
                     <input type="hidden"  name="makeaction" value="productDelete">
                     <input id="prod2del" type="hidden"  name="prod2del" value="">
-
                 </form>
 
+                <!-- table to show selected product from the session -->
                 <br>
                 <h4>Request Item List</h4>
                 <p><?php echo $msg ?></p>
@@ -162,14 +196,12 @@
                     <table class="table table-bordered" id="requestProductTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                              
                                 <th>item id</th>
                                 <th>item Name</th>
-                                <!-- <th>color</th>
-                                <th>size</th> -->
+                                <th>size</th>
+                                <th>color</th>
                                 <th>amount</th>
                                 <th>Operation</th>
-                                <!-- <th class="OperationColumn">operation</th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -180,6 +212,8 @@
                                     echo "<tr>
                                         <td>".$k['product_id']."</td>
                                         <td>".$k['productname']."</td>
+                                        <td>".$k['sel_color']."</td>
+                                        <td>".$k['sel_size']."</td>
                                         <td>".$k['deliverynumber']."</td>
                                         <td class='OperationColumn'>
                                             <button type='button' class='btn btn-danger' onclick='JavaScript:deleteThisProduct(".$i.");'>Remove</button>
@@ -310,41 +344,23 @@
             return (today - idate) < 0;
         }
 
-        //hide/show the contact address div
-        function toggleDiv(){
-            var x = document.getElementById("newReceiver");
-            var y = document.getElementById("oldReceiver");
-            if (x.style.display === "none") {
-                x.style.display = "block";
-                y.style.display = "none";
-            } else {
-                x.style.display = "none";
-                y.style.display = "block";
+        //open selection form
+        function openSelectionForm(evt, productname) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
             }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(productname).style.display = "block";
+            evt.currentTarget.className += " active";
         }
+
         
-        function showOld(){
-            var y = document.getElementById("oldReceiver");
-            if (y.style.display === "block") {
-                y.style.display = "none";
-                x.style.display = "block";
-            } else {
-                y.style.display = "block";
-                x.style.display = "none";
-            }
-        }
-
-        function showNew(){
-            var x = document.getElementById("newReceiver");
-            if (x.style.display === "block") {
-                x.style.display = "none";
-                y.style.display = "block";
-            } else {
-                x.style.display = "block";
-                y.style.display = "none";
-            }
-        }
-
+        //Remove selected product from the session
         function deleteThisProduct(idP){
             $("#prod2del").val(idP);
             $("#productDelete").submit();

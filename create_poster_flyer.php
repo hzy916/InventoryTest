@@ -12,13 +12,15 @@
 
     if($_POST) {
         $itemname = $_POST['itemname'];
+        //item type
+        $itemtype = $_POST['itemtype'];
     
         $amount = $_POST['amount'];
      
         if (isset($amount) && ctype_digit($amount))
         {
         // the get input contains a positive number and is safe
-            $sql = "INSERT INTO pawtrails (itemname, amount) VALUES ('$itemname', '$amount')";
+            $sql = "INSERT INTO pawtrails (itemtype, itemname, amount) VALUES ('$itemtype','$itemname', '$amount')";
             if($conn->query($sql) === TRUE) {
                 // $msg = "New Product Successfully Created";
                 echo "<script>

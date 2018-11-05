@@ -114,28 +114,33 @@
 		
 						<tbody>
 							<?php
-							$sql = "SELECT * FROM Request WHERE RequestEmployeeID = '$logged_user_id'";
-							$result = $conn->query($sql);
-	
-							if($result->num_rows > 0) {
-								while($row = $result->fetch_assoc()) {
-											echo 
-												"<tr>
-													<td>".$row['RequestID']."</td>
-													<td>".$row['RequestDate']."</td>
-													<td>".$row['ShipDate']."</td>
-													<td>
-														<button type='button' class='btn btn-info' onclick='JavaScript:GetRequestID(".$row['RequestID'].");'>See Request Items</button>
-													</td>
-													<td>
-													".$row['RequestStatusID']."
-													</td>
-												</tr>";
-								
-								}
-							} else {
-									echo "<tr><td colspan='5'><center>No Data Avaliable</center></td></tr>";
+							if($_SESSION['user_role_id'] == 1) {
+								$sql = "SELECT * FROM Request";
+							} else{
+								$sql = "SELECT * FROM Request WHERE RequestEmployeeID = '$logged_user_id'";
 							}
+
+								$result = $conn->query($sql);
+		
+								if($result->num_rows > 0) {
+									while($row = $result->fetch_assoc()) {
+												echo 
+													"<tr>
+														<td>".$row['RequestID']."</td>
+														<td>".$row['RequestDate']."</td>
+														<td>".$row['ShipDate']."</td>
+														<td>
+															<button type='button' class='btn btn-info' onclick='JavaScript:GetRequestID(".$row['RequestID'].");'>See Request Items</button>
+														</td>
+														<td>
+														".$row['RequestStatusID']."
+														</td>
+													</tr>";
+									
+									}
+								} else {
+										echo "<tr><td colspan='5'><center>You have no related requests.</center></td></tr>";
+								}
 							?>
 
 							<form id="displayRequest" method="POST">
