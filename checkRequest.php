@@ -27,6 +27,11 @@
         $result_two = $conn->query($sql_two);
         $data_two = $result_two->fetch_assoc();
 
+        //get status name
+        $sql_5 = "SELECT status_name FROM Request_status WHERE status_id = {$data['RequestStatusID']}";
+        $result_5 = $conn->query($sql_5);
+        $data_5 = $result_5->fetch_assoc();
+
         //get request item list
         $sql_three = "SELECT pawtrails_id FROM Pawtrails_Request_junction WHERE request_id = {$id}";
         $result_three = $conn->query($sql_three);
@@ -70,13 +75,11 @@
 							<th>Ship date</th>
                             <th>Employee</th>
 							<th>Status</th>
-							<th class="OperationColumn">operation</th>
 						</tr>
 					</thead>
 		
 						<tbody>
 							<?php
-                        
                                 echo 
                                     "<tr>
                                         <td>".$data['RequestID']."</td>
@@ -84,12 +87,9 @@
                                         <td>".$data['ShipDate']."</td>
                                         <td>".$data_two['user_name']."</td>
                                         <td>
-                                        ".$data['RequestStatusID']."
+                                        ".$data_5['status_name']."
                                         </td>
-                                     
                                     </tr>";
-                                
-                            
 							?>
 
 							<form id="displayRequest" method="POST">
@@ -109,7 +109,7 @@
                                         <th>item Name</th>
                                         <th>size</th>
                                         <th>color</th>
-                                        <th>amount</th>
+                                        <th>Quantity</th>
                                       
                                     </tr>
                                 </thead>
@@ -125,7 +125,7 @@
                                                 <td>".$row_four['color']."</td>
                                                 <td>".$row_four['size']."</td>
                                                 <td>
-                                                ".$row_four['RequestStatusID']."
+                                                ".$row_four['itemname']."
                                                 </td>
                                             </tr>";
                                         }
@@ -159,7 +159,7 @@
                     </div>
 
                     <button class='btn btn-success' type='button'>Approve</button>
-                    <button class='btn btn-success' type='button'>Deny</button>
+                    <button class='btn btn-danger' type='button'>Deny</button>
 
                     <div class="form-group">
                         <label for="comment">Comments:</label>

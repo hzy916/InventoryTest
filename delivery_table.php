@@ -51,40 +51,27 @@
 				if(isset($_POST['req2display'])){
 					$request_id = $_POST['req2display'];
 			
-				$sql = "SELECT pawtrails_id FROM Pawtrails_Request_junction WHERE request_id = '$request_id'" ;
+				$sql = "SELECT pawtrails.itemname as name, pawtrails.id as id, Pawtrails_Request_junction.Qty as quantity FROM pawtrails, Pawtrails_Request_junction WHERE Pawtrails_Request_junction.request_id = '$request_id' AND Pawtrails_Request_junction.pawtrails_id = pawtrails.id" ;
 
 				$result = $conn->query($sql);
+			
 
 				if($result->num_rows > 0) {
-					while($row = $result->fetch_assoc()) {
-
-						$id_array[] = $row['pawtrails_id'];
-						// var_dump($id_array);
-			
-						$ids = join("','",$id_array);   
-						$sql_two = "SELECT * FROM pawtrails WHERE id IN ('$ids')";
-						$result_two = $conn->query($sql_two);
-
-						if($result_two->num_rows > 0) {
-							while($row_two = $result_two->fetch_assoc()) {
-							echo 
+					while($row = $result->fetch_array()) {
+						echo 
 							"
 							<tr>
-								<td>".$row_two['id']."</td>
-								<td>".$row_two['itemname']."</td>
-								<td>".$row_two['amount']."</td>
+								<td>".$row['id']."</td>
+								<td>".$row['name']."</td>
+								<td>".$row['quantity']."</td>
 								
 							</tr>";
-							}
-						}else {
-							echo "Error " . $sql_two . ' ' . $conn->connect_error;
-						}	
-				
 					}
-				} else {
-						echo "<tr><td colspan='5'><center>No Data Avaliable</center></td></tr>";
+				}else {
+					echo "<tr><td colspan='5'><center>No Data Avaliable</center></td></tr>";
 				}
 			}
+		
 				?>
 					</tbody>
 				</table>
