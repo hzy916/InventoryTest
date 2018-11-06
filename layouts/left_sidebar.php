@@ -47,21 +47,21 @@
 		
 		<?php 
 		//only visible to admin and editor
-		if(($_SESSION['user_role_id'] == 1) || $_SESSION['user_role_id'] == 2 ){?>
+		if(($_SESSION['user_role_id'] == 1)){?>
 		
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="archived_request.php" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-wrench"></i>
-            <span class="nav-link-text">Appearance</span>
+            <span class="nav-link-text">Archived Requests</span>
           </a>
-          <ul class="sidenav-second-level collapse" id="collapseComponents">
+          <!-- <ul class="sidenav-second-level collapse" id="collapseComponents">
             <li>
               <a href="#">Themes</a>
             </li>
             <li>
-              <a href="#">Menus</a>
+              <a href="#">Archived Requests</a>
             </li>
-          </ul>
+          </ul> -->
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
           <a class="nav-link" data-toggle="collapse" data-parent="#exampleAccordion">

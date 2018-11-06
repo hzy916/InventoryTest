@@ -42,9 +42,10 @@
 
                 $sql = "SELECT id FROM pawtrails  WHERE color = '$sel_color' AND size = '$sel_size'";
                 $result = $conn->query($sql);
-                while ($row = $result->fetch_assoc()) {
+                while ($row = $result->fetch_array()) {
                   $sel_id = $row[0]; 
                 }
+          
                 
                 $_SESSION['delivery'][] = [
                     'product_id' => $sel_id,

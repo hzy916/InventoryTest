@@ -109,18 +109,15 @@
 							<th>Ship date</th>
                             <th>Request Items</th>
 							<th>Status</th>
-							<th class="OperationColumn">operation</th>
+						
 						</tr>
 					</thead>
 		
 						<tbody>
 							<?php
-							if($_SESSION['user_role_id'] == 1) {
-								$sql = "SELECT * FROM Request WHERE is_archived = 0";
-							} else{
-								$sql = "SELECT * FROM Request WHERE RequestEmployeeID = '$logged_user_id' AND is_archived = 0";
-							}
-
+					
+								$sql = "SELECT * FROM Request WHERE is_archived = 1";
+							
 								$result = $conn->query($sql);
 		
 								if($result->num_rows > 0) {
@@ -156,9 +153,7 @@
 																<td>
 																".$row_four['status_name']."
 																</td>
-																<td class='OperationColumn'>
-																	<a href='checkRequest.php?id=".$row['RequestID']."'><button class='btn btn-success' type='button'>Approve</button></a>
-																</td>
+															
 															</tr>";
 														}
 													}else {
@@ -194,21 +189,4 @@
 	</script>
 
 
-<?php  
-
-if($_SESSION['user_role_id'] == 2 || $_SESSION['user_role_id'] == 3  ) {
-	echo('<script>$("#createBtn").addClass("hidebutton");
-	$(".OperationColumn").addClass("hidebutton");
-	$(".EmployeeColumn").addClass("hidebutton");
-	
-	</script>' );
-
-
-		
-	
-	
-	
-}
-
-?>
 <?php require_once('layouts/footer.php'); ?>	

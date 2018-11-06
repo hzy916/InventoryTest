@@ -86,9 +86,7 @@
                                         <td>
                                         ".$data['RequestStatusID']."
                                         </td>
-                                        <td class='OperationColumn'>
-                                            <a href='checkRequest.php?id=".$data['RequestID']."'><button class='btn btn-success' type='button'>Approve</button></a>
-                                        </td>
+                                     
                                     </tr>";
                                 
                             
@@ -140,8 +138,36 @@
                         </tbody>
                     </table>
                     </div>
+                    
+                   <!-- Receiver's details-->
+                   <h4>Receiver details</h4>
+                    <p><?php echo $msg ?></p>
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="requestProductTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>item id</th>
+                                        <th>item Name</th>
+                                        <th>size</th>
+                                        <th>color</th>
+                                        <th>amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                        </tbody>
+                    </table>
+                    </div>
+
+                    <button class='btn btn-success' type='button'>Approve</button>
+                    <button class='btn btn-success' type='button'>Deny</button>
+
+                    <div class="form-group">
+                        <label for="comment">Comments:</label>
+                        <textarea class="form-control" rows="5" id="comment"></textarea>
+                    </div>
+
                     <td><a href="delivery_table.php"><button type="button" class="btn btn-primary">Back</button></a></td>
-               
+
               </div>
             </div>
           </div>

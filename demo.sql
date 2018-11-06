@@ -71,19 +71,22 @@ INSERT INTO `tbl_user_role` (`id`, `user_role`) VALUES
 CREATE TABLE Request_status (
     `status_id` int(11) NOT NULL AUTO_INCREMENT,
     `status_name` varchar(255) DEFAULT NULL,
+  
      PRIMARY KEY (`status_id`)
 )ENGINE=INNODB;
 
 INSERT INTO `Request_status` (`status_id`, `status_name`) VALUES
-	(1, 'Pending');
+	(1, 'Denied');
 INSERT INTO `Request_status` (`status_id`, `status_name`) VALUES
-	(2, 'Processing');
+	(2, 'Processing' );
 INSERT INTO `Request_status` (`status_id`, `status_name`) VALUES
-	(3, 'Delayed');
+	(3, 'Delayed' );
 INSERT INTO `Request_status` (`status_id`, `status_name`) VALUES
 	(4, 'Cancelled');
 INSERT INTO `Request_status` (`status_id`, `status_name`) VALUES
-  (5, 'Fulfilled');
+  (5, 'Completed');
+
+
 
 /**Receiver table creation**/
 
@@ -127,6 +130,7 @@ CREATE TABLE Request (
     `RequestStatusID` INT(11)  NOT NULL ,
     `Comments` varchar(255),
     `RequestEmployeeID` INT(11) NOT NULL,
+    `is_archived` boolean DEFAULT 0,
     PRIMARY KEY (`RequestID`), 
     FOREIGN KEY (`ReceiverID`) REFERENCES Receiver(`receiver_id`) ,
     FOREIGN KEY (`RequestStatusID`) REFERENCES Request_status(`status_id`) ,
