@@ -43,6 +43,8 @@
 					
 						<th>item id</th>
 						<th>item Name</th>
+						<th>Size</th>
+						<th>Color</th>
 						<th>Quantity</th>
 					</tr>
 				</thead>
@@ -51,7 +53,7 @@
 				if(isset($_POST['req2display'])){
 					$request_id = $_POST['req2display'];
 			
-				$sql = "SELECT pawtrails.itemname as name, pawtrails.id as id, Pawtrails_Request_junction.Qty as quantity FROM pawtrails, Pawtrails_Request_junction WHERE Pawtrails_Request_junction.request_id = '$request_id' AND Pawtrails_Request_junction.pawtrails_id = pawtrails.id" ;
+				$sql = "SELECT pawtrails.itemname as name, pawtrails.id as id, pawtrails.color as color, pawtrails.size as size,  Pawtrails_Request_junction.Qty as quantity FROM pawtrails, Pawtrails_Request_junction WHERE Pawtrails_Request_junction.request_id = '$request_id' AND Pawtrails_Request_junction.pawtrails_id = pawtrails.id" ;
 
 				$result = $conn->query($sql);
 			
@@ -63,6 +65,8 @@
 							<tr>
 								<td>".$row['id']."</td>
 								<td>".$row['name']."</td>
+								<td>".$row['size']."</td>
+								<td>".$row['color']."</td>
 								<td>".$row['quantity']."</td>
 								
 							</tr>";
@@ -108,14 +112,14 @@
 								$sql = "SELECT * FROM Request WHERE RequestEmployeeID = '$logged_user_id' AND is_archived = 0";
 							}
 
+
+							// $sql = "SELECT tbl_users.user_name as employeename, Request_status.status_name as status_name FROM tbl_users, Request_status WHERE Request.RequestStatusID = Request_status.status_id AND Request.RequestEmployeeID = tbl_users.id" ;
+				
 								$result = $conn->query($sql);
-		
 								if($result->num_rows > 0) {
 									while($row = $result->fetch_assoc()) {
-
 										$employeeID_array[] = $row['RequestEmployeeID'];
 										// var_dump($id_array);
-							
 										$employeeids = join("','",$employeeID_array);   
 										$sql_three = "SELECT user_name FROM tbl_users WHERE id IN ('$employeeids')";
 										$result_three = $conn->query($sql_three);

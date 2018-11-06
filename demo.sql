@@ -74,17 +74,18 @@ CREATE TABLE Request_status (
   
      PRIMARY KEY (`status_id`)
 )ENGINE=INNODB;
-
 INSERT INTO `Request_status` (`status_id`, `status_name`) VALUES
-	(1, 'Denied');
+	(1, 'Submitted');
 INSERT INTO `Request_status` (`status_id`, `status_name`) VALUES
-	(2, 'Processing' );
+	(2, 'Processing');
 INSERT INTO `Request_status` (`status_id`, `status_name`) VALUES
-	(3, 'Delayed' );
+	(3, 'Denied' );
 INSERT INTO `Request_status` (`status_id`, `status_name`) VALUES
-	(4, 'Cancelled');
+	(4, 'Delayed' );
 INSERT INTO `Request_status` (`status_id`, `status_name`) VALUES
-  (5, 'Completed');
+	(5, 'Cancelled');
+INSERT INTO `Request_status` (`status_id`, `status_name`) VALUES
+  (6, 'Completed');
 
 
 
