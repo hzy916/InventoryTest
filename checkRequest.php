@@ -17,23 +17,13 @@
         $id = $_GET['id'];
 
         //get all the request details
-        // $sql = "SELECT * FROM Request WHERE RequestID = {$id}";
-        $sql = "SELECT Request.RequestID, Request.RequestDate, Request.ShipDate, Request_status.status_name as status_name, tbl_users.user_name as user_name FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id";
+  
+        $sql = "SELECT Request.RequestID, Request.RequestDate, Request.ShipDate, Request_status.status_name, tbl_users.user_name FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id WHERE Request.RequestID = '{$id}'";
 
         $result = $conn->query($sql);
         
         $data = $result->fetch_assoc();
        
-        // //get employee name
-        // $sql_two = "SELECT user_name FROM tbl_users WHERE id = {$data['RequestEmployeeID']}";
-        // $result_two = $conn->query($sql_two);
-        // $data_two = $result_two->fetch_assoc();
-
-        // //get status name
-        // $sql_5 = "SELECT status_name FROM Request_status WHERE status_id = {$data['RequestStatusID']}";
-        // $result_5 = $conn->query($sql_5);
-        // $data_5 = $result_5->fetch_assoc();
-
         //get receiver details
         $sql_two = "SELECT * FROM Receiver JOIN Request ON Receiver.receiver_id = Request.ReceiverID  WHERE Request.RequestID = '{$id}' ";
         $result_two = $conn->query($sql_two);  
@@ -125,8 +115,6 @@
                                     }else {
                                         echo "Error " . $sql_three . ' ' . $conn->connect_error;
                                     }	
-
-                                
                                 ?>
                         </tbody>
                     </table>
@@ -172,23 +160,24 @@
                                     }else {
                                         echo "Error " . $sql_three . ' ' . $conn->connect_error;
                                     }	
-
-                            
                                 ?>
                             </tbody>
                     </table>
                     </div>
 
-                  
-
+                <form method="post">
                     <div class="form-group">
                         <label for="comment">Comments:</label>
-                        <textarea class="form-control" rows="5" id="comment"></textarea>
+                        <textarea class="form-control" rows="5" id="comment_details"></textarea>
+                        <input type="submit" name="submit" value="Send" id="submit"/>
                     </div>
-                                    
-                    <button class='btn btn-success' type='submit'>Approve</button>
-                    <button class='btn btn-danger' type='button'>Deny</button>
+
+                    <input type="submit" class='btn btn-success' value="Approve" name="approveRequest">
+                    <input type="submit" class='btn btn-danger' value="Decline" name="declineRequest">
+                    <input type="submit" class='btn btn-warning' value="Decline" name="delayRequest">
+                   
                     <td><a href="delivery_table.php"><button type="button" class="btn btn-primary">Back</button></a></td>
+                </form>
 
               </div>
             </div>
@@ -196,24 +185,84 @@
     </div>
 
 <?php
-  if($_POST) {
-      if($_GET['id']) {
+//get comments and update in database
+
+if(isset($_POST['comment_details'])) {
+    if($_GET['id']) {
         $id = $_GET['id'];
         
-        $sql = "UPDATE Request SET RequestStatusID = 2";
-        $result = $conn->query($sql);
-        if(mysqli_affected_rows($result) >0){
-            echo "<script>
-            alert('You approved this request, it goes to Processing status.');
-            window.location.href='./delivery_table.php';
-            </script>";
-        }else {
-            echo "wrong";
-        }
+      $sql_udpate = "UPDATE Request SET Comments = " .$_POST['comment_details']. " WHERE Request.RequestID = '$id'";
+      if ($conn->query($sql_udpate) === TRUE) {
+        echo "<script>
+        alert('You approved this request, it goes to processing status.');
+        window.location.href='./delivery_table.php';
+        </script>";
+    } else {
+        echo "Error updating record: " . $conn->error;
+    }
         
         $conn->close();
     }
 }
+
+//approve the request,  it goes to processing status
+if(isset($_POST['approveRequest'])) {
+      if($_GET['id']) {
+        $id = $_GET['id'];
+        
+      $sql_udpate = "UPDATE Request SET RequestStatusID = 2 WHERE Request.RequestID = '$id'";
+      if ($conn->query($sql_udpate) === TRUE) {
+        echo "<script>
+        alert('You approved this request, it goes to processing status.');
+        window.location.href='./delivery_table.php';
+        </script>";
+    } else {
+        echo "Error updating record: " . $conn->error;
+    }
+        
+        $conn->close();
+    }
+}
+
+//decline the request
+if(isset($_POST['declineRequest'])) {
+    if($_GET['id']) {
+      $id = $_GET['id'];
+      
+    $sql_decline = "UPDATE Request SET RequestStatusID = 6 WHERE Request.RequestID = '$id'";
+    if ($conn->query($sql_decline) === TRUE) {
+      echo "<script>
+      alert('You declined this request, it goes to declined status.');
+      window.location.href='./delivery_table.php';
+      </script>";
+  } else {
+      echo "Error updating record: " . $conn->error;
+  }
+      
+      $conn->close();
+  }
+}
+
+//
+//decline the request
+if(isset($_POST['delayRequest'])) {
+    if($_GET['id']) {
+      $id = $_GET['id'];
+      
+    $sql_decline = "UPDATE Request SET RequestStatusID = 3 WHERE Request.RequestID = '$id'";
+    if ($conn->query($sql_decline) === TRUE) {
+      echo "<script>
+      alert('You declined this request, it goes to declined status.');
+      window.location.href='./delivery_table.php';
+      </script>";
+  } else {
+      echo "Error updating record: " . $conn->error;
+  }
+      
+      $conn->close();
+  }
+}
+
 ?>
 
 <?php require_once('layouts/footer.php'); ?>	

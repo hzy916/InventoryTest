@@ -79,13 +79,13 @@ INSERT INTO `Request_status` (`status_id`, `status_name`) VALUES
 INSERT INTO `Request_status` (`status_id`, `status_name`) VALUES
 	(2, 'Processing');
 INSERT INTO `Request_status` (`status_id`, `status_name`) VALUES
-	(3, 'Denied' );
+	(3, 'Delayed' );
 INSERT INTO `Request_status` (`status_id`, `status_name`) VALUES
-	(4, 'Delayed' );
+	(4, 'Cancelled' );
 INSERT INTO `Request_status` (`status_id`, `status_name`) VALUES
-	(5, 'Cancelled');
+	(5, 'Completed');
 INSERT INTO `Request_status` (`status_id`, `status_name`) VALUES
-  (6, 'Completed');
+  (6, 'Denied');
 
 
 

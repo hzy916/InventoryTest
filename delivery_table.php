@@ -106,63 +106,37 @@
 		
 						<tbody>
 							<?php
-							if($_SESSION['user_role_id'] == 1) {
-								$sql = "SELECT * FROM Request WHERE is_archived = 0";
-							} else{
-								$sql = "SELECT * FROM Request WHERE RequestEmployeeID = '$logged_user_id' AND is_archived = 0";
-							}
+							// if($_SESSION['user_role_id'] == 1) {
+							// 	$sql = "SELECT * FROM Request WHERE is_archived = 0";
+							// } else{
+							// 	$sql = "SELECT * FROM Request WHERE RequestEmployeeID = '$logged_user_id' AND is_archived = 0";
+							// }
 
-
-							// $sql = "SELECT tbl_users.user_name as employeename, Request_status.status_name as status_name FROM tbl_users, Request_status WHERE Request.RequestStatusID = Request_status.status_id AND Request.RequestEmployeeID = tbl_users.id" ;
-				
-								$result = $conn->query($sql);
-								if($result->num_rows > 0) {
-									while($row = $result->fetch_assoc()) {
-										$employeeID_array[] = $row['RequestEmployeeID'];
-										// var_dump($id_array);
-										$employeeids = join("','",$employeeID_array);   
-										$sql_three = "SELECT user_name FROM tbl_users WHERE id IN ('$employeeids')";
-										$result_three = $conn->query($sql_three);
-											if($result_three->num_rows > 0) {
-												while($row_three = $result_three->fetch_assoc()) {
-													
-													//get status from status table using status id 
-													$statusID_array[] = $row['RequestStatusID'];
-													$statusids = join("','",$statusID_array);   
-													$sql_four = "SELECT status_name FROM Request_status WHERE status_id IN ('$statusids')";
-
-													$result_four = $conn->query($sql_four);
-													if($result_four->num_rows > 0) {
-														while($row_four = $result_four->fetch_assoc()) {
-															echo 
-															"<tr>
-																<td>".$row['RequestID']."</td>
-																<td class='EmployeeColumn'>".$row_three['user_name']."</td>
-
-																<td>".$row['RequestDate']."</td>
-																<td>".$row['ShipDate']."</td>
-																<td>
-																	<button type='button' class='btn btn-info' onclick='JavaScript:GetRequestID(".$row['RequestID'].");'>See Request Items</button>
-																</td>
-																<td>
-																".$row_four['status_name']."
-																</td>
-																<td class='OperationColumn'>
-																	<a href='checkRequest.php?id=".$row['RequestID']."'><button class='btn btn-success' type='button'>Approve</button></a>
-																</td>
-															</tr>";
-														}
-													}else {
-														echo "Error " . $sql_four . ' ' . $conn->connect_error;
-													}	
-												}
-											}else {
-												echo "Error " . $sql_three . ' ' . $conn->connect_error;
-											}	
-									}
-								} else {
-										echo "<tr><td colspan='5'><center>You have no related requests.</center></td></tr>";
+							$sql = "SELECT Request.RequestID, Request.RequestDate, Request.ShipDate, Request_status.status_name as status_name, tbl_users.user_name as user_name FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id";
+							
+							$result = $conn->query($sql);	
+							if($result->num_rows > 0) {
+								while($row = $result->fetch_array()) {
+									echo 
+									"<tr>
+										<td>".$row['RequestID']."</td>
+										<td>".$row['user_name']."</td>
+										<td>".$row['RequestDate']."</td>
+										<td>".$row['ShipDate']."</td>
+										<td>
+											<button type='button' class='btn btn-info' onclick='JavaScript:GetRequestID(".$row['RequestID'].");'>See Request Items</button>
+										</td>
+										<td>
+										".$row['status_name']."
+										</td>
+										<td class='OperationColumn'>
+											<a href='checkRequest.php?id=".$row['RequestID']."'><button class='btn btn-success' type='button'>Check</button></a>
+										</td>
+									</tr>";
 								}
+							}else {
+								echo "Error " . $sql . ' ' . $conn->connect_error;
+							}
 							?>
 
 							<form id="displayRequest" method="POST">
@@ -193,11 +167,6 @@ if($_SESSION['user_role_id'] == 2 || $_SESSION['user_role_id'] == 3  ) {
 	$(".EmployeeColumn").addClass("hidebutton");
 	
 	</script>' );
-
-
-		
-	
-	
 	
 }
 
