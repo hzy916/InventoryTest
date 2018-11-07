@@ -19,16 +19,19 @@
         if(isset($_POST['newpassword1']) && isset($_POST['newpassword2'])) {
 
             $password1 = $_POST['newpassword1'];
-            echo $password1;
+            //encrypted the password;
+            $md5Password1 = md5($password1);
+		
             $password2 = $_POST['newpassword2'];
+             //encrypted the password;
+            $md5Password2 = md5($password2);
 
-            if ($password1 != $password2){ 
-                   
-                    echo "<script>
-                    alert('your passwords do not match');
-                    </script>";
+            if ($md5Password1 != $md5Password2){      
+                echo "<script>
+                alert('your passwords do not match');
+                </script>";
             }else {
-                $sql = "UPDATE tbl_users SET password = '$password1' WHERE id = {$user_id}";
+                $sql = "UPDATE tbl_users SET password = '$md5Password1' WHERE id = {$user_id}";
                 if ($conn->query($sql) === TRUE) {
                     echo "<script>
                     alert('You changed your password successfully.');

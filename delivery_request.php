@@ -197,7 +197,7 @@
                     <table class="table table-bordered" id="requestProductTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th>item id</th>
+                                <!-- <th>item id</th> -->
                                 <th>item Name</th>
                                 <th>size</th>
                                 <th>color</th>
@@ -211,7 +211,7 @@
                                 
                                 foreach($_SESSION['delivery'] as $i=> $k) {
                                     echo "<tr>
-                                        <td>".$k['product_id']."</td>
+                                   
                                         <td>".$k['productname']."</td>
                                         <td>".$k['sel_color']."</td>
                                         <td>".$k['sel_size']."</td>
@@ -337,13 +337,7 @@
 
     <script type="text/javascript">
         //check ship date to be at least one day after today
-        function isFutureDate(idate){
-            var today = new Date().getTime(),
-                idate = idate.split("/");
 
-            idate = new Date(idate[2], idate[1] - 1, idate[0]).getTime();
-            return (today - idate) < 0;
-        }
 
         //open selection form
         function openSelectionForm(evt, productname) {
@@ -373,7 +367,7 @@
                         var sel_item=$(this).val();
 						    var myData = {};
                             myData.itemname = sel_item;
-                            alert( myData.itemname );
+                            // alert( myData.itemname );
 
 							if (sel_item == "fed"){
 								$("#sizeOption").removeClass("hidedisplay");

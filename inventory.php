@@ -31,11 +31,14 @@
       <h1>Welcome to Dashboard</h1>
       <hr>
       <p>You are login as <strong><?php echo getUserAccessRoleByID($_SESSION['user_role_id']); ?></strong></p>
-	  
-	  <p>You can create a product</p>
-	  <a class="btn btn-primary" id="createBtn" href="create.php">Create</a>
-		<br>
 	
+	<?php
+		if($_SESSION['user_role_id'] == 1 ) {
+			echo "<p>You can create a product</p>
+			<a class='btn btn-primary' id='createBtn' href='create.php'>Create</a>
+				<br>";
+		}
+	?>
 	<!-- DataTables Example -->
 	<div class="card mb-3 mt-3">
 		<div class="card-header">

@@ -158,11 +158,7 @@
                                                     <td> <label><strong>Country:</strong> </label>".$row_two['country']."</td>
                                                     <td> <label><strong>Postal code:</strong> </label>".$row_two['postalcode']."</td>
                                                 </tr>
-                                                <tr>
-                                                    <td> <label><strong>Comments:</strong> </label>".$row_two['Comments']."</td>
-                                                    <td> </td>
-                                                </tr>
-                                        
+                                    
                                             </table>
                                             </div>";
                                         }
@@ -173,39 +169,29 @@
             
                     </div>
 
-        <?php
-        if($_SESSION['user_role_id'] == 1 ) {  ?>
-                <form method="post" id="ciaociao">
+                <form method="post">
                     <div class="form-group">
-                        <input type="hidden" name="postAction" value="" id="postAction"/>
                         <label for="comment">Comments:</label>
                         <textarea class="form-control" rows="5" name="commentRequest" id="comment_details"></textarea>
-                        <input type="button" class='btn btn-secondary' value="Send" onclick="JavaScript:makeMyAction('comment')"/>
+                        <input type="submit" class='btn btn-secondary' name="commentRequest" value="Send" id="submit"/>
                     </div>
 
                 <?php 
                 //if the request status is not submitted and processing, then don't show approve, 
                     if($data['status_name'] == 'Submitted'){
-                 
+                        // echo "<script>
+                        // $('.operateBTN').addClass('hidebutton');
+                        // </script>";
                        echo "
-                       <input type='button' class='btn btn-success operateBTN' value='Approve' onclick=\"JavaScript:makeMyAction('approve')\">
-                       <input type='button' class='btn btn-danger operateBTN' value='Decline' onclick=\"JavaScript:makeMyAction('decline')\">
-                       <input type='button' class='btn btn-warning operateBTN' value='Delay' onclick=\"JavaScript:makeMyAction('delay')\">        
+                       <input type='submit' class='btn btn-success operateBTN' value='Approve' name='approveRequest'>
+                       <input type='submit' class='btn btn-danger operateBTN' value='Decline' name='declineRequest'>
+                       <input type='submit' class='btn btn-warning operateBTN' value='Delay' name='delayRequest'>        
                        ";
                     }
                     ?>
-        <?php  } ?> 
+                 
                     <td><a href="delivery_table.php"><button type="button" class="btn btn-primary">Back</button></a></td>
                 </form>
-
-                <script language="JavaScript">
-                 function makeMyAction(val){
-                    //  alert(val);
-                     document.getElementById('postAction').value = val;
-                     document.getElementById('ciaociao').submit();
-                     return;
-                 }
-                </script>
 
               </div>
             </div>
@@ -214,47 +200,81 @@
 
 <?php
 //get comments and update in database
-// print('aaaa: '.$_POST['commentRequest']);
-// var_dump($_POST);
-// exit;
-$myCommReq='';
-if(!empty($_POST['commentRequest'])){
-    $myCommReq=$_POST['commentRequest'];
-}
 
-$myArr=array(
-    'comment'=> array(
-        'sql'=>"UPDATE Request SET Comments = '".$myCommReq."' WHERE Request.RequestID = '$id'",
-        'alert'=>'You send comments this request',
-    ),
-    'approve'=> array(
-        'sql'=>"UPDATE Request SET RequestStatusID = 2 WHERE Request.RequestID = '$id'",
-        'alert'=>'You approved this request, it goes to processing status.',
-    ),
-    'decline'=> array(
-        'sql'=>"UPDATE Request SET RequestStatusID = 6 WHERE Request.RequestID = '$id'",
-        'alert'=>'You declined this request, it goes to declined status.',
-    ),
-    'delay'=> array(
-        'sql'=>"UPDATE Request SET RequestStatusID = 3 WHERE Request.RequestID = '$id'",
-        'alert'=>'You delayed this request, it goes to delayed status.',
-    ),
-);
-
-if($_GET['id'] && isset($_POST['postAction'])) {
-    $id = $_GET['id'];
-    $sql_udpate = $myArr[$_POST['postAction']]['sql'];
-    if ($conn->query($sql_udpate) === TRUE) {
+if(isset($_POST['commentRequest'])) {
+    if($_GET['id']) {
+        $id = $_GET['id'];
+        echo $_POST['commentRequest'];
+      $sql_udpate = "UPDATE Request SET Comments = " .$_POST['commentRequest']. " WHERE Request.RequestID = '$id'";
+      if ($conn->query($sql_udpate) === TRUE) {
         echo "<script>
-        alert('".$myArr[$_POST['postAction']]['alert']."');
+        alert('You send comments this request.');
         window.location.href='./delivery_table.php';
         </script>";
     } else {
         echo "Error updating record: " . $conn->error;
     } 
-    $conn->close();
+        $conn->close();
+    }
 }
 
+//approve the request,  it goes to processing status
+if(isset($_POST['approveRequest'])) {
+      if($_GET['id']) {
+        $id = $_GET['id'];
+        
+      $sql_udpate = "UPDATE Request SET RequestStatusID = 2 WHERE Request.RequestID = '$id'";
+      if ($conn->query($sql_udpate) === TRUE) {
+        echo "<script>
+        alert('You approved this request, it goes to processing status.');
+        window.location.href='./delivery_table.php';
+        </script>";
+    } else {
+        echo "Error updating record: " . $conn->error;
+    }
+        
+        $conn->close();
+    }
+}
+
+//decline the request
+if(isset($_POST['declineRequest'])) {
+    if($_GET['id']) {
+      $id = $_GET['id'];
+      
+    $sql_decline = "UPDATE Request SET RequestStatusID = 6 WHERE Request.RequestID = '$id'";
+    if ($conn->query($sql_decline) === TRUE) {
+      echo "<script>
+      alert('You declined this request, it goes to declined status.');
+      window.location.href='./delivery_table.php';
+      </script>";
+  } else {
+      echo "Error updating record: " . $conn->error;
+  }
+      
+      $conn->close();
+  }
+}
+
+//
+//decline the request
+if(isset($_POST['delayRequest'])) {
+    if($_GET['id']) {
+      $id = $_GET['id'];
+      
+    $sql_decline = "UPDATE Request SET RequestStatusID = 3 WHERE Request.RequestID = '$id'";
+    if ($conn->query($sql_decline) === TRUE) {
+      echo "<script>
+      alert('You delayed this request, it goes to delayed status.');
+      window.location.href='./delivery_table.php';
+      </script>";
+  } else {
+      echo "Error updating record: " . $conn->error;
+  }
+      
+      $conn->close();
+  }
+}
 
 ?>
 

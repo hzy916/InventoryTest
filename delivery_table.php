@@ -20,7 +20,7 @@
 }
 
 </style>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
   <div class="content-wrapper">
     <div class="container-fluid">
       <!-- Breadcrumbs-->
@@ -123,11 +123,12 @@
 									$btCls='btn btn-success checkBtn';
 									$btCmd='checkRequest.php?id='.$row['RequestID'];
 								
-										if($row['status_name'] == 'Processing') {
+										if($row['status_name'] == 'Processing' && $_SESSION['user_role_id'] == 1) {
 											$btText='Finish';
 											$btId='finish'.$row['RequestID'];
 											$btCls='btn btn-danger finishBtn';
 											$btCmd='finishRequest.php?id='.$row['RequestID'];
+										
 										} else if ($row['status_name'] == 'Completed'){
 											$btText='Archive';
 											$btId='archive'.$row['RequestID'];
@@ -154,7 +155,8 @@
 									</tr>";
 								}
 							}else {
-								echo "Error " . $sql . ' ' . $conn->connect_error;
+								// echo "Error " . $sql . ' ' . $conn->connect_error;
+								echo "No data available";
 							}
 							?>
 
@@ -182,7 +184,7 @@
 
 if($_SESSION['user_role_id'] == 2 || $_SESSION['user_role_id'] == 3  ) {
 	echo('<script>$("#createBtn").addClass("hidebutton");
-	$(".OperationColumn").addClass("hidebutton");
+	// $(".OperationColumn").addClass("hidebutton");
 	$(".EmployeeColumn").addClass("hidebutton");
 	
 	</script>' );
