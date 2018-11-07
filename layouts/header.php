@@ -14,6 +14,10 @@
   <link href="assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Custom styles for this template-->
   <link href="assets/css/sb-admin.css" rel="stylesheet">
+
+
+  <link href="assets/css/custom.css" rel="stylesheet">
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 

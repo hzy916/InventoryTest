@@ -1,0 +1,6 @@
+@media (min-width: 992px){
+    #mainNav .navbar-collapse .navbar-sidenav {
+        top: 50px!important;
+    
+    }
+}
