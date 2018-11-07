@@ -66,11 +66,17 @@
 	
 							if($result->num_rows > 0) {
 								while($row = $result->fetch_assoc()) {
+									// set styles the way you want
+									if($row['color'] == 'red') {
+										$tdStyle='background-color:#DC143C;';
+									} else {
+										$tdStyle='background-color:#A9A9A9;';
+									}
 									echo 
 									"<tr>
 											<td>".$row['id']."</td>
 											<td>".$row['itemname']."</td>
-											<td>".$row['color']."</td>
+											<td style= $tdStyle >".$row['color']."</td>
 											<td>".$row['size']."</td>
 											<td>".$row['amount']."</td>
 											<td>".$row['date']."</td>

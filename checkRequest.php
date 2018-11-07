@@ -124,45 +124,49 @@
                    <h4>Receiver details</h4>
                     <p><?php echo $msg ?></p>
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="requestProductTable" width="100%" cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th>Receiver id</th>
-                                        <th>Company Name</th>
-                                        <th>First Name</th>
-                                        <th>First Name</th>
-                                        <th>Phone</th>
-                                        <th>First Name</th>
-                                        <th>Phone</th>
-                                        <th>First Name</th>
-                                        <th>Phone</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                    
                                 <?php    
                                     if($result_two->num_rows > 0) {
                                         while($row_two = $result_two->fetch_assoc()) {
                                             echo 
-                                            "<tr>
-                                                <td>".$row_two['receiver_id']."</td>
-                                                <td>".$row_two['company_name']."</td>
-                                                <td>".$row_two['first_name']."</td>
-                                                <td>".$row_two['last_name']."</td>
-                                                <td>".$row_two['phone']."</td>
-                                                <td>".$row_two['address1']."</td>
-                                                <td>".$row_two['address2']."</td>
-                                                <td>".$row_two['address3']."</td>
-                                                <td>
-                                                ".$row_two['city']."
-                                                </td>
-                                            </tr>";
+                                            "<div>
+                                            <table>
+                                                <tr>
+                                                    <td> <label><strong>Receiver ID:</strong> </label> ".$row_two['receiver_id']."</td>
+                                                    <td><strong>Company Name:</strong> ".$row_two['company_name']."</td>
+                                                </tr>
+                                              
+                                                <tr>
+                                                    <td><strong>First Name:</strong> ".$row_two['first_name']."</td>
+                                                    <td><strong>Last Name:</strong> ".$row_two['last_name']."</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td> <label><strong>Phone Number:</strong> </label>".$row_two['phone']."</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td> <label><strong>address1:</strong> </label>".$row_two['address1']."</td>
+                                                    <td> <label><strong>address2:</strong> </label>".$row_two['address2']."</td>
+                                                </tr>
+                                                <tr>
+                                                    <td> <label><strong>address 3:</strong> </label>".$row_two['address3']."</td>
+                                                    <td> <label><strong>City:</strong> </label>".$row_two['city']."</td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td> <label><strong>Country:</strong> </label>".$row_two['country']."</td>
+                                                    <td> <label><strong>Postal code:</strong> </label>".$row_two['postalcode']."</td>
+                                                </tr>
+                                    
+                                            </table>
+                                            </div>";
                                         }
                                     }else {
-                                        echo "Error " . $sql_three . ' ' . $conn->connect_error;
+                                        echo "Error " . $sql_two . ' ' . $conn->connect_error;
                                     }	
                                 ?>
-                            </tbody>
-                    </table>
+            
                     </div>
 
                 <form method="post">
@@ -174,7 +178,7 @@
 
                     <input type="submit" class='btn btn-success' value="Approve" name="approveRequest">
                     <input type="submit" class='btn btn-danger' value="Decline" name="declineRequest">
-                    <input type="submit" class='btn btn-warning' value="Decline" name="delayRequest">
+                    <input type="submit" class='btn btn-warning' value="Delay" name="delayRequest">
                    
                     <td><a href="delivery_table.php"><button type="button" class="btn btn-primary">Back</button></a></td>
                 </form>
@@ -199,8 +203,7 @@ if(isset($_POST['comment_details'])) {
         </script>";
     } else {
         echo "Error updating record: " . $conn->error;
-    }
-        
+    } 
         $conn->close();
     }
 }
@@ -252,7 +255,7 @@ if(isset($_POST['delayRequest'])) {
     $sql_decline = "UPDATE Request SET RequestStatusID = 3 WHERE Request.RequestID = '$id'";
     if ($conn->query($sql_decline) === TRUE) {
       echo "<script>
-      alert('You declined this request, it goes to declined status.');
+      alert('You delayed this request, it goes to delayed status.');
       window.location.href='./delivery_table.php';
       </script>";
   } else {
