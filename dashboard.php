@@ -26,7 +26,7 @@
         <li class="breadcrumb-item">
           <a href="dashboard.php">Dashboard</a>
         </li>
-		<li class="breadcrumb-item active">Inventory</li>
+		<li class="breadcrumb-item active">Messages</li>
       </ol>
       <h1>Welcome to Dashboard</h1>
       <hr>
@@ -49,7 +49,12 @@
           <div class="col-xl-3 col-sm-6 mb-3">
               <div class="card text-white bg-primary o-hidden h-100">
                 <div class="card-body">
-                  <div class="mr-5">11 New Delivery Requests!</div>
+              <?php
+                
+              $sql = "SELECT count(*) FROM Request  WHERE RequestStatusID = 1";
+              $result = $conn->query($sql);	
+              ?>
+                  <div class="mr-5"><?php echo $result ?> New Delivery Requests!</div>
                 </div>
                 <a class="card-footer text-white clearfix small z-1" href="delivery_table.php">
                   <span class="float-left">View Details</span>
@@ -68,7 +73,7 @@
               </div>
             </div>
 
-            <div class="col-xl-3 col-sm-6 mb-3">
+            <!-- <div class="col-xl-3 col-sm-6 mb-3">
               <div class="card text-white bg-success o-hidden h-100">
                 <div class="card-body">
                   <div class="mr-5">!</div>
@@ -89,7 +94,7 @@
                 </a>
               </div>
             </div>
-          </div>
+          </div> -->
 
 
 

@@ -100,42 +100,20 @@
 							<th>Ship date</th>
                             <th>Request Items</th>
 							<th>Status</th>
-							<th class="OperationColumn">operation</th>
+						
 						</tr>
 					</thead>
 						<tbody>
 							<?php
-							if($_SESSION['user_role_id'] == 1) {
-							// 	$sql = "SELECT * FROM Request WHERE is_archived = 0";
-							$sql = "SELECT Request.RequestID, Request.RequestDate, Request.ShipDate, Request_status.status_name as status_name, tbl_users.user_name as user_name FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id WHERE is_archived = 0";
-							
-							} else{
-							// 	$sql = "SELECT * FROM Request WHERE RequestEmployeeID = '$logged_user_id' AND is_archived = 0";
-							$sql = "SELECT Request.RequestID, Request.RequestDate, Request.ShipDate, Request_status.status_name as status_name, tbl_users.user_name as user_name FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id WHERE RequestEmployeeID = '$logged_user_id' AND is_archived = 0";
-							}
-
-							// $sql = "SELECT Request.RequestID, Request.RequestDate, Request.ShipDate, Request_status.status_name as status_name, tbl_users.user_name as user_name FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id";
-							
+					
+                            //get all archived request and list in a table
+							$sql = "SELECT Request.RequestID, Request.RequestDate, Request.ShipDate, Request_status.status_name as status_name, tbl_users.user_name as user_name FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id WHERE is_archived = 1";
+						
 							$result = $conn->query($sql);	
 							$num_rows = mysqli_num_rows($result);
 							if($result->num_rows > 0) {
 								while($row = $result->fetch_array()) {
-									$btText='Check';
-									$btId='check'.$row['RequestID'];
-									$btCls='btn btn-success checkBtn';
-									$btCmd='checkRequest.php?id='.$row['RequestID'];
 								
-										if($row['status_name'] == 'Processing') {
-											$btText='Finish';
-											$btId='finish'.$row['RequestID'];
-											$btCls='btn btn-danger finishBtn';
-											$btCmd='finishRequest.php?id='.$row['RequestID'];
-										} else if ($row['status_name'] == 'Completed'){
-											$btText='Archive';
-											$btId='archive'.$row['RequestID'];
-											$btCls='btn btn-primary archiveBtn';
-											$btCmd='archiveRequest.php?id='.$row['RequestID'];
-										}
 									echo 
 									"<tr>
 										<td>".$row['RequestID']."</td>
@@ -148,9 +126,7 @@
 										<td>
 										".$row['status_name']."
 										</td>
-										<td class='OperationColumn'>
-										<a id='".$btId."' href='".$btCmd."'><button class='".$btCls."' type='button'>".$btText."</button></a>
-										</td>
+									
 									</tr>";
 								}
 							}else {

@@ -27,7 +27,7 @@
         </li>
 		<?php 
 		//only visible to admin and editor
-		if($_SESSION['user_role_id'] != 4){?>
+		if($_SESSION['user_role_id'] == 2 || $_SESSION['user_role_id'] == 3){?>
 		
 			 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
 			  <a class="nav-link" href="delivery_request.php">
@@ -46,55 +46,40 @@
 		<?php }?>
 		
 		<?php 
-		//only visible to admin and editor
+		//only visible to admin 
 		if(($_SESSION['user_role_id'] == 1)){?>
 		
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="archived_request.php" data-parent="#exampleAccordion">
+        <!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-wrench"></i>
             <span class="nav-link-text">Archived Requests</span>
           </a>
-          <!-- <ul class="sidenav-second-level collapse" id="collapseComponents">
+          <ul class="sidenav-second-level collapse" id="collapseComponents">
             <li>
               <a href="#">Themes</a>
             </li>
             <li>
               <a href="#">Archived Requests</a>
             </li>
-          </ul> -->
-        </li>
+          </ul> 
+        </li> -->
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
-          <a class="nav-link" data-toggle="collapse" data-parent="#exampleAccordion">
+           <a class="nav-link" href="archived_table.php">
             <i class="fa fa-fw fa-file"></i>
-            <span class="nav-link-text">Components</span>
+            <span class="nav-link-text">Archived Requests</span>
           </a>
- 
         </li>
   
 		<?php } ?>
-		<?php 
-		//only visible to admin
-		if($_SESSION['user_role_id'] == 1){?>
-		<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
-      <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseSettings" data-parent="#exampleAccordion">
-        <i class="fa fa-fw fa fa-gear"></i>
-        <span class="nav-link-text">Settings</span>
-      </a>
-      <ul class="sidenav-second-level collapse" id="collapseSettings">
-        <li>
-          <a href="#">Add a user</a>
-        </li>
-        <li>
-          <a href="#">Change Password</a>
-        </li>
-      </ul>
-		</li>
-		
-		<?php
-		}
-		?>
-        
-      </ul>
+
+      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
+          <a class="nav-link" href="change_password.php">
+          <i class="fa fa-fw fa fa-gear"></i>
+          <span class="nav-link-text">Change Password</span>
+        </a>
+      </li>
+
+    </ul>
      
 	 
 	 

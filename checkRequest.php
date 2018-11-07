@@ -172,9 +172,10 @@
                 <form method="post">
                     <div class="form-group">
                         <label for="comment">Comments:</label>
-                        <textarea class="form-control" rows="5" id="comment_details"></textarea>
-                        <input type="submit" name="submit" value="Send" id="submit"/>
+                        <textarea class="form-control" rows="5" name="commentRequest" id="comment_details"></textarea>
+                        <input type="submit" name="commentRequest" value="Send" id="submit"/>
                     </div>
+
 
                     <input type="submit" class='btn btn-success' value="Approve" name="approveRequest">
                     <input type="submit" class='btn btn-danger' value="Decline" name="declineRequest">
@@ -191,14 +192,14 @@
 <?php
 //get comments and update in database
 
-if(isset($_POST['comment_details'])) {
+if(isset($_POST['commentRequest'])) {
     if($_GET['id']) {
         $id = $_GET['id'];
-        
-      $sql_udpate = "UPDATE Request SET Comments = " .$_POST['comment_details']. " WHERE Request.RequestID = '$id'";
+        echo $_POST['commentRequest'];
+      $sql_udpate = "UPDATE Request SET Comments = " .$_POST['commentRequest']. " WHERE Request.RequestID = '$id'";
       if ($conn->query($sql_udpate) === TRUE) {
         echo "<script>
-        alert('You approved this request, it goes to processing status.');
+        alert('You send comments this request.');
         window.location.href='./delivery_table.php';
         </script>";
     } else {
