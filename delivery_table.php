@@ -127,13 +127,17 @@
 								
 										if($row['status_name'] == 'Processing') {
 											$btText='Finish';
-											$btId='archive'.$row['RequestID'];
+											$btId='finish'.$row['RequestID'];
 											$btCls='btn btn-danger finishBtn';
 											$btCmd='finishRequest.php?id='.$row['RequestID'];
+										} else if ($row['status_name'] == 'Completed'){
+											$btText='Archive';
+											$btId='archive'.$row['RequestID'];
+											$btCls='btn btn-primary archiveBtn';
+											$btCmd='archiveRequest.php?id='.$row['RequestID'];
+										}
 
-										} 
-								
-	
+
 									echo 
 									"<tr>
 										<td>".$row['RequestID']."</td>
