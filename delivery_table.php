@@ -40,7 +40,7 @@
 			<table class='table table-bordered' id='requestProductTable' width='100%' cellspacing='0'>
 				<thead>
 					<tr>
-					
+						<th>item type</th>
 						<th>item id</th>
 						<th>item Name</th>
 						<th>Size</th>
@@ -53,16 +53,16 @@
 				if(isset($_POST['req2display'])){
 					$request_id = $_POST['req2display'];
 			
-				$sql = "SELECT pawtrails.itemname as name, pawtrails.id as id, pawtrails.color as color, pawtrails.size as size,  Pawtrails_Request_junction.Qty as quantity FROM pawtrails, Pawtrails_Request_junction WHERE Pawtrails_Request_junction.request_id = '$request_id' AND Pawtrails_Request_junction.pawtrails_id = pawtrails.id" ;
+				$sql = "SELECT pawtrails.itemname as name, pawtrails.id as id, pawtrails.color as color, pawtrails.size as size, pawtrails.itemtype as itemtype, Pawtrails_Request_junction.Qty as quantity FROM pawtrails, Pawtrails_Request_junction WHERE Pawtrails_Request_junction.request_id = '$request_id' AND Pawtrails_Request_junction.pawtrails_id = pawtrails.id" ;
 
 				$result = $conn->query($sql);
-			
-
+		
 				if($result->num_rows > 0) {
 					while($row = $result->fetch_array()) {
 						echo 
 							"
 							<tr>
+								<td>".$row['itemtype']."</td>
 								<td>".$row['id']."</td>
 								<td>".$row['name']."</td>
 								<td>".$row['size']."</td>
@@ -94,6 +94,7 @@
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 					<thead>
 						<tr>
+							<th>Receiver ID</th>
 							<th>Request ID</th>
 							<th class="EmployeeColumn">Employee</th>
 							<th>Submit date</th>
@@ -106,16 +107,14 @@
 						<tbody>
 							<?php
 							if($_SESSION['user_role_id'] == 1) {
-							// 	$sql = "SELECT * FROM Request WHERE is_archived = 0";
-							$sql = "SELECT Request.RequestID, Request.RequestDate, Request.ShipDate, Request_status.status_name as status_name, tbl_users.user_name as user_name FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id WHERE is_archived = 0";
+						
+							$sql = "SELECT Request.RequestID, Request.RequestDate, Request.ShipDate, Receiver.first_name as first_name, Receiver.last_name as last_name, Request_status.status_name as status_name, tbl_users.user_name as user_name FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN Receiver ON Request.ReceiverID = Receiver.receiver_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id WHERE is_archived = 0";
 							
 							} else{
-							// 	$sql = "SELECT * FROM Request WHERE RequestEmployeeID = '$logged_user_id' AND is_archived = 0";
-							$sql = "SELECT Request.RequestID, Request.RequestDate, Request.ShipDate, Request_status.status_name as status_name, tbl_users.user_name as user_name FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id WHERE RequestEmployeeID = '$logged_user_id' AND is_archived = 0";
+						
+							$sql = "SELECT Request.RequestID, Request.RequestDate, Request.ShipDate, Receiver.first_name as first_name, Receiver.last_name as last_name, Request_status.status_name as status_name, tbl_users.user_name as user_name FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN Receiver ON Request.ReceiverID = Receiver.receiver_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id WHERE RequestEmployeeID = '$logged_user_id' AND is_archived = 0";
 							}
 
-							// $sql = "SELECT Request.RequestID, Request.RequestDate, Request.ShipDate, Request_status.status_name as status_name, tbl_users.user_name as user_name FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id";
-							
 							$result = $conn->query($sql);	
 							$num_rows = mysqli_num_rows($result);
 							if($result->num_rows > 0) {
@@ -138,6 +137,8 @@
 										}
 									echo 
 									"<tr>
+									
+										<td>".$row['first_name']."  ".$row['last_name']."</td>
 										<td>".$row['RequestID']."</td>
 										<td>".$row['user_name']."</td>
 										<td>".$row['RequestDate']."</td>

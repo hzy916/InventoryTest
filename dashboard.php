@@ -50,11 +50,12 @@
               <div class="card text-white bg-primary o-hidden h-100">
                 <div class="card-body">
               <?php
-                
-              $sql = "SELECT count(*) FROM Request  WHERE RequestStatusID = 1";
+                //get the request which are still in submitted status.
+              $sql = "SELECT RequestID FROM Request  WHERE RequestStatusID = 1";
               $result = $conn->query($sql);	
+              $count =  $result->num_rows;
               ?>
-                  <div class="mr-5"><?php echo $result ?> New Delivery Requests!</div>
+                  <div class="mr-5"><?php echo $count ?> New Delivery Requests!</div>
                 </div>
                 <a class="card-footer text-white clearfix small z-1" href="delivery_table.php">
                   <span class="float-left">View Details</span>
