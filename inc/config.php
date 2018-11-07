@@ -32,7 +32,7 @@
 	}
 
 		
-	function getUserID($id)
+	function getUserName($id)
 	{
 		global $conn;
 		

@@ -12,16 +12,44 @@
 	require_once('layouts/left_sidebar.php');   
     
 
-    if($_GET['id']) {
-        $id = $_GET['id'];
-        
-        $sql = "SELECT * FROM pawtrails WHERE id = {$id}";
+    $user_id = $_SESSION['id'];
+    //change password
+    if($_POST) {
+        //check if two password input isn't empty
+        if(isset($_POST['newpassword1']) && isset($_POST['newpassword2'])) {
+
+            $password1 = $_POST['newpassword1'];
+            echo $password1;
+            $password2 = $_POST['newpassword2'];
+
+            if ($password1 != $password2){ 
+                   
+                    echo "<script>
+                    alert('your passwords do not match');
+                    </script>";
+            }else {
+                $sql = "UPDATE tbl_users SET password = '$password1' WHERE id = {$user_id}";
+                if ($conn->query($sql) === TRUE) {
+                    echo "<script>
+                    alert('You changed your password successfully.');
+                    window.location.href='./index.php';
+                    </script>";
+                } else {
+                    echo "Error updating record: " . $conn->error;
+                } 
+            }
+        }
+    }
+
+    //read from database and get current password and username
+   
+        $sql = "SELECT * FROM tbl_users WHERE id = {$user_id}";
         $result = $conn->query($sql);
         
         $data = $result->fetch_assoc();
         
-        $conn->close();
-    }
+  
+  
 ?>
 
 
@@ -32,9 +60,11 @@
         <li class="breadcrumb-item">
           <a href="/dashboard.php">Dashboard</a>
         </li>
-        
+        <li class="breadcrumb-item active">Change Password</li>
       </ol>
-      <h1>Welcome to Dashboard</h1>
+     
+      <p><?php echo getUserName($_SESSION['id']); ?> are login as <strong><?php echo getUserAccessRoleByID($_SESSION['user_role_id']); ?></strong></p>
+
   
 	<!-- DataTables Example -->
 	<div class="card mb-3">
@@ -43,30 +73,36 @@
         <form method="post">
             <table cellspacing="0" cellpadding="0">
                 <tr>
-                    <th>ID</th>
+                    <th>User ID</th>
                     <td><?php echo $data['id'] ?> </td>
                 </tr>
                 <tr>
                     <th>User Role</th>
-                    <td><?php echo $data['itemname'] ?></td>
+                    <td><?php echo getUserAccessRoleByID($_SESSION['user_role_id']); ?></td>
                 </tr>     
                 <tr>
+                    <th>User Name</th>
+                    <td><?php echo $data['user_name'] ?></td>
+                </tr>
+
+                 <tr>
                     <th>Email</th>
-                    <td><?php echo $data['color'] ?></td>
-                </tr>
-                <tr>
-                    <th>Password</th>
-                    <td><input type="text" name="amount" id="amountid" placeholder="amount" value="<?php echo $data['amount'] ?>" /></td>
-                </tr>
-                <tr>
-                    <th>Confirm Password</th>
-                    <td><input type="text" name="amount" id="amountid" placeholder="amount" value="<?php echo $data['amount'] ?>" /></td>
+                    <td><?php echo $data['email'] ?></td>
                 </tr>
 
                 <tr>
+                    <th>New Password</th>
+                    <td><input type="password" name="newpassword1" placeholder="password" value="" required/></td>
+                </tr>
+                <tr>
+                    <th>Confirm New Password</th>
+                    <td><input type="password" name="newpassword2" placeholder="confirm password" value="" required/></td>
+                </tr>
+          
+                <tr>
                     <input type="hidden" name="id" value="<?php echo $data['id']?>" />
-                    <td><button type="submit" class="btn btn-success">Save Changes</button></td>
                     <td><a href="dashboard.php"><button type="button" class="btn btn-info">Back</button></a></td>
+                    <td><button type="submit" class="btn btn-success">Save Changes</button></td>
                 </tr>
             </table>
         </form>
@@ -75,4 +111,6 @@
     <!-- /.container-fluid-->
 
 
-<?php require_once('layouts/footer.php'); ?>	
+<?php require_once('layouts/footer.php'); 
+    $conn->close();
+?>	

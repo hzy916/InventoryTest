@@ -30,30 +30,42 @@
       </ol>
       <h1>Welcome to Dashboard</h1>
       <hr>
-      <p>You are login as <strong><?php echo getUserAccessRoleByID($_SESSION['user_role_id']); ?></strong></p>
+      <p><?php echo getUserName($_SESSION['id']); ?> are login as <strong><?php echo getUserAccessRoleByID($_SESSION['user_role_id']); ?></strong></p>
 
-     
-      
       <?php
       		//only visible to admin and editor
           if($_SESSION['user_role_id'] == 2 || $_SESSION['user_role_id'] == 3  ) {?>
 		
           <p>You can:</p>
           <a class="btn btn-dark" href="delivery_request.php">Submit Delivery Request</a>
-          <a class="btn btn-secondary" href="return_request.php">Submit Return Request</a>
+          <!-- <a class="btn btn-secondary" href="return_request.php">Submit Return Request</a> -->
           
 		  <?php }?>
 
+
+        <?php
+      		//only visible to admin and editor
+          if($_SESSION['user_role_id'] == 1 ) {
+            //get the request which are still in submitted status.
+              $sql = "SELECT RequestID FROM Request WHERE RequestStatusID = 1";
+              $result = $conn->query($sql);	
+              $count =  $result->num_rows;
+          } else {
+             //get the request which belongs to this employee and still in submitted status.
+             $sql = "SELECT RequestID FROM Request WHERE RequestStatusID = 1 AND RequestEmployeeID = ". $_SESSION['id'];
+             $result = $conn->query($sql);	
+             $count =  $result->num_rows;
+          }
+          ?>
+
+       
           <!-- Icon Cards-->
         <div class="row" style="margin-top:1em;">
           <div class="col-xl-3 col-sm-6 mb-3">
               <div class="card text-white bg-primary o-hidden h-100">
                 <div class="card-body">
               <?php
-                //get the request which are still in submitted status.
-              $sql = "SELECT RequestID FROM Request  WHERE RequestStatusID = 1";
-              $result = $conn->query($sql);	
-              $count =  $result->num_rows;
+          
               ?>
                   <div class="mr-5"><?php echo $count ?> New Delivery Requests!</div>
                 </div>
@@ -63,7 +75,7 @@
               </div>
             </div>
 
-            <div class="col-xl-3 col-sm-6 mb-3">
+            <!-- <div class="col-xl-3 col-sm-6 mb-3">
               <div class="card text-white bg-warning o-hidden h-100">
                 <div class="card-body">
                   <div class="mr-5">11 Return Requests!</div>
@@ -72,8 +84,9 @@
                   <span class="float-left">View Details</span>
                 </a>
               </div>
-            </div>
+            </div> -->
 
+     
             <!-- <div class="col-xl-3 col-sm-6 mb-3">
               <div class="card text-white bg-success o-hidden h-100">
                 <div class="card-body">
@@ -96,10 +109,9 @@
               </div>
             </div>
           </div> -->
-
-
-
     </div>
+
+
     <!-- /.container-fluid-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <?php  

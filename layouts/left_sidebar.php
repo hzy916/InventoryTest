@@ -36,12 +36,12 @@
 			  </a>
 			</li>
 			
-			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+			<!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
 			  <a class="nav-link" href="#">
 				<i class="fa fa-fw fa-circle-o-notch"></i>
 				<span class="nav-link-text">Categories</span>
 			  </a>
-			</li>
+			</li> -->
 		
 		<?php }?>
 		
@@ -84,12 +84,25 @@
 	 
 	 
       <ul class="navbar-nav ml-auto">
+        
+        <li class="nav-item">
+          <a class="nav-link">
+          <p class="welcomeMSG"> Hello, <?php echo getUserName($_SESSION['id']); ?></p>
+          </a>
+        </li>
 
         <li class="nav-item">
           <a class="nav-link" href="index.php?logout=true">
             <i class="fa fa-fw fa-sign-out"></i>Logout
-		  </a>
+		      </a>
         </li>
       </ul>
     </div>
   </nav>
+
+  <style>
+  .welcomeMSG{
+    color:#ffffff;
+
+  }
+  </style>

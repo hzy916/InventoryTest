@@ -30,11 +30,11 @@
         </li>
 		<li class="breadcrumb-item active">Delivery Request Details</li>
       </ol>
-      <h1>Welcome to Delivery Request Tables</h1>
+      <h1>Delivery request table</h1>
       <hr>
-      <p>You are login as <strong><?php echo getUserAccessRoleByID($_SESSION['user_role_id']); ?></strong></p>
+      <p><?php echo getUserName($_SESSION['id']); ?>  are login as <strong><?php echo getUserAccessRoleByID($_SESSION['user_role_id']); ?></strong></p>
 
-			<div>
+		<div>
 			<div class="card card-body">
 			<h3>Request Items List</h3>
 			<table class='table table-bordered' id='requestProductTable' width='100%' cellspacing='0'>
@@ -68,7 +68,6 @@
 								<td>".$row['size']."</td>
 								<td>".$row['color']."</td>
 								<td>".$row['quantity']."</td>
-								
 							</tr>";
 					}
 				}else {
@@ -83,7 +82,7 @@
 		</div>
 
    	<!-- DataTables Example -->
-	<div class="card mb-3">
+	<div class="card mb-3 mt-3">
 		<div class="card-header">
 			<i class="fas fa-table"></i>
 			Your Delivery Request Table
@@ -94,7 +93,7 @@
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 					<thead>
 						<tr>
-							<th>Receiver ID</th>
+							<th>Receiver Name</th>
 							<th>Request ID</th>
 							<th class="EmployeeColumn">Employee</th>
 							<th>Submit date</th>
@@ -140,7 +139,7 @@
 									
 										<td>".$row['first_name']."  ".$row['last_name']."</td>
 										<td>".$row['RequestID']."</td>
-										<td>".$row['user_name']."</td>
+										<td class='EmployeeColumn'>".$row['user_name']."</td>
 										<td>".$row['RequestDate']."</td>
 										<td>".$row['ShipDate']."</td>
 										<td>
