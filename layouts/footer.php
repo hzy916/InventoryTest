@@ -2,7 +2,7 @@
     <footer class="sticky-footer">
       <div class="container">
         <div class="text-center">
-          <small>Copyright © <a href="https://www.attitudetech.ie/">Attitude Technologies LTD</a></small>
+          <small>Copyright © <a target="_blank" href="https://www.attitudetech.ie/">Attitude Technologies LTD</a></small>
         </div>
       </div>
     </footer>

@@ -11,36 +11,42 @@
 	require_once('layouts/header.php'); 
 	require_once('layouts/left_sidebar.php');   
     
+    $passwordErr = '';
 
     $user_id = $_SESSION['id'];
     //change password
     if($_POST) {
-        //check if two password input isn't empty
+         //check if two password input isn't empty
         if(isset($_POST['newpassword1']) && isset($_POST['newpassword2'])) {
-
-            $password1 = $_POST['newpassword1'];
-            //encrypted the password;
-            $md5Password1 = md5($password1);
-		
-            $password2 = $_POST['newpassword2'];
-             //encrypted the password;
-            $md5Password2 = md5($password2);
-
-            if ($md5Password1 != $md5Password2){      
-                echo "<script>
-                alert('your passwords do not match');
-                </script>";
-            }else {
-                $sql = "UPDATE tbl_users SET password = '$md5Password1' WHERE id = {$user_id}";
-                if ($conn->query($sql) === TRUE) {
-                    echo "<script>
-                    alert('You changed your password successfully.');
-                    window.location.href='./index.php';
-                    </script>";
-                } else {
-                    echo "Error updating record: " . $conn->error;
-                } 
-            }
+           
+            //check password numbers to be 6 above
+            if (strlen($_POST["newpassword1"]) <'6') {
+                $passwordErr = "Your Password Must Contain At Least 6 Characters! Change password failed.";
+            } else {
+                $password1 = $_POST['newpassword1'];
+                //encrypted the password;
+                $md5Password1 = md5($password1);
+            
+                $password2 = $_POST['newpassword2'];
+                 //encrypted the password;
+                $md5Password2 = md5($password2);
+    
+                if ($md5Password1 != $md5Password2){     
+                    
+                    $passwordErr = 'your passwords do not match';
+                 
+                }else {
+                    $sql = "UPDATE tbl_users SET password = '$md5Password1' WHERE id = {$user_id}";
+                    if ($conn->query($sql) === TRUE) {
+                        echo "<script>
+                        alert('You changed your password successfully.');
+                        window.location.href='./index.php';
+                        </script>";
+                    } else {
+                        echo "Error updating record: " . $conn->error;
+                    } 
+                }
+            }  
         }
     }
 
@@ -73,6 +79,17 @@
 	<div class="card mb-3">
 		<div class="card-header">
         <h2>Change Password</h2>
+        
+        <ul>
+            <li></li>
+
+            <li></li>
+
+            <li></li>
+
+            <li></li>
+        </ul>
+
         <form method="post">
             <table cellspacing="0" cellpadding="0">
                 <tr>
@@ -107,6 +124,11 @@
                     <td><a href="dashboard.php"><button type="button" class="btn btn-info">Back</button></a></td>
                     <td><button type="submit" class="btn btn-success">Save Changes</button></td>
                 </tr>
+
+                <tr>
+                    <p> <?php echo $passwordErr; ?></p>
+                </tr>
+
             </table>
         </form>
           </div>

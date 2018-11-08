@@ -67,7 +67,7 @@
               <?php
           
               ?>
-                  <div class="mr-5"><?php echo $count ?> New Delivery Requests!</div>
+                  <div class="mr-5"><?php echo $count ?> Pending Delivery Requests.</div>
                 </div>
                 <a class="card-footer text-white clearfix small z-1" href="delivery_table.php">
                   <span class="float-left">View Details</span>

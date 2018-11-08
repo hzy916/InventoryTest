@@ -122,19 +122,31 @@
 									$btId='check'.$row['RequestID'];
 									$btCls='btn btn-success checkBtn';
 									$btCmd='checkRequest.php?id='.$row['RequestID'];
-								
-										if($row['status_name'] == 'Processing' && $_SESSION['user_role_id'] == 1) {
-											$btText='Finish';
-											$btId='finish'.$row['RequestID'];
-											$btCls='btn btn-danger finishBtn';
-											$btCmd='finishRequest.php?id='.$row['RequestID'];
-										
-										} else if ($row['status_name'] == 'Completed'){
-											$btText='Archive';
-											$btId='archive'.$row['RequestID'];
-											$btCls='btn btn-primary archiveBtn';
-											$btCmd='archiveRequest.php?id='.$row['RequestID'];
+									$status_style = '';
+
+									$status_name = $row['status_name'];
+										switch ($status_name) {
+											case ($status_name == "Processing" && $_SESSION['user_role_id'] == 1):
+												$btText='Finish';
+												$btId='finish'.$row['RequestID'];
+												$btCls='btn btn-danger finishBtn';
+												$btCmd='finishRequest.php?id='.$row['RequestID'];
+												break;
+											case "Completed":
+												$btText='Archive';
+												$btId='archive'.$row['RequestID'];
+												$btCls='btn btn-primary archiveBtn';
+												$btCmd='archiveRequest.php?id='.$row['RequestID'];
+												$status_style = 'background-color:#ADFF2F;';
+												break;
+											case "Delayed":
+												$status_style = 'background-color:#F0E68C;';
+												break;
+											case "Declined":
+												$status_style = 'background-color:#DC143C;';
+												break;
 										}
+										
 									echo 
 									"<tr>
 									
@@ -146,7 +158,7 @@
 										<td>
 											<button type='button' class='btn btn-info' onclick='JavaScript:GetRequestID(".$row['RequestID'].");'>See Request Items</button>
 										</td>
-										<td>
+										<td style='".$status_style."'>
 										".$row['status_name']."
 										</td>
 										<td class='OperationColumn'>
