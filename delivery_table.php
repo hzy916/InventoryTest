@@ -14,13 +14,6 @@
 	require_once('layouts/left_sidebar.php'); 
 ?>
 
-<style>
-.hidebutton{
-	display: none!important;
-}
-
-</style>
-
   <div class="content-wrapper">
     <div class="container-fluid">
       <!-- Breadcrumbs-->
@@ -146,7 +139,7 @@
 												$status_style = 'background-color:#DC143C;';
 												break;
 										}
-										
+
 									echo 
 									"<tr>
 									

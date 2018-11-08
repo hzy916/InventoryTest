@@ -14,12 +14,7 @@
 	require_once('layouts/left_sidebar.php'); 
 ?>
 
-<style>
-.hidebutton{
-	display: none!important;
-}
 
-</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <div class="content-wrapper">
     <div class="container-fluid">
