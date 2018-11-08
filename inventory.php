@@ -11,13 +11,9 @@
 	require_once('layouts/header.php'); 
 	require_once('layouts/left_sidebar.php'); 
 ?>
+    <!-- /.container-fluid-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<style>
-.hidebutton{
-	display: none!important;
-}
-
-</style>
 
   <div class="content-wrapper">
     <div class="container-fluid">
@@ -49,16 +45,34 @@
 		<div class="card-body">
 			<div class="table-responsive">
 				<h5>PawTrails All In One GPS Tracker</h5>
-				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+				<table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
 					<thead>
 						<tr>
-							<th>ID</th>
-							<th>item name</th>
-							<th>color</th>
-							<th>size</th>
-							<th>Quantity</th>
-							<th>Update date</th>
-							<th class="OperationColumn">operation</th>
+							<th class="th-sm">ID
+								<i class="fa fa-sort float-right" aria-hidden="true"></i>
+							</th>
+							<th class="th-sm">
+								item name
+								<i class="fa fa-sort float-right" aria-hidden="true"></i>
+							</th>
+							<th class="th-sm">
+								color
+								<i class="fa fa-sort float-right" aria-hidden="true"></i>
+							</th>
+							
+							<th class="th-sm">
+								size
+								<i class="fa fa-sort float-right" aria-hidden="true"></i>
+							</th>
+							<th class="th-sm">
+								Quantity
+								<i class="fa fa-sort float-right" aria-hidden="true"></i>
+							</th>
+							<th class="th-sm">
+								Update date
+								<i class="fa fa-sort float-right" aria-hidden="true"></i>
+							</th>
+							<th class="OperationColumn th-sm">operation</th>
 						</tr>
 					</thead>
 		
@@ -139,8 +153,14 @@
             </div>
 		</div>
     </div>
-    <!-- /.container-fluid-->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<script>
+		//data table sort
+		$(document).ready(function () {
+		$('#dtBasicExample').DataTable();
+		$('.dataTables_length').addClass('bs-select');
+		});
+	</script>
 <?php  
 
 if($_SESSION['user_role_id'] == 2 || $_SESSION['user_role_id'] == 3  ) {

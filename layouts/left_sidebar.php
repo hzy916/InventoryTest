@@ -22,7 +22,7 @@
        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Delivery List">
           <a class="nav-link" href="delivery_table.php">
             <i class="fa fa-fw fa fa-wpforms"></i>
-            <span class="nav-link-text">Delivery List</span>
+            <span class="nav-link-text">Delivery Request List</span>
           </a>
         </li>
 		<?php 
@@ -32,7 +32,7 @@
 			 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
 			  <a class="nav-link" href="delivery_request.php">
 				<i class="fa fa-fw fa fa-copy"></i>
-				<span class="nav-link-text">Delivery Requests</span>
+				<span class="nav-link-text">Make Delivery Requests</span>
 			  </a>
 			</li>
 			
@@ -45,10 +45,7 @@
 		
 		<?php }?>
 		
-		<?php 
-		//only visible to admin 
-		if(($_SESSION['user_role_id'] == 1)){?>
-		
+
         <!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-wrench"></i>
@@ -70,7 +67,7 @@
           </a>
         </li>
   
-		<?php } ?>
+	
 
       <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
           <a class="nav-link" href="change_password.php">

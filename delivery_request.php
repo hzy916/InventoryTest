@@ -57,7 +57,14 @@
             break;
 
             case 'address':
-              include ('submit_address.php');
+                if(!empty($_SESSION['delivery'])){
+                    include ('submit_address.php');
+                } else{
+                    echo "<script>
+                    alert('Your request failed, Please add product before you make delivery request.');
+                    window.location.href='./delivery_request.php';
+                    </script>";
+                }
             break;
         }
     }
@@ -231,27 +238,7 @@
 
                 <h4>Receiver's Details</h4>
 
-                <!-- <button class="btn btn-success" onclick="showOld()">Choose From Old Contacts</button>
-                <button class="btn btn-warning" onclick="showNew()">Fill New Address</button>
-                 -->
-                <!-- <div id="oldReceiver">
-                    <label for="deliveryProduct">Saved Company Contacts</label>
-                    <br>
-                    <select name="sel_receiver" id="sel_receiver" class="form-control" required>
-                        <?php
-                            // $sql = mysqli_query($conn, "SELECT receiver_id, company_name FROM Receiver WHERE company_name IS NOT NULL AND company_name != ''");
-                            // while ($row = $sql->fetch_assoc()){
-                            // echo "<option value='$row[receiver_id]'>" . $row['company_name'] . "</option>";
-                            // }
-                        ?>
-                    </select>
-                </div>
-                
-                <div>Show Old address</div>
- -->
                 <form action="delivery_request.php" method="POST">
-
-
                 <input type="hidden"  name="makeaction" value="address">
                 <!-- <input type="text" name="myPlist" value="<?php echo $myPlist; ?>">
                  -->

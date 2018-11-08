@@ -89,21 +89,29 @@
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 					<thead>
 						<tr>
+							<th>Receiver Name</th>
 							<th>Request ID</th>
 							<th class="EmployeeColumn">Employee</th>
 							<th>Submit date</th>
 							<th>Ship date</th>
                             <th>Request Items</th>
 							<th>Status</th>
-						
 						</tr>
 					</thead>
 						<tbody>
 							<?php
 					
                             //get all archived request and list in a table
-							$sql = "SELECT Request.RequestID, Request.RequestDate, Request.ShipDate, Request_status.status_name as status_name, tbl_users.user_name as user_name FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id WHERE is_archived = 1";
+							// $sql = "SELECT Request.RequestID, Request.RequestDate, Request.ShipDate, Receiver.first_name as first_name, Receiver.last_name as last_name, Request_status.status_name as status_name, tbl_users.user_name as user_name FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id WHERE is_archived = 1";
+							if($_SESSION['user_role_id'] == 1) {
 						
+								$sql = "SELECT Request.RequestID, Request.RequestDate, Request.ShipDate, Receiver.first_name as first_name, Receiver.last_name as last_name, Request_status.status_name as status_name, tbl_users.user_name as user_name FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN Receiver ON Request.ReceiverID = Receiver.receiver_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id WHERE is_archived = 1";
+								
+								} else{
+							
+								$sql = "SELECT Request.RequestID, Request.RequestDate, Request.ShipDate, Receiver.first_name as first_name, Receiver.last_name as last_name, Request_status.status_name as status_name, tbl_users.user_name as user_name FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN Receiver ON Request.ReceiverID = Receiver.receiver_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id WHERE RequestEmployeeID = '$logged_user_id' AND is_archived = 1";
+								}
+
 							$result = $conn->query($sql);	
 							$num_rows = mysqli_num_rows($result);
 							if($result->num_rows > 0) {
@@ -111,6 +119,7 @@
 								
 									echo 
 									"<tr>
+										<td>".$row['first_name']."  ".$row['last_name']."</td>
 										<td>".$row['RequestID']."</td>
 										<td>".$row['user_name']."</td>
 										<td>".$row['RequestDate']."</td>
@@ -125,7 +134,8 @@
 									</tr>";
 								}
 							}else {
-								echo "Error " . $sql . ' ' . $conn->connect_error;
+								// echo "Error " . $sql . ' ' . $conn->connect_error;
+								echo "No data available";
 							}
 							?>
 

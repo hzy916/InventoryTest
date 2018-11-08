@@ -22,6 +22,10 @@
             //check password numbers to be 6 above
             if (strlen($_POST["newpassword1"]) <'6') {
                 $passwordErr = "Your Password Must Contain At Least 6 Characters! Change password failed.";
+                echo "<script>
+                alert('Your Password Must Contain At Least 6 Characters! Change password failed.');
+                window.location.href='./change_password.php';
+                </script>";
             } else {
                 $password1 = $_POST['newpassword1'];
                 //encrypted the password;
@@ -34,6 +38,10 @@
                 if ($md5Password1 != $md5Password2){     
                     
                     $passwordErr = 'your passwords do not match';
+                    echo "<script>
+                    alert('your passwords do not match, please enter the same one.');
+                    window.location.href='./change_password.php';
+                    </script>";
                  
                 }else {
                     $sql = "UPDATE tbl_users SET password = '$md5Password1' WHERE id = {$user_id}";
@@ -81,13 +89,7 @@
         <h2>Change Password</h2>
         
         <ul>
-            <li></li>
-
-            <li></li>
-
-            <li></li>
-
-            <li></li>
+            <li>Password needs to be at least 6 numbers above</li>
         </ul>
 
         <form method="post">
@@ -125,9 +127,7 @@
                     <td><button type="submit" class="btn btn-success">Save Changes</button></td>
                 </tr>
 
-                <tr>
-                    <p> <?php echo $passwordErr; ?></p>
-                </tr>
+      
 
             </table>
         </form>

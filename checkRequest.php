@@ -186,12 +186,15 @@
                 <?php 
                 //if the request status is not submitted and processing, then don't show approve, 
                     if($data['status_name'] == 'Submitted'){
-                 
                        echo "
                        <input type='button' class='btn btn-success operateBTN' value='Approve' onclick=\"JavaScript:makeMyAction('approve')\">
                        <input type='button' class='btn btn-danger operateBTN' value='Decline' onclick=\"JavaScript:makeMyAction('decline')\">
                        <input type='button' class='btn btn-warning operateBTN' value='Delay' onclick=\"JavaScript:makeMyAction('delay')\">        
                        ";
+                    } else if($data['status_name'] == 'Delayed'){
+                        echo "
+                        <input type='button' class='btn btn-success operateBTN' value='Approve' onclick=\"JavaScript:makeMyAction('approve')\">
+                        <input type='button' class='btn btn-danger operateBTN' value='Decline' onclick=\"JavaScript:makeMyAction('decline')\">";
                     }
                     ?>
         <?php  } ?> 
