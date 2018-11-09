@@ -185,6 +185,7 @@
 
                 <?php 
                 //if the request status is not submitted and processing, then don't show approve, 
+             
                     if($data['status_name'] == 'Submitted'){
                        echo "
                        <input type='button' class='btn btn-success operateBTN' value='Approve' onclick=\"JavaScript:makeMyAction('approve')\">
@@ -195,7 +196,12 @@
                         echo "
                         <input type='button' class='btn btn-success operateBTN' value='Approve' onclick=\"JavaScript:makeMyAction('approve')\">
                         <input type='button' class='btn btn-danger operateBTN' value='Decline' onclick=\"JavaScript:makeMyAction('decline')\">";
+                    } else if($data['status_name'] == 'Processing'){
+                        echo "
+                        <input type='button' class='btn btn-danger operateBTN' value='Finish' onclick=\"JavaScript:makeMyAction('finish')\">
+                         ";
                     }
+
                     ?>
         <?php  } ?> 
                     <td><a href="delivery_table.php"><button type="button" class="btn btn-primary">Back</button></a></td>
@@ -222,7 +228,7 @@
 // exit;
 $myCommReq='';
 if(!empty($_POST['commentRequest'])){
-    $myCommReq=$_POST['commentRequest'];
+    $myCommReq=mysqli_real_escape_string($conn,$_POST['commentRequest']);
 }
 
 $myArr=array(
@@ -231,7 +237,9 @@ $myArr=array(
         'alert'=>'You send comments this request',
     ),
     'approve'=> array(
+         //get the product id and number requested, and update inventory when request is completed. 
         'sql'=>"UPDATE Request SET RequestStatusID = 2 WHERE Request.RequestID = '$id'",
+
         'alert'=>'You approved this request, it goes to processing status.',
     ),
     'decline'=> array(
@@ -242,9 +250,28 @@ $myArr=array(
         'sql'=>"UPDATE Request SET RequestStatusID = 3 WHERE Request.RequestID = '$id'",
         'alert'=>'You delayed this request, it goes to delayed status.',
     ),
+    'finish'=> array(
+        'sql'=> "UPDATE Request SET RequestStatusID = 5 WHERE Request.RequestID = '$id'",
+        'alert'=>'You finished this request, it goes to completed status.',
+    ),
 );
 
 if($_GET['id'] && isset($_POST['postAction'])) {
+
+    if($_POST['postAction'] == 'approve'){
+         //get the product id and number requested, and update inventory when request is completed. 
+         $sql_updatestock = "UPDATE pawtrails JOIN Pawtrails_Request_junction ON pawtrails.id = Pawtrails_Request_junction.pawtrails_id && Pawtrails_Request_junction.request_id = '$id' SET pawtrails.amount = pawtrails.amount - Pawtrails_Request_junction.Qty"; 
+       
+         //check if update stock successfully
+         if ($conn->query($sql_updatestock) === TRUE) {
+             echo "<script>
+             alert('The related product inventory is updated!');
+             </script>";
+         } else {
+             echo "Error updating record: " . $conn->error;
+         } 
+    }
+
     $id = $_GET['id'];
     $sql_udpate = $myArr[$_POST['postAction']]['sql'];
     if ($conn->query($sql_udpate) === TRUE) {

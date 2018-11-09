@@ -1,6 +1,5 @@
 <?php
     $user_id = $_SESSION['id']; 
-  
 
         $receivercompany = mysqli_real_escape_string($conn,$_POST['receivercompany']);
         $firstname =  mysqli_real_escape_string($conn,$_POST['firstname']);

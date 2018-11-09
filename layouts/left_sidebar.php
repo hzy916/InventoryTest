@@ -25,9 +25,6 @@
             <span class="nav-link-text">Delivery Request List</span>
           </a>
         </li>
-		<?php 
-		//only visible to admin and editor
-		if($_SESSION['user_role_id'] == 2 || $_SESSION['user_role_id'] == 3){?>
 		
 			 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
 			  <a class="nav-link" href="delivery_request.php">
@@ -43,9 +40,6 @@
 			  </a>
 			</li> -->
 		
-		<?php }?>
-		
-
         <!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-wrench"></i>

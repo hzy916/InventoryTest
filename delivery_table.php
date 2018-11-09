@@ -92,8 +92,9 @@
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 					<thead>
 						<tr>
-							<th>Receiver Name</th>
 							<th>Request ID</th>
+							<th>Receiver Name</th>
+							<th>Company Name</th>
 							<th class="EmployeeColumn">Employee</th>
 							<th>Submit date</th>
 							<th>Ship date</th>
@@ -104,7 +105,7 @@
 					</thead>
 						<tbody>
 							<?php
-							$sql = "SELECT Request.RequestID, Request.RequestEmployeeID, Request.RequestDate, Request.ShipDate, Receiver.first_name as first_name, Receiver.last_name as last_name, Request_status.status_name as status_name, tbl_users.user_name as user_name FROM Request  JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN Receiver ON Request.ReceiverID = Receiver.receiver_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id WHERE is_archived = 0";
+							$sql = "SELECT Request.RequestID, Request.RequestEmployeeID, Request.RequestDate, Request.ShipDate, Receiver.first_name as first_name, Receiver.last_name as last_name, Receiver.company_name as company_name, Request_status.status_name as status_name, tbl_users.user_name as user_name FROM Request  JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN Receiver ON Request.ReceiverID = Receiver.receiver_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id WHERE is_archived = 0";
 							
 							$result = $conn->query($sql);	
 							$num_rows = mysqli_num_rows($result);
@@ -118,12 +119,12 @@
 
 									$status_name = $row['status_name'];
 										switch ($status_name) {
-											case ($status_name == "Processing" && $_SESSION['user_role_id'] == 1):
-												$btText='Finish';
-												$btId='finish'.$row['RequestID'];
-												$btCls='btn btn-danger finishBtn';
-												$btCmd='finishRequest.php?id='.$row['RequestID'];
-												break;
+											// case ($status_name == "Processing" && $_SESSION['user_role_id'] == 1):
+											// 	$btText='Finish';
+											// 	$btId='finish'.$row['RequestID'];
+											// 	$btCls='btn btn-danger finishBtn';
+											// 	$btCmd='finishRequest.php?id='.$row['RequestID'];
+											// 	break;
 											case "Completed":
 												$btText='Archive';
 												$btId='archive'.$row['RequestID'];
@@ -147,9 +148,9 @@
 
 									echo 
 									"<tr>
-									
-										<td>".$row['first_name']."  ".$row['last_name']."</td>
 										<td>".$row['RequestID']."</td>
+										<td>".$row['first_name']."  ".$row['last_name']."</td>
+										<td>".$row['company_name']."</td>
 										<td class='EmployeeColumn'>".$row['user_name']."</td>
 										<td>".$row['RequestDate']."</td>
 										<td>".$row['ShipDate']."</td>

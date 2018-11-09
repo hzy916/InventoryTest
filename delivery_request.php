@@ -348,6 +348,19 @@
             $("#productDelete").submit();
         }
 
+        //check request item number is smaller than the stock
+       
+            $deliverynumber = $_SESSION['delivery']['product_id'];
+            $sql_stock = "SELECT amount FROM pawtrails  WHERE id = " $deliverynumber;
+            $stocknumber = 
+
+            if($deliverynumber <= $stocknumber){
+
+            }else{
+                alert("The Product number you select is not enough in stock.Check inventory first, please.");
+            }
+        
+
 	//show color and size option only when user select PawTrails all in one product
 			$(document).ready(function(){
                     $("#deliverynumber").change(function(){
@@ -387,15 +400,6 @@
 
 			    });
 	</script>
-
-<?php
-      // IF they are not admin, hide the make delivery request form
-      if($_SESSION['user_role_id'] == 1 || $_SESSION['user_role_id'] == 4 ) {
-        echo('<script>$("#deliveryForm").addClass("hidedisplay");
-        </script>' );
-    }
-
-?>
 
 <?php
   $conn->close();

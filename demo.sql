@@ -96,7 +96,7 @@ CREATE TABLE Receiver (
     `company_name` varchar(255) DEFAULT NULL,
     `first_name` varchar(255) DEFAULT NULL,
     `last_name` varchar(255) DEFAULT NULL,
-    `phone` varchar(15) DEFAULT NULL,
+    `phone` varchar(30) DEFAULT NULL,
     `address1` varchar(255) DEFAULT NULL,
     `address2` varchar(255) DEFAULT NULL,
     `address3` varchar(255) DEFAULT NULL,
