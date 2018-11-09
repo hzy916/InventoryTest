@@ -2,17 +2,17 @@
     $user_id = $_SESSION['id']; 
   
 
-        $receivercompany = $_POST['receivercompany'];
-        $firstname = $_POST['firstname'];
-        $lastname = $_POST['lastname'];
-        $phonenumber = $_POST['phonenumber'];
-        $inputAddress1 = $_POST['inputAddress1'];
-        $inputAddress2 = $_POST['inputAddress2'];
-        $inputAddress3 = $_POST['inputAddress3'];
-        $inputCity = $_POST['inputCity'];
-        $inputCountry = $_POST['inputCountry'];
-        $inputPostcode = $_POST['inputPostcode'];
-        $deliverydate = $_POST['deliverydate'];
+        $receivercompany = mysqli_real_escape_string($conn,$_POST['receivercompany']);
+        $firstname =  mysqli_real_escape_string($conn,$_POST['firstname']);
+        $lastname =  mysqli_real_escape_string($conn,$_POST['lastname']);
+        $phonenumber =  mysqli_real_escape_string($conn,$_POST['phonenumber']);
+        $inputAddress1 =  mysqli_real_escape_string($conn,$_POST['inputAddress1']);
+        $inputAddress2 =  mysqli_real_escape_string($conn,$_POST['inputAddress2']);
+        $inputAddress3 = mysqli_real_escape_string($conn,$_POST['inputAddress3']);
+        $inputCity =  mysqli_real_escape_string($conn,$_POST['inputCity']);
+        $inputCountry =  mysqli_real_escape_string($conn,$_POST['inputCountry']);
+        $inputPostcode =  mysqli_real_escape_string($conn,$_POST['inputPostcode']);
+        $deliverydate =  mysqli_real_escape_string($conn,$_POST['deliverydate']);
 
 
         if (!empty($receivercompany)) {
@@ -58,9 +58,7 @@
                         alert('New Request Successfully Submitted.');
                         window.location.href='./delivery_table.php';
                         </script>";
-                      
-                     
-              
+
                     }else{
                         echo "Error " . $sql_four . ' ' . $conn->connect_error;
                         echo "<script type=\"text/javascript\">".
@@ -82,4 +80,5 @@
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
 ?>
+
 

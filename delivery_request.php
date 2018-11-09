@@ -350,19 +350,17 @@
 
 	//show color and size option only when user select PawTrails all in one product
 			$(document).ready(function(){
-                    $("#sel_product").change(function(){
-                        var sel_item=$(this).val();
+                    $("#deliverynumber").change(function(){
+                        var sel_number=$(this).val();
 						    var myData = {};
-                            myData.itemname = sel_item;
-                            // alert( myData.itemname );
+                            myData.itemnumber = sel_number;
+                            // alert( myData.itemnumber );
 
-							if (sel_item == "fed"){
-								$("#sizeOption").removeClass("hidedisplay");
-								$("#colorOption").removeClass("hidedisplay");
-							}else {
-								$("#sizeOption").addClass("hidedisplay");
-								$("#colorOption").addClass("hidedisplay");
-							}
+							// if (sel_number < ){
+							
+							// }else {
+							
+							// }
 					// });
                     
                     //	send user's select to MYSQL commands to get the stock number of the product selected
@@ -391,7 +389,6 @@
 	</script>
 
 <?php
-    
       // IF they are not admin, hide the make delivery request form
       if($_SESSION['user_role_id'] == 1 || $_SESSION['user_role_id'] == 4 ) {
         echo('<script>$("#deliveryForm").addClass("hidedisplay");

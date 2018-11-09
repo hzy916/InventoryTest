@@ -252,6 +252,7 @@ if($_GET['id'] && isset($_POST['postAction'])) {
         alert('".$myArr[$_POST['postAction']]['alert']."');
         window.location.href='./delivery_table.php';
         </script>";
+        include('mail.php');
     } else {
         echo "Error updating record: " . $conn->error;
     } 

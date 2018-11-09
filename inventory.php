@@ -154,13 +154,7 @@
 		</div>
     </div>
 
-	<script>
-		//data table sort
-		$(document).ready(function () {
-		$('#dtBasicExample').DataTable();
-		$('.dataTables_length').addClass('bs-select');
-		});
-	</script>
+
 <?php  
 
 if($_SESSION['user_role_id'] == 2 || $_SESSION['user_role_id'] == 3  ) {

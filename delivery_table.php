@@ -14,6 +14,12 @@
 	require_once('layouts/left_sidebar.php'); 
 ?>
 
+<style>
+ .highlightEmployee{
+    background-color: red!important;
+ }
+</style>
+
   <div class="content-wrapper">
     <div class="container-fluid">
       <!-- Breadcrumbs-->
@@ -98,15 +104,8 @@
 					</thead>
 						<tbody>
 							<?php
-							if($_SESSION['user_role_id'] == 1) {
-						
-							$sql = "SELECT Request.RequestID, Request.RequestDate, Request.ShipDate, Receiver.first_name as first_name, Receiver.last_name as last_name, Request_status.status_name as status_name, tbl_users.user_name as user_name FROM Request  JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN Receiver ON Request.ReceiverID = Receiver.receiver_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id WHERE is_archived = 0";
+							$sql = "SELECT Request.RequestID, Request.RequestEmployeeID, Request.RequestDate, Request.ShipDate, Receiver.first_name as first_name, Receiver.last_name as last_name, Request_status.status_name as status_name, tbl_users.user_name as user_name FROM Request  JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN Receiver ON Request.ReceiverID = Receiver.receiver_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id WHERE is_archived = 0";
 							
-							} else{
-						
-							$sql = "SELECT Request.RequestID, Request.RequestDate, Request.ShipDate, Receiver.first_name as first_name, Receiver.last_name as last_name, Request_status.status_name as status_name, tbl_users.user_name as user_name FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN Receiver ON Request.ReceiverID = Receiver.receiver_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id WHERE RequestEmployeeID = '$logged_user_id' AND is_archived = 0";
-							}
-
 							$result = $conn->query($sql);	
 							$num_rows = mysqli_num_rows($result);
 							if($result->num_rows > 0) {
@@ -139,6 +138,12 @@
 												$status_style = 'color:#DC143C;';
 												break;
 										}
+									
+									//if the request belongs to the logged in user, highlight the employee td
+									// if($row['RequestEmployeeID'] == $_SESSION['id']){
+									// 	// echo('<script>$(".EmployeeColumn").addClass("highlightEmployee");
+									// 	// 	</script>' );	
+									// }
 
 									echo 
 									"<tr>
@@ -189,12 +194,7 @@
 
 if($_SESSION['user_role_id'] == 2 || $_SESSION['user_role_id'] == 3  ) {
 	echo('<script>$("#createBtn").addClass("hidebutton");
-	// $(".OperationColumn").addClass("hidebutton");
-	$(".EmployeeColumn").addClass("hidebutton");
-	
 	</script>' );
-	
 }
-
 ?>
 <?php require_once('layouts/footer.php'); ?>	
