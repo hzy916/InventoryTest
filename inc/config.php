@@ -20,7 +20,6 @@
 	function getUserAccessRoleByID($id)
 	{
 		global $conn;
-		
 		// $query = "select user_role from tbl_user_role where  id = '$id' ";
 		
 		$query = "SELECT user_role FROM tbl_user_role WHERE id = {$id}";

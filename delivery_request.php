@@ -20,16 +20,29 @@
     $myPlist='';
 
     if($_POST) {
+        $doAction = true;
+
         switch($_POST['makeaction']) {
             case 'product': 
-                list($pId,$pName)=explode('-', $_POST['sel_product']);
-                $_SESSION['delivery'][] = [
-                    'product_id' => $pId,
-                    'productname' => $pName,
-                    'sel_color' => '/',
-                    'sel_size' => '/',
-                    'deliverynumber' => $_POST['deliverynumber'] 
-                ];
+                list($pId,$pName,$maxAmount)=explode('-', $_POST['sel_product']);
+                $dNumber = intval($_POST['deliverynumber']);
+
+                if($dNumber == 0 ){
+                    echo '<script> alert("You have to enter a valid number");</script>';
+                    $doAction = false;
+                }else if($dNumber > $maxAmount){
+                    echo '<script> alert("Out of Stock");</script>';
+                    $doAction = false;
+                } else{
+                    $_SESSION['delivery'][] = [
+                        'product_id' => $pId,
+                        'productname' => $pName,
+                        'sel_color' => '/',
+                        'sel_size' => '/',
+                        'deliverynumber' => $dNumber
+                    ];
+                }
+          
             break;
 
             case 'productDelete':
@@ -46,7 +59,6 @@
                   $sel_id = $row[0]; 
                 }
           
-                
                 $_SESSION['delivery'][] = [
                     'product_id' => $sel_id,
                     'productname' => 'PawTrails',
@@ -119,17 +131,24 @@
 
                 <div id="flyer_poster" class="tabcontent">
                     <h4>Choose Flyers or Posters</h4> 
-                    <form method="POST">
+                    <form method="POST" id="form_flyer">
                         <input type="hidden"  name="makeaction" value="product">
                         <div class="form-group row">
                             <div class="col">
                                 <label for="deliveryProduct">Product</label>
                             <br>
-                                <select name="sel_product" id="sel_product" class="form-control" required>
+                                <select name="sel_product" id="sel_product" class="form-control" onchange="checkStock();" required>
                                     <?php
-                                        $sql = mysqli_query($conn, "SELECT id, itemname FROM pawtrails  WHERE itemtype = 'flyer' OR  itemtype =  'poster'");
+                                        $j = 0;
+
+                                        $sql = mysqli_query($conn, "SELECT id, itemname, amount FROM pawtrails  WHERE itemtype = 'flyer' OR  itemtype =  'poster'");
+                                        
                                         while ($row = $sql->fetch_assoc()){
-                                            echo "<option value='".$row[id]." - ".$row['itemname']."'>" . $row['itemname'] . "</option>";
+                                            if($j == 0 ){
+                                                $thisNumber = $row[amount];
+                                            }
+                                            echo "<option amount='".$row['amount']."' value='".$row[id]." - ".$row['itemname']." - ".$row['amount']."'>" . $row['itemname'] . "</option>";
+                                            $j++;
                                         }
                                     ?>
                                 </select>
@@ -139,8 +158,17 @@
                                 <label for="deliverynumber">Number of Products</label>
                                 <input type="number" class="form-control" name="deliverynumber" id="deliverynumber" placeholder="number"  min="1" required>		
                             </div>
+                            <!-- stock number-->
+                            <div class="col">
+                                <label for="stocknumber">stock Number</label>
+                                <br>
+                           
+                             <span id="stocknumber"><?php echo $thisNumber; ?></span>
+                            </div>
+
                         </div>
-                        <input type="submit" name="AddProduct" class="btn btn-info">
+                        <!-- <input type="submit" name="AddProduct" class="btn btn-info"> -->
+                        <button type="button" name="AddProduct" onclick="checkBeforeSubmit();" class="btn btn-info">Add Product</button>
                     </form>
                 </div>
                 
@@ -184,8 +212,15 @@
                                     <label for="deliverynumber">Number of Products</label>
                                     <input type="number" class="form-control" name="deliverynumber" id="deliverynumber" placeholder="number"  min="1" required>		
                                 </div>
+
+                                 <div class="col">
+                                    <label for="deliverynumber">Stock Number</label>
+                                    <br>
+                                    <input  value="<?php echo $thisNumber; ?>" readonly>
+                             
+                                </div>
                         </div>
-                        <input type="submit" name="AddProduct" class="btn btn-info">
+                        <button type="button" name="" class="btn btn-info">AddProduct</button>
                     </form>
                 </div>
 
@@ -215,10 +250,8 @@
                         <tbody>
                         <?php    
                             if(!empty($_SESSION['delivery'])){
-                                
                                 foreach($_SESSION['delivery'] as $i=> $k) {
                                     echo "<tr>
-                                   
                                         <td>".$k['productname']."</td>
                                         <td>".$k['sel_color']."</td>
                                         <td>".$k['sel_size']."</td>
@@ -349,56 +382,36 @@
         }
 
         //check request item number is smaller than the stock
-       
-            $deliverynumber = $_SESSION['delivery']['product_id'];
-            $sql_stock = "SELECT amount FROM pawtrails  WHERE id = " $deliverynumber;
-            $stocknumber = 
+        function checkStock(){
+             
+            var e = document.getElementById("sel_product");
+      
+            var amount = e.options[e.selectedIndex].getAttribute('amount');
+            document.getElementById('stocknumber').innerHTML = amount;
+            return amount;
+        }
 
-            if($deliverynumber <= $stocknumber){
+        //
+        function checkBeforeSubmit(){
+            var qty =  document.getElementById('deliverynumber').value;
+            qty = parseInt(qty);
 
-            }else{
-                alert("The Product number you select is not enough in stock.Check inventory first, please.");
+            if(isNaN(qty) || qty == 0){
+                alert('You have to enter a valid number');
+                return false;
             }
+
+            var maxQty = checkStock();
+            if(qty > maxQty){
+                alert('Out of Stock');
+                return false;
+            }
+            document.getElementById('form_flyer').submit();
+            return;
+          
+        }
+
         
-
-	//show color and size option only when user select PawTrails all in one product
-			$(document).ready(function(){
-                    $("#deliverynumber").change(function(){
-                        var sel_number=$(this).val();
-						    var myData = {};
-                            myData.itemnumber = sel_number;
-                            // alert( myData.itemnumber );
-
-							// if (sel_number < ){
-							
-							// }else {
-							
-							// }
-					// });
-                    
-                    //	send user's select to MYSQL commands to get the stock number of the product selected
-                        $.ajax({
-                            url: 'getStockNumber.php',
-                            type: 'post',
-                            data: myData,
-                            dataType: 'json',
-                            
-                            success:function(response){
-                           
-                                    // var len = response.length;
-                                    // // var amount = response[i]['amount'];
-                                    //     $("#sel_number").empty();
-                                    //     for( var i = 0; i < len; i++){
-                                    //         var id = response[i]['id'];
-                                    //         var amount = response[i]['amount'];
-                                    //         $("#sel_number").append("<option value='"+id+"'>"+ amount +"</option>");
-                                    //     }
-                            }
-                        });
-
-					});
-
-			    });
 	</script>
 
 <?php
