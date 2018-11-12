@@ -54,11 +54,12 @@
                 $sel_color = $_POST['sel_color'];
                 $sel_size = $_POST['sel_size'];
 
-                $sql = "SELECT id FROM pawtrails  WHERE color = '$sel_color' AND size = '$sel_size'";
+                $sql = "SELECT id, amount FROM pawtrails  WHERE color = '$sel_color' AND size = '$sel_size'";
                 $result = $conn->query($sql);
                 while ($row = $result->fetch_array()) {
-                  $sel_id = $row[0]; 
-                  $maxQty = $row[1];
+                    
+                  $sel_id = $row['id']; 
+                  $maxQty = $row['amount'];
                 }
                 
                 $dNumber = intval($_POST['deliverynumber']);
@@ -188,7 +189,7 @@
                 
                 <div id="pawtrailsProduct" class="tabcontent">
                     <h4 class="mt-3">Choose PawTrails Size and Color</h4>
-                    <form method="POST">
+                    <form method="POST" id="pawtrails_form">
 
                         <input type="hidden"  name="makeaction" value="pawtrailsSelect">
 
@@ -196,9 +197,9 @@
                             <div class="col">
                                 <label for="deliveryProduct">Color</label>
                                 <br>
-                                <select name="sel_color" id="sel_color" class="form-control">
+                                <select name="sel_color" id="sel_color" class="form-control" onchange="checkPawtrailsStock();">
                             
-                                        <option value="" selected disabled hidden>Choose here</option>
+                                        <option value="0" selected disabled hidden>Choose here</option>
                                         <option value="red">red</option>
                                         <option value="black">black</option>
                                 </select>
@@ -208,7 +209,7 @@
                                 <label for="deliverynumber">Size</label>
                                 <br>
                                 <select name="sel_size" id="sel_size" class="form-control" onchange="checkPawtrailsStock();">
-                                    <option value="" selected disabled hidden>Choose here</option>
+                                    <option value="0" selected disabled hidden>Choose here</option>
                                     <option value="small">small</option>
                                     <option value="medium">medium</option>
                                     <option value="large">large</option>
@@ -219,17 +220,17 @@
                         <div class="form-group row">
                                 <div class="col">
                                     <label for="deliverynumber">Number of Products</label>
-                                    <input type="number" class="form-control" name="deliverynumber" id="deliverynumber" placeholder="number"  min="1" required>		
+                                    <input type="number" class="form-control" name="deliverynumber" id="deliverynumber2" placeholder="number"  min="1" required>		
                                 </div>
 
                                  <div class="col">
                                     <label for="deliverynumber">Stock Number</label>
                                     <br>
-                                    <span id="pawtrails_stock"><?php echo $maxQty; ?></span>
+                                    <span id="pawtrails_stock"></span>
                                     
                                 </div>
                         </div>
-                        <button type="button" name="AddProduct" class="btn btn-info">AddProduct</button>
+                        <button type="button" name="AddProduct"  onclick="checkPawTrailsBeforeSubmit();" class="btn btn-info">Add Product</button>
                     </form>
                 </div>
 
@@ -416,27 +417,57 @@
             return;
           
         }
-	</script>
 
-<?php
-         //check pawtrails stock
-         function checkPawtrailsStock(){
-            if(isset($sel_color) && isset($sel_size)){
-                alert($sel_color);
-                $sql = "SELECT amount FROM pawtrails  WHERE color = '$sel_color' AND size = '$sel_size'";
-                $result = $conn->query($sql);
-                while ($row = $result->fetch_array()) {
-                
-                $maxQty = $row[0];
-                }
-            }else{
-                $maxQty = 'select product first';
+
+   
+
+        //check pawtrails before submit
+        function checkPawTrailsBeforeSubmit(){
+            var qty =  document.getElementById('deliverynumber2').value;
+            qty = parseInt(qty);
+
+            if(isNaN(qty) || qty == 0){
+                alert('You have to enter a valid number');
+                return false;
             }
+
+            var maxQty = document.getElementById('pawtrails_stock').value;
+            if(qty > maxQty){
+                alert('Out of Stock');
+                return false;
+            }
+            document.getElementById('pawtrails_form').submit();
+            return;
         }
 
-  $conn->close();
-?>
+         //check pawtrails stock
+         function checkPawtrailsStock(){
+             var color = document.getElementById('sel_color').options[document.getElementById('sel_color').selectedIndex].value;
+             var size = document.getElementById('sel_size').options[document.getElementById('sel_size').selectedIndex].value;
 
+           if(color != '0' && size != '0'){
+              
+               jQuery.ajax ({
+                    type: 'POST',
+                    async: true,
+                    url: 'getStock.php',
+                    data: JSON.stringify({'color': color, 'size': size}),
+                    dataType: 'JSON',
+                    success: function (response) {
+                        document.getElementById('pawtrails_stock').innerHTML = JSON.stringify(response);
+                        // alert(JSON.stringify(response));
+
+                        },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        // handle ajax errors
+                        alert(JSON.stringify(xhr));
+                        }
+                    }) ;
+               return;
+           } 
+        }
+
+	</script>
 
 
 <?php require_once('layouts/footer.php'); ?>

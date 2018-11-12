@@ -1,17 +1,29 @@
 <?php
-if(isset($_POST['sel_color']) && isset($_POST['sel_size'])){
-    $sql = "SELECT amount FROM pawtrails WHERE color = '".$_POST['sel_color']."' AND WHERE size = '".$_POST['sel_size']."'";
-    $result = $conn->query($sql);
 
-    if ($result->num_rows > 0) {
+require_once('inc/config.php');
+
+$json = file_get_contents('php://input');
+
+
+$obj = json_decode($json, TRUE);
+
+
+$output = null;
+
+if(!empty( $obj['color']) && !empty($obj['size'])){
+    $sql = "SELECT amount FROM pawtrails WHERE color = '".$obj['color']."' AND size = '".$obj['size']."' LIMIT 0, 1";
+    $result = $conn->query($sql);
         while($row = $result->fetch_assoc()) {
-         
-            echo $row['amount'];
-          
-        }
+            $output = $row['amount'];
     }
-    $sql = NULL;
 }
 
+
+
+if($output === null){
+    header('HTTP/1.0 400 Bad Request');
+}else{
+    echo $output;
+}
 
 ?>
