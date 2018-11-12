@@ -9,7 +9,9 @@
 	define("DB_PASS","root");
 	define("DB_NAME","Pawtrails_inventory");
 	
-	
+
+  	session_start();
+
 	$conn = mysqli_connect(HOST,DB_USER,DB_PASS,DB_NAME);
 	
 	if(!$conn)
@@ -34,9 +36,7 @@
 	function getUserName($id)
 	{
 		global $conn;
-		
-		// $query = "select user_role from tbl_user_role where  id = '$id' ";
-		
+
 		$query = "SELECT user_name FROM tbl_users WHERE id = {$id}";
 	
 		$rs = mysqli_query($conn,$query);

@@ -1,29 +1,95 @@
-<?php 
-	session_start();
-	
-	if(!isset($_SESSION['id'],$_SESSION['user_role_id']))
-	{
-		header('location:index.php?lmsg=true');
-		exit;
-	}		
-	
-	require 'inc/config.php';
-	require_once('layouts/header.php'); 
-	require_once('layouts/left_sidebar.php');   
+<?php
+
+    require 'inc/config.php';
+
+    if(!isset($_SESSION['id'],$_SESSION['user_role_id']))
+    {
+        header('location:index.php?lmsg=true');
+        exit;
+    }		
+
+
+    require_once('layouts/header.php'); 
+    require_once('layouts/left_sidebar.php');   
+
+if($_GET['id']) {
+    $id = $_GET['id'];
+
+    $myCommReq='';
+    if(!empty($_POST['commentRequest'])){
+        $myCommReq=mysqli_real_escape_string($conn,$_POST['commentRequest']);
+    }
+
+    $myArr=array(
+        'comment'=> array(
+            'sql'=>"UPDATE Request SET Comments = '".$myCommReq."' WHERE Request.RequestID = '$id'",
+            'alert'=>'You send comments this request',
+        ),
+        'approve'=> array(
+            //get the product id and number requested, and update inventory when request is completed. 
+            'sql'=>"UPDATE Request SET RequestStatusID = 2 WHERE Request.RequestID = '$id'",
+
+            'alert'=>'You approved this request, it goes to processing status.',
+        ),
+        'decline'=> array(
+            'sql'=>"UPDATE Request SET RequestStatusID = 6 WHERE Request.RequestID = '$id'",
+            'alert'=>'You declined this request, it goes to declined status.',
+        ),
+        'delay'=> array(
+            'sql'=>"UPDATE Request SET RequestStatusID = 3 WHERE Request.RequestID = '$id'",
+            'alert'=>'You delayed this request, it goes to delayed status.',
+        ),
+        'finish'=> array(
+            'sql'=> "UPDATE Request SET RequestStatusID = 5 WHERE Request.RequestID = '$id'",
+            'alert'=>'You finished this request, it goes to completed status.',
+        ),
+        'archive'=> array(
+            'sql'=> "UPDATE Request SET is_archived = 1 WHERE Request.RequestID = '$id'",
+            'alert'=>'You archived this request, it goes to archived list.',
+        ),
+    );
+
+    if(isset($_POST['postAction'])) {
     
-    $msg = "";
+        if($_POST['postAction'] == 'approve'){
+            //get the product id and number requested, and update inventory when request is completed. 
+            $sql_updatestock = "UPDATE pawtrails JOIN Pawtrails_Request_junction ON pawtrails.id = Pawtrails_Request_junction.pawtrails_id && Pawtrails_Request_junction.request_id = '$id' SET pawtrails.amount = pawtrails.amount - Pawtrails_Request_junction.Qty"; 
+        
+            //check if update stock successfully
+            if ($conn->query($sql_updatestock) === TRUE) {
+                echo "<script>
+                alert('The related product inventory is updated!');
+                </script>";
+            } else {
+                echo "Error updating record: " . $conn->error;
+            } 
+        }
 
-    if($_GET['id']) {
-        $id = $_GET['id'];
+    
+            $sql_udpate = $myArr[$_POST['postAction']]['sql'];
+            if ($conn->query($sql_udpate) === TRUE) {
+                echo "<script>
+                alert('".$myArr[$_POST['postAction']]['alert']."');
+            
+                </script>";
+                // include('mail.php');
+            } else {
+                echo "Error updating record: " . $conn->error;
+            } 
+        }
 
+        
+        $msg = "";
+
+    
         //get all the request details
-  
+
         $sql = "SELECT Request.RequestID, Request.RequestDate, Request.ShipDate, Request_status.status_name, tbl_users.user_name FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id WHERE Request.RequestID = '{$id}'";
 
         $result = $conn->query($sql);
         
         $data = $result->fetch_assoc();
-       
+    
         //get receiver details
         $sql_two = "SELECT * FROM Receiver JOIN Request ON Receiver.receiver_id = Request.ReceiverID  WHERE Request.RequestID = '{$id}' ";
         $result_two = $conn->query($sql_two);  
@@ -32,7 +98,12 @@
         $sql_three = "SELECT pawtrails.itemname as name, pawtrails.id as id, pawtrails.color as color, pawtrails.size as size,  Pawtrails_Request_junction.Qty as quantity FROM pawtrails, Pawtrails_Request_junction WHERE Pawtrails_Request_junction.request_id = '{$id}' AND Pawtrails_Request_junction.pawtrails_id = pawtrails.id" ;
         $result_three = $conn->query($sql_three);  
     }
+
+
 ?>
+
+
+
 
   <div class="content-wrapper">
     <div class="container-fluid">
@@ -200,6 +271,10 @@
                         echo "
                         <input type='button' class='btn btn-danger operateBTN' value='Finish' onclick=\"JavaScript:makeMyAction('finish')\">
                          ";
+                    }else if($data['status_name'] == 'Completed'){
+                        echo "
+                        <input type='button' class='btn btn-info operateBTN' value='Archive' onclick=\"JavaScript:makeMyAction('archive')\">
+                         ";
                     }
 
                     ?>
@@ -221,72 +296,6 @@
           </div>
     </div>
 
-<?php
-//get comments and update in database
-// print('aaaa: '.$_POST['commentRequest']);
-// var_dump($_POST);
-// exit;
-$myCommReq='';
-if(!empty($_POST['commentRequest'])){
-    $myCommReq=mysqli_real_escape_string($conn,$_POST['commentRequest']);
-}
 
-$myArr=array(
-    'comment'=> array(
-        'sql'=>"UPDATE Request SET Comments = '".$myCommReq."' WHERE Request.RequestID = '$id'",
-        'alert'=>'You send comments this request',
-    ),
-    'approve'=> array(
-         //get the product id and number requested, and update inventory when request is completed. 
-        'sql'=>"UPDATE Request SET RequestStatusID = 2 WHERE Request.RequestID = '$id'",
-
-        'alert'=>'You approved this request, it goes to processing status.',
-    ),
-    'decline'=> array(
-        'sql'=>"UPDATE Request SET RequestStatusID = 6 WHERE Request.RequestID = '$id'",
-        'alert'=>'You declined this request, it goes to declined status.',
-    ),
-    'delay'=> array(
-        'sql'=>"UPDATE Request SET RequestStatusID = 3 WHERE Request.RequestID = '$id'",
-        'alert'=>'You delayed this request, it goes to delayed status.',
-    ),
-    'finish'=> array(
-        'sql'=> "UPDATE Request SET RequestStatusID = 5 WHERE Request.RequestID = '$id'",
-        'alert'=>'You finished this request, it goes to completed status.',
-    ),
-);
-
-if($_GET['id'] && isset($_POST['postAction'])) {
-
-    if($_POST['postAction'] == 'approve'){
-         //get the product id and number requested, and update inventory when request is completed. 
-         $sql_updatestock = "UPDATE pawtrails JOIN Pawtrails_Request_junction ON pawtrails.id = Pawtrails_Request_junction.pawtrails_id && Pawtrails_Request_junction.request_id = '$id' SET pawtrails.amount = pawtrails.amount - Pawtrails_Request_junction.Qty"; 
-       
-         //check if update stock successfully
-         if ($conn->query($sql_updatestock) === TRUE) {
-             echo "<script>
-             alert('The related product inventory is updated!');
-             </script>";
-         } else {
-             echo "Error updating record: " . $conn->error;
-         } 
-    }
-
-    $id = $_GET['id'];
-    $sql_udpate = $myArr[$_POST['postAction']]['sql'];
-    if ($conn->query($sql_udpate) === TRUE) {
-        echo "<script>
-        alert('".$myArr[$_POST['postAction']]['alert']."');
-        window.location.href='./delivery_table.php';
-        </script>";
-        include('mail.php');
-    } else {
-        echo "Error updating record: " . $conn->error;
-    } 
-    $conn->close();
-}
-
-
-?>
 
 <?php require_once('layouts/footer.php'); ?>	

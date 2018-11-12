@@ -1,6 +1,7 @@
 <?php 
-	session_start();
+
 	
+	require_once('inc/config.php');
 	if(!isset($_SESSION['id'],$_SESSION['user_role_id']))
 	{
 		header('location:index.php?lmsg=true');
@@ -9,7 +10,6 @@
 	
 	$logged_user_id = $_SESSION['id'];
 
-	require_once('inc/config.php');
 	require_once('layouts/header.php'); 
 	require_once('layouts/left_sidebar.php'); 
 ?>

@@ -1,6 +1,6 @@
 <?php 
-	session_start();
-	
+
+	require_once('inc/config.php');
 	if(!isset($_SESSION['id'],$_SESSION['user_role_id']))
 	{
 		header('location:index.php?lmsg=true');
@@ -9,7 +9,7 @@
 	
 	$logged_user_id = $_SESSION['id'];
 
-	require_once('inc/config.php');
+
 	require_once('layouts/header.php'); 
 	require_once('layouts/left_sidebar.php'); 
 ?>
@@ -125,11 +125,12 @@
 											// 	$btCls='btn btn-danger finishBtn';
 											// 	$btCmd='finishRequest.php?id='.$row['RequestID'];
 											// 	break;
+
 											case "Completed":
-												$btText='Archive';
-												$btId='archive'.$row['RequestID'];
-												$btCls='btn btn-primary archiveBtn';
-												$btCmd='archiveRequest.php?id='.$row['RequestID'];
+												// $btText='Archive';
+												// $btId='archive'.$row['RequestID'];
+												// $btCls='btn btn-primary archiveBtn';
+												// $btCmd='archiveRequest.php?id='.$row['RequestID'];
 												$status_style = 'color:#008000;';
 												break;
 											case "Delayed":
@@ -139,12 +140,7 @@
 												$status_style = 'color:#DC143C;';
 												break;
 										}
-									
-									//if the request belongs to the logged in user, highlight the employee td
-									// if($row['RequestEmployeeID'] == $_SESSION['id']){
-									// 	// echo('<script>$(".EmployeeColumn").addClass("highlightEmployee");
-									// 	// 	</script>' );	
-									// }
+				
 
 									echo 
 									"<tr>

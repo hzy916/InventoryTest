@@ -1,7 +1,7 @@
 
 <?php
-	session_start();
 
+    require_once('inc/config.php');
 	if(!isset($_SESSION['id'],$_SESSION['user_role_id']))
 	{
 		header('location:index.php?lmsg=true');
@@ -11,7 +11,7 @@
 
     $sql_four = '';
 
-    require_once('inc/config.php');
+  
 	require_once('layouts/header.php');
     require_once('layouts/left_sidebar.php');
     
@@ -19,6 +19,7 @@
 
     $myPlist='';
 
+  
     if($_POST) {
         $doAction = true;
 
@@ -57,15 +58,26 @@
                 $result = $conn->query($sql);
                 while ($row = $result->fetch_array()) {
                   $sel_id = $row[0]; 
+                  $maxQty = $row[1];
                 }
-          
-                $_SESSION['delivery'][] = [
-                    'product_id' => $sel_id,
-                    'productname' => 'PawTrails',
-                    'sel_color' => $sel_color,
-                    'sel_size' => $sel_size,
-                    'deliverynumber' => $_POST['deliverynumber'] 
-                ];
+                
+                $dNumber = intval($_POST['deliverynumber']);
+
+                if($dNumber == 0 ){
+                    echo '<script> alert("You have to enter a valid number");</script>';
+                    $doAction = false;
+                }else if($dNumber > $maxQty){
+                    echo '<script> alert("Out of Stock");</script>';
+                    $doAction = false;
+                } else{
+                    $_SESSION['delivery'][] = [
+                        'product_id' => $sel_id,
+                        'productname' => 'PawTrails',
+                        'sel_color' => $sel_color,
+                        'sel_size' => $sel_size,
+                        'deliverynumber' => $dNumber
+                    ];
+                }
             break;
 
             case 'address':
@@ -80,6 +92,8 @@
             break;
         }
     }
+
+
  
 ?>
 
@@ -145,9 +159,9 @@
                                         
                                         while ($row = $sql->fetch_assoc()){
                                             if($j == 0 ){
-                                                $thisNumber = $row[amount];
+                                                $thisNumber = $row['amount'];
                                             }
-                                            echo "<option amount='".$row['amount']."' value='".$row[id]." - ".$row['itemname']." - ".$row['amount']."'>" . $row['itemname'] . "</option>";
+                                            echo "<option amount='".$row['amount']."' value='".$row['id']." - ".$row['itemname']." - ".$row['amount']."'>" . $row['itemname'] . "</option>";
                                             $j++;
                                         }
                                     ?>
@@ -183,12 +197,7 @@
                                 <label for="deliveryProduct">Color</label>
                                 <br>
                                 <select name="sel_color" id="sel_color" class="form-control">
-                                    <?php
-                                        // $sql = mysqli_query($conn, "SELECT * FROM pawtrails  WHERE itemtype = 'pawtrails'");
-                                        // while ($row = $sql->fetch_assoc()){
-                                        //     echo "<option value='".$row[id]." - ".$row['itemname']."'>" . $row['itemname'] . "</option>";
-                                        // }
-                                    ?>
+                            
                                         <option value="" selected disabled hidden>Choose here</option>
                                         <option value="red">red</option>
                                         <option value="black">black</option>
@@ -198,7 +207,7 @@
                             <div class="col">
                                 <label for="deliverynumber">Size</label>
                                 <br>
-                                <select name="sel_size" id="sel_size" class="form-control">
+                                <select name="sel_size" id="sel_size" class="form-control" onchange="checkPawtrailsStock();">
                                     <option value="" selected disabled hidden>Choose here</option>
                                     <option value="small">small</option>
                                     <option value="medium">medium</option>
@@ -216,11 +225,11 @@
                                  <div class="col">
                                     <label for="deliverynumber">Stock Number</label>
                                     <br>
-                                    <input  value="<?php echo $thisNumber; ?>" readonly>
-                             
+                                    <span id="pawtrails_stock"><?php echo $maxQty; ?></span>
+                                    
                                 </div>
                         </div>
-                        <button type="button" name="" class="btn btn-info">AddProduct</button>
+                        <button type="button" name="AddProduct" class="btn btn-info">AddProduct</button>
                     </form>
                 </div>
 
@@ -286,7 +295,7 @@
                     <div class="form-group row">
                         <div class="col">
                             <label for="receivercompany">Receiver's Company</label>
-                            <input type="text" class="form-control" name="receivercompany" placeholder="receiver company" onchange="checkDate()">
+                            <input type="text" class="form-control" name="receivercompany" placeholder="receiver company">
                         </div>
                         <div class="col">
                             <label for="phonenumber">Phone Number</label>
@@ -314,11 +323,11 @@
 
                         <div class="form-group col-md-4">
                             <label for="inputAddress">Address2</label>
-                            <input type="text" class="form-control" name="inputAddress2" placeholder="1234 Main St" required>
+                            <input type="text" class="form-control" name="inputAddress2" placeholder="1234 Main St">
                         </div>
                         <div class="form-group col-md-4">
                             <label for="inputAddress">Address3</label>
-                            <input type="text" class="form-control" name="inputAddress3" placeholder="1234 Main St" required>
+                            <input type="text" class="form-control" name="inputAddress3" placeholder="1234 Main St">
                         </div>
                     </div>
 
@@ -357,8 +366,6 @@
 
     <script type="text/javascript">
         //check ship date to be at least one day after today
-
-
         //open selection form
         function openSelectionForm(evt, productname) {
             var i, tabcontent, tablinks;
@@ -373,8 +380,7 @@
             document.getElementById(productname).style.display = "block";
             evt.currentTarget.className += " active";
         }
-
-        
+ 
         //Remove selected product from the session
         function deleteThisProduct(idP){
             $("#prod2del").val(idP);
@@ -410,11 +416,24 @@
             return;
           
         }
-
-        
 	</script>
 
 <?php
+         //check pawtrails stock
+         function checkPawtrailsStock(){
+            if(isset($sel_color) && isset($sel_size)){
+                alert($sel_color);
+                $sql = "SELECT amount FROM pawtrails  WHERE color = '$sel_color' AND size = '$sel_size'";
+                $result = $conn->query($sql);
+                while ($row = $result->fetch_array()) {
+                
+                $maxQty = $row[0];
+                }
+            }else{
+                $maxQty = 'select product first';
+            }
+        }
+
   $conn->close();
 ?>
 
