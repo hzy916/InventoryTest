@@ -136,6 +136,7 @@
     <!-- /.container-fluid-->
 
 
-<?php require_once('layouts/footer.php'); 
-    $conn->close();
+<?php 
+require_once('layouts/footer.php'); 
+   
 ?>	

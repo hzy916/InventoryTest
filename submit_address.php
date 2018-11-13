@@ -12,13 +12,14 @@
         $inputCountry =  mysqli_real_escape_string($conn,$_POST['inputCountry']);
         $inputPostcode =  mysqli_real_escape_string($conn,$_POST['inputPostcode']);
         $deliverydate =  mysqli_real_escape_string($conn,$_POST['deliverydate']);
+        $receiverEmail =  mysqli_real_escape_string($conn,$_POST['receiverEmail']);
 
 
         if (!empty($receivercompany)) {
-            $sql = "INSERT INTO Receiver (company_name, first_name, last_name, phone, address1, address2, address3, city, country, postalcode) VALUES ('$receivercompany', '$firstname',  '$lastname', '$phonenumber', '$inputAddress1', '$inputAddress2','$inputAddress3', '$inputCity', '$inputCountry', '$inputPostcode')";
+            $sql = "INSERT INTO Receiver (company_name, first_name, last_name, phone, address1, address2, address3, city, country, postalcode, receiver_email ) VALUES ('$receivercompany', '$firstname',  '$lastname', '$phonenumber', '$inputAddress1', '$inputAddress2','$inputAddress3', '$inputCity', '$inputCountry', '$inputPostcode', '$receiverEmail')";
        
         } else {
-            $sql = "INSERT INTO Receiver (first_name, last_name, phone, address1, address2, address3, city, country, postalcode) VALUES ('$firstname',  '$lastname', '$phonenumber', '$inputAddress1', '$inputAddress2','$inputAddress3', '$inputCity', '$inputCountry', '$inputPostcode')";
+            $sql = "INSERT INTO Receiver (first_name, last_name, phone, address1, address2, address3, city, country, postalcode, receiver_email) VALUES ('$firstname',  '$lastname', '$phonenumber', '$inputAddress1', '$inputAddress2','$inputAddress3', '$inputCity', '$inputCountry', '$inputPostcode','$receiverEmail')";
        
         }
        

@@ -214,6 +214,7 @@ if($_GET['id']) {
 
                                                 <tr>
                                                     <td> <label><strong>Phone Number:</strong> </label>".$row_two['phone']."</td>
+                                                    <td> <label><strong>Receiver Email:</strong> </label>".$row_two['receiver_email']."</td>
                                                 </tr>
 
                                                 <tr>
@@ -230,7 +231,7 @@ if($_GET['id']) {
                                                     <td> <label><strong>Postal code:</strong> </label>".$row_two['postalcode']."</td>
                                                 </tr>
                                                 <tr>
-                                                    <td> <label><strong>Comments:</strong> </label>".$row_two['Comments']."</td>
+                                                    <td> <label><strong>Submitted Comments:</strong> </label>".$row_two['Comments']."</td>
                                                     <td> </td>
                                                 </tr>
                                         

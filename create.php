@@ -139,7 +139,7 @@
                 // $msg = "Updating failed.";
                 echo "Error " . $sql . ' ' . $conn->connect_error;
             }
-            $conn->close();
+        
         } else {
             echo "<script>
             alert('Number should be positive integers.');

@@ -28,20 +28,28 @@
                 list($pId,$pName,$maxAmount)=explode('-', $_POST['sel_product']);
                 $dNumber = intval($_POST['deliverynumber']);
 
-                if($dNumber == 0 ){
-                    echo '<script> alert("You have to enter a valid number");</script>';
-                    $doAction = false;
-                }else if($dNumber > $maxAmount){
-                    echo '<script> alert("Out of Stock");</script>';
-                    $doAction = false;
-                } else{
-                    $_SESSION['delivery'][] = [
-                        'product_id' => $pId,
-                        'productname' => $pName,
-                        'sel_color' => '/',
-                        'sel_size' => '/',
-                        'deliverynumber' => $dNumber
-                    ];
+                switch(true) {
+                    case ($dNumber == 0):
+                        echo '<script> alert("You have to enter a valid number");</script>';
+                        $doAction = false;
+                    break;
+                    case ($dNumber > $maxAmount):
+                        echo '<script> alert("Out of Stock");</script>';
+                        $doAction = false;
+                    break;
+                    case ($dNumber < 0):
+                        echo '<script> alert("You have to enter a positive number");</script>';
+                        $doAction = false;
+                    break;
+                    case ($dNumber < $maxAmount && $dNumber > 0):
+                        $_SESSION['delivery'][] = [
+                            'product_id' => $pId,
+                            'productname' => $pName,
+                            'sel_color' => '/',
+                            'sel_size' => '/',
+                            'deliverynumber' => $dNumber
+                        ];
+                    break;
                 }
           
             break;
@@ -51,34 +59,48 @@
             break;
 
             case 'pawtrailsSelect':
-                $sel_color = $_POST['sel_color'];
-                $sel_size = $_POST['sel_size'];
+                   
+                if(!empty($_POST['sel_color'])&& !empty( $_POST['sel_size'])){
+                    $sel_color = $_POST['sel_color'];
+                    $sel_size = $_POST['sel_size'];
 
-                $sql = "SELECT id, amount FROM pawtrails  WHERE color = '$sel_color' AND size = '$sel_size'";
-                $result = $conn->query($sql);
-                while ($row = $result->fetch_array()) {
+                    $sql = "SELECT id, amount FROM pawtrails  WHERE color = '$sel_color' AND size = '$sel_size'";
+                    $result = $conn->query($sql);
+                    while ($row = $result->fetch_array()) {
+                        
+                    $sel_id = $row['id']; 
+                    $maxQty = $row['amount'];
+                    }
                     
-                  $sel_id = $row['id']; 
-                  $maxQty = $row['amount'];
-                }
-                
-                $dNumber = intval($_POST['deliverynumber']);
+                    $dNumber = intval($_POST['deliverynumber']);
 
-                if($dNumber == 0 ){
-                    echo '<script> alert("You have to enter a valid number");</script>';
-                    $doAction = false;
-                }else if($dNumber > $maxQty){
-                    echo '<script> alert("Out of Stock");</script>';
-                    $doAction = false;
-                } else{
-                    $_SESSION['delivery'][] = [
-                        'product_id' => $sel_id,
-                        'productname' => 'PawTrails',
-                        'sel_color' => $sel_color,
-                        'sel_size' => $sel_size,
-                        'deliverynumber' => $dNumber
-                    ];
+                    switch(true) {
+                        case ($dNumber == 0):
+                            echo '<script> alert("You have to enter a valid number");</script>';
+                            $doAction = false;
+                        break;
+                        case ($dNumber > $maxQty):
+                            echo '<script> alert("Out of Stock");</script>';
+                            $doAction = false;
+                        break;
+                        case ($dNumber < 0):
+                            echo '<script> alert("You have to enter a positive number");</script>';
+                            $doAction = false;
+                        break;
+                        case ($dNumber < $maxQty && $dNumber > 0):
+                            $_SESSION['delivery'][] = [
+                                'product_id' => $sel_id,
+                                'productname' => 'PawTrails',
+                                'sel_color' => $sel_color,
+                                'sel_size' => $sel_size,
+                                'deliverynumber' => $dNumber
+                            ];
+                        break;
+                    }  
+                }else{
+                    echo '<script> alert("Please select product first.");</script>';
                 }
+             
             break;
 
             case 'address':
@@ -194,7 +216,7 @@
                         <input type="hidden"  name="makeaction" value="pawtrailsSelect">
 
                         <div class="form-group row">
-                            <div class="col">
+                            <div class="col ss-item-required">
                                 <label for="deliveryProduct">Color</label>
                                 <br>
                                 <select name="sel_color" id="sel_color" class="form-control" onchange="checkPawtrailsStock();">
@@ -205,7 +227,7 @@
                                 </select>
                             </div>
 
-                            <div class="col">
+                            <div class="col ss-item-required">
                                 <label for="deliverynumber">Size</label>
                                 <br>
                                 <select name="sel_size" id="sel_size" class="form-control" onchange="checkPawtrailsStock();">
@@ -218,12 +240,12 @@
                         </div>
 
                         <div class="form-group row">
-                                <div class="col">
+                                <div class="col ss-item-required">
                                     <label for="deliverynumber">Number of Products</label>
                                     <input type="number" class="form-control" name="deliverynumber" id="deliverynumber2" placeholder="number"  min="1" required>		
                                 </div>
 
-                                 <div class="col">
+                                 <div class="col ss-item-required">
                                     <label for="deliverynumber">Stock Number</label>
                                     <br>
                                     <span id="pawtrails_stock"></span>
@@ -301,6 +323,10 @@
                         <div class="col">
                             <label for="phonenumber">Phone Number</label>
                             <input type="text" class="form-control" name="phonenumber" placeholder="#####" required>
+                        </div>
+                        <div class="col">
+                            <label for="receiverEmail">Receiver Email</label>
+                            <input type="email" class="form-control" name="receiverEmail" placeholder="receiver email" required>
                         </div>
                     </div>
 
@@ -419,13 +445,19 @@
         }
 
 
-   
-
         //check pawtrails before submit
         function checkPawTrailsBeforeSubmit(){
+            // var fields = $(".ss-item-required")
+            // .find("select, input").serializeArray();
+            
+            // $.each(fields, function(i, field) {
+            //     if (!field.value)
+            //     alert(field.name + ' is required');
+            // }); 
+
             var qty =  document.getElementById('deliverynumber2').value;
             qty = parseInt(qty);
-
+            
             if(isNaN(qty) || qty == 0){
                 alert('You have to enter a valid number');
                 return false;
@@ -434,9 +466,10 @@
             var maxQty = document.getElementById('pawtrails_stock').value;
             if(qty > maxQty){
                 alert('Out of Stock');
-                return false;
-            }
-            document.getElementById('pawtrails_form').submit();
+                // return false;
+            } else{
+                document.getElementById('pawtrails_form').submit();
+            } 
             return;
         }
 
