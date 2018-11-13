@@ -14,8 +14,6 @@
 	require_once('layouts/left_sidebar.php'); 
 ?>
 
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <div class="content-wrapper">
     <div class="container-fluid">
       <!-- Breadcrumbs-->
@@ -32,10 +30,9 @@
 			<div>
 			<div class="card card-body">
 			<h3>Request Items List</h3>
-			<table class='table table-bordered' id='requestProductTable' width='100%' cellspacing='0'>
+			<table class="table table-bordered table-sm table-hover" id='requestProductTable' width='100%' cellspacing='0'>
 				<thead>
 					<tr>
-					
 						<th>item id</th>
 						<th>item Name</th>
 						<th>Size</th>
@@ -86,7 +83,7 @@
 
 		<div class="card-body">
 			<div class="table-responsive">
-				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+				<table class="table table-bordered" id="archivedTable" width="100%" cellspacing="0">
 					<thead>
 						<tr>
 							<th>Receiver Name</th>
@@ -149,9 +146,14 @@
             </div>
 		</div>
     </div>
-    <!-- /.container-fluid-->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 	<script>
+		//table pagination
+			$(document).ready(function () {
+			$('#archivedTable').DataTable();
+		});
+
+
 		function GetRequestID(idR){
 			$("#req2display").val(idR);
 			$("#displayRequest").submit();

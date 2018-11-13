@@ -14,11 +14,6 @@
 	require_once('layouts/left_sidebar.php'); 
 ?>
 
-<style>
- .highlightEmployee{
-    background-color: red!important;
- }
-</style>
 
   <div class="content-wrapper">
     <div class="container-fluid">
@@ -36,7 +31,7 @@
 		<div>
 			<div class="card card-body">
 			<h3>Request Items List</h3>
-			<table class='table table-bordered' id='requestProductTable' width='100%' cellspacing='0'>
+			<table class="table table-bordered table-sm table-hover" id='requestProductTable' width='100%' cellspacing='0'>
 				<thead>
 					<tr>
 						<th>item type</th>
@@ -88,8 +83,8 @@
 		</div>
 
 		<div class="card-body">
-			<div class="table-responsive">
-				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+			<div class="table-responsive ">
+				<table id="requestTable" class="table table-bordered table-sm table-hover" width="100%" cellspacing="0">
 					<thead>
 						<tr>
 							<th>Request ID</th>
@@ -119,18 +114,8 @@
 
 									$status_name = $row['status_name'];
 										switch ($status_name) {
-											// case ($status_name == "Processing" && $_SESSION['user_role_id'] == 1):
-											// 	$btText='Finish';
-											// 	$btId='finish'.$row['RequestID'];
-											// 	$btCls='btn btn-danger finishBtn';
-											// 	$btCmd='finishRequest.php?id='.$row['RequestID'];
-											// 	break;
-
 											case "Completed":
-												// $btText='Archive';
-												// $btId='archive'.$row['RequestID'];
-												// $btCls='btn btn-primary archiveBtn';
-												// $btCmd='archiveRequest.php?id='.$row['RequestID'];
+									
 												$status_style = 'color:#008000;';
 												break;
 											case "Delayed":
@@ -177,9 +162,14 @@
             </div>
 		</div>
     </div>
-    <!-- /.container-fluid-->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script>
+ 
+
+	<script type="text/javascript">
+			//table pagination
+			$(document).ready(function () {
+			$('#requestTable').DataTable();
+		});
+
 		function GetRequestID(idR){
 			$("#req2display").val(idR);
 			$("#displayRequest").submit();

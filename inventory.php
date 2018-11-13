@@ -11,8 +11,6 @@
 	require_once('layouts/header.php'); 
 	require_once('layouts/left_sidebar.php'); 
 ?>
-    <!-- /.container-fluid-->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 
   <div class="content-wrapper">
@@ -45,32 +43,32 @@
 		<div class="card-body">
 			<div class="table-responsive">
 				<h5>PawTrails All In One GPS Tracker</h5>
-				<table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+				<table class="table datatable table-striped table-bordered table-sm table-hover" cellspacing="0" width="100%">
 					<thead>
 						<tr>
 							<th class="th-sm">ID
-								<i class="fa fa-sort float-right" aria-hidden="true"></i>
+							
 							</th>
 							<th class="th-sm">
 								item name
-								<i class="fa fa-sort float-right" aria-hidden="true"></i>
+							
 							</th>
 							<th class="th-sm">
 								color
-								<i class="fa fa-sort float-right" aria-hidden="true"></i>
+							
 							</th>
 							
 							<th class="th-sm">
 								size
-								<i class="fa fa-sort float-right" aria-hidden="true"></i>
+							
 							</th>
 							<th class="th-sm">
 								Quantity
-								<i class="fa fa-sort float-right" aria-hidden="true"></i>
+						
 							</th>
 							<th class="th-sm">
 								Update date
-								<i class="fa fa-sort float-right" aria-hidden="true"></i>
+							
 							</th>
 							<th class="OperationColumn th-sm">operation</th>
 						</tr>
@@ -113,7 +111,7 @@
 
 			  <div class="table-responsive">
 			  	<h5>PawTrails Posters and Flyers</h5>
-				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+				<table  class="table datatable table-striped table-bordered table-sm table-hover" id="flyerTable" width="100%" cellspacing="0">
 					<thead>
 						<tr>
 							<th>ID</th>
@@ -154,6 +152,10 @@
 		</div>
     </div>
 
+<script>
+$('#flyerTable').dataTable();
+</script>
+	
 
 <?php  
 

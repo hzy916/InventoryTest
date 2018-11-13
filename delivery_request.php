@@ -9,17 +9,10 @@
         $requestUserID = $_SESSION['id'];
 	}
 
-    $sql_four = '';
-
-  
 	require_once('layouts/header.php');
     require_once('layouts/left_sidebar.php');
     
-    $msg = "";
 
-    $myPlist='';
-
-  
     if($_POST) {
         $doAction = true;
 
@@ -266,7 +259,7 @@
                 <!-- table to show selected product from the session -->
                 <br>
                 <h4>Request Item List</h4>
-                <p><?php echo $msg ?></p>
+ 
                 <div class="table-responsive">
                     <table class="table table-bordered" id="requestProductTable" width="100%" cellspacing="0">
                         <thead>
@@ -305,21 +298,20 @@
 
                 <form action="delivery_request.php" method="POST">
                 <input type="hidden"  name="makeaction" value="address">
-                <!-- <input type="text" name="myPlist" value="<?php echo $myPlist; ?>">
-                 -->
+             
                     <div class="form-group row">
                         <div class="col">
                             <label for="applicantName">Shipping Date</label>
                             <input id="date" type="date" class="form-control" name="deliverydate" placeholder="Enter date" required>
                         </div>
-                    </div>
-
-                            
-                    <div class="form-group row">
                         <div class="col">
                             <label for="receivercompany">Receiver's Company</label>
                             <input type="text" class="form-control" name="receivercompany" placeholder="receiver company">
                         </div>
+                    </div>
+
+                            
+                    <div class="form-group row">
                         <div class="col">
                             <label for="phonenumber">Phone Number</label>
                             <input type="text" class="form-control" name="phonenumber" placeholder="#####" required>
@@ -447,14 +439,6 @@
 
         //check pawtrails before submit
         function checkPawTrailsBeforeSubmit(){
-            // var fields = $(".ss-item-required")
-            // .find("select, input").serializeArray();
-            
-            // $.each(fields, function(i, field) {
-            //     if (!field.value)
-            //     alert(field.name + ' is required');
-            // }); 
-
             var qty =  document.getElementById('deliverynumber2').value;
             qty = parseInt(qty);
             
