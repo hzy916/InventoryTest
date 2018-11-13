@@ -136,16 +136,18 @@
 							}
 							?>
 
-							<form id="displayRequest" method="POST">
-								<input type="hidden"  name="makeaction" value="displayRequest">
-								<input id="req2display" type="hidden"  name="req2display" value="">
-							</form>
+						
 					</tbody>
 				</table>
               </div>
             </div>
 		</div>
     </div>
+
+		<form id="displayRequest" method="POST">
+			<input type="hidden"  name="makeaction" value="displayRequest">
+			<input id="req2display" type="hidden"  name="req2display" value="">
+		</form>
 
 	<script>
 		//table pagination

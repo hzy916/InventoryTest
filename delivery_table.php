@@ -152,28 +152,32 @@
 							}
 							?>
 
-							<form id="displayRequest" method="POST">
-								<input type="hidden"  name="makeaction" value="displayRequest">
-								<input id="req2display" type="hidden"  name="req2display" value="">
-							</form>
+							
 					</tbody>
 				</table>
               </div>
             </div>
 		</div>
     </div>
+
+	<form id="displayRequest" method="POST">
+		<input type="hidden"  name="makeaction" value="displayRequest">
+		<input id="req2display" type="hidden"  name="req2display" value="">
+	</form>
  
 
 	<script type="text/javascript">
-			//table pagination
-			$(document).ready(function () {
-			$('#requestTable').DataTable();
-		});
 
 		function GetRequestID(idR){
 			$("#req2display").val(idR);
 			$("#displayRequest").submit();
 		}
+			//table pagination
+		$(document).ready(function () {
+			$('#requestTable').DataTable();
+		});
+
+	
 	</script>
 
 
