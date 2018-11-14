@@ -141,9 +141,9 @@
             <h1>Delivery Requests</h1>
             <hr>
             <p>You are login as <strong><?php echo getUserAccessRoleByID($_SESSION['user_role_id']); ?></strong></p>
-            <ul>
-                <p>Please select the product you request</p>
-            </ul>
+          
+             
+      
 
         <!-- DataTables Example -->
         <div class="card mb-3" id="deliveryForm">
@@ -153,6 +153,8 @@
             </div>
 
             <div class="card-body tab-content">
+
+               <h5>Please select the product you request.</h5> 
                 <!--button to select which type of product you request-->
                 <div class="tab">
                     <button class="tablinks btn btn-success" onclick="openSelectionForm(event, 'flyer_poster')">Flyers or Posters</button>
@@ -160,7 +162,7 @@
                 </div>
 
                 <div id="flyer_poster" class="tabcontent">
-                    <h4>Choose Flyers or Posters</h4> 
+                 
                     <form method="POST" id="form_flyer">
                         <input type="hidden"  name="makeaction" value="product">
                         <div class="form-group row">

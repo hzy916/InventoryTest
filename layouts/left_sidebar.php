@@ -33,12 +33,12 @@
 			  </a>
 			</li>
 			
-			<!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-			  <a class="nav-link" href="#">
+			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
+			  <a class="nav-link" href="customize_item_request.php">
 				<i class="fa fa-fw fa-circle-o-notch"></i>
-				<span class="nav-link-text">Categories</span>
+				<span class="nav-link-text">Ask Customised Items</span>
 			  </a>
-			</li> -->
+			</li>
 		
         <!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="" data-parent="#exampleAccordion">

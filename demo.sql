@@ -154,3 +154,25 @@ create table Pawtrails_Request_junction
 
 )ENGINE=INNODB;
 
+
+/**Delivery Request table creation**/
+CREATE TABLE CustomRequest (
+    `customrequestID` int(11) NOT NULL AUTO_INCREMENT,
+    `c_RequestDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `UseDate` date DEFAULT NULL,
+    `updateDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `c_RequestStatusID` INT(11)  NOT NULL ,
+    `c_RequestEmployeeID` INT(11) NOT NULL,
+    `c_AdminComments` varchar(255),
+    `c_EmployeeComments` varchar(255),
+    `voucherCode` varchar(255),
+    `companyName` varchar(255),
+    `uploadLogo` varchar(255),
+    `quantity` int(11) DEFAULT NULL,
+    `itemType` varchar(255),
+    `c_is_archived` boolean DEFAULT 0,
+
+    PRIMARY KEY (`customrequestID`), 
+    FOREIGN KEY (`c_RequestStatusID`) REFERENCES Request_status(`status_id`) ,
+	  FOREIGN KEY (`c_RequestEmployeeID`) REFERENCES tbl_users(`id`) 
+)ENGINE=INNODB;

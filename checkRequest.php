@@ -79,11 +79,9 @@ if($_GET['id']) {
                 echo "Error updating record: " . $conn->error;
             } 
         }
-
-        
+ 
         $msg = "";
 
-    
         //get all the request details
 
         $sql = "SELECT Request.RequestID, Request.RequestDate, Request.ShipDate, Request_status.status_name, tbl_users.user_name,tbl_users.email FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id WHERE Request.RequestID = '{$id}'";
@@ -119,8 +117,6 @@ if($_GET['id']) {
          }
     }
 ?>
-
-
 
 
   <div class="content-wrapper">
