@@ -118,7 +118,7 @@
 							<th>item name</th>
 							<th>Quantity</th>
 							<th>Update date</th>
-							<th class="OperationColumn">operation</th>
+							<th class="OperationColumn no-sort">operation</th>
 						</tr>
 					</thead>
 		
@@ -153,7 +153,11 @@
     </div>
 
 <script>
-$('#flyerTable').dataTable();
+$('#flyerTable').dataTable({
+				columnDefs: [
+					{ targets: 'no-sort', orderable: false }
+				]
+			});
 </script>
 	
 

@@ -91,7 +91,7 @@
 							<th class="EmployeeColumn">Employee</th>
 							<th>Submit date</th>
 							<th>Ship date</th>
-                            <th>Request Items</th>
+							<th class="no-sort">Request Items</th>
 							<th>Status</th>
 						</tr>
 					</thead>
@@ -152,7 +152,11 @@
 	<script>
 		//table pagination
 			$(document).ready(function () {
-			$('#archivedTable').DataTable();
+			$('#archivedTable').DataTable({
+				columnDefs: [
+					{ targets: 'no-sort', orderable: false }
+				]
+			});
 		});
 
 

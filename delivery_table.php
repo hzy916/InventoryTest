@@ -93,9 +93,9 @@
 							<th class="EmployeeColumn">Employee</th>
 							<th>Submit date</th>
 							<th>Ship date</th>
-                            <th>Request Items</th>
+                            <th class="no-sort">Request Items</th>
 							<th>Status</th>
-							<th class="OperationColumn">operation</th>
+							<th class="OperationColumn no-sort">operation</th>
 						</tr>
 					</thead>
 						<tbody>
@@ -174,7 +174,11 @@
 		}
 			//table pagination
 		$(document).ready(function () {
-			$('#requestTable').DataTable();
+			$('#requestTable').DataTable({
+				columnDefs: [
+					{ targets: 'no-sort', orderable: false }
+				]
+			});
 		});
 
 	

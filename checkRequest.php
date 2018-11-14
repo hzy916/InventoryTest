@@ -50,7 +50,8 @@ if($_GET['id']) {
     );
 
     if(isset($_POST['postAction'])) {
-    
+        $send_email_action = false;
+
         if($_POST['postAction'] == 'approve'){
             //get the product id and number requested, and update inventory when request is completed. 
             $sql_updatestock = "UPDATE pawtrails JOIN Pawtrails_Request_junction ON pawtrails.id = Pawtrails_Request_junction.pawtrails_id && Pawtrails_Request_junction.request_id = '$id' SET pawtrails.amount = pawtrails.amount - Pawtrails_Request_junction.Qty"; 
@@ -58,8 +59,11 @@ if($_GET['id']) {
             //check if update stock successfully
             if ($conn->query($sql_updatestock) === TRUE) {
                 echo "<script>
-                alert('The related product inventory is updated!');
+                alert('The related product inventory is updated!'); 
                 </script>";
+                // include 'mail.php';
+            
+
             } else {
                 echo "Error updating record: " . $conn->error;
             } 
@@ -68,11 +72,9 @@ if($_GET['id']) {
     
             $sql_udpate = $myArr[$_POST['postAction']]['sql'];
             if ($conn->query($sql_udpate) === TRUE) {
-                echo "<script>
-                alert('".$myArr[$_POST['postAction']]['alert']."');
-            
-                </script>";
-                // include('mail.php');
+
+                $send_email_action = true;
+
             } else {
                 echo "Error updating record: " . $conn->error;
             } 
@@ -84,7 +86,7 @@ if($_GET['id']) {
     
         //get all the request details
 
-        $sql = "SELECT Request.RequestID, Request.RequestDate, Request.ShipDate, Request_status.status_name, tbl_users.user_name FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id WHERE Request.RequestID = '{$id}'";
+        $sql = "SELECT Request.RequestID, Request.RequestDate, Request.ShipDate, Request_status.status_name, tbl_users.user_name,tbl_users.email FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id WHERE Request.RequestID = '{$id}'";
 
         $result = $conn->query($sql);
         
@@ -96,10 +98,26 @@ if($_GET['id']) {
 
         //get request item list
         $sql_three = "SELECT pawtrails.itemname as name, pawtrails.id as id, pawtrails.color as color, pawtrails.size as size,  Pawtrails_Request_junction.Qty as quantity FROM pawtrails, Pawtrails_Request_junction WHERE Pawtrails_Request_junction.request_id = '{$id}' AND Pawtrails_Request_junction.pawtrails_id = pawtrails.id" ;
+       
         $result_three = $conn->query($sql_three);  
+
+
+     
+         if(isset($send_email_action)){
+              //sending emails after status changed
+
+                $output = $data['user_name'] . '  request status changed to ' .$data['status_name'] . ' and the request ID is '.$id ;
+                
+                $to = $data['email'];
+                $subject = "Request Status changed";
+            
+                $headers = "From: test@test.com" . "\r\n" .
+                "CC: somebodyelse@example.com";
+                
+                mail($to,$subject,$output,$headers);
+          //end of sending emails after status changed   
+         }
     }
-
-
 ?>
 
 
