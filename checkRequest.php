@@ -72,6 +72,10 @@ if($_GET['id']) {
     
             $sql_udpate = $myArr[$_POST['postAction']]['sql'];
             if ($conn->query($sql_udpate) === TRUE) {
+                //alert notifications about the status change
+                echo "<script>
+                alert('".$myArr[$_POST['postAction']]['alert']."');
+                </script>";
 
                 $send_email_action = true;
 

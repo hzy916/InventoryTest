@@ -19,41 +19,40 @@
           </a>
         </li>
 
-       <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Delivery List">
-          <a class="nav-link" href="delivery_table.php">
-            <i class="fa fa-fw fa fa-wpforms"></i>
-            <span class="nav-link-text">Delivery Request List</span>
+		
+      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" data-target="#makerequest">
+          <i class="fa fa-fw fa fa-copy"></i>
+            <span class="nav-link-text">Make Requests</span>
           </a>
+          <ul class="sidenav-second-level collapse" id="makerequest">
+            <li>
+              <a href="delivery_request.php">Make Delivery Requests</a>
+            </li>
+            <li>
+              <a href="customize_item_request.php">Ask Customised Items</a>
+            </li>
+          </ul> 
         </li>
-		
-			 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
-			  <a class="nav-link" href="delivery_request.php">
-				<i class="fa fa-fw fa fa-copy"></i>
-				<span class="nav-link-text">Make Delivery Requests</span>
-			  </a>
-			</li>
-			
-			<li class="nav-item" data-toggle="tooltip" data-placement="right" title="Tables">
-			  <a class="nav-link" href="customize_item_request.php">
-				<i class="fa fa-fw fa-circle-o-notch"></i>
-				<span class="nav-link-text">Ask Customised Items</span>
-			  </a>
-			</li>
-		
-        <!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="" data-parent="#exampleAccordion">
+
+
+        <li class="nav-item" title="Components">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" data-target="#collapseComponents">
             <i class="fa fa-fw fa-wrench"></i>
-            <span class="nav-link-text">Archived Requests</span>
+            <span class="nav-link-text">Request Lists</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseComponents">
             <li>
-              <a href="#">Themes</a>
+              <a href="delivery_table.php">Delivery Request List</a>
             </li>
             <li>
-              <a href="#">Archived Requests</a>
+              <a href="custom_request_table.php">Custom Request List</a>
             </li>
           </ul> 
-        </li> -->
+        </li>
+
+   
+
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
            <a class="nav-link" href="archived_table.php">
             <i class="fa fa-fw fa-file"></i>
