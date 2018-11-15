@@ -9,7 +9,6 @@
         exit;
     }		
 
-
     require_once('layouts/header.php'); 
     require_once('layouts/left_sidebar.php');   
 
@@ -89,7 +88,7 @@ if($_GET['id']) {
 
         //get all the request details
 
-        $sql = "SELECT CustomRequest.customrequestID, CustomRequest.voucherCode, CustomRequest.quantity, CustomRequest.companyName, CustomRequest.itemtype, CustomRequest.c_RequestEmployeeID, CustomRequest.c_RequestDate, CustomRequest.UseDate,  Request_status.status_name as status_name, tbl_users.user_name as user_name FROM CustomRequest  JOIN Request_status ON CustomRequest.c_RequestStatusID = Request_status.status_id JOIN tbl_users ON  CustomRequest.c_RequestEmployeeID = tbl_users.id WHERE c_is_archived = 0";
+        $sql = "SELECT CustomRequest.customrequestID, CustomRequest.voucherCode, CustomRequest.quantity, CustomRequest.companyName, CustomRequest.itemtype, CustomRequest.c_RequestEmployeeID, CustomRequest.c_RequestDate, CustomRequest.UseDate,  Request_status.status_name as status_name, tbl_users.user_name as user_name FROM CustomRequest  JOIN Request_status ON CustomRequest.c_RequestStatusID = Request_status.status_id JOIN tbl_users ON  CustomRequest.c_RequestEmployeeID = tbl_users.id WHERE CustomRequest.customrequestID = '{$id}'";
                         
         $result = $conn->query($sql);
         
@@ -97,15 +96,11 @@ if($_GET['id']) {
     
         //  if(isset($send_email_action)){
         //       //sending emails after status changed
-
-        //         $output = $data['user_name'] . '  request status changed to ' .$data['status_name'] . ' and the request ID is '.$id ;
-                
+        //         $output = $data['user_name'] . '  request status changed to ' .$data['status_name'] . ' and the request ID is '.$id ;  
         //         $to = $data['email'];
         //         $subject = "Request Status changed";
-            
         //         $headers = "From: test@test.com" . "\r\n" .
-        //         "CC: somebodyelse@example.com";
-                
+        //         "CC: somebodyelse@example.com";    
         //         mail($to,$subject,$output,$headers);
         //   //end of sending emails after status changed   
         //  }
@@ -162,16 +157,23 @@ if($_GET['id']) {
 							?>
 					</tbody>
 				</table>
-               
-                <form id="displayRequest" method="POST">
-                    <input type="hidden"  name="makeaction" value="displayRequest">
-                    <input id="req2display" type="hidden"  name="req2display" value="">
-                </form>
+            
 
                 <h4>Logo download</h4>
                     <p><?php echo $msg ?></p>
                     <div class="table-responsive">
-                     
+                    <?php
+
+                        $id = intval($_GET['id']);
+                        $query = mysql_query('SELECT uploadLogo FROM CustomRequest WHERE customrequestID = ' . $id);
+                        if (($row = mysql_fetch_row($query)) !== false)
+                        {
+                            header('Content-Disposition: attachment; filename=' . basename($row[0]));
+                            readfile($row[0]);
+                        }
+                        exit;
+
+                        ?>
                     </div>
        
         <?php
@@ -223,7 +225,5 @@ if($_GET['id']) {
             </div>
           </div>
     </div>
-
-
 
 <?php require_once('layouts/footer.php'); ?>	

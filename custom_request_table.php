@@ -36,7 +36,7 @@
 
 		<div class="card-body">
 			<div class="table-responsive">
-				<table id="requestTable" class="table table-bordered table-sm table-hover" width="100%" cellspacing="0">
+				<table id="customTable" class="table table-bordered table-sm table-hover" width="100%" cellspacing="0">
 					<thead>
 						<tr>
 							<th>ID</th>
@@ -67,7 +67,6 @@
 									$status_name = $row['status_name'];
 										switch ($status_name) {
 											case "Completed":
-									
 												$status_style = 'color:#008000;';
 												break;
 											case "Delayed":
@@ -112,21 +111,12 @@
 		</div>
     </div>
 
-	<form id="displayRequest" method="POST">
-		<input type="hidden"  name="makeaction" value="displayRequest">
-		<input id="req2display" type="hidden"  name="req2display" value="">
-	</form>
- 
 
 	<script type="text/javascript">
 
-		function GetRequestID(idR){
-			$("#req2display").val(idR);
-			$("#displayRequest").submit();
-		}
-			//table pagination
+	    //table pagination
 		$(document).ready(function () {
-			$('#requestTable').DataTable({
+			$('#customTable').DataTable({
 				columnDefs: [
 					{ targets: 'no-sort', orderable: false }
 				]

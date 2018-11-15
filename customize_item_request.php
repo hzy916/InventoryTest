@@ -13,6 +13,17 @@ $requestUserID = $_SESSION['id'];
 require_once('layouts/header.php');
 require_once('layouts/left_sidebar.php');
 
+if($_POST) {
+    switch($_POST['makeaction']) {
+        case 'submitCustomRequest':
+            include ('submit_customRequest.php');
+        break;
+
+        case 'uploadFile':
+            include ('upload.php');
+        break;
+    }
+}
 
 ?>
 
@@ -68,9 +79,9 @@ require_once('layouts/left_sidebar.php');
         <div class="card-body tab-content">
 
             <h4>Item Details</h4>
-
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST">
-
+            
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST"  enctype = "multipart/form-data">
+                <input type="hidden"  name="makeaction" value="submitCustomRequest">
                 <div class="form-group row">   
                     <div class="col">
                         <label for="customType">Select Type</label>
@@ -93,16 +104,8 @@ require_once('layouts/left_sidebar.php');
                         <input type="text" class="form-control" name="companyname" placeholder="#####" required>
                     </div>
                     <div class="col">
-                    <label>Upload Logo</label>
-                        <!-- <div class="input-group">
-                            <span class="input-group-btn">
-                                <span class="btn btn-default btn-file">
-                                    Browse… <input type="file" id="imgInp">
-                                </span>
-                            </span>
-                            <input type="text" class="form-control" readonly>
-                        </div>
-                        <img id='img-upload'/> -->
+                        <label for="quantity">Quantity</label>
+                        <input type="number" class="form-control" name="quantity" placeholder="number"  min="1" required>		
                     </div>
                 </div>
 
@@ -111,9 +114,11 @@ require_once('layouts/left_sidebar.php');
                         <label for="usingdate">Date of using</label>
                         <input type="date" class="form-control" name="usingdate" placeholder="Enter date" required>
                     </div>
-                    <div class="col ss-item-required">
-                        <label for="quantity">Quantity</label>
-                        <input type="number" class="form-control" name="quantity" placeholder="number"  min="1" required>		
+                    <div class="col">
+                    <label>Upload Logo</label>
+                         <br>
+                      <input type = "file" name = "image" />
+                      <!-- <input type="hidden"  name="uploadLogo" value=""> -->
                     </div>
                 </div>
 
@@ -137,29 +142,7 @@ require_once('layouts/left_sidebar.php');
 <?php 
 
 if($_POST) {   
-        $customType = mysqli_real_escape_string($conn,$_POST['customType']);
-        $vouchercode =  mysqli_real_escape_string($conn,$_POST['vouchercode']);
-        $companyname =  mysqli_real_escape_string($conn,$_POST['companyname']);
-        $usingdate =  mysqli_real_escape_string($conn,$_POST['usingdate']);
-        $quantity =  mysqli_real_escape_string($conn,$_POST['quantity']);
-     
-        //Insert Custom Request details
-            $sql= "INSERT INTO CustomRequest (UseDate, c_RequestStatusID, c_RequestEmployeeID, voucherCode, companyName, quantity, itemType) VALUES ('$usingdate', '1', '$requestUserID', '$vouchercode', '$companyname', '$quantity', '$customType')";
-         
-            if($conn->query($sql) === TRUE) {
-                //Grab the value of request items
-                echo "<script type=\"text/javascript\">".
-                "alert('Your submitted a Customised Item Request successfully.');".
-               "window.location.href='./custom_request_table.php';".
-                "</script>";
-
-            } else {
-                // $msg = "Updating failed.";
-                echo "Error " . $sql . ' ' . $conn->connect_error;
-                echo "<script type=\"text/javascript\">".
-                "alert('Your Delivery Request submit failed.');".
-                "</script>";
-            }
+    
         }
 ?>
 
