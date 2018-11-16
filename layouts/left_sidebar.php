@@ -19,8 +19,7 @@
           </a>
         </li>
 
-		
-      <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
+      <li id="makeRequest" class="nav-item" data-toggle="tooltip" data-placement="right" title="Charts">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" data-target="#makerequest">
           <i class="fa fa-fw fa fa-copy"></i>
             <span class="nav-link-text">Make Requests</span>
@@ -42,7 +41,7 @@
             <span class="nav-link-text">Request Lists</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseComponents">
-            <li>
+          <li id="deliveryR_table">
               <a href="delivery_table.php">Delivery Request List</a>
             </li>
             <li>
@@ -59,7 +58,7 @@
             <span class="nav-link-text">Archived Requests</span>
           </a>
             <ul class="sidenav-second-level collapse" id="archivedRequest">
-              <li>
+              <li id="deliveryR">
                 <a href="archived_request.php">Delivery Requests</a>
               </li>
               <li>
@@ -100,4 +99,18 @@
     color:#ffffff;
 
   }
+  .hidebutton{
+    display:none;
+  }
   </style>
+
+    <?php 
+  //hide make request nav link to designers
+  if($_SESSION['user_role_id'] == 4) {
+    echo('<script>$("#makeRequest").addClass("hidebutton");
+    $("#deliveryR").addClass("hidebutton");
+    $("#deliveryR_table").addClass("hidebutton");
+    </script>' );
+  }
+
+  ?>

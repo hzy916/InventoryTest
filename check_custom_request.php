@@ -27,9 +27,15 @@ if($_GET['id']) {
         ),
         'approve'=> array(
             //get the product id and number requested, and update inventory when request is completed. 
-            'sql'=>"UPDATE CustomRequest SET c_RequestStatusID = 2 WHERE CustomRequest.customrequestID = '$id'",
+            'sql'=>"UPDATE CustomRequest SET c_RequestStatusID = 9 WHERE CustomRequest.customrequestID = '$id'",
 
-            'alert'=>'You approved this request, it goes to processing status.',
+            'alert'=>'You approved this request, it goes to approved status.',
+        ),
+        'design'=> array(
+            //get the product id and number requested, and update inventory when request is completed. 
+            'sql'=>"UPDATE CustomRequest SET c_RequestStatusID = 7 WHERE CustomRequest.customrequestID = '$id'",
+
+            'alert'=>'You start this request, it goes to designing status.',
         ),
         'decline'=> array(
             'sql'=>"UPDATE CustomRequest SET c_RequestStatusID = 6 WHERE CustomRequest.customrequestID = '$id'",
@@ -183,7 +189,7 @@ if($_GET['id']) {
 
                     
         <?php
-        if($_SESSION['user_role_id'] == 1 ) {  ?>
+        if($_SESSION['user_role_id'] == 1 || $_SESSION['user_role_id'] == 4 ) {  ?>
                 <form method="post" id="ciaociao">
                     <div class="form-group">
                         <input type="hidden" name="postAction" value="" id="postAction"/>
@@ -193,27 +199,48 @@ if($_GET['id']) {
                     </div>
                 <?php 
                 //if the request status is not submitted and processing, then don't show approve, 
-             
-                    if($data['status_name'] == 'Submitted'){
-                       echo "
-                       <input type='button' class='btn btn-success operateBTN' value='Approve' onclick=\"JavaScript:makeMyAction('approve')\">
-                       <input type='button' class='btn btn-danger operateBTN' value='Decline' onclick=\"JavaScript:makeMyAction('decline')\">
-                       <input type='button' class='btn btn-warning operateBTN' value='Delay' onclick=\"JavaScript:makeMyAction('delay')\">        
-                       ";
-                    } else if($data['status_name'] == 'Delayed'){
+                    switch (true) {
+                        case ($data['status_name'] == 'Submitted'):
                         echo "
                         <input type='button' class='btn btn-success operateBTN' value='Approve' onclick=\"JavaScript:makeMyAction('approve')\">
-                        <input type='button' class='btn btn-danger operateBTN' value='Decline' onclick=\"JavaScript:makeMyAction('decline')\">";
-                    } else if($data['status_name'] == 'Processing'){
+                        <input type='button' class='btn btn-danger operateBTN' value='Decline' onclick=\"JavaScript:makeMyAction('decline')\">
+                        ";
+                        break;
+                        
+                        case ($data['status_name'] == 'Delayed'):
                         echo "
-                        <input type='button' class='btn btn-danger operateBTN' value='Finish' onclick=\"JavaScript:makeMyAction('finish')\">
-                         ";
-                    }else if($data['status_name'] == 'Completed' && $data['c_is_archived'] == '0'){
-                        echo "
-                        <input type='button' class='btn btn-info operateBTN' value='Archive' onclick=\"JavaScript:makeMyAction('archive')\">
-                         ";
-                    } else if($data['c_is_archived'] == '1'){
-                        echo "";
+                        <input type='button' class='btn btn-success operateBTN' value='Start Design' onclick=\"JavaScript:makeMyAction('design')\">
+                        ";
+                        break;
+
+                        case ($data['status_name'] == 'Approved'):
+                            switch($_SESSION['user_role_id']) {
+                                case 4:
+                                    echo "
+                                    <input type='button' class='btn btn-success operateBTN' value='Start Design' onclick=\"JavaScript:makeMyAction('design')\">
+                                    <input type='button' class='btn btn-danger operateBTN' value='Delay' onclick=\"JavaScript:makeMyAction('delay')\">";
+                                break;
+
+                                case 1:
+                                    echo "
+                                        ";
+                                break;
+                            }
+                        break;
+
+                        case ($data['status_name'] == 'Designing'):
+                           if($_SESSION['user_role_id'] == 4){
+                            echo "
+                            <input type='button' class='btn btn-danger operateBTN' value='Finish' onclick=\"JavaScript:makeMyAction('finish')\">
+                            ";
+                           }
+                        break;
+
+                        case ($data['status_name'] == 'Completed' && $data['c_is_archived'] == '0'):
+                            echo "
+                          
+                            ";
+                        break;
                     }
                 } 
                 //to give different go back link based on which page user is
