@@ -156,11 +156,11 @@ create table Pawtrails_Request_junction
 
 
 /**Delivery Request table creation**/
-CREATE TABLE CustomRequest (
+CREATE TABLE CustomRequest22 (
     `customrequestID` int(11) NOT NULL AUTO_INCREMENT,
     `c_RequestDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     `UseDate` date DEFAULT NULL,
-    `updateDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    -- `updateDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     `c_RequestStatusID` INT(11)  NOT NULL ,
     `c_RequestEmployeeID` INT(11) NOT NULL,
     `c_AdminComments` varchar(255),

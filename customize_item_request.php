@@ -118,11 +118,12 @@ if($_POST) {
                     <label>Upload Logo</label>
                          <br>
                       <input type = "file" name = "image" />
-                      <!-- <input type="hidden"  name="uploadLogo" value=""> -->
+                  
                     </div>
                 </div>
 
-      
+                <p><strong>Note: Please upload jpg, jpeg, png, pdf format images. And the limit size is 5M.</strong></p>
+
                 <div class="form-group">
                     <div class="form-check ml-3">
                         <input class="form-check-input" type="checkbox" id="gridCheck" required>

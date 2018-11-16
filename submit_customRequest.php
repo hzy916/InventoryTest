@@ -32,10 +32,17 @@
     
     if(in_array($file_ext,$expensions)=== false){
        $errors[]="extension not allowed, please choose a JPEG or PNG file.";
+       
+       echo "<script type=\"text/javascript\">".
+       "alert('extension not allowed, please choose a JPEG, PNG, or PDF file');".
+       "</script>";
     }
     
-    if($file_size > 2097152) {
-       $errors[]='File size must be smaller 5 MB';
+    if($file_size > 5242880) {
+       $errors[]='File size must be smaller than 5 MB';
+       echo "<script type=\"text/javascript\">".
+       "alert('File size must be smaller than 5 MB');".
+       "</script>";
     }
     
     if(empty($errors)==true) {
@@ -61,12 +68,14 @@
             echo "Error " . $sql . ' ' . $conn->connect_error;
             // echo "<script type=\"text/javascript\">".
             // "alert('Your Delivery Request submit failed.');".
-            // "window.location.href='./custom_request_table.php';".
             // "</script>";
         }
 
     }else{
-       print_r($errors);
+      //  print_r($errors);
+       echo "<script type=\"text/javascript\">".
+       "alert('Logo upload failed, Please double check the valid logo format');".
+       "</script>";
     }
  } 
 

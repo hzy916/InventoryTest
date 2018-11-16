@@ -163,16 +163,23 @@ if($_GET['id']) {
                     <p><?php echo $msg ?></p>
                     <div class="table-responsive">
                     <?php
+                        if($_GET['id']) {
+                            $id = $_GET['id'];
+                            // $id = intval($_GET['id']);
+                            $sql ="SELECT uploadLogo FROM CustomRequest WHERE customrequestID = '{$id}'";
+                            $result = $conn->query($sql);
+        
+                            $uploadFile = $result->fetch_assoc();
 
-                        $id = intval($_GET['id']);
-                        $query = mysql_query('SELECT uploadLogo FROM CustomRequest WHERE customrequestID = ' . $id);
-                        if (($row = mysql_fetch_row($query)) !== false)
-                        {
-                            header('Content-Disposition: attachment; filename=' . basename($row[0]));
-                            readfile($row[0]);
+                            echo 
+                            "<p>".$uploadFile['uploadLogo']."</p>";
+
+                            $getfilename = substr($uploadFile, 8);
+                            echo 
+                            "<p>". $getfilename."</p>";
+                           echo "<a href='download.php?file=picture.jpg'>Download file</a>";
+                            // "<a href="download.php?file=picture.jpg">".Download file."</a>".;
                         }
-                        exit;
-
                         ?>
                     </div>
        
