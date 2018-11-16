@@ -47,7 +47,8 @@
     
     if(empty($errors)==true) {
        move_uploaded_file($file_tmp,"uploads/".$newfilename);
- 
+      
+      //  exit;
      $filepath = "uploads/".$newfilename;
 
         //insert new request after image is uploaded    

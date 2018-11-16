@@ -63,9 +63,9 @@ if($_POST) {
             <li class="breadcrumb-item">
                 <a href="dashboard.php">Dashboard</a>
             </li>
-            <li class="breadcrumb-item active">Customized Item Requests</li>
+            <li class="breadcrumb-item active">Design Requests</li>
         </ol>
-        <h1>Customized Item Requests</h1>
+        <h1>Design Requests</h1>
         <hr>
         <p>You are login as <strong><?php echo getUserAccessRoleByID($_SESSION['user_role_id']); ?></strong></p>
    

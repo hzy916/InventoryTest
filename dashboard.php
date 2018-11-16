@@ -50,11 +50,22 @@
               $sql = "SELECT RequestID FROM Request WHERE RequestStatusID = 1";
               $result = $conn->query($sql);	
               $count =  $result->num_rows;
+
+              //get the design request which are still in submitted status.
+              $sql_two = "SELECT customrequestID FROM CustomRequest WHERE c_RequestStatusID = 1";
+              $result_two = $conn->query($sql_two);	
+              $count_two =  $result_two->num_rows;
+
           } else {
              //get the request which belongs to this employee and still in submitted status.
              $sql = "SELECT RequestID FROM Request WHERE RequestStatusID = 1 AND RequestEmployeeID = ". $_SESSION['id'];
              $result = $conn->query($sql);	
              $count =  $result->num_rows;
+
+            //get the design request which belongs to this employee and still in submitted status.
+            $sql_two = "SELECT customrequestID FROM CustomRequest WHERE c_RequestStatusID = 1 AND c_RequestEmployeeID = ". $_SESSION['id'];
+            $result_two = $conn->query($sql_two);	
+            $count_two =  $result_two->num_rows;
           }
           ?>
 
@@ -75,16 +86,16 @@
               </div>
             </div>
 
-            <!-- <div class="col-xl-3 col-sm-6 mb-3">
+            <div class="col-xl-3 col-sm-6 mb-3">
               <div class="card text-white bg-warning o-hidden h-100">
                 <div class="card-body">
-                  <div class="mr-5">11 Return Requests!</div>
+                  <div class="mr-5"><?php echo $count_two ?>  Design Requests!</div>
                 </div>
-                <a class="card-footer text-white clearfix small z-1" href="#">
+                <a class="card-footer text-white clearfix small z-1" href="custom_request_table.php">
                   <span class="float-left">View Details</span>
                 </a>
               </div>
-            </div> -->
+            </div> 
 
      
             <!-- <div class="col-xl-3 col-sm-6 mb-3">

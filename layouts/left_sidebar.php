@@ -27,10 +27,10 @@
           </a>
           <ul class="sidenav-second-level collapse" id="makerequest">
             <li>
-              <a href="delivery_request.php">Make Delivery Requests</a>
+              <a href="delivery_request.php">Ask Delivery Requests</a>
             </li>
             <li>
-              <a href="customize_item_request.php">Ask Customised Items</a>
+              <a href="customize_item_request.php">Ask Design Requests</a>
             </li>
           </ul> 
         </li>
@@ -46,7 +46,7 @@
               <a href="delivery_table.php">Delivery Request List</a>
             </li>
             <li>
-              <a href="custom_request_table.php">Custom Request List</a>
+              <a href="custom_request_table.php">Design Request List</a>
             </li>
           </ul> 
         </li>
@@ -54,10 +54,18 @@
    
 
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Example Pages">
-           <a class="nav-link" href="archived_table.php">
+           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" data-target="#archivedRequest">
             <i class="fa fa-fw fa-file"></i>
             <span class="nav-link-text">Archived Requests</span>
           </a>
+            <ul class="sidenav-second-level collapse" id="archivedRequest">
+              <li>
+                <a href="archived_request.php">Delivery Requests</a>
+              </li>
+              <li>
+                <a href="archived_custom_request.php">Design Requests</a>
+              </li>
+            </ul> 
         </li>
   
 	

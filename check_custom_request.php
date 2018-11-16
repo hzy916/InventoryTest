@@ -85,15 +85,10 @@ if($_GET['id']) {
     }
  
         $msg = "";
-
         //get all the request details
-
-        $sql = "SELECT CustomRequest.customrequestID, CustomRequest.voucherCode, CustomRequest.quantity, CustomRequest.companyName, CustomRequest.itemtype, CustomRequest.c_RequestEmployeeID, CustomRequest.c_RequestDate, CustomRequest.UseDate,  Request_status.status_name as status_name, tbl_users.user_name as user_name FROM CustomRequest  JOIN Request_status ON CustomRequest.c_RequestStatusID = Request_status.status_id JOIN tbl_users ON  CustomRequest.c_RequestEmployeeID = tbl_users.id WHERE CustomRequest.customrequestID = '{$id}'";
-                        
+        $sql = "SELECT CustomRequest.customrequestID, CustomRequest.c_is_archived, CustomRequest.c_AdminComments, CustomRequest.voucherCode, CustomRequest.quantity, CustomRequest.companyName, CustomRequest.itemtype, CustomRequest.c_RequestEmployeeID, CustomRequest.c_RequestDate, CustomRequest.UseDate,  Request_status.status_name as status_name, tbl_users.user_name as user_name FROM CustomRequest  JOIN Request_status ON CustomRequest.c_RequestStatusID = Request_status.status_id JOIN tbl_users ON  CustomRequest.c_RequestEmployeeID = tbl_users.id WHERE CustomRequest.customrequestID = '{$id}'";               
         $result = $conn->query($sql);
-        
         $data = $result->fetch_assoc();
-    
         //  if(isset($send_email_action)){
         //       //sending emails after status changed
         //         $output = $data['user_name'] . '  request status changed to ' .$data['status_name'] . ' and the request ID is '.$id ;  
@@ -158,11 +153,16 @@ if($_GET['id']) {
 					</tbody>
 				</table>
             
-
+                <?php
+                       echo 
+                       "<p>Last Comments:  "   .$data['c_AdminComments']."</p>";
+                ?>
                 <h4>Logo download</h4>
                     <p><?php echo $msg ?></p>
                     <div class="table-responsive">
                     <?php
+                  
+                  
                         if($_GET['id']) {
                             $id = $_GET['id'];
                             // $id = intval($_GET['id']);
@@ -171,20 +171,17 @@ if($_GET['id']) {
         
                             $uploadFile = $result->fetch_assoc();
 
-                            echo 
-                            "<p>".$uploadFile['uploadLogo']."</p>";
-                            //change an array to string
-                            // $stringFileName = 
-
                             $getfilename = substr($uploadFile['uploadLogo'], 8);
                             echo 
                             "<p>". $getfilename."</p>";
                            echo "<a href='download.php?file=$getfilename'>Download file</a>";
-                            // "<a href="download.php?file=picture.jpg">".Download file."</a>".;
+                    
                         }
+                       
                         ?>
                     </div>
-       
+
+                    
         <?php
         if($_SESSION['user_role_id'] == 1 ) {  ?>
                 <form method="post" id="ciaociao">
@@ -211,14 +208,22 @@ if($_GET['id']) {
                         echo "
                         <input type='button' class='btn btn-danger operateBTN' value='Finish' onclick=\"JavaScript:makeMyAction('finish')\">
                          ";
-                    }else if($data['status_name'] == 'Completed'){
+                    }else if($data['status_name'] == 'Completed' && $data['c_is_archived'] == '0'){
                         echo "
                         <input type='button' class='btn btn-info operateBTN' value='Archive' onclick=\"JavaScript:makeMyAction('archive')\">
                          ";
+                    } else if($data['c_is_archived'] == '1'){
+                        echo "";
                     }
-                    ?>
-              <?php  } ?> 
-                    <td><a href="custom_request_table.php"><button type="button" class="btn btn-primary">Back</button></a></td>
+                } 
+                //to give different go back link based on which page user is
+                    if($data['c_is_archived'] == '1'){
+                        $link = "archived_custom_request.php";
+                    } else {
+                        $link = "custom_request_table.php";
+                    }
+                            echo "<td><a href='$link'><button type='button' class='btn btn-primary'>Back</button></a></td>";
+                    ?> 
                 </form>
 
                 <script language="JavaScript">

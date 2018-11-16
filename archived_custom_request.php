@@ -31,7 +31,7 @@
 	<div class="card mb-3 mt-3">
 		<div class="card-header">
 			<i class="fas fa-table"></i>
-			Your Design Request Table
+			Archived Design Request Table
 		</div>
 
 		<div class="card-body">
@@ -52,7 +52,7 @@
 					</thead>
 						<tbody>
 							<?php
-							$sql = "SELECT CustomRequest.customrequestID, CustomRequest.voucherCode, CustomRequest.quantity, CustomRequest.companyName, CustomRequest.itemtype, CustomRequest.c_RequestEmployeeID, CustomRequest.c_RequestDate, CustomRequest.UseDate,  Request_status.status_name as status_name, tbl_users.user_name as user_name FROM CustomRequest  JOIN Request_status ON CustomRequest.c_RequestStatusID = Request_status.status_id JOIN tbl_users ON  CustomRequest.c_RequestEmployeeID = tbl_users.id WHERE c_is_archived = 0";
+							$sql = "SELECT CustomRequest.customrequestID, CustomRequest.voucherCode, CustomRequest.quantity, CustomRequest.companyName, CustomRequest.itemtype, CustomRequest.c_RequestEmployeeID, CustomRequest.c_RequestDate, CustomRequest.UseDate,  Request_status.status_name as status_name, tbl_users.user_name as user_name FROM CustomRequest  JOIN Request_status ON CustomRequest.c_RequestStatusID = Request_status.status_id JOIN tbl_users ON  CustomRequest.c_RequestEmployeeID = tbl_users.id WHERE c_is_archived = 1";
                             
                             $result = $conn->query($sql);	
 							$num_rows = mysqli_num_rows($result);
@@ -77,7 +77,6 @@
 												break;
 										}
 				
-
 									echo 
 									"<tr>
 										<td>".$row['customrequestID']."</td>
