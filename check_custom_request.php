@@ -173,11 +173,13 @@ if($_GET['id']) {
 
                             echo 
                             "<p>".$uploadFile['uploadLogo']."</p>";
+                            //change an array to string
+                            // $stringFileName = 
 
-                            $getfilename = substr($uploadFile, 8);
+                            $getfilename = substr($uploadFile['uploadLogo'], 8);
                             echo 
                             "<p>". $getfilename."</p>";
-                           echo "<a href='download.php?file=picture.jpg'>Download file</a>";
+                           echo "<a href='download.php?file=$getfilename'>Download file</a>";
                             // "<a href="download.php?file=picture.jpg">".Download file."</a>".;
                         }
                         ?>
