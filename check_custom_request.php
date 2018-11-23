@@ -106,6 +106,16 @@ if($_GET['id']) {
         //   //end of sending emails after status changed   
         //  }
     }
+
+
+    // if($_POST) {
+    //     switch($_POST['makeaction']) {
+    //         case 'uploadDesign':
+    //             include ('uploadDesign.php');
+    //         break;
+
+    //     }
+    // }
 ?>
 
   <div class="content-wrapper">
@@ -164,11 +174,9 @@ if($_GET['id']) {
                        "<p>Last Comments:  "   .$data['c_AdminComments']."</p>";
                 ?>
                 <h4>Logo download</h4>
-                    <p><?php echo $msg ?></p>
+                <p><?php echo $msg ?></p>
                     <div class="table-responsive">
                     <?php
-                  
-                  
                         if($_GET['id']) {
                             $id = $_GET['id'];
                             // $id = intval($_GET['id']);
@@ -180,13 +188,30 @@ if($_GET['id']) {
                             $getfilename = substr($uploadFile['uploadLogo'], 8);
                             echo 
                             "<p>". $getfilename."</p>";
-                           echo "<a href='download.php?file=$getfilename'>Download file</a>";
+                            echo "<a href='download.php?file=$getfilename'>Download file</a>";
                     
                         }
-                       
+                        
                         ?>
-                    </div>
+                    </div> 
+                    
+               
 
+    <?php
+        if($_SESSION['user_role_id'] == 4 ) {  ?>
+         <h4>Upload Design</h4> 
+         <form action="uploadDesign.php" method="POST"  enctype = "multipart/form-data">
+                    <input type="hidden"  name="makeaction" value="uploadDesign">
+                    <div class="col">
+                    <label>Design File</label>
+                         <br>
+                      <input type = "file" name = "image" />
+                    </div>
+                    <br>
+                    <input type="submit" class="btn btn-primary" value="Submit Design"/>
+                   
+                </form>
+    <?php  } ?>
                     
         <?php
         if($_SESSION['user_role_id'] == 1 || $_SESSION['user_role_id'] == 4 ) {  ?>
@@ -201,10 +226,10 @@ if($_GET['id']) {
                 //if the request status is not submitted and processing, then don't show approve, 
                     switch (true) {
                         case ($data['status_name'] == 'Submitted'):
-                        echo "
-                        <input type='button' class='btn btn-success operateBTN' value='Approve' onclick=\"JavaScript:makeMyAction('approve')\">
-                        <input type='button' class='btn btn-danger operateBTN' value='Decline' onclick=\"JavaScript:makeMyAction('decline')\">
-                        ";
+                            echo "
+                            <input type='button' class='btn btn-success operateBTN' value='Approve' onclick=\"JavaScript:makeMyAction('approve')\">
+                            <input type='button' class='btn btn-danger operateBTN' value='Decline' onclick=\"JavaScript:makeMyAction('decline')\">
+                            ";
                         break;
                         
                         case ($data['status_name'] == 'Delayed'):
@@ -232,14 +257,18 @@ if($_GET['id']) {
                            if($_SESSION['user_role_id'] == 4){
                             echo "
                             <input type='button' class='btn btn-danger operateBTN' value='Finish' onclick=\"JavaScript:makeMyAction('finish')\">
+                          
                             ";
                            }
                         break;
 
                         case ($data['status_name'] == 'Completed' && $data['c_is_archived'] == '0'):
-                            echo "
-                          
-                            ";
+                            if($_SESSION['user_role_id'] == 1){
+                                echo "
+                                    <p>Please only click printed button when the design poster or flyer is printed.</p>
+                                    <input type='button' class='btn btn-danger operateBTN' value='Printed' onclick=\"JavaScript:makeMyAction('print')\">
+                                ";
+                            }
                         break;
                     }
                 } 
@@ -266,5 +295,6 @@ if($_GET['id']) {
             </div>
           </div>
     </div>
+
 
 <?php require_once('layouts/footer.php'); ?>	

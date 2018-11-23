@@ -30,7 +30,6 @@ $err = '<p style="color:#990000">Sorry, the file you are requesting is unavailab
             default:
         }
 
-
         // check that file exists and is readable
         if (file_exists($path) && is_readable($path)) {
             // get the file size and send the http headers

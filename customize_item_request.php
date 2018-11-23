@@ -19,9 +19,9 @@ if($_POST) {
             include ('submit_customRequest.php');
         break;
 
-        case 'uploadFile':
-            include ('upload.php');
-        break;
+        // case 'uploadFile':
+        //     include ('upload.php');
+        // break;
     }
 }
 
@@ -140,12 +140,6 @@ if($_POST) {
     </div>
 </div>
 
-<?php 
-
-if($_POST) {   
-    
-        }
-?>
 
 <?php require_once('layouts/footer.php'); ?>
 
