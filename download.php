@@ -4,13 +4,16 @@
 if (isset($_GET['file']) && basename($_GET['file']) == $_GET['file']) {
     $filename = $_GET['file'];
 } else {
-    $filename = NULL;
+    $filename = false;
 }
+
+// print("new test $filename");
+// exit;
 
 // define error message
 $err = '<p style="color:#990000">Sorry, the file you are requesting is unavailable.</p>';
 //allow file to download
-    if (!$filename) {
+    if (!isset($filename)) {
         // if variable $filename is NULL or false display the message
         echo $err;
     } else {
@@ -48,10 +51,10 @@ $err = '<p style="color:#990000">Sorry, the file you are requesting is unavailab
                 fpassthru($file);
                 exit;
             } else {
-                echo $err;
+                echo "first line <br>".$err;
             }
         } else {
-            echo $err;
+            echo "second line <br>".$path;
         }
     }
     ?>

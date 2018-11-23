@@ -46,26 +46,26 @@
     }
     
     if(empty($errors)==true) {
-     move_uploaded_file($file_tmp,"uploads/".$newfilename);
+   //   move_uploaded_file($file_tmp,"uploads/".$newfilename);
       
       //use FTP method to upload 
       // connect and login to FTP server
-      // $ftp_server = "localhost";
-      // $ftp_conn = ftp_connect($ftp_server) or die("Could not connect to $ftp_server");
-      // $login = ftp_login($ftp_conn, 'ziyun', 'XiangShou2018JinTian');
+      $ftp_server = "localhost";
+      $ftp_conn = ftp_connect($ftp_server) or die("Could not connect to $ftp_server");
+      $login = ftp_login($ftp_conn, 'ziyun', 'XiangShou2018JinTian');
 
-      // // upload file
-      // if (ftp_put($ftp_conn, "/testweb.pawtrails.com/web/InventoryTest/uploads/".$file_name, $file_tmp, FTP_ASCII))
-      // {
-      // echo "Successfully uploaded $file_tmp.";
-      // }
-      // else
-      // {
-      // echo "Error uploading $file_tmp.";
-      // }
+      // upload file
+      if (ftp_put($ftp_conn, "/testweb.pawtrails.com/web/InventoryTest/uploads/".$newfilename, $file_tmp, FTP_ASCII))
+      {
+      echo "Successfully uploaded $file_tmp.";
+      }
+      else
+      {
+      echo "Error uploading $file_tmp.";
+      }
 
-      // // close connection
-      // ftp_close($ftp_conn);
+      // close connection
+      ftp_close($ftp_conn);
 
       //  exit;
      $filepath = "uploads/".$newfilename;
