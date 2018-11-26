@@ -1,7 +1,7 @@
 
 <?php
 
-    require 'inc/config.php';
+    require_once 'inc/config.php';
 
     if(!isset($_SESSION['id'],$_SESSION['user_role_id']))
     {
@@ -12,6 +12,8 @@
     require_once('layouts/header.php'); 
     require_once('layouts/left_sidebar.php');   
 
+
+  
 if($_GET['id']) {
     $id = $_GET['id'];
 
@@ -35,7 +37,7 @@ if($_GET['id']) {
             //get the product id and number requested, and update inventory when request is completed. 
             'sql'=>"UPDATE CustomRequest SET c_RequestStatusID = 7 WHERE CustomRequest.customrequestID = '$id'",
 
-            'alert'=>'You start this request, it goes to designing status.',
+            'alert'=>'You finished this design request, it goes to designed status.',
         ),
         'decline'=> array(
             'sql'=>"UPDATE CustomRequest SET c_RequestStatusID = 6 WHERE CustomRequest.customrequestID = '$id'",
@@ -45,9 +47,9 @@ if($_GET['id']) {
             'sql'=>"UPDATE CustomRequest SET c_RequestStatusID = 3 WHERE CustomRequest.customrequestID = '$id'",
             'alert'=>'You delayed this request, it goes to delayed status.',
         ),
-        'finish'=> array(
-            'sql'=> "UPDATE CustomRequest SET c_RequestStatusID = 5 WHERE CustomRequest.customrequestID = '$id'",
-            'alert'=>'You finished this request, it goes to completed status.',
+        'print'=> array(
+            'sql'=> "UPDATE CustomRequest SET c_RequestStatusID = 8 WHERE CustomRequest.customrequestID = '$id'",
+            'alert'=>'You printed this design request, it goes to ready status, the inventory is updated too.',
         ),
         'archive'=> array(
             'sql'=> "UPDATE CustomRequest SET c_is_archived = 1 WHERE CustomRequest.customrequestID = '$id'",
@@ -55,7 +57,7 @@ if($_GET['id']) {
         ),
     );
 
-    if(isset($_POST['postAction'])) {
+    if(isset($_POST['postAction']) && $_POST['randomcheck']==$_SESSION['rand']){
         $send_email_action = false;
 
         if($_POST['postAction'] == 'approve'){
@@ -107,16 +109,10 @@ if($_GET['id']) {
         //  }
     }
 
-
-    // if($_POST) {
-    //     switch($_POST['makeaction']) {
-    //         case 'uploadDesign':
-    //             include ('uploadDesign.php');
-    //         break;
-
-    //     }
-    // }
+    $rand=rand();
+    $_SESSION['rand']=$rand;
 ?>
+
 
   <div class="content-wrapper">
     <div class="container-fluid">
@@ -158,8 +154,6 @@ if($_GET['id']) {
                                     <td>".$data['UseDate']."</td>
                                     <td class='EmployeeColumn'>".$data['user_name']."</td>
                                     <td>".$data['c_RequestDate']."</td>
-                                    
-                                    
                                     <td>".$data['quantity']."</td>
                                     <td>".$data['voucherCode']."</td>
                                     <td>".$data['status_name']."</td> 
@@ -173,7 +167,7 @@ if($_GET['id']) {
                        echo 
                        "<p>Last Comments:  "   .$data['c_AdminComments']."</p>";
                 ?>
-                <h4>Logo download</h4>
+                <h4>Download Logo</h4>
                 <p><?php echo $msg ?></p>
                     <div class="table-responsive">
                     <?php
@@ -187,35 +181,52 @@ if($_GET['id']) {
 
                             $getfilename = substr($uploadFile['uploadLogo'], 8);
                             echo 
-                            "<p>". $getfilename."</p>";
-                            echo "<a href='download.php?file=$getfilename'>Download file</a>";
-                    
-                        }
-                        
+                            "<p>Logo File Name:". $getfilename."</p>";
+                            echo "<a href='download.php?file=uploads/$getfilename'>Download file</a>";
+                        }    
                         ?>
                     </div> 
-                    
-               
+                <hr>
+         <h4>Upload Design</h4> 
 
     <?php
         if($_SESSION['user_role_id'] == 4 ) {  ?>
-         <h4>Upload Design</h4> 
-         <form action="uploadDesign.php" method="POST"  enctype = "multipart/form-data">
-                    <input type="hidden"  name="makeaction" value="uploadDesign">
-                    <div class="col">
-                    <label>Design File</label>
-                         <br>
-                      <input type = "file" name = "image" />
-                    </div>
+         <form action="upload.php?id=<?php echo $_GET['id'];?>" method="POST"  enctype = "multipart/form-data">
+      
+            <input type="hidden"  name="randomcheck" value="<?php echo $rand; ?>">
+            <div class="col">
+            <label>Design File</label>
                     <br>
-                    <input type="submit" class="btn btn-primary" value="Submit Design"/>
-                   
-                </form>
+                <input type = "file" name = "image" />
+            </div>
+            <br>
+            <input type="submit" class="btn btn-primary" value="Submit Design"/>
+        </form>
+        <hr>
     <?php  } ?>
-                    
+    <br>
+    <h4>Download Design</h4> 
+        <?php
+        //to get the uploaded Design file name and download link
+            if($_GET['id']) {
+                $id = $_GET['id'];
+                // $id = intval($_GET['id']);
+                $sql ="SELECT DesignFilePath FROM CustomRequest WHERE customrequestID = '{$id}'";
+                $result = $conn->query($sql);
+
+                $designFile = $result->fetch_assoc();
+
+                $designfileName = substr($designFile['DesignFilePath'], 13);
+                echo 
+                "<p>Design File Name: ". $designfileName."</p>";
+                echo "<a href='download.php?file=DesignUpload/$designfileName'>Download Design file</a>";
+            }
+        ?>
+
         <?php
         if($_SESSION['user_role_id'] == 1 || $_SESSION['user_role_id'] == 4 ) {  ?>
                 <form method="post" id="ciaociao">
+                    <input type="hidden"  name="randomcheck" value="<?php echo $rand; ?>">
                     <div class="form-group">
                         <input type="hidden" name="postAction" value="" id="postAction"/>
                         <label for="comment">Comments:</label>
@@ -239,37 +250,31 @@ if($_GET['id']) {
                         break;
 
                         case ($data['status_name'] == 'Approved'):
-                            switch($_SESSION['user_role_id']) {
-                                case 4:
-                                    echo "
-                                    <input type='button' class='btn btn-success operateBTN' value='Start Design' onclick=\"JavaScript:makeMyAction('design')\">
-                                    <input type='button' class='btn btn-danger operateBTN' value='Delay' onclick=\"JavaScript:makeMyAction('delay')\">";
-                                break;
-
-                                case 1:
-                                    echo "
-                                        ";
-                                break;
+                            if($_SESSION['user_role_id'] == 4){
+                                echo "
+                                <input type='button' class='btn btn-success operateBTN' value='Finish Design' onclick=\"JavaScript:makeMyAction('design')\">
+                                <input type='button' class='btn btn-danger operateBTN' value='Delay' onclick=\"JavaScript:makeMyAction('delay')\">";
+                        
                             }
                         break;
 
-                        case ($data['status_name'] == 'Designing'):
-                           if($_SESSION['user_role_id'] == 4){
+                        case ($data['status_name'] == 'Design Complete'):
+                           if($_SESSION['user_role_id'] == 1){
                             echo "
-                            <input type='button' class='btn btn-danger operateBTN' value='Finish' onclick=\"JavaScript:makeMyAction('finish')\">
+                            <input type='button' class='btn btn-danger operateBTN' value='Printed- Ready' onclick=\"JavaScript:makeMyAction('print')\">
                           
                             ";
                            }
                         break;
 
-                        case ($data['status_name'] == 'Completed' && $data['c_is_archived'] == '0'):
-                            if($_SESSION['user_role_id'] == 1){
-                                echo "
-                                    <p>Please only click printed button when the design poster or flyer is printed.</p>
-                                    <input type='button' class='btn btn-danger operateBTN' value='Printed' onclick=\"JavaScript:makeMyAction('print')\">
-                                ";
-                            }
-                        break;
+                        // case ($data['status_name'] == 'Design Complete' && $data['c_is_archived'] == '0'):
+                        //     if($_SESSION['user_role_id'] == 1){
+                        //         echo "
+                        //             <p>Please only click printed button when the design poster or flyer is printed.</p>
+                        //             <input type='button' class='btn btn-danger operateBTN' value='Printed' onclick=\"JavaScript:makeMyAction('print')\">
+                        //         ";
+                        //     }
+                        // break;
                     }
                 } 
                 //to give different go back link based on which page user is
@@ -295,6 +300,7 @@ if($_GET['id']) {
             </div>
           </div>
     </div>
+
 
 
 <?php require_once('layouts/footer.php'); ?>	

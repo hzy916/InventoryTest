@@ -49,7 +49,7 @@ if($_GET['id']) {
         ),
     );
 
-    if(isset($_POST['postAction'])) {
+    if(isset($_POST['postAction']) && $_POST['randomcheck']==$_SESSION['rand']){
         $send_email_action = false;
 
         if($_POST['postAction'] == 'approve'){
@@ -103,8 +103,6 @@ if($_GET['id']) {
        
         $result_three = $conn->query($sql_three);  
 
-
-     
          if(isset($send_email_action)){
               //sending emails after status changed
 
@@ -120,6 +118,10 @@ if($_GET['id']) {
           //end of sending emails after status changed   
          }
     }
+
+    //create a random string and save it in session
+    $rand=rand();
+    $_SESSION['rand']=$rand;
 ?>
 
 
@@ -266,6 +268,7 @@ if($_GET['id']) {
         <?php
         if($_SESSION['user_role_id'] == 1 ) {  ?>
                 <form method="post" id="ciaociao">
+                    <input type="hidden"  name="randomcheck" value="<?php echo $rand; ?>">
                     <div class="form-group">
                         <input type="hidden" name="postAction" value="" id="postAction"/>
                         <label for="comment">Comments:</label>

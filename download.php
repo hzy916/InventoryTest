@@ -1,14 +1,12 @@
-
-
 <?php
-if (isset($_GET['file']) && basename($_GET['file']) == $_GET['file']) {
-    $filename = $_GET['file'];
+
+if (isset($_GET['file'])) {
+    $path = $_GET['file'];
+    $filename = basename($_GET['file']);
+
 } else {
     $filename = false;
 }
-
-// print("new test $filename");
-// exit;
 
 // define error message
 $err = '<p style="color:#990000">Sorry, the file you are requesting is unavailable.</p>';
@@ -17,9 +15,7 @@ $err = '<p style="color:#990000">Sorry, the file you are requesting is unavailab
         // if variable $filename is NULL or false display the message
         echo $err;
     } else {
-        // define the path to your download folder plus assign the file name
-        $path = 'uploads/'.$filename;
-
+        
         //check which file  extension it is
         $file_extension = strtolower(substr(strrchr($filename,"."),1));
         switch( $file_extension ) {
@@ -35,7 +31,6 @@ $err = '<p style="color:#990000">Sorry, the file you are requesting is unavailab
             // get the file size and send the http headers
             $size = filesize($path);
             header('Content-Type: ' .$ctype);
-
             header('Content-Length: '.$size);
             header('Content-Disposition: attachment; filename='.$filename);
             header('Content-Transfer-Encoding: binary');
@@ -53,7 +48,8 @@ $err = '<p style="color:#990000">Sorry, the file you are requesting is unavailab
                 echo "first line <br>".$err;
             }
         } else {
-            echo "second line <br>".$path;
+            echo "file doesn't exsit ".$filename."<br>";
+            echo "file path <br>".$path;
         }
     }
     ?>

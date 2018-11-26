@@ -73,7 +73,7 @@
 
 									$status_name = $row['status_name'];
 										switch ($status_name) {
-											case "Completed":
+											case "Design Complete":
 												$status_style = 'color:#008000;';
 												break;
 											case "Delayed":
@@ -82,6 +82,9 @@
 											case "Declined":
 												$status_style = 'color:#DC143C;';
 												break;
+											case "Printed":
+												$status_style = 'color:#20B2AA;';
+											break;
 										}
 				
 
