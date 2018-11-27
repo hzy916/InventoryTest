@@ -56,6 +56,11 @@
               $result_two = $conn->query($sql_two);	
               $count_two =  $result_two->num_rows;
 
+          }  else if($_SESSION['user_role_id'] == 4 ){
+              //get the design request which belongs to this employee and still in submitted status.
+              $sql_two = "SELECT customrequestID FROM CustomRequest WHERE c_RequestStatusID = 9";
+              $result_two = $conn->query($sql_two);	
+              $count_two =  $result_two->num_rows;
           } else {
              //get the request which belongs to this employee and still in submitted status.
              $sql = "SELECT RequestID FROM Request WHERE RequestStatusID = 1 AND RequestEmployeeID = ". $_SESSION['id'];
@@ -72,12 +77,13 @@
        
           <!-- Icon Cards-->
         <div class="row" style="margin-top:1em;">
-          <div class="col-xl-3 col-sm-6 mb-3">
+      <!--hide the delivery requsts to designers-->
+        <?php 
+        if($_SESSION['user_role_id'] != 4 ) {
+        ?>
+            <div class="col-xl-3 col-sm-6 mb-3">
               <div class="card text-white bg-primary o-hidden h-100">
                 <div class="card-body">
-              <?php
-          
-              ?>
                   <div class="mr-5"><?php echo $count ?> Pending Delivery Requests.</div>
                 </div>
                 <a class="card-footer text-white clearfix small z-1" href="delivery_table.php">
@@ -85,6 +91,7 @@
                 </a>
               </div>
             </div>
+         <?php } ?>
 
             <div class="col-xl-3 col-sm-6 mb-3">
               <div class="card text-white bg-warning o-hidden h-100">
@@ -132,6 +139,8 @@ if($_SESSION['user_role_id'] == 2 || $_SESSION['user_role_id'] == 3  ) {
 	$(".OperationColumn").addClass("hidebutton");
 	</script>' );
 }
+
+
 
 ?>
 <?php require_once('layouts/footer.php'); ?>	

@@ -20,9 +20,9 @@
         <li class="breadcrumb-item">
           <a href="dashboard.php">Dashboard</a>
         </li>
-		<li class="breadcrumb-item active">Design Request List</li>
+		<li class="breadcrumb-item active">Archived Design Request List</li>
       </ol>
-      <h1>Design request table</h1>
+      <h1>Archived Design requests</h1>
       <hr>
       <p><?php echo getUserName($_SESSION['id']); ?>  are login as <strong><?php echo getUserAccessRoleByID($_SESSION['user_role_id']); ?></strong></p>
 
@@ -41,8 +41,8 @@
 						<tr>
 							<th>ID</th>
 							<th>Item name</th>
-							<th class="EmployeeColumn">Employee</th>
 							<th>Submit date</th>
+							<th class="EmployeeColumn">Employee</th>
 							<th>Use date</th>
                             <th>Quantity</th>
                             <th>Voucher Code</th>
@@ -52,8 +52,14 @@
 					</thead>
 						<tbody>
 							<?php
-							$sql = "SELECT CustomRequest.customrequestID, CustomRequest.voucherCode, CustomRequest.quantity, CustomRequest.companyName, CustomRequest.itemtype, CustomRequest.c_RequestEmployeeID, CustomRequest.c_RequestDate, CustomRequest.UseDate,  Request_status.status_name as status_name, tbl_users.user_name as user_name FROM CustomRequest  JOIN Request_status ON CustomRequest.c_RequestStatusID = Request_status.status_id JOIN tbl_users ON  CustomRequest.c_RequestEmployeeID = tbl_users.id WHERE c_is_archived = 1";
-                            
+							if($_SESSION['user_role_id'] == 1) {
+								$sql = "SELECT CustomRequest.customrequestID, CustomRequest.voucherCode, CustomRequest.quantity, CustomRequest.companyName, CustomRequest.itemtype, CustomRequest.c_RequestEmployeeID, CustomRequest.c_RequestDate, CustomRequest.UseDate,  Request_status.status_name as status_name, tbl_users.user_name as user_name FROM CustomRequest  JOIN Request_status ON CustomRequest.c_RequestStatusID = Request_status.status_id JOIN tbl_users ON  CustomRequest.c_RequestEmployeeID = tbl_users.id WHERE c_is_archived = 1";
+							}
+							//show to designer the request which is design complete status.
+							else if($_SESSION['user_role_id'] == 4) {
+								$sql = "SELECT CustomRequest.customrequestID, CustomRequest.voucherCode, CustomRequest.quantity, CustomRequest.companyName, CustomRequest.itemtype, CustomRequest.c_RequestEmployeeID, CustomRequest.c_RequestDate, CustomRequest.UseDate,  Request_status.status_name as status_name, tbl_users.user_name as user_name FROM CustomRequest  JOIN Request_status ON CustomRequest.c_RequestStatusID = Request_status.status_id JOIN tbl_users ON  CustomRequest.c_RequestEmployeeID = tbl_users.id WHERE c_RequestStatusID = 7";
+							}
+
                             $result = $conn->query($sql);	
 							$num_rows = mysqli_num_rows($result);
 							if($result->num_rows > 0) {
@@ -100,9 +106,7 @@
 								// echo "Error " . $sql . ' ' . $conn->connect_error;
 								echo "No data available";
 							}
-							?>
-
-							
+							?>	
 					</tbody>
 				</table>
               </div>

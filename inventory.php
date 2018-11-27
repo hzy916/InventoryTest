@@ -163,7 +163,7 @@ $('#flyerTable').dataTable({
 
 <?php  
 
-if($_SESSION['user_role_id'] == 2 || $_SESSION['user_role_id'] == 3  ) {
+if($_SESSION['user_role_id'] != 1 ) {
 	echo('<script>$("#createBtn").addClass("hidebutton");
 	$(".OperationColumn").addClass("hidebutton");
 	</script>' );

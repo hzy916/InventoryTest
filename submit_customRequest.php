@@ -79,7 +79,7 @@
         if($conn->query($sql) === TRUE) {
             //Grab the value of request items
             echo "<script type=\"text/javascript\">".
-            "alert('Your submitted a Customised Item Request successfully.');".
+            "alert('You submitted a Customised Item Request successfully.');".
             "window.location.href='./custom_request_table.php';".
             "</script>";
 

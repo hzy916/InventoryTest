@@ -133,8 +133,9 @@ if($_GET['id']) {
 						<tr>
                             <th>ID</th>
 							<th>Item name</th>
+                            <th>Submit date</th>
 							<th class="EmployeeColumn">Employee</th>
-							<th>Submit date</th>
+						
                             <th>Use date</th>
                             <th>Quantity</th>
                             <th>Voucher Code</th>
@@ -148,9 +149,10 @@ if($_GET['id']) {
                                 "<tr>
                                     <td>".$data['customrequestID']."</td>
                                     <td>".$data['itemtype']."  ".$data['companyName']."</td>
-                                    <td>".$data['UseDate']."</td>
-                                    <td class='EmployeeColumn'>".$data['user_name']."</td>
                                     <td>".$data['c_RequestDate']."</td>
+                                 
+                                    <td class='EmployeeColumn'>".$data['user_name']."</td>
+                                    <td>".$data['UseDate']."</td>
                                     <td>".$data['quantity']."</td>
                                     <td>".$data['voucherCode']."</td>
                                     <td>".$data['status_name']."</td> 
@@ -162,8 +164,9 @@ if($_GET['id']) {
             
                 <?php
                        echo 
-                       "<p>Last Comments:  "   .$data['c_AdminComments']."</p>";
+                       "<h3>Admin's Comments:  "   .$data['c_AdminComments']."</h3>";
                 ?>
+                <hr>
                 <h4>Download Logo</h4>
                 <p><?php echo $msg ?></p>
                     <div class="table-responsive">
@@ -244,9 +247,11 @@ if($_GET['id']) {
                         break;
                         
                         case ($data['status_name'] == 'Delayed'):
-                        echo "
-                        <input type='button' class='btn btn-success operateBTN' value='Start Design' onclick=\"JavaScript:makeMyAction('design')\">
-                        ";
+                        if($_SESSION['user_role_id'] == 4){
+                            echo "
+                            <input type='button' class='btn btn-success operateBTN' value='Finish Design' onclick=\"JavaScript:makeMyAction('design')\">
+                            ";
+                        }
                         break;
 
                         case ($data['status_name'] == 'Approved'):
@@ -254,7 +259,6 @@ if($_GET['id']) {
                                 echo "
                                 <input type='button' class='btn btn-success operateBTN' value='Finish Design' onclick=\"JavaScript:makeMyAction('design')\">
                                 <input type='button' class='btn btn-danger operateBTN' value='Delay' onclick=\"JavaScript:makeMyAction('delay')\">";
-                        
                             }
                         break;
 
@@ -270,7 +274,7 @@ if($_GET['id']) {
                         case ($data['status_name'] == 'Printed' && $data['c_is_archived'] == '0'):
                             if($_SESSION['user_role_id'] == 1){
                                 echo "
-                                    <input type='button' class='btn btn-danger operateBTN' value='Printed' onclick=\"JavaScript:makeMyAction('archive')\">
+                                    <input type='button' class='btn btn-danger operateBTN' value='Archive' onclick=\"JavaScript:makeMyAction('archive')\">
                                 ";
                             }
                         break;
@@ -291,20 +295,20 @@ if($_GET['id']) {
                     function makeMyAction(val){
                         //  alert(val);
                         document.getElementById('postAction').value = val;
-                        document.getElementById('ciaociao').submit();
+                        //finish design button submit check if image is uploaded
+                        if (document.getElementById('postAction').value == 'design'){
+                <?php 
+                            if(isset($_FILES['image']) && $_FILES['image']['size'] > 0){   ?>
+                            document.getElementById('ciaociao').submit();
+             <?php          } else {   ?>
+                               alert('No design file uploaded yet, please upload before you finish this design request.');
+             <?php              }    ?>
+                        } else {
+                            document.getElementById('ciaociao').submit();
+                        }
                         return;
                     }
 
-                    //jquery to disable multiple click on button submit
-
-                    //  $(function()
-                    // {
-                    // $('.operateBTN').on('click',function()
-                    // {
-                    //     $(this).val('Please wait ...')
-                    //     .attr('disabled','disabled');
-                    //     $('#ciaociao').submit();
-                    // });
                 </script>
 
               </div>
