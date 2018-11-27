@@ -14,6 +14,7 @@
 
 
   
+  
 if($_GET['id']) {
     $id = $_GET['id'];
 
@@ -49,7 +50,7 @@ if($_GET['id']) {
         ),
         'print'=> array(
             'sql'=> "UPDATE CustomRequest SET c_RequestStatusID = 8 WHERE CustomRequest.customrequestID = '$id'",
-            'alert'=>'You printed this design request, it goes to ready status, the inventory is updated too.',
+            'alert'=>'You printed this design request, it goes to ready status.',    
         ),
         'archive'=> array(
             'sql'=> "UPDATE CustomRequest SET c_is_archived = 1 WHERE CustomRequest.customrequestID = '$id'",
@@ -57,26 +58,12 @@ if($_GET['id']) {
         ),
     );
 
+    //to check if they use resubmit because of reloading
     if(isset($_POST['postAction']) && $_POST['randomcheck']==$_SESSION['rand']){
+
         $send_email_action = false;
 
-        if($_POST['postAction'] == 'approve'){
-            // //get the product id and number requested, and update inventory when request is completed. 
-            // $sql_updatestock = "UPDATE pawtrails JOIN Pawtrails_Request_junction ON pawtrails.id = Pawtrails_Request_junction.pawtrails_id && Pawtrails_Request_junction.request_id = '$id' SET pawtrails.amount = pawtrails.amount - Pawtrails_Request_junction.Qty"; 
-        
-            // //check if update stock successfully
-            // if ($conn->query($sql_updatestock) === TRUE) {
-            //     echo "<script>
-            //     alert('The related product inventory is updated!'); 
-            //     </script>";
-            //     // include 'mail.php';
-            
-            // } else {
-            //     echo "Error updating record: " . $conn->error;
-            // } 
-        }
-
-    
+     //   execute the related sql 
         $sql_udpate = $myArr[$_POST['postAction']]['sql'];
         if ($conn->query($sql_udpate) === TRUE) {
            
@@ -91,22 +78,32 @@ if($_GET['id']) {
             echo "Error updating record: " . $conn->error;
         } 
     }
- 
+
+        //get request details
         $msg = "";
         //get all the request details
         $sql = "SELECT CustomRequest.customrequestID, CustomRequest.c_is_archived, CustomRequest.c_AdminComments, CustomRequest.voucherCode, CustomRequest.quantity, CustomRequest.companyName, CustomRequest.itemtype, CustomRequest.c_RequestEmployeeID, CustomRequest.c_RequestDate, CustomRequest.UseDate,  Request_status.status_name as status_name, tbl_users.user_name as user_name FROM CustomRequest  JOIN Request_status ON CustomRequest.c_RequestStatusID = Request_status.status_id JOIN tbl_users ON  CustomRequest.c_RequestEmployeeID = tbl_users.id WHERE CustomRequest.customrequestID = '{$id}'";               
         $result = $conn->query($sql);
         $data = $result->fetch_assoc();
-        //  if(isset($send_email_action)){
-        //       //sending emails after status changed
-        //         $output = $data['user_name'] . '  request status changed to ' .$data['status_name'] . ' and the request ID is '.$id ;  
-        //         $to = $data['email'];
-        //         $subject = "Request Status changed";
-        //         $headers = "From: test@test.com" . "\r\n" .
-        //         "CC: somebodyelse@example.com";    
-        //         mail($to,$subject,$output,$headers);
-        //   //end of sending emails after status changed   
-        //  }
+
+        //get itemname based on item type and company
+        $itemname = $data['itemtype'].''.$data['companyName'];
+        $itemtype = $data['itemtype'];
+        $qty = $data['quantity'];
+        
+        //Create new items in inventory after design is printed
+        if(isset($_POST['postAction']) && $_POST['postAction'] == 'print'){
+            // //get the product id and number requested, and update inventory when request is completed. 
+            $sql_createstock = "INSERT INTO pawtrails (`itemtype`,`itemname`, `amount`) VALUES ( '{$itemtype}', '{$itemname}', '{$qty}')"; 
+            // //check if update stock successfully
+            if ($conn->query($sql_createstock) === TRUE) {
+                echo "<script>
+                alert('The related product inventory is updated!'); 
+                </script>";
+            } else {
+                echo "Error updating record: " . $conn->error;
+            } 
+        }
     }
 
     $rand=rand();
@@ -148,7 +145,7 @@ if($_GET['id']) {
 						<tbody>
 							<?php
                                 echo
-                                    "<tr>
+                                "<tr>
                                     <td>".$data['customrequestID']."</td>
                                     <td>".$data['itemtype']."  ".$data['companyName']."</td>
                                     <td>".$data['UseDate']."</td>
@@ -187,10 +184,12 @@ if($_GET['id']) {
                         ?>
                     </div> 
                 <hr>
-         <h4>Upload Design</h4> 
-
+    
+    
     <?php
+    //only show to designers about the upload design button
         if($_SESSION['user_role_id'] == 4 ) {  ?>
+             <h4>Upload Design</h4> 
          <form action="upload.php?id=<?php echo $_GET['id'];?>" method="POST"  enctype = "multipart/form-data">
       
             <input type="hidden"  name="randomcheck" value="<?php echo $rand; ?>">
@@ -205,6 +204,7 @@ if($_GET['id']) {
         <hr>
     <?php  } ?>
     <br>
+
     <h4>Download Design</h4> 
         <?php
         //to get the uploaded Design file name and download link
@@ -267,14 +267,13 @@ if($_GET['id']) {
                            }
                         break;
 
-                        // case ($data['status_name'] == 'Design Complete' && $data['c_is_archived'] == '0'):
-                        //     if($_SESSION['user_role_id'] == 1){
-                        //         echo "
-                        //             <p>Please only click printed button when the design poster or flyer is printed.</p>
-                        //             <input type='button' class='btn btn-danger operateBTN' value='Printed' onclick=\"JavaScript:makeMyAction('print')\">
-                        //         ";
-                        //     }
-                        // break;
+                        case ($data['status_name'] == 'Printed' && $data['c_is_archived'] == '0'):
+                            if($_SESSION['user_role_id'] == 1){
+                                echo "
+                                    <input type='button' class='btn btn-danger operateBTN' value='Printed' onclick=\"JavaScript:makeMyAction('archive')\">
+                                ";
+                            }
+                        break;
                     }
                 } 
                 //to give different go back link based on which page user is
@@ -288,12 +287,24 @@ if($_GET['id']) {
                 </form>
 
                 <script language="JavaScript">
+
                     function makeMyAction(val){
                         //  alert(val);
                         document.getElementById('postAction').value = val;
                         document.getElementById('ciaociao').submit();
                         return;
                     }
+
+                    //jquery to disable multiple click on button submit
+
+                    //  $(function()
+                    // {
+                    // $('.operateBTN').on('click',function()
+                    // {
+                    //     $(this).val('Please wait ...')
+                    //     .attr('disabled','disabled');
+                    //     $('#ciaociao').submit();
+                    // });
                 </script>
 
               </div>

@@ -5,15 +5,15 @@
 	// define("DB_NAME","Pawtrails_inventory");
 	
 	//////////////PawTrails Test system FOR Shreya
-	define("HOST","localhost");
-	define("DB_USER","pawtrails");
-	define("DB_PASS","attitudetech2018");
-	define("DB_NAME","Pawtrails_inventory_test");
-
 	// define("HOST","localhost");
-	// define("DB_USER","root");
-	// define("DB_PASS","root");
-	// define("DB_NAME","Pawtrails_inventory");
+	// define("DB_USER","pawtrails");
+	// define("DB_PASS","attitudetech2018");
+	// define("DB_NAME","Pawtrails_inventory_test");
+
+	define("HOST","localhost");
+	define("DB_USER","root");
+	define("DB_PASS","root");
+	define("DB_NAME","Pawtrails_inventory");
 	
   	session_start();
 
