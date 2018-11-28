@@ -1,4 +1,5 @@
 
+
 <?php
 
     require_once 'inc/config.php';
@@ -12,8 +13,6 @@
     require_once('layouts/header.php'); 
     require_once('layouts/left_sidebar.php');   
 
-
-  
   
 if($_GET['id']) {
     $id = $_GET['id'];
@@ -82,7 +81,7 @@ if($_GET['id']) {
         //get request details
         $msg = "";
         //get all the request details
-        $sql = "SELECT CustomRequest.customrequestID, CustomRequest.c_is_archived, CustomRequest.c_AdminComments, CustomRequest.voucherCode, CustomRequest.quantity, CustomRequest.companyName, CustomRequest.itemtype, CustomRequest.c_RequestEmployeeID, CustomRequest.c_RequestDate, CustomRequest.UseDate,  Request_status.status_name as status_name, tbl_users.user_name as user_name FROM CustomRequest  JOIN Request_status ON CustomRequest.c_RequestStatusID = Request_status.status_id JOIN tbl_users ON  CustomRequest.c_RequestEmployeeID = tbl_users.id WHERE CustomRequest.customrequestID = '{$id}'";               
+        $sql = "SELECT CustomRequest.customrequestID, CustomRequest.DesignFilePath, CustomRequest.c_is_archived, CustomRequest.c_AdminComments, CustomRequest.voucherCode, CustomRequest.quantity, CustomRequest.companyName, CustomRequest.itemtype, CustomRequest.c_RequestEmployeeID, CustomRequest.c_RequestDate, CustomRequest.UseDate,  Request_status.status_name as status_name, tbl_users.user_name as user_name FROM CustomRequest  JOIN Request_status ON CustomRequest.c_RequestStatusID = Request_status.status_id JOIN tbl_users ON  CustomRequest.c_RequestEmployeeID = tbl_users.id WHERE CustomRequest.customrequestID = '{$id}'";               
         $result = $conn->query($sql);
         $data = $result->fetch_assoc();
 
@@ -150,7 +149,6 @@ if($_GET['id']) {
                                     <td>".$data['customrequestID']."</td>
                                     <td>".$data['itemtype']."  ".$data['companyName']."</td>
                                     <td>".$data['c_RequestDate']."</td>
-                                 
                                     <td class='EmployeeColumn'>".$data['user_name']."</td>
                                     <td>".$data['UseDate']."</td>
                                     <td>".$data['quantity']."</td>
@@ -163,8 +161,8 @@ if($_GET['id']) {
 				</table>
             
                 <?php
-                       echo 
-                       "<h3>Admin's Comments:  "   .$data['c_AdminComments']."</h3>";
+                    echo 
+                    "<h3>Admin's Comments:  "   .$data['c_AdminComments']."</h3>";
                 ?>
                 <hr>
                 <h4>Download Logo</h4>
@@ -187,20 +185,21 @@ if($_GET['id']) {
                         ?>
                     </div> 
                 <hr>
-    
-    
     <?php
     //only show to designers about the upload design button, and only show upload when the design is not complete
         if(($_SESSION['user_role_id'] == 4) && ($data['status_name'] != 'Design Complete')) {  ?>
-            
-         <form action="upload.php?id=<?php echo $_GET['id'];?>" method="POST" enctype = "multipart/form-data">
+         <form action="upload.php?id=<?php echo $_GET['id'];?>" method="POST" id="UploadDesign" enctype = "multipart/form-data">
             <h4>Upload Design</h4> 
+            <p>Please upload image format file(PNG, JPEG) or PDF file, and file size smaller than 100M.</p>
+
+      
             <input type="hidden"  name="randomcheck" value="<?php echo $rand; ?>">
             <div class="col">
             <label>Design File</label>
                     <br>
                 <input type = "file" name = "image" />
             </div>
+        
             <br>
             <input type="submit" class="btn btn-primary" value="Submit Design"/>
         </form>
@@ -291,15 +290,15 @@ if($_GET['id']) {
                 </form>
 
                 <script language="JavaScript">
-
                     function makeMyAction(val){
                         //  alert(val);
                         document.getElementById('postAction').value = val;
                         //finish design button submit check if image is uploaded
                         if (document.getElementById('postAction').value == 'design'){
-                <?php 
-                            if(isset($_FILES['image']) && $_FILES['image']['size'] > 0){   ?>
-                            document.getElementById('ciaociao').submit();
+            <?php 
+                            // if(isset($_FILES['image']) && $_FILES['image']['size'] > 0){  
+                            if(!empty($data['DesignFilePath'])){    ?>
+                                document.getElementById('ciaociao').submit();
              <?php          } else {   ?>
                                alert('No design file uploaded yet, please upload before you finish this design request.');
              <?php              }    ?>
@@ -308,7 +307,6 @@ if($_GET['id']) {
                         }
                         return;
                     }
-
                 </script>
 
               </div>
@@ -316,13 +314,5 @@ if($_GET['id']) {
           </div>
     </div>
 
-<?php 
-
-// if ($data['status_name'] == 7) {
-//     echo('<script>$("#uploadForm").addClass("hidebutton");
-	
-// 	</script>' );
-// }
-?>
 
 <?php require_once('layouts/footer.php'); ?>	

@@ -1,6 +1,4 @@
-
 <?php
-
     require_once('inc/config.php');
 	if(!isset($_SESSION['id'],$_SESSION['user_role_id']))
 	{

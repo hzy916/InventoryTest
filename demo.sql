@@ -51,11 +51,11 @@ CREATE TABLE IF NOT EXISTS `tbl_user_role` (
 INSERT INTO `tbl_user_role` (`id`, `user_role`) VALUES
 	(1, 'admin');
 INSERT INTO `tbl_user_role` (`id`, `user_role`) VALUES
-	(2, 'editor');
+	(2, 'marketing');
 INSERT INTO `tbl_user_role` (`id`, `user_role`) VALUES
-	(3, 'author');
+	(3, 'sales');
 INSERT INTO `tbl_user_role` (`id`, `user_role`) VALUES
-	(4, 'contributor');
+	(4, 'designer');
 /*!40000 ALTER TABLE `tbl_user_role` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

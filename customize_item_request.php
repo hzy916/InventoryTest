@@ -117,7 +117,7 @@ if($_POST) {
                     <div class="col">
                     <label>Upload Logo</label>
                          <br>
-                      <input type = "file" name = "image" />
+                      <input type = "file" name = "image" required/>
                   
                     </div>
                 </div>
