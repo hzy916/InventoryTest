@@ -87,7 +87,7 @@ if($_POST) {
                         <label for="customType">Select Type</label>
                         <br>
                         <select name="customType" id="customType" class="form-control" onchange="" required>
-                            <option value="0" selected disabled hidden>Choose here</option>
+                            <option value="">Choose here</option>
                             <option value="flyer">Customised flyer</option>
                             <option value="poster">Customised poster</option>
                         </select>
@@ -112,7 +112,7 @@ if($_POST) {
                 <div class="form-group row">
                     <div class="col">
                         <label for="usingdate">Date of using</label>
-                        <input id="selectDate" type="date" class="form-control" name="usingdate" placeholder="Enter date" required>
+                        <input id="selectDate" onchange="validateDate()" type="date" class="form-control" name="usingdate" placeholder="Enter date" required>
                     </div>
                     <div class="col">
                     <label>Upload Logo</label>
@@ -139,6 +139,17 @@ if($_POST) {
 
     </div>
 </div>
+
+<script>
+     //check ship date to be at least one day after today
+     function validateDate(){
+            var userdate = new Date(document.getElementById("selectDate").value).toJSON().slice(0,10);
+            var today = new Date().toJSON().slice(0,10);
+            if(userdate < today){
+            alert('Please select future date only!');
+            }
+        }
+</script>
 
 <?php require_once('layouts/footer.php'); ?>
 

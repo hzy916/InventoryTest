@@ -64,7 +64,7 @@
                 //insert new request after image is uploaded    
                 $realfilepath =  mysqli_real_escape_string($conn,$filepath); 
                 //Insert Custom Request details
-                $sql= "UPDATE CustomRequest SET DesignFilePath = '$realfilepath'";
+                $sql= "UPDATE CustomRequest SET DesignFilePath = '$realfilepath' WHERE customrequestID =" .$_GET['id'];
                     
                 if($conn->query($sql) === TRUE) {
                         //Grab the value of request items

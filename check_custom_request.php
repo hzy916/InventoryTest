@@ -38,7 +38,7 @@ if($_GET['id']) {
             //get the product id and number requested, and update inventory when request is completed. 
             'sql'=>"UPDATE CustomRequest SET c_RequestStatusID = 7 WHERE CustomRequest.customrequestID = '$id'",
 
-            'alert'=>'You finished this design request, it goes to designed status.',
+            'alert'=>'You finished this design request, it goes to your archived desgin list.',
         ),
         'decline'=> array(
             'sql'=>"UPDATE CustomRequest SET c_RequestStatusID = 6 WHERE CustomRequest.customrequestID = '$id'",
@@ -120,7 +120,7 @@ if($_GET['id']) {
             </li>
             <li class="breadcrumb-item active">Customized Item Requests</li>
       </ol>
-      <h1>Process Custom Request</h1>
+      <h1>Process Custom Design Request</h1>
   
 	<!-- DataTables Example -->
 	<div class="card mb-3">
@@ -190,11 +190,11 @@ if($_GET['id']) {
     
     
     <?php
-    //only show to designers about the upload design button
-        if($_SESSION['user_role_id'] == 4 ) {  ?>
-             <h4>Upload Design</h4> 
-         <form action="upload.php?id=<?php echo $_GET['id'];?>" method="POST"  enctype = "multipart/form-data">
-      
+    //only show to designers about the upload design button, and only show upload when the design is not complete
+        if(($_SESSION['user_role_id'] == 4) && ($data['status_name'] != 'Design Complete')) {  ?>
+            
+         <form action="upload.php?id=<?php echo $_GET['id'];?>" method="POST" enctype = "multipart/form-data">
+            <h4>Upload Design</h4> 
             <input type="hidden"  name="randomcheck" value="<?php echo $rand; ?>">
             <div class="col">
             <label>Design File</label>
@@ -222,12 +222,12 @@ if($_GET['id']) {
                 $designfileName = substr($designFile['DesignFilePath'], 13);
                 echo 
                 "<p>Design File Name: ". $designfileName."</p>";
-                echo "<a href='download.php?file=DesignUpload/$designfileName'>Download Design file</a>";
+                echo "<a href='download.php?file=DesignUpload/$designfileName'>Download Design file</a><br><br>";
             }
         ?>
 
         <?php
-        if($_SESSION['user_role_id'] == 1 || $_SESSION['user_role_id'] == 4 ) {  ?>
+        if(($_SESSION['user_role_id'] == 1 && $data['c_is_archived'] == 0 ) || ( $_SESSION['user_role_id'] == 4 && $data['status_name'] != 'Design Complete')) {  ?>
                 <form method="post" id="ciaociao">
                     <input type="hidden"  name="randomcheck" value="<?php echo $rand; ?>">
                     <div class="form-group">
@@ -316,6 +316,13 @@ if($_GET['id']) {
           </div>
     </div>
 
+<?php 
 
+// if ($data['status_name'] == 7) {
+//     echo('<script>$("#uploadForm").addClass("hidebutton");
+	
+// 	</script>' );
+// }
+?>
 
 <?php require_once('layouts/footer.php'); ?>	

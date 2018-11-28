@@ -58,7 +58,7 @@
 
           }  else if($_SESSION['user_role_id'] == 4 ){
               //get the design request which belongs to this employee and still in submitted status.
-              $sql_two = "SELECT customrequestID FROM CustomRequest WHERE c_RequestStatusID = 9";
+              $sql_two = "SELECT customrequestID FROM CustomRequest WHERE c_RequestStatusID = 9 OR c_RequestStatusID = 3";
               $result_two = $conn->query($sql_two);	
               $count_two =  $result_two->num_rows;
           } else {

@@ -304,7 +304,7 @@
                     <div class="form-group row">
                         <div class="col">
                             <label for="applicantName">Shipping Date</label>
-                            <input id="date" type="date" class="form-control" name="deliverydate" placeholder="Enter date" required>
+                            <input id="date" onchange="validateDate()" type="date" class="form-control" name="deliverydate" placeholder="Enter date" required>
                         </div>
                         <div class="col">
                             <label for="receivercompany">Receiver's Company</label>
@@ -387,6 +387,14 @@
 
     <script type="text/javascript">
         //check ship date to be at least one day after today
+        function validateDate(){
+            var userdate = new Date(document.getElementById("date").value).toJSON().slice(0,10);
+            var today = new Date().toJSON().slice(0,10);
+            if(userdate < today){
+            alert('Please select future date only!');
+            }
+        }
+
         //open selection form
         function openSelectionForm(evt, productname) {
             var i, tabcontent, tablinks;
