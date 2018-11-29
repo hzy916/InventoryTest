@@ -1,6 +1,6 @@
 <?php 
  
- require_once('inc/config.php');
+ require_once('../inc/config.php');
 
 if($_GET['id']) {
     $id = $_GET['id'];

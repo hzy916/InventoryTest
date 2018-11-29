@@ -1,6 +1,6 @@
 <?php 
 
-    require 'inc/config.php';
+    require_once('../inc/config.php');
 	if(!isset($_SESSION['id'],$_SESSION['user_role_id']))
 	{
 		header('location:index.php?lmsg=true');
@@ -8,8 +8,8 @@
 	}		
 
 
-	require_once('layouts/header.php'); 
-	require_once('layouts/left_sidebar.php'); 
+	require_once('../layouts/header.php'); 
+	require_once('../layouts/left_sidebar.php'); 
      //remind user message
      $msg = "";
 

@@ -1,15 +1,14 @@
 <?php 
 
-	require_once('inc/config.php');
+	require_once('../inc/config.php');
 	if(!isset($_SESSION['id'],$_SESSION['user_role_id']))
 	{
 		header('location:index.php?lmsg=true');
 		exit;
 	}		
 	
-
-	require_once('layouts/header.php'); 
-	require_once('layouts/left_sidebar.php'); 
+	require_once('../layouts/header.php'); 
+	require_once('../layouts/left_sidebar.php'); 
 ?>
 
 
@@ -170,4 +169,4 @@ if($_SESSION['user_role_id'] != 1 ) {
 }
 
 ?>
-<?php require_once('layouts/footer.php'); ?>	
+<?php require_once('../layouts/footer.php'); ?>	

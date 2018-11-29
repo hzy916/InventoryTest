@@ -9,21 +9,21 @@
   <meta name="author" content="">
   <title>PawTrails Portal</title>
   <!-- Bootstrap core CSS-->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/InventoryTest/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
  
 
   <!-- Custom fonts for this template-->
- <link href="assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+ <link href="/InventoryTest/assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Custom styles for this template-->
-  <link href="assets/css/sb-admin.css" rel="stylesheet">
-  <link href="assets/css/custom.css" rel="stylesheet">
+  <link href="/InventoryTest/assets/css/sb-admin.css" rel="stylesheet">
+  <link href="/InventoryTest/assets/css/custom.css" rel="stylesheet">
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/InventoryTest/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="/InventoryTest/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   
   <!-- CDN for Bootstrap Table -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
