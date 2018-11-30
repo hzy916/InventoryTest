@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="13px" height="17px" viewBox="0 0 13 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>password icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M14,8.00013291 L14,8.00013291 C14,6.89801906 13.1019059,6 11.9994684,6 C10.8978141,6 10,6.89803327 10,8.00013291 C10,9.10199616 10.8978435,10 11.9994684,10 C13.1018764,10 14,9.10201036 14,8.00013291 L14,8.00013291 Z M16,8.00018987 L16,8.00018987 C16,10.2053449 14.20543,12 11.9992406,12 C9.79419024,12 8,10.2053449 8,8.00018987 C8,5.79465515 9.79419024,4 11.9992406,4 C14.20543,4 16,5.79465515 16,8.00018987 L16,8.00018987 Z M8,21 L9.17654914,16.1532379 C9.49321961,14.9921128 9.79259139,15 10.997152,15 L13.002848,15 C14.2028795,15 14.5086763,14.9990645 14.8234509,16.1532379 L16,21 L18,21 L16.7529785,15.6270031 C16.201075,13.6033568 15.1054564,13 13.002848,13 L10.997152,13 C8.8908254,13 7.80103395,13.5956241 7.2470215,15.6270031 L6,21 L8,21 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Login" transform="translate(-580.000000, -441.000000)">
+            <g id="Components/Signups/Login-#4" transform="translate(545.000000, 339.000000)">
+                <g id="Controls/Inputs-White/Create-Password-32px" transform="translate(25.149701, 77.000000)">
+                    <g id="Molecules/Inputs/Basic/-32px-with-Icon" transform="translate(0.000000, 17.000000)">
+                        <g id="Icons/24px/user" transform="translate(4.000000, 4.000000)">
+                            <mask id="mask-2" fill="white">
+                                <use xlink:href="#path-1"></use>
+                            </mask>
+                            <use id="Combined-Shape" fill="#525A65" fill-rule="nonzero" xlink:href="#path-1"></use>
+                            <g id="Colors/Dark" mask="url(#mask-2)" fill="#525A65" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24"></rect>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

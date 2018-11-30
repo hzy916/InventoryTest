@@ -66,7 +66,6 @@ if(isset($_GET['lmsg']) && $_GET['lmsg'] == true)
   <link href="assets/css/sb-admin.css" rel="stylesheet">
   <link href="assets/css/custom.css" rel="stylesheet">
 
-
 </head>
 
 <body class="bg-light">
@@ -80,7 +79,6 @@ if(isset($_GET['lmsg']) && $_GET['lmsg'] == true)
 
   <div class="container">
     <h1 class="Hey-Welcome mx-auto mt-5">HEY, WELCOME!</h1>
-
     	<?php 
 			if(isset($errorMsg))
 			{
@@ -89,38 +87,49 @@ if(isset($_GET['lmsg']) && $_GET['lmsg'] == true)
 				echo '</div>';
 				unset($errorMsg);
 			}
-		?>
+    ?>
+    
     <div class="card card-login mx-auto mt-5 customCard">
-      <div class="card-header">Please LOG IN</div>
+      <div class="card-header">PLEASE LOG IN</div>
       <div class="card-body">
 	
-        <form action="<?php echo $_SERVER['PHP_SELF']?>" method="post">
-          <div class="form-group">
-            <label for="exampleInputEmail1">Username (Email)</label>
-            <input class="form-control" id="exampleInputEmail1" name="email" type="email" placeholder="Enter email" required>
+        <form action="<?php echo $_SERVER['PHP_SELF']?>" class="LoginForm" method="post">
+          <label for="exampleInputEmail1">Username (Email)</label>
+          <div class="form-group inner-addon left-addon">
+                    <!--icon -->
+            <img class="glyphicon" src="assets/img/usernameicon.svg">
+            <input class="form-control requiredRed" id="exampleInputEmail1" name="email" type="email" placeholder="Enter email" required>
           </div>
-          <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input class="form-control" id="exampleInputPassword1" name="password" type="password" placeholder="Password" required>
+         
+          <label for="exampleInputPassword1">Password</label>
+          <div class="form-group inner-addon left-addon">
+            <img class="glyphicon" src="assets/img/passwordicon.svg">
+            <input class="form-control requiredRed" id="exampleInputPassword1" name="password" type="password" placeholder="Password" required>
           </div>
 
         <!--Switch Button in bootstrap -->
-        <div class="outerDivFull" >
-            <div class="switchToggle">
-              Remeber Me
-                <input type="checkbox" id="switch">
-                <label for="switch">Toggle</label>
+        <!-- <div class="toggle-group">
+            <label for="on-off-switch">
+              Remember Me <span class="aural">Show:</span> 
+            </label>
+
+            <input type="checkbox invisible" name="on-off-switch" id="on-off-switch" checked="" tabindex="1">
+          
+            <div class="onoffswitch pull-right" aria-hidden="true">
+                <div class="onoffswitch-label">
+                    <div class="onoffswitch-inner"></div>
+                    <div class="onoffswitch-switch"></div>
+                </div>
             </div>
-        </div>
-
-          <p class="notmember">NOT A MEMBER?</p>
-          <a class="applymember">APPLY FOR MEMBERSHIP NOW</a>
-
+        </div> -->
+       
+          <p class="notmember">NOT A MEMBER? <br><a href="#" class="applymember text-center">APPLY FOR MEMBERSHIP NOW</a></p>
+        <hr>
           <div class="row">
             <hr>
-            <div class="col-sm-12 text-center">
+            <div class="col-sm-12 text-center mt-3 mb-3">
               <button class="btn btn-login uppercase" type="submit" name="login">Login</button>
-              <button class="btn btn-close uppercase" name="close">Close</button>
+              <a class="btn btn-close uppercase" href="http://www.pawtrails.com">Close</a>
             </div>
           </div>
         </form>
@@ -130,23 +139,23 @@ if(isset($_GET['lmsg']) && $_GET['lmsg'] == true)
   </div>
 
 <footer class="footer">
-   
-					<div class="row">
-						<div class="col-sm-6 ">
-							<div class="copyright-text">
-								<p class="footerleft">Staff Portal V.2.0 |  Copyright © 2018 Attitude Technologies Ltd.  All rights reserved.  </p>
-							</div>
-						</div> <!-- End Col -->
-						<div class="col-sm-6">							
-							<ul id="customlinklist" class="pull-right">
-								<li><a href="">Privacy Policy |</a></li>						
-								<li><a href="">Terms of Use |</a></li>
-								<li><a href="">PawTrails Website | </a></li>
-								<li><a href="">Help</a></li>
-							</ul>							
-						</div> <!-- End Col -->
-					</div>
-			
+    <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="copyright-text">
+              <p class="footerleft">Staff Portal V.2.0 |  Copyright © 2018 Attitude Technologies Ltd.  All rights reserved.  </p>
+            </div>
+          </div> <!-- End Col -->
+          <div class="col-sm-6">							
+            <ul id="customlinklist" class="pull-right">
+              <li><a href="">Privacy Policy |</a></li>						
+              <li><a href="">Terms of Use |</a></li>
+              <li><a href="">PawTrails Website | </a></li>
+              <li><a href="">Help</a></li>
+            </ul>							
+          </div> <!-- End Col -->
+        </div>
+    </div>
 </div>
 
   <!-- Bootstrap core JavaScript-->

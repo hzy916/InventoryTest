@@ -19,15 +19,55 @@
 /**Custom Style For the System******/
 /************************************/
 
+/**Custom Font Style******/
+@font-face {
+    font-family: "Montserrat Light";
+    src: url("/fonts/Montserrat-Light.eot");
+    src: 
+        url("/fonts/Montserrat-Light.woff") format("woff"),
+        url("/fonts/Montserrat-Light.otf") format("opentype"),
+    }
+
+
+body {
+    font-family: "Montserrat Light", Arial !important;
+ }
 /*************************************/
 /**Login Page Style******/
 /************************************/
 
+.alert {
+   margin:3rem;
+   width:40%;
+    margin: 0 auto;
+ }
+/****add icon before input field***/
+/* enable absolute positioning */
+.inner-addon { 
+    position: relative; 
+}
 
+/* style icon */
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+
+/* align icon */
+.left-addon .glyphicon  { left:  0px;}
+.right-addon .glyphicon { right: 0px;}
+
+/* add padding  */
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }
+ 
+
+/****text and button styles **/
 .Hey-Welcome {
     width: 316px;
     height: 47px;
-    font-family: Montserrat;
+    font-family: 'Montserrat Light',Arial, sans-serif;
     font-size: 38px;
     font-weight: normal;
     font-style: normal;
@@ -60,33 +100,28 @@
     color:#ffffff;
   }
 
+  /**required field style*/
+  .LoginForm input{
+    border-right: 3px solid;
+  }
+
+  .LoginForm input:required{
+        border-right-color: salmon; 
+    }
 
   /**switch button style*/
-
-.outerDivFull { margin:50px; } 
-
-.switchToggle input[type=checkbox]{height: 0; width: 0; visibility: hidden; position: absolute; }
-.switchToggle label {cursor: pointer; text-indent: -9999px; width: 70px; max-width: 70px; height: 30px; background: #d1d1d1; display: block; border-radius: 100px; position: relative; }
-.switchToggle label:after {content: ''; position: absolute; top: 2px; left: 2px; width: 26px; height: 26px; background: #fff; border-radius: 90px; transition: 0.3s; }
-.switchToggle input:checked + label, .switchToggle input:checked + input + label  {background: #3e98d3; }
-.switchToggle input + label:before, .switchToggle input + input + label:before {content: 'No'; position: absolute; top: 5px; left: 35px; width: 26px; height: 26px; border-radius: 90px; transition: 0.3s; text-indent: 0; color: #fff; }
-.switchToggle input:checked + label:before, .switchToggle input:checked + input + label:before {content: 'Yes'; position: absolute; top: 5px; left: 10px; width: 26px; height: 26px; border-radius: 90px; transition: 0.3s; text-indent: 0; color: #fff; }
-.switchToggle input:checked + label:after, .switchToggle input:checked + input + label:after {left: calc(100% - 2px); transform: translateX(-100%); }
-.switchToggle label:active:after {width: 60px; } 
-.toggle-switchArea { margin: 10px 0 10px 0; }
-
+    /** end of switch button style*/
 
 .applymember{
-  
     font-size: 13px;
     font-weight: normal;
     font-style: normal;
     font-stretch: normal;
     line-height: normal;
     letter-spacing: normal;
-    text-align: center;
+    display: inline-block;
     color: #2296f3!important;
-    text-align: center;
+
 }
 .notmember{
     color: #525a65;
@@ -97,6 +132,7 @@
     border-radius: 2px;
     box-shadow: 0 5px 15px 0 rgba(82, 90, 101, 0.15);
     background-color: #ffffff;
+    /* text-align: center; */
 }
 
 .footer {
@@ -110,7 +146,7 @@
 }
 
 .footerleft{
-    font-family: OpenSans;
+    font-family: 'OpenSans';
     font-size: 13px;
     font-weight: normal;
     font-style: normal;
@@ -118,11 +154,13 @@
     line-height: normal;
     letter-spacing: normal;
     color: #525a65;
+    line-height: 60px;
 }
+
 
 #customlinklist li {
     display: inline;
-    font-family: OpenSans;
+    font-family: 'OpenSans';
     font-size: 13px;
     font-weight: normal;
     font-style: normal;
@@ -130,5 +168,7 @@
     line-height: normal;
     letter-spacing: normal;
     text-align: right;
-    color: #525a65;
+}
+#customlinklist li  a{
+    color: #525a65!important;
 }
