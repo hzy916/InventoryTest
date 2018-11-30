@@ -27,7 +27,7 @@ if(isset($_POST['login']))
 		}
 		else
 		{
-			$errorMsg = "Wrong email or password";
+			$errorMsg = "Username or password incorrect. Please try again.";
 		}
 	}
 }
@@ -62,14 +62,26 @@ if(isset($_GET['lmsg']) && $_GET['lmsg'] == true)
   <link href="assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Custom styles for this template-->
   <link href="assets/css/sb-admin.css" rel="stylesheet">
+
+  <link href="assets/css/sb-admin.css" rel="stylesheet">
+  <link href="assets/css/custom.css" rel="stylesheet">
+
+
 </head>
 
-<body class="bg-dark">
+<body class="bg-light">
+    <!-- Just an image -->
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand ml-5 mt-5" href="http://www.attitudetech.ie">
+      <img src="assets/img/com_logo.png" width="180" height="47" alt="">
+    </a>
+  </nav>
+
+
   <div class="container">
-    <div class="card card-login mx-auto mt-5">
-      <div class="card-header">Login</div>
-      <div class="card-body">
-		<?php 
+    <h1 class="Hey-Welcome mx-auto mt-5">HEY, WELCOME!</h1>
+
+    	<?php 
 			if(isset($errorMsg))
 			{
 				echo '<div class="alert alert-danger">';
@@ -78,21 +90,65 @@ if(isset($_GET['lmsg']) && $_GET['lmsg'] == true)
 				unset($errorMsg);
 			}
 		?>
+    <div class="card card-login mx-auto mt-5 customCard">
+      <div class="card-header">Please LOG IN</div>
+      <div class="card-body">
+	
         <form action="<?php echo $_SERVER['PHP_SELF']?>" method="post">
           <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
+            <label for="exampleInputEmail1">Username (Email)</label>
             <input class="form-control" id="exampleInputEmail1" name="email" type="email" placeholder="Enter email" required>
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Password</label>
             <input class="form-control" id="exampleInputPassword1" name="password" type="password" placeholder="Password" required>
           </div>
-          <button class="btn btn-primary btn-block" type="submit" name="login">Login</button>
+
+        <!--Switch Button in bootstrap -->
+        <div class="outerDivFull" >
+            <div class="switchToggle">
+              Remeber Me
+                <input type="checkbox" id="switch">
+                <label for="switch">Toggle</label>
+            </div>
+        </div>
+
+          <p class="notmember">NOT A MEMBER?</p>
+          <a class="applymember">APPLY FOR MEMBERSHIP NOW</a>
+
+          <div class="row">
+            <hr>
+            <div class="col-sm-12 text-center">
+              <button class="btn btn-login uppercase" type="submit" name="login">Login</button>
+              <button class="btn btn-close uppercase" name="close">Close</button>
+            </div>
+          </div>
         </form>
        
       </div>
     </div>
   </div>
+
+<footer class="footer">
+   
+					<div class="row">
+						<div class="col-sm-6 ">
+							<div class="copyright-text">
+								<p class="footerleft">Staff Portal V.2.0 |  Copyright © 2018 Attitude Technologies Ltd.  All rights reserved.  </p>
+							</div>
+						</div> <!-- End Col -->
+						<div class="col-sm-6">							
+							<ul id="customlinklist" class="pull-right">
+								<li><a href="">Privacy Policy |</a></li>						
+								<li><a href="">Terms of Use |</a></li>
+								<li><a href="">PawTrails Website | </a></li>
+								<li><a href="">Help</a></li>
+							</ul>							
+						</div> <!-- End Col -->
+					</div>
+			
+</div>
+
   <!-- Bootstrap core JavaScript-->
   <script src="assets/vendor/jquery/jquery.min.js"></script>
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
