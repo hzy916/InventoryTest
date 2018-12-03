@@ -1,43 +1,89 @@
- <!-- /.content-wrapper-->
-    <footer class="sticky-footer">
-      <div class="container">
-        <div class="text-center">
-          <small>Copyright © <a target="_blank" href="https://www.attitudetech.ie/">Attitude Technologies LTD</a></small>
+<style>
+
+  /*****footer style*****/
+
+  .footerleft {
+      font-family: 'OpenSans';
+      font-size: 13px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      color: #525a65;
+      line-height: 60px;
+  }
+
+  #customlinklist li {
+      display: inline;
+      font-family: 'OpenSans';
+      font-size: 13px;
+      font-weight: normal;
+      font-style: normal;
+      font-stretch: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      text-align: right;
+  }
+
+  #customlinklist li a {
+      color: #525a65!important;
+  }
+
+  .pull-right {
+      float: right;
+  }
+  </style>
+  
+          <footer class="footer">
+              <div class="container">
+                    <div class="row">
+                      <div class="col-sm-6">
+                        <div class="copyright-text">
+                          <p class="footerleft">Staff Portal V.2.0 |  Copyright © 2018 Attitude Technologies Ltd.  All rights reserved.  </p>
+                        </div>
+                      </div> <!-- End Col -->
+                      <div class="col-sm-6">							
+                        <ul id="customlinklist" class="pull-right">
+                          <li><a href="">Privacy Policy |</a></li>						
+                          <li><a href="">Terms of Use |</a></li>
+                          <li><a href="">PawTrails Website | </a></li>
+                          <li><a href="">Help</a></li>
+                        </ul>							
+                      </div> <!-- End Col -->
+                    </div>
+                </div>
+            </div>
+          </footer>
         </div>
-      </div>
-    </footer>
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-      <i class="fa fa-angle-up"></i>
-    </a>
+    </div>
 
-    <!-- Bootstrap core JavaScript-->
-  
-    <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- Core plugin JavaScript-->
-    <script src="/assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-  
-    <!-- Custom scripts for this page-->
-    <!-- Toggle between fixed and static navbar-->
-    <script>
-    $('#toggleNavPosition').click(function() {
-      $('body').toggleClass('fixed-nav');
-      $('nav').toggleClass('fixed-top static-top');
-    });
-
-    </script>
-    <!-- Toggle between dark and light navbar-->
-    <script>
-    $('#toggleNavColor').click(function() {
-      $('nav').toggleClass('navbar-dark navbar-light');
-      $('nav').toggleClass('bg-dark bg-light');
-      $('body').toggleClass('bg-dark bg-light');
-    });
-
-    </script>
-  </div>
 </body>
+<!--   Core JS Files   -->
+<script src="/assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>
+<script src="/assets/js/core/popper.min.js" type="text/javascript"></script>
+<script src="/assets/js/core/bootstrap.min.js" type="text/javascript"></script>
+<!--  Plugin for Switches, full documentation here: http://www.jque.re/plugins/version3/bootstrap.switch/ -->
+<script src="/assets/js/plugins/bootstrap-switch.js"></script>
+
+<!--  Chartist Plugin  -->
+<script src="/assets/js/plugins/chartist.min.js"></script>
+
+<!--  Notifications Plugin   -->
+<script src="/assets/js/plugins/bootstrap-notify.js"></script>
+<!-- Control Center for Light Bootstrap Dashboard: scripts for the example pages etc -->
+<script src="/assets/js/light-bootstrap-dashboard.js?v=2.0.1" type="text/javascript"></script>
+<!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->
+<script src="/assets/js/demo.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        // Javascript method's body can be found in assets/js/demos.js
+        demo.initDashboardPageCharts();
+
+        demo.showNotification();
+
+    });
+</script>
 
 </html>
 

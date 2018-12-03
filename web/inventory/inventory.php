@@ -6,9 +6,11 @@
 		header('location:index.php?lmsg=true');
 		exit;
 	}		
-	
+
 	require_once('../layouts/header.php'); 
-	require_once('../layouts/left_sidebar.php'); 
+	require_once('../layouts/side_bar.php'); 
+  	require_once('../layouts/nav.php'); 
+
 ?>
 
 

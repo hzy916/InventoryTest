@@ -9,9 +9,10 @@
 	}		
 	
 	$logged_user_id = $_SESSION['id'];
-
-	require_once('layouts/header.php'); 
-	require_once('layouts/left_sidebar.php'); 
+	
+	require_once('../layouts/header.php'); 
+	require_once('../layouts/side_bar.php'); 
+  	require_once('../layouts/nav.php'); 
 ?>
 
   <div class="content-wrapper">

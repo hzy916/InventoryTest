@@ -9,9 +9,10 @@
 	
 	$logged_user_id = $_SESSION['id'];
 
-
 	require_once('../layouts/header.php'); 
-	require_once('../layouts/left_sidebar.php'); 
+	require_once('../layouts/side_bar.php'); 
+  	require_once('../layouts/nav.php'); 
+
 ?>
 
 
@@ -20,9 +21,9 @@
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="dashboard.php">Dashboard</a>
+          <a href="../dashboard.php">Dashboard</a>
         </li>
-		<li class="breadcrumb-item active">Delivery Request List</li>
+		<li class="breadcrumb-item active">Shipment Requests</li>
       </ol>
       <h1>Delivery request table</h1>
       <hr>

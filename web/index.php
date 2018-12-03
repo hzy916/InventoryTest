@@ -140,29 +140,26 @@ if(isset($_GET['lmsg']) && $_GET['lmsg'] == true)
 
 <footer class="footer">
     <div class="container">
-        <div class="row">
-          <div class="col-sm-6">
-            <div class="copyright-text">
-              <p class="footerleft">Staff Portal V.2.0 |  Copyright © 2018 Attitude Technologies Ltd.  All rights reserved.  </p>
-            </div>
-          </div> <!-- End Col -->
-          <div class="col-sm-6">							
-            <ul id="customlinklist" class="pull-right">
-              <li><a href="">Privacy Policy |</a></li>						
-              <li><a href="">Terms of Use |</a></li>
-              <li><a href="">PawTrails Website | </a></li>
-              <li><a href="">Help</a></li>
-            </ul>							
-          </div> <!-- End Col -->
-        </div>
-    </div>
-</div>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="copyright-text">
+                <p class="footerleft">Staff Portal V.2.0 |  Copyright © 2018 Attitude Technologies Ltd.  All rights reserved.  </p>
+              </div>
+            </div> <!-- End Col -->
+            <div class="col-sm-6">							
+              <ul id="customlinklist" class="pull-right">
+                <li><a href="">Privacy Policy |</a></li>						
+                <li><a href="">Terms of Use |</a></li>
+                <li><a href="">PawTrails Website | </a></li>
+                <li><a href="">Help</a></li>
+              </ul>							
+            </div> <!-- End Col -->
+          </div>
+      </div>
+  </div>
+</footer>
 
-  <!-- Bootstrap core JavaScript-->
-  <script src="assets/vendor/jquery/jquery.min.js"></script>
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <!-- Core plugin JavaScript-->
-  <script src="assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
 </body>
 
 </html>
