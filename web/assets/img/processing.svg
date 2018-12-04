@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>Combined Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M2,2 L2,14 L14,14 L14,2 L2,2 Z M0,0 L16,0 L16,16 L0,16 L0,0 Z M6,1 L10,1 L10,5 L6,7 L6,1 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.75">
+        <g id="Dashboard" transform="translate(-52.000000, -422.000000)">
+            <g id="slidebar-icons">
+                <g id="Menu" transform="translate(0.000000, 310.000000)">
+                    <g id="Components/Menu-2" transform="translate(52.000000, 111.000000)">
+                        <g id="Icons/24px/star" transform="translate(0.000000, 1.000000)">
+                            <mask id="mask-2" fill="white">
+                                <use xlink:href="#path-1"></use>
+                            </mask>
+                            <use id="Combined-Shape" fill="#525A65" fill-rule="nonzero" xlink:href="#path-1"></use>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

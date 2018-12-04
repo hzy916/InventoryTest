@@ -111,7 +111,6 @@
  
 ?>
 
-
 <style>
 	.hidedisplay{
 		display: none!important;
@@ -132,17 +131,11 @@
             <!-- Breadcrumbs-->
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="dashboard.php">Dashboard</a>
+                    <a href="../dashboard.php">Dashboard</a>
                 </li>
-                <li class="breadcrumb-item active">Delivery Requests</li>
+                <li class="breadcrumb-item active">New Shipment Request</li>
             </ol>
-            <h1>Delivery Requests</h1>
-            <hr>
-            <p>You are login as <strong><?php echo getUserAccessRoleByID($_SESSION['user_role_id']); ?></strong></p>
           
-             
-      
-
         <!-- DataTables Example -->
         <div class="card mb-3" id="deliveryForm">
             <div class="card-header">

@@ -14,12 +14,16 @@
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
   <!-- CSS Files -->
+  
   <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="/assets/css/light-bootstrap-dashboard.css?v=2.0.1" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="/assets/css/demo.css" rel="stylesheet" />
 
-  <!-- <link href="/assets/css/custom.css" rel="stylesheet" /> -->
+  <link href="/assets/css/main.css" rel="stylesheet" />
+
+  <!-- Add icon library -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>

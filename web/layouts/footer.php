@@ -32,17 +32,18 @@
 
   .pull-right {
       float: right;
+      line-height:50px;
   }
   </style>
   
-          <footer class="footer">
+          <!-- <footer class="footer">
               <div class="container">
                     <div class="row">
                       <div class="col-sm-6">
                         <div class="copyright-text">
                           <p class="footerleft">Staff Portal V.2.0 |  Copyright © 2018 Attitude Technologies Ltd.  All rights reserved.  </p>
                         </div>
-                      </div> <!-- End Col -->
+                      </div> 
                       <div class="col-sm-6">							
                         <ul id="customlinklist" class="pull-right">
                           <li><a href="">Privacy Policy |</a></li>						
@@ -50,14 +51,12 @@
                           <li><a href="">PawTrails Website | </a></li>
                           <li><a href="">Help</a></li>
                         </ul>							
-                      </div> <!-- End Col -->
+                      </div> 
                     </div>
                 </div>
             </div>
-          </footer>
-        </div>
-    </div>
-
+          </footer> -->
+    
 </body>
 <!--   Core JS Files   -->
 <script src="/assets/js/core/jquery.3.2.1.min.js" type="text/javascript"></script>

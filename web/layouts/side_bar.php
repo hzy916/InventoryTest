@@ -36,6 +36,22 @@
 
 }
 
+.shipbutton{
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    border-radius: 2px;
+}
+
+.btn-1 {
+  background-image: linear-gradient(to left, #01bcd5, #2296f3);
+    border: none;
+}
+
+.shipbutton:hover {
+  background-position: right center; /* change the direction of the change here */
+}
+
 </style>
 
 <div class="sidebar" data-image="../assets/img/sidebar-5.jpg">
@@ -46,48 +62,58 @@
     -->
             <div class="sidebar-wrapper">
                 <div class="logo">
-                    <a href="http://www.attitudetech.ie" class="simple-text">
-                        <img src="/assets/img/logo-white.png" alt="" style="width:150px; height:auto;">
+                    <a href="http://www.attitudetech.ie" class="simple-text mb-3">
+                        <img src="/assets/img/logo-white.png" alt="" style="width:140px; height:auto;">
                     </a>
                     
-                    <div class="item">
+                    <div class="item mb-3">
                         <img class="EmployeeImg" src="/assets/img/new_logo.png" alt="">
                         <p class="caption"><?php echo getUserName($_SESSION['id']); ?></p>
                     </div>
 
-                </div>
+                    <a href="/DeliveryRequests/delivery_request.php" class="shipbutton btn btn-1 mb-3"><i class="fa fa-plus"></i> New Shipment Request</a>
+               </div>
+
                 <ul class="nav">
                     <li>
-                        <a class="nav-link" href="./delivery_table.php">
+                        <a class="nav-link" href="/DeliveryRequests/delivery_table.php">
                             <i class="nc-icon nc-chart-pie-35"></i>
                             <p>Shipment Requests</p>
                         </a>
                     </li>
+
                     <li class="nav-item active">
-                        <a class="nav-link" href="./user.html">
-                            <i class="nc-icon nc-circle-09"></i>
-                            <p>User Profile</p>
+                        <a class="nav-link" href="/DeliveryRequests/submitted_shipment.php">
+                            <!-- <img class="nc-icon" src="/assets/img/submitted.svg"> -->
+                            <p>Submitted</p>
                         </a>
                     </li>
                     <li>
                         <a class="nav-link" href="./table.html">
                             <i class="nc-icon nc-notes"></i>
-                            <p>Table List</p>
+                            <p>Processing</p>
                         </a>
                     </li>
                     <li>
                         <a class="nav-link" href="./typography.html">
                             <i class="nc-icon nc-paper-2"></i>
-                            <p>Typography</p>
+                            <p>Completed</p>
                         </a>
                     </li>
+                    <li>
+                        <a class="nav-link" href="./typography.html">
+                            <i class="nc-icon nc-paper-2"></i>
+                            <p>Declined</p>
+                        </a>
+                    </li>
+                    
                     
                     <hr>
 
                     <li>
-                        <a class="nav-link" href="./icons.html">
+                        <a class="nav-link" href="/DesignRequests/design_request_table.php">
                             <i class="nc-icon nc-atom"></i>
-                            <p>Icons</p>
+                            <p>Design Requests</p>
                         </a>
                     </li>
                     <li>
@@ -108,7 +134,13 @@
                             <p>Notifications</p>
                         </a>
                     </li>
-             
+                    <hr>
+                    <li>
+                        <a class="nav-link" href="/inventory/inventory.php">
+                            <i class="nc-icon nc-bell-55"></i>
+                            <p>Inventory</p>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>

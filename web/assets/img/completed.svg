@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="13px" viewBox="0 0 18 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>Icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M6.3006259,9.9460016 L2.0476259,5.7220016 C1.5776259,5.2550016 0.817625902,5.2560016 0.349625902,5.7240016 C-0.117374098,6.1940016 -0.116374098,6.9540016 0.351625902,7.4210016 L5.4526259,12.4910016 C5.5346259,12.5720016 5.6336259,12.6210016 5.7296259,12.6740016 C5.7706259,12.6970016 5.8056259,12.7350016 5.8486259,12.7530016 C5.9936259,12.8120016 6.1466259,12.8410016 6.3006259,12.8410016 C6.4536259,12.8410016 6.6076259,12.8120016 6.7516259,12.7530016 C6.7956259,12.7350016 6.8296259,12.6970016 6.8706259,12.6740016 C6.9676259,12.6210016 7.0656259,12.5720016 7.1476259,12.4910016 L17.6466259,2.0490016 C18.1156259,1.5810016 18.1166259,0.822001603 17.6486259,0.352001603 C17.1816259,-0.115998397 16.4226259,-0.117998397 15.9516259,0.350001603 L6.3006259,9.9460016 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.75">
+        <g id="Dashboard" transform="translate(-51.000000, -472.000000)">
+            <g id="slidebar-icons">
+                <g id="Menu" transform="translate(0.000000, 310.000000)">
+                    <g id="Components/Menu-2" transform="translate(51.000000, 162.000000)">
+                        <g id="Icons/24px/star">
+                            <mask id="mask-2" fill="white">
+                                <use xlink:href="#path-1"></use>
+                            </mask>
+                            <use id="Icon" fill="#525A65" xlink:href="#path-1"></use>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

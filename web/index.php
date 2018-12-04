@@ -56,25 +56,25 @@ if(isset($_GET['lmsg']) && $_GET['lmsg'] == true)
   <meta name="description" content="">
   <meta name="author" content="">
   <title>PawTrails Portal</title>
-  <!-- Bootstrap core CSS-->
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Custom fonts for this template-->
-  <link href="assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-  <!-- Custom styles for this template-->
+   <!--     Fonts and icons     -->
+   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+  <!-- CSS Files -->
+  
+  <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="assets/css/sb-admin.css" rel="stylesheet">
 
-  <link href="assets/css/sb-admin.css" rel="stylesheet">
-  <link href="assets/css/custom.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
 
 </head>
 
 <body class="bg-light">
     <!-- Just an image -->
-  <nav class="navbar navbar-light bg-light">
+  
     <a class="navbar-brand ml-5 mt-5" href="http://www.attitudetech.ie">
       <img src="assets/img/com_logo.png" width="180" height="47" alt="">
     </a>
-  </nav>
+  
 
 
   <div class="container">
@@ -138,26 +138,26 @@ if(isset($_GET['lmsg']) && $_GET['lmsg'] == true)
     </div>
   </div>
 
-<footer class="footer">
-    <div class="container">
-          <div class="row">
-            <div class="col-sm-6">
-              <div class="copyright-text">
-                <p class="footerleft">Staff Portal V.2.0 |  Copyright © 2018 Attitude Technologies Ltd.  All rights reserved.  </p>
+    <footer class="footer">
+        <div class="container">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="copyright-text">
+                    <p class="footerleft">Staff Portal V.2.0 |  Copyright © 2018 Attitude Technologies Ltd.  All rights reserved.  </p>
+                  </div>
+                </div> <!-- End Col -->
+                <div class="col-sm-6">							
+                  <ul id="customlinklist" class="pull-right">
+                    <li><a href="">Privacy Policy |</a></li>						
+                    <li><a href="">Terms of Use |</a></li>
+                    <li><a href="">PawTrails Website | </a></li>
+                    <li><a href="">Help</a></li>
+                  </ul>							
+                </div> <!-- End Col -->
               </div>
-            </div> <!-- End Col -->
-            <div class="col-sm-6">							
-              <ul id="customlinklist" class="pull-right">
-                <li><a href="">Privacy Policy |</a></li>						
-                <li><a href="">Terms of Use |</a></li>
-                <li><a href="">PawTrails Website | </a></li>
-                <li><a href="">Help</a></li>
-              </ul>							
-            </div> <!-- End Col -->
           </div>
       </div>
-  </div>
-</footer>
+    </footer>
 
 
 </body>

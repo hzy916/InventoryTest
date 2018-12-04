@@ -46,6 +46,10 @@ td {
 .card .table tbody td:first-child, .card .table thead th:first-child {
     padding-left: 35px!important;
 }
+
+.highlight{
+  font-weight: 400;
+}
 </style>
 
   <div class="content">
@@ -56,9 +60,7 @@ td {
           <a href="dashboard.php">Dashboard</a>
         </li>
       </ol>
-   
-      <p>Welcome, <?php echo getUserName($_SESSION['id']); ?> are login as <strong><?php echo getUserAccessRoleByID($_SESSION['user_role_id']); ?></strong></p>
-
+ 
         <?php
       		//only visible to admin and editor
           if($_SESSION['user_role_id'] == 1 ) {
@@ -95,7 +97,7 @@ td {
           <div class="col-md-6 col-lg-6">
               <div class="card  card-tasks">
                   <div class="card-header ">
-                      <h4 class="card-title">Un-Completed Shipment Request</h4>
+                      <h4 class="card-title highlight">Un-Completed Shipment Request</h4>
                       <a href="DeliveryRequests/delivery_table.php" class="card-category">See all Requests  →</a>
                   </div>
                   <div class="card-body ">
@@ -140,8 +142,8 @@ td {
             <div class="col-md-6 col-lg-6">
               <div class="card  card-tasks">
                   <div class="card-header ">
-                      <h4 class="card-title">Un-Completed Design Request</h4>
-                      <p class="card-category">See all Requests  →</p>
+                      <h4 class="card-title highlight">Un-Completed Design Request</h4>
+                      <a href="DesignRequests/design_request_table.php" class="card-category">See all Requests  →</a>
                   </div>
                   <div class="card-body ">
                     <div class="table-full-width">
@@ -219,7 +221,21 @@ td {
                                       Out of Stock
                                   </td>
                               </tr>
-
+                              <tr>
+                                  <td class="td-actions requestTitle">PawTrails All in One</td>
+                                  <td class="td-actions  requestTitle">
+                                    Black
+                                  </td>
+                                  <td class="td-actions  requestTitle">
+                                     Small
+                                  </td>
+                                  <td class="td-actions  requestTitle">
+                                      0
+                                  </td>
+                                  <td class="td-actions requestTitle">
+                                      Out of Stock
+                                  </td>
+                              </tr>
 
                           </tbody>
                       </table>
