@@ -15,7 +15,7 @@
 
 ?>
 
-
+ 
   <div class="content-wrapper">
     <div class="container-fluid">
       <!-- Breadcrumbs-->
@@ -167,30 +167,29 @@
 	</form>
  
 
-	<script type="text/javascript">
-
-		function GetRequestID(idR){
-			$("#req2display").val(idR);
-			$("#displayRequest").submit();
-		}
-			//table pagination
-		$(document).ready(function () {
+    <script type="text/javascript">
+        //table pagination
+        $(document).ready(function () {
 			$('#requestTable').DataTable({
 				columnDefs: [
 					{ targets: 'no-sort', orderable: false }
 				]
 			});
-		});
-
-	
+        });
+        
+        function GetRequestID(idR){
+			$("#req2display").val(idR);
+			$("#displayRequest").submit();
+		}
+           
 	</script>
 
 
 <?php  
 
-if($_SESSION['user_role_id'] == 2 || $_SESSION['user_role_id'] == 3  ) {
-	echo('<script>$("#createBtn").addClass("hidebutton");
-	</script>' );
-}
+    if($_SESSION['user_role_id'] == 2 || $_SESSION['user_role_id'] == 3  ) {
+        echo('<script>$("#createBtn").addClass("hidebutton");
+        </script>' );
+    }
 ?>
 <?php require_once('../layouts/footer.php'); ?>	

@@ -152,8 +152,8 @@
                 <li class="breadcrumb-item active">New Shipment Request</li>
             </ol>
           
-        <!-- DataTables Example -->
-            <div class="card mb-3" id="deliveryForm">
+        <!-- Original Form  -->
+            <!-- <div class="card mb-3" id="deliveryForm">
         
                 <div class="card-body tab-content">
 
@@ -165,7 +165,6 @@
                     </div>
 
                     <div id="flyer_poster" class="tabcontent">
-                    
                         <form method="POST" id="form_flyer">
                             <input type="hidden"  name="makeaction" value="product">
                             <div class="form-group row">
@@ -380,7 +379,7 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
-            </div>
+            </div> -->
             
         <!-- MultiStep Form -->
         <div class="container">
@@ -414,9 +413,112 @@
                                         <hr class="seperateLine">
                                         <img class="emptyItemIMG" src="https://cdn.shopify.com/s/files/1/2590/2182/files/Christmas2018-PawTrailsmin.png?8270276245400105272" src="Empty in your Request">
                                         <p class="noitemText">No Item in your shipment, please add item into your shipment </p>
-
-                                        <a href="" class="shipbutton btn btn-1 mb-3"><i class="fa fa-plus"></i> Add Item Into My Shipments</a>
+                                            <button id="addItem" class="shipbutton btn btn-1 mb-3"><i class="fa fa-plus"></i> Add Item Into My Shipments</button>
                                         <br>
+
+                                        <!-- The Modal -->
+                                        <div id="myModal" class="modal">
+                                            <div class="modal-content">
+                                                <span class="close">&times;</span>
+
+                                                    <h5>Please select the product you request.</h5> 
+                                                    <!--button to select which type of product you request-->
+                                                    <form id="form-shower">
+                                                        <select id="myselect">
+                                                            <option value="" selected="selected"></option>
+                                                            <option value="form_flyer">Flyer or Poster</option>
+                                                            <option value="pawtrails_form">PawTrails All In One</option>   
+                                                        </select>
+                                                    </form>
+
+                                                    <!-- The Form for flyer or posters-->
+                                              
+                                                    <form name="form_flyer" method="POST" id="form_flyer" style="display:none">
+                                                        <input type="hidden"  name="makeaction" value="product">
+                                                        <div class="form-group row">
+                                                            <div class="col">
+                                                                <label for="deliveryProduct">Product</label>
+                                                            <br>
+                                                                <select name="sel_product" id="sel_product" class="form-control" onchange="checkStock();" required>
+                                                                    <?php
+                                                                        $j = 0;
+
+                                                                        $sql = mysqli_query($conn, "SELECT id, itemname, amount FROM pawtrails  WHERE itemtype = 'flyer' OR  itemtype =  'poster'");
+                                                                        
+                                                                        while ($row = $sql->fetch_assoc()){
+                                                                            if($j == 0 ){
+                                                                                $thisNumber = $row['amount'];
+                                                                            }
+                                                                            echo "<option amount='".$row['amount']."' value='".$row['id']." - ".$row['itemname']." - ".$row['amount']."'>" . $row['itemname'] . "</option>";
+                                                                            $j++;
+                                                                        }
+                                                                    ?>
+                                                                </select>
+                                                            </div>
+                                                    
+                                                            <div class="col">
+                                                                <label for="deliverynumber">Number of Products</label>
+                                                                <input type="number" class="form-control" name="deliverynumber" id="deliverynumber" placeholder="number"  min="1" >		
+                                                            </div>
+                                                            <!-- stock number-->
+                                                            <div class="col">
+                                                                <label for="stocknumber">stock Number</label>
+                                                                <br>
+                                                        
+                                                            <span id="stocknumber"><?php echo $thisNumber; ?></span>
+                                                            </div>
+
+                                                        </div>
+                                                        <!-- <input type="submit" name="AddProduct" class="btn btn-info"> -->
+                                                        <button type="button" name="AddProduct" onclick="checkBeforeSubmit();" class="btn btn-info">Add Product</button>
+                                                    </form>
+                                            
+                                                <!-- The Form for pawtrails all in one -->
+                                            
+                                                    <form name="pawtrails_form" method="POST" id="pawtrails_form" style="display:none">
+                                                        <input type="hidden"  name="makeaction" value="pawtrailsSelect">
+
+                                                        <div class="form-group row">
+                                                            <div class="col ss-item-required">
+                                                                <label for="deliveryProduct">Color</label>
+                                                                <br>
+                                                                <select name="sel_color" id="sel_color" class="form-control" onchange="checkPawtrailsStock();">
+                                                                        <option value="0" selected disabled hidden>Choose here</option>
+                                                                        <option value="red">red</option>
+                                                                        <option value="black">black</option>
+                                                                </select>
+                                                            </div>
+
+                                                            <div class="col ss-item-required">
+                                                                <label for="deliverynumber">Size</label>
+                                                                <br>
+                                                                <select name="sel_size" id="sel_size" class="form-control" onchange="checkPawtrailsStock();">
+                                                                    <option value="0" selected disabled hidden>Choose here</option>
+                                                                    <option value="small">small</option>
+                                                                    <option value="medium">medium</option>
+                                                                    <option value="large">large</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group row">
+                                                                <div class="col ss-item-required">
+                                                                    <label for="deliverynumber">Number of Products</label>
+                                                                    <input type="number" class="form-control" name="deliverynumber" id="deliverynumber2" placeholder="number"  min="1" required>		
+                                                                </div>
+
+                                                                <div class="col ss-item-required">
+                                                                    <label for="deliverynumber">Stock Number</label>
+                                                                    <br>
+                                                                    <span id="pawtrails_stock"></span>
+                                                                </div>
+                                                        </div>
+                                                        <button type="button" name="AddProduct"  onclick="checkPawTrailsBeforeSubmit();" class="btn btn-info">Add Product</button>
+                                                    </form>
+                                              
+                                            </div>
+                                        </div>
+
                                         <hr class="seperateLine">
                                         <input type="button" name="cancel" class="cancel previous btn" value="Cancel" />
                                  
@@ -573,7 +675,45 @@
     </div>
 </div>
 
+
+
+
+
+
     <script type="text/javascript">
+    /****************/
+    //Pop up form js
+
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("addItem");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal 
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    $("#myselect").on("change", function() {
+        $("#" + $(this).val()).show().siblings().hide();
+    });
+        /****************/
         //check ship date to be at least one day after today
         function validateDate(){
             var userdate = new Date(document.getElementById("date").value).toJSON().slice(0,10);

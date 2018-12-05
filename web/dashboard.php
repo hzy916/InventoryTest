@@ -57,8 +57,9 @@ td {
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
         <li class="breadcrumb-item">
-          <a href="dashboard.php">Dashboard</a>
+          <a href="dashboard.php">Home</a>
         </li>
+		<li class="breadcrumb-item active"> Dashboard</li>
       </ol>
  
         <?php
