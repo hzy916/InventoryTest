@@ -290,7 +290,7 @@
                 <h4>Receiver's Details</h4>
 
                 <form action="delivery_request.php" method="POST">
-                <input type="hidden"  name="makeaction" value="address">
+                    <input type="hidden"  name="makeaction" value="address">
              
                     <div class="form-group row">
                         <div class="col">

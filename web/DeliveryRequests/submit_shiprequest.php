@@ -1,18 +1,48 @@
 <?php
     $user_id = $_SESSION['id']; 
 
-        $receivercompany = mysqli_real_escape_string($conn,$_POST['receivercompany']);
-        $firstname =  mysqli_real_escape_string($conn,$_POST['firstname']);
-        $lastname =  mysqli_real_escape_string($conn,$_POST['lastname']);
-        $phonenumber =  mysqli_real_escape_string($conn,$_POST['phonenumber']);
-        $inputAddress1 =  mysqli_real_escape_string($conn,$_POST['inputAddress1']);
-        $inputAddress2 =  mysqli_real_escape_string($conn,$_POST['inputAddress2']);
-        $inputAddress3 = mysqli_real_escape_string($conn,$_POST['inputAddress3']);
-        $inputCity =  mysqli_real_escape_string($conn,$_POST['inputCity']);
-        $inputCountry =  mysqli_real_escape_string($conn,$_POST['inputCountry']);
-        $inputPostcode =  mysqli_real_escape_string($conn,$_POST['inputPostcode']);
-        $deliverydate =  mysqli_real_escape_string($conn,$_POST['deliverydate']);
-        $receiverEmail =  mysqli_real_escape_string($conn,$_POST['receiverEmail']);
+        // $receivercompany = mysqli_real_escape_string($conn,$_POST['receivercompany']);
+        // $firstname =  mysqli_real_escape_string($conn,$_POST['firstname']);
+        // $lastname =  mysqli_real_escape_string($conn,$_POST['lastname']);
+        // $phonenumber =  mysqli_real_escape_string($conn,$_POST['phonenumber']);
+        // $inputAddress1 =  mysqli_real_escape_string($conn,$_POST['inputAddress1']);
+        // $inputAddress2 =  mysqli_real_escape_string($conn,$_POST['inputAddress2']);
+        // $inputAddress3 = mysqli_real_escape_string($conn,$_POST['inputAddress3']);
+        // $inputCity =  mysqli_real_escape_string($conn,$_POST['inputCity']);
+        // $inputCountry =  mysqli_real_escape_string($conn,$_POST['inputCountry']);
+        // $inputPostcode =  mysqli_real_escape_string($conn,$_POST['inputPostcode']);
+        // $deliverydate =  mysqli_real_escape_string($conn,$_POST['deliverydate']);
+        // $receiverEmail =  mysqli_real_escape_string($conn,$_POST['receiverEmail']);
+
+
+     
+        if(!empty($_SESSION['requestDetails'])){
+            echo "  <h3>Receiver Details</h3>";
+            foreach($_SESSION['requestDetails'] as $i=> $k) {
+                echo "
+                    <p>".$k['fullname']."</p>
+                    <p>".$k['company']."</p>
+                    <p>".$k['phonenumber']."</p>
+                    <p>".$k['receiverEmail']."</p>";
+                    $i++;
+                }  
+        }
+ 
+        if(!empty($_SESSION['requestDetails'])){
+            foreach($_SESSION['requestDetails'] as $i=> $k) {
+                echo "
+                    <p>".$k['inputAddress1']."</p>
+                    <p>".$k['inputAddress2']."</p>
+                    <p>".$k['inputAddress3']."</p>
+                    <p>".$k['receiverEmail']."</p>
+                    <p>".$k['inputCity']."</p>
+                    <p>".$k['inputCountry']."</p>
+                    <p>".$k['inputPostcode']."</p>";
+                    
+                    $i++;
+                }  
+        }
+  
 
 
         if (!empty($receivercompany)) {

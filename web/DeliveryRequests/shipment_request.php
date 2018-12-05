@@ -11,7 +11,12 @@
 	require_once('../layouts/side_bar.php'); 
   	require_once('../layouts/nav.php'); 
 
-    if($_POST) {
+   $rand=rand();
+    $_SESSION['rand']=$rand;
+
+   //to check if they use resubmit because of reloading
+   if(isset($_POST['makeaction'])){
+
         $doAction = true;
 
         switch($_POST['makeaction']) {
@@ -94,9 +99,31 @@
              
             break;
 
-            case 'address':
-                if(!empty($_SESSION['delivery'])){
-                    include ('submit_address.php');
+            
+            case 'confirmaddress':
+
+                if(isset($_POST['randomcheck'])  && $_POST['randomcheck']==$_SESSION['rand'] ){
+                    //save all details in the session before user submit
+                    $_SESSION['requestDetails'][] = [
+                        'company' => $_POST['receivercompany'],
+                        'fullname' => $_POST['firstname'],
+                        'phonenumber' => $_POST['phonenumber'],
+                        'inputAddress1' => $_POST['inputAddress1'],
+                        'inputAddress2' => $_POST['inputAddress2'],
+                        'inputAddress3' => $_POST['inputAddress3'],
+                        'inputCity' => $_POST['inputCity'],
+                        'inputCountry' => $_POST['inputCountry'],
+                        'inputPostcode' => $_POST['inputPostcode'],
+                        'deliverydate' => $_POST['deliverydate'],
+                        'receiverEmail' => $_POST['receiverEmail']
+                    ];
+                    break;
+                }
+          
+
+            case 'submitRequest':
+                if(!empty($_SESSION['delivery']) && !empty($_SESSION['requestDetails'])){
+                    include ('submit_shiprequest.php');
                 } else{
                     echo "<script>
                     alert('Your request failed, Please add product before you make delivery request.');
@@ -277,8 +304,7 @@
                               
                                                     <form name="flyerForm" method="POST" id="flyerForm">
                                                         <input type="hidden"  name="makeaction" value="product">
-                                                     
-                                                       
+     
                                                             <label class="fieldLabel" for="deliveryProduct">Product</label>
                                                         
                                                             <select name="sel_product" id="sel_product" class="form-control" onchange="checkStock();" required>
@@ -368,134 +394,99 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Wizard STEP 2 END -->
+                            <!-- Wizard STEP 1 END -->
 
-                            <!-- Wizard STEP 1 -->
+                            <!-- Wizard STEP 2 -->
                             <div class="row setup-content" id="step-2">
                                 <h2 class="fs-title">Receiver’s Details</h2>
                                 <hr class="seperateLine">
 
                                 <div class="col-sm-12">
-                                    <!-- Text input-->
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 control-label" for="textinput">Full Contact Name</label>
-                                        <div class="col-sm-10">
-                                            <div class="input-group">
-                                                <input autocomplete="on" type="text" placeholder="Full Name" class="form-control" required>
-                                                <span class="input-group-addon label-danger"><i class="fa fa-user fa-lg text-white"></i></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                            <!-- Text input-->
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 control-label" for="textinput">Company Name</label>
-                                        <div class="col-sm-10">
-                                            <div class="input-group">
-                                                <input type="text" placeholder="Your business name" class="form-control" required>
-                                                <span class="input-group-addon label-danger"><i class="fa fa-building fa-lg text-white"></i></span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Text input-->
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 control-label" for="textinput">Email</label>
-                                        <div class="col-sm-10">
-                                            <div class="input-group">
-                                                <input type="email" placeholder="Email Address" class="form-control" required>
-                                                <span class="input-group-addon label-danger"><i class="fa fa-envelope fa-lg text-white"></i></span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Text input-->
+                                <form  method="POST">
+                                    <!--set random number to check resumbit on refresh -->
+                                    <input type="hidden"  name="randomcheck" value="<?php echo $rand; ?>">
+                                   
+                                    <input type="hidden"  name="makeaction" value="confirmaddress">
                                     
                                     <div class="form-group row">
-                                        <label class="col-sm-2 control-label" for="textinput">Company</label>
-                                        <div class="col-sm-10">
-                                            <div class="input-group">
-                                                <input type="text" placeholder="Your business name" class="form-control" required>
-                                                <span class="input-group-addon label-danger"><i class="fa fa-building fa-lg text-white"></i></span>
-                                            </div>
+                                        <div class="col">
+                                            <label for="firstname">Full Contact Name</label>
+                                            <input type="text" class="form-control" name="firstname" placeholder="#####" required>
+                                        </div>
+                                        <div class="col">
+                                            <label for="receivercompany">Company Name</label>
+                                            <input type="text" class="form-control" name="receivercompany" placeholder="receiver company">
                                         </div>
                                     </div>
 
+                                    <div class="form-group row">
+                                        <div class="col">
+                                            <label for="receiverEmail">Receiver Email</label>
+                                            <input type="email" class="form-control" name="receiverEmail" placeholder="receiver email" required>
+                                        </div>
+
+                                          <div class="col">
+                                            <label for="phonenumber">Phone Number</label>
+                                            <input type="text" class="form-control" name="phonenumber" placeholder="#####" required>
+                                        </div>
+                                    </div>
+                                    
                                     <h2 class="fs-title">Shipping ADDRESS</h2>
                                     <hr class="seperateLine">
+                                            
+                                    <div class="form-group row">
+                                      
+                                        <div class="col">
+                                            <label for="applicantName">Shipping Date</label>
+                                            <input id="date" onchange="validateDate()" type="date" class="form-control" name="deliverydate" placeholder="Enter date" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
                                     
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 control-label" for="textinput">Company</label>
-                                            <div class="col-sm-10">
-                                                <div class="input-group">
-                                                    <input type="text" placeholder="Your business name" class="form-control" required>
-                                                    <span class="input-group-addon label-danger"><i class="fa fa-building fa-lg text-white"></i></span>
-                                                </div>
-                                            </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="inputAddress">Street / House No</label>
+                                            <input type="text" class="form-control" name="inputAddress1" placeholder="1234 Main St" required>
                                         </div>
 
-                                            <div class="form-group row">
-                                            <label class="col-sm-2 control-label" for="textinput">Company</label>
-                                            <div class="col-sm-10">
-                                                <div class="input-group">
-                                                    <input type="text" placeholder="Your business name" class="form-control" required>
-                                                    <span class="input-group-addon label-danger"><i class="fa fa-building fa-lg text-white"></i></span>
-                                                </div>
-                                            </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="inputAddress">Address2</label>
+                                            <input type="text" class="form-control" name="inputAddress2" placeholder="1234 Main St">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="inputAddress">Address3</label>
+                                            <input type="text" class="form-control" name="inputAddress3" placeholder="1234 Main St">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+
+                                        <div class="form-group col-md-4">
+                                            <label for="inputCountry">Country</label>
+                                            <input type="text" class="form-control" name="inputCountry" required>
                                         </div>
 
-                                            <div class="form-group row">
-                                                <label class="col-sm-2 control-label" for="textinput">Company</label>
-                                                <div class="col-sm-10">
-                                                    <div class="input-group">
-                                                        <input type="text" placeholder="Your business name" class="form-control" required>
-                                                        <span class="input-group-addon label-danger"><i class="fa fa-building fa-lg text-white"></i></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                    
-                                            <div class="form-group row">
-                                            <label class="col-sm-2 control-label" for="industry">Country</label>
-                                                <div class="col-sm-10">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon label-danger"><i class="fa fa-briefcase fa-lg text-white"></i></span>
-                                                        <select id="industry" class="form-control">
-                                                            <option value="" selected disabled>Choose One:</option>
-                                                            <option value="Accountancy">Ireland</option>
-                                                            <option value="Agricultural">UK</option>
-                                                            <option value="Automotive">France</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        
-
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 control-label" for="textinput">City</label>
-                                            <div class="col-sm-10">
-                                                <div class="input-group">
-                                                    <input id="postcode" type="text" placeholder="City" class="form-control">
-                                                    <span class="input-group-addon bg-success"><i class="fa fa-map-marker fa-lg text-white"></i></span>
-                                                </div>
-                                            </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="inputCity">City</label>
+                                            <input type="text" class="form-control" name="inputCity" required>
                                         </div>
 
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 control-label" for="textinput">Postcode</label>
-                                            <div class="col-sm-10">
-                                                <div class="input-group">
-                                                    <input id="postcode" type="text" placeholder="Post Code" class="form-control">
-                                                    <span class="input-group-addon bg-success"></span>
-                                                </div>
-                                            </div>
+                                      
+                                        <div class="form-group col-md-4">
+                                            <label for="inputPostcode">Postcode</label>
+                                            <input type="text" class="form-control" name="inputPostcode" required>
                                         </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Submit</button>                              
+                                </form>
+                              
 
                                     <input type="button" name="previous" class="cancel previous btn" value="Back" />
-                                    
                                     <button class="btn nextBtn next_btn" type="button" >Next<i class="fa fa-angle-double-right"></i></button>
                                 </div>
                                 
                             </div>
-                            <!-- Wizard STEP 1 END -->
+                            <!-- Wizard STEP 2 END -->
 
                             <!-- Wizard STEP 3 -->
                             <div class="row setup-content" id="step-3">
@@ -503,11 +494,101 @@
                                     <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-10">
                             
-                                    hello
+                                        <div class="form-group">
+                                            <div class="form-check ml-3">
+                                            <h2 class="fs-title">Final Review</h2>
+                                             <hr class="seperateLine">
+                                             <div class="row">
+                                                <!--Receiver details in the session-->
+                                                <div class="col-lg-6">
+                                               
+                                                        <?php    
+                                                            if(!empty($_SESSION['requestDetails'])){
+                                                                echo "  <h3>Receiver Details</h3>";
+                                                                foreach($_SESSION['requestDetails'] as $i=> $k) {
+                                                                    echo "
+                                                                        <p>".$k['fullname']."</p>
+                                                                        <p>".$k['company']."</p>
+                                                                        <p>".$k['phonenumber']."</p>
+                                                                        <p>".$k['receiverEmail']."</p>";
+                                                                        $i++;
+                                                                    }  
+                                                            }
+                                                        ?>
+                                                </div>
+                                               
+                                                <!--Shipment address in the session-->
+                                                <div class="col-lg-6">
+                                                        <?php    
+                                                            if(!empty($_SESSION['requestDetails'])){
+                                                                foreach($_SESSION['requestDetails'] as $i=> $k) {
+                                                                    echo "
+                                                                        <p>".$k['inputAddress1']."</p>
+                                                                        <p>".$k['inputAddress2']."</p>
+                                                                        <p>".$k['inputAddress3']."</p>
+                                                                        <p>".$k['receiverEmail']."</p>
+                                                                        <p>".$k['inputCity']."</p>
+                                                                        <p>".$k['inputCountry']."</p>
+                                                                        <p>".$k['inputPostcode']."</p>";
+                                                                        
+                                                                        $i++;
+                                                                    }  
+                                                            }
+                                                        ?>
+
+                                                </div>
+                                            </div>
+                                                <!--Shipment Items in the session-->
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered" id="requestProductTable" width="100%" cellspacing="0">
+                                                        <thead>
+                                                            <tr>
+                                                                <!-- <th>item id</th> -->
+                                                                <th>Product Name</th>
+                                                                <th>Size</th>
+                                                                <th>Color</th>
+                                                                <th>Amount</th>
+                                                              
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        <?php    
+                                                            if(!empty($_SESSION['delivery'])){
+                                                                foreach($_SESSION['delivery'] as $i=> $k) {
+                                                                    echo "<tr>
+                                                                        <td>".$k['productname']."</td>
+                                                                        <td>".$k['sel_color']."</td>
+                                                                        <td>".$k['sel_size']."</td>
+                                                                        <td>".$k['deliverynumber']."</td>
+                                                                   
+                                                                        </tr>";
+                                                                        $i++;
+                                                                    }  
+                                                            }
+                                                        ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                                <input class="form-check-input" type="checkbox" id="gridCheck" required>
+                                                <label class="form-check-label" for="gridCheck">
+                                                    I confirm all the information above are correct.
+                                                </label>
+                                                                    
+                                            </div>
+                                        </div>
                                     </div>
                                     <hr>
-                                    <button class="btn btn-primary col-xs-3 pull-right" type="button" >Submit </button>
+                                <form  method="POST">
+                                    <!--set random number to check resumbit on refresh -->
+                                    <input type="hidden" name="randomcheck" value="<?php echo $rand; ?>">
+                                   
+                                    <input type="hidden"  name="makeaction" value="submitRequest">
+                                    
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
                             </div>
+                           
                         </div>
                         </fieldset><!-- form contents END -->
                 </div>
