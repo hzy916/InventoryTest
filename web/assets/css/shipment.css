@@ -1,4 +1,29 @@
 /********************************/
+/*****Add Item POp up*********/
+/*******************************/
+
+
+.addBtn{
+    border-radius: 2px;
+    background-color: #2296f3;
+    color:#ffffff!important;
+    border: none;
+}
+
+.cancel{
+    border:none;
+    border-radius: 2px;
+    box-shadow: inset 0 -1px 0 0 #e5e5e5;
+    background-color: #f2f2f2;
+}
+
+.fieldLabel{
+    margin-top: 10px;
+    margin-left: 10px;
+    text-align: left;
+}
+
+/********************************/
 /*****Modal Form POp up*********/
 /*******************************/
 /* The Modal (background) */
@@ -22,7 +47,7 @@
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    width:50%!important;
 }
 
 /* The Close Button */
@@ -31,6 +56,7 @@
     float: right;
     font-size: 28px;
     font-weight: bold;
+    text-align:right;
 }
 
 .close:hover,
