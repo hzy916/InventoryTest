@@ -62,38 +62,7 @@ td {
 		<li class="breadcrumb-item active"> Dashboard</li>
       </ol>
  
-        <?php
-      		//only visible to admin and editor
-          if($_SESSION['user_role_id'] == 1 ) {
-            //get the request which are still in submitted status.
-              $sql = "SELECT RequestID FROM Request WHERE RequestStatusID = 1";
-              $result = $conn->query($sql);	
-              $count =  $result->num_rows;
-
-              //get the design request which are still in submitted status.
-              $sql_two = "SELECT customrequestID FROM CustomRequest WHERE c_RequestStatusID = 1";
-              $result_two = $conn->query($sql_two);	
-              $count_two =  $result_two->num_rows;
-
-          }  else if($_SESSION['user_role_id'] == 4 ){
-              //get the design request which belongs to this employee and still in submitted status.
-              $sql_two = "SELECT customrequestID FROM CustomRequest WHERE c_RequestStatusID = 9 OR c_RequestStatusID = 3";
-              $result_two = $conn->query($sql_two);	
-              $count_two =  $result_two->num_rows;
-          } else {
-             //get the request which belongs to this employee and still in submitted status.
-             $sql = "SELECT RequestID FROM Request WHERE RequestStatusID = 1 AND RequestEmployeeID = ". $_SESSION['id'];
-             $result = $conn->query($sql);	
-             $count =  $result->num_rows;
-
-            //get the design request which belongs to this employee and still in submitted status.
-            $sql_two = "SELECT customrequestID FROM CustomRequest WHERE c_RequestStatusID = 1 AND c_RequestEmployeeID = ". $_SESSION['id'];
-            $result_two = $conn->query($sql_two);	
-            $count_two =  $result_two->num_rows;
-          }
-          ?>
-
-      
+    
       <div class="row">
           <div class="col-md-6 col-lg-6">
               <div class="card  card-tasks">
@@ -103,40 +72,38 @@ td {
                   </div>
                   <div class="card-body ">
                     <div class="table-full-width">
-                      <table class="table">
-                          <tbody>
-                              <tr>
-                                  <td class="Companyrow">Title</td>
-                                  <td class="td-actions text-right Companyrow">
-                                    Status
-                                  </td>
-                              </tr>
+                    <table class="table">
+                            <thead>
+                                <tr>
+                                    <th class="Companyrow">Title</th>
+                                    <th class="td-actions text-right Companyrow">
+                                        Status
+                                    </th>
+                                </tr>
+                            </thead> 
 
-                              <tr>
-                                  <td class="tablecontent">Company Name</td>
-                                  <td class="td-actions text-right tablecontent">
-                                    Status
-                                  </td>
-                              </tr>
-
-                              <tr>
-                                  <td class="tablecontent">Company Name</td>
-                                  <td class="td-actions text-right tablecontent">
-                                    Status
-                                  </td>
-                              </tr>
-
-                          </tbody>
+                         	<tbody>
+                                <?php
+                                    $sql = "SELECT Receiver.first_name as fullname, Request_status.status_name as status_name FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN Receiver ON Request.ReceiverID = Receiver.receiver_id  WHERE Request.RequestStatusID != 5 LIMIT 0,2;";
+                                    $result = $conn->query($sql);
+            
+                                    if($result->num_rows > 0) {
+                                        while($row = $result->fetch_assoc()) {
+                                            echo 
+                                            "<tr>
+                                                <td class='Companyrow'>".$row['fullname']."</td>
+                                                <td class='td-actions text-right Companyrow'><span style='color:#ffffff; text-align:center; width:6em;background-color:#f5a623;'>".$row['status_name']."</span></td>
+                                            </tr>";
+                                        }
+                                    } else {
+                                            echo "<tr><td colspan='5'><center>No Data Avaliable</center></td></tr>";
+                                    }
+                                    ?>
+                            </tbody>
+                         
                       </table>
                     </div>
                   </div>
-
-                  <!-- <div class="card-footer ">
-                      <hr>
-                      <div class="stats">
-                          <i class="now-ui-icons loader_refresh spin"></i> Updated 3 minutes ago
-                      </div>
-                  </div> -->
               </div>
           </div>
 
@@ -149,29 +116,34 @@ td {
                   <div class="card-body ">
                     <div class="table-full-width">
                       <table class="table">
-                          <tbody>
-                              <tr>
-                                  <td class="Companyrow">Title</td>
-                                  <td class="td-actions text-right Companyrow">
-                                    Status
-                                  </td>
-                              </tr>
+                            <thead>
+                                <tr>
+                                    <th class="Companyrow">Title</th>
+                                    <th class="td-actions text-right Companyrow">
+                                        Status
+                                    </th>
+                                </tr>
+                            </thead> 
 
-                              <tr>
-                                  <td class="tablecontent">Company Name</td>
-                                  <td class="td-actions text-right tablecontent">
-                                    Status
-                                  </td>
-                              </tr>
-
-                              <tr>
-                                  <td class="tablecontent">Company Name</td>
-                                  <td class="td-actions text-right tablecontent">
-                                    Status
-                                  </td>
-                              </tr>
-
-                          </tbody>
+                         	<tbody>
+                                <?php
+                                    $sql = "SELECT CustomRequest.companyName as companyName, Request_status.status_name as status_name FROM CustomRequest JOIN Request_status ON CustomRequest.c_RequestStatusID = Request_status.status_id  WHERE CustomRequest.c_RequestStatusID = 1 LIMIT 0,2;";
+                                    $result = $conn->query($sql);
+            
+                                    if($result->num_rows > 0) {
+                                        while($row = $result->fetch_assoc()) {
+                                            echo 
+                                            "<tr>
+                                                <td class='Companyrow'>".$row['companyName']."</td>
+                                                <td class='td-actions text-right Companyrow'><span style='color:#ffffff; text-align:center; width:6em;background-color:#f5a623;'>".$row['status_name']."</span></td>
+                                            </tr>";
+                                        }
+                                    } else {
+                                            echo "<tr><td colspan='5'><center>No Data Avaliable</center></td></tr>";
+                                    }
+                                    ?>
+                            </tbody>
+                         
                       </table>
                     </div>
                   </div>
@@ -216,11 +188,30 @@ td {
                                      Small
                                   </td>
                                   <td class="td-actions  requestTitle">
-                                      0
-                                  </td>
-                                  <td class="td-actions requestTitle">
-                                      Out of Stock
-                                  </td>
+                                    <?php
+                                            $sql = "SELECT * FROM pawtrails WHERE id = 27";
+                                            $result = $conn->query($sql);
+                                    
+                                            if($result->num_rows > 0) {
+                                                while($row = $result->fetch_assoc()) {
+                                                    // set styles the way you want
+                                                    if($row['amount'] > 0) {
+                                                        $tdStyle='background-color:#ADFF2F';
+                                                        $stocktext = 'In Stock';
+                                                    } else {
+                                                        $tdStyle='background-color:#d4143d';
+                                                        $stocktext = 'Out of Stock';
+                                                    }
+                                                    echo  $row['amount'];
+                                                }
+                                            } else {
+                                                    echo "No Data Avaliable";
+                                            }
+                                            ?>
+                                    </td>
+                                    <td class="td-actions requestTitle">
+                                        <span style="text-align:center; width:6em; <?php echo $tdStyle; ?>"><?php echo $stocktext; ?></span>
+                                    </td>
                               </tr>
                               <tr>
                                   <td class="td-actions requestTitle">PawTrails All in One</td>
@@ -231,10 +222,29 @@ td {
                                      Small
                                   </td>
                                   <td class="td-actions  requestTitle">
-                                      0
+                                  <?php
+                                        $sql = "SELECT * FROM pawtrails WHERE id = 28";
+                                        $result = $conn->query($sql);
+                                 
+                                        if($result->num_rows > 0) {
+                                            while($row = $result->fetch_assoc()) {
+                                                // set styles the way you want
+                                                if($row['amount'] > 0) {
+                                                    $tdStyle='background-color:#ADFF2F';
+                                                    $stocktext = 'In Stock';
+                                                } else {
+                                                    $tdStyle='background-color:#d4143d';
+                                                    $stocktext = 'Out of Stock';
+                                                }
+                                                echo  $row['amount'];
+                                            }
+                                        } else {
+                                                echo "No Data Avaliable";
+                                        }
+                                        ?>
                                   </td>
                                   <td class="td-actions requestTitle">
-                                      Out of Stock
+                                     <span style="text-align:center; width:6em; <?php echo $tdStyle; ?>"><?php echo $stocktext; ?></span>
                                   </td>
                               </tr>
 

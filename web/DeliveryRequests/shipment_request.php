@@ -105,8 +105,6 @@
 
             
             case 'confirmaddress':
-                // unset($_SESSION['requestDetails']);
-
                 if($_POST['randomcheck']==$_SESSION['rand'] ){  
                     //save all details in the session before user submit
                     $_SESSION['requestDetails'][0] = [
@@ -125,21 +123,22 @@
                 }
             break;
 
-            // case 'submitRequest':
-            //     if(!empty($_SESSION['delivery']) && !empty($_SESSION['requestDetails'])){
-            //         include ('submit_shiprequest.php');
-            //     } else{
-            //         echo "<script>
-            //         alert('Your request failed, Please add product before you make delivery request.');
-            //         window.location.href='./delivery_request.php';
-            //         </script>";
-            //     }
-            // break;
+            case 'submitRequest':
+                if(!empty($_SESSION['delivery']) && !empty($_SESSION['requestDetails'])){
+                    include ('submit_shiprequest.php');
+                } else{
+                    echo 
+                    "<script>
+                        alert('Your request failed, Please add product before you make delivery request.');
+                    </script>";
+                }
+            break;
         }
     }
 
     $NoItemDivView='block';
     $ItemDivView='none';
+    
     if(isset($_SESSION['delivery']) && !empty($_SESSION['delivery'])){
         $NoItemDivView='none';
         $ItemDivView='block';     
@@ -221,6 +220,7 @@
                                             <h2 class="fs-title">Shipment Contents</h2>
                                             <hr class="seperateLine">
                                             <img class="emptyItemIMG" src="https://cdn.shopify.com/s/files/1/2590/2182/files/Christmas2018-PawTrailsmin.png?8270276245400105272" src="Empty in your Request">
+                                           
                                             <p class="noitemText">No Item in your shipment, please add item into your shipment </p>
                                                 <button id="addItem" class="shipbutton btn btn-1 mb-3"><i class="fa fa-plus"></i> Add Item Into My Shipments</button>
                                             <br>
@@ -419,6 +419,7 @@
                                     <input type="hidden"  name="makeaction" value="confirmaddress">
                                     
                                     <?php
+                                    //save user input in the session and allow user to edit it before submit
                                     $fullname='';
                                     $company='';
                                     $phonenumber='';
