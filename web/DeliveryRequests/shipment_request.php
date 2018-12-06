@@ -11,8 +11,6 @@
 	require_once('../layouts/side_bar.php'); 
   	require_once('../layouts/nav.php'); 
 
-   $rand=rand();
-    $_SESSION['rand']=$rand;
 
    //to check if they use resubmit because of reloading
    if(isset($_POST['makeaction'])){
@@ -38,13 +36,16 @@
                         $doAction = false;
                     break;
                     case ($dNumber < $maxAmount && $dNumber > 0):
-                        $_SESSION['delivery'][] = [
-                            'product_id' => $pId,
-                            'productname' => $pName,
-                            'sel_color' => '/',
-                            'sel_size' => '/',
-                            'deliverynumber' => $dNumber
-                        ];
+                            //check if resubmit on reload the page
+                        if($_POST['flyerToken']==$_SESSION['rand'] ){   
+                            $_SESSION['delivery'][] = [
+                                'product_id' => $pId,
+                                'productname' => $pName,
+                                'sel_color' => '/',
+                                'sel_size' => '/',
+                                'deliverynumber' => $dNumber
+                            ];
+                        }
                     break;
                 }
           
@@ -55,54 +56,58 @@
             break;
 
             case 'pawtrailsSelect':
-                   
-                if(!empty($_POST['sel_color'])&& !empty( $_POST['sel_size'])){
-                    $sel_color = $_POST['sel_color'];
-                    $sel_size = $_POST['sel_size'];
+                //check if resubmit on reload the page
+                if($_POST['pawtrailsToken']==$_SESSION['rand'] ){   
+                     
+                    if(!empty($_POST['sel_color'])&& !empty( $_POST['sel_size'])){
+                        $sel_color = $_POST['sel_color'];
+                        $sel_size = $_POST['sel_size'];
 
-                    $sql = "SELECT id, amount FROM pawtrails  WHERE color = '$sel_color' AND size = '$sel_size'";
-                    $result = $conn->query($sql);
-                    while ($row = $result->fetch_array()) {
+                        $sql = "SELECT id, amount FROM pawtrails  WHERE color = '$sel_color' AND size = '$sel_size'";
+                        $result = $conn->query($sql);
+                        while ($row = $result->fetch_array()) {
+                            
+                        $sel_id = $row['id']; 
+                        $maxQty = $row['amount'];
+                        }
                         
-                    $sel_id = $row['id']; 
-                    $maxQty = $row['amount'];
-                    }
-                    
-                    $dNumber = intval($_POST['deliverynumber']);
+                        $dNumber = intval($_POST['deliverynumber']);
 
-                    switch(true) {
-                        case ($dNumber == 0):
-                            echo '<script> alert("You have to enter a valid number");</script>';
-                            $doAction = false;
-                        break;
-                        case ($dNumber > $maxQty):
-                            echo '<script> alert("Out of Stock");</script>';
-                            $doAction = false;
-                        break;
-                        case ($dNumber < 0):
-                            echo '<script> alert("You have to enter a positive number");</script>';
-                            $doAction = false;
-                        break;
-                        case ($dNumber < $maxQty && $dNumber > 0):
-                            $_SESSION['delivery'][] = [
-                                'product_id' => $sel_id,
-                                'productname' => 'PawTrails',
-                                'sel_color' => $sel_color,
-                                'sel_size' => $sel_size,
-                                'deliverynumber' => $dNumber
-                            ];
-                        break;
-                    }  
-                }else{
-                    echo '<script> alert("Please select product first.");</script>';
+                        switch(true) {
+                            case ($dNumber == 0):
+                                echo '<script> alert("You have to enter a valid number");</script>';
+                                $doAction = false;
+                            break;
+                            case ($dNumber > $maxQty):
+                                echo '<script> alert("Out of Stock");</script>';
+                                $doAction = false;
+                            break;
+                            case ($dNumber < 0):
+                                echo '<script> alert("You have to enter a positive number");</script>';
+                                $doAction = false;
+                            break;
+                            case ($dNumber < $maxQty && $dNumber > 0):
+                                $_SESSION['delivery'][] = [
+                                    'product_id' => $sel_id,
+                                    'productname' => 'PawTrails',
+                                    'sel_color' => $sel_color,
+                                    'sel_size' => $sel_size,
+                                    'deliverynumber' => $dNumber
+                                ];
+                            break;
+                        }  
+                    }else{
+                        echo '<script> alert("Please select product first.");</script>';
+                    }
                 }
              
             break;
 
             
             case 'confirmaddress':
+                // unset($_SESSION['requestDetails']);
 
-                if(isset($_POST['randomcheck'])  && $_POST['randomcheck']==$_SESSION['rand'] ){
+                if($_POST['randomcheck']==$_SESSION['rand'] ){  
                     //save all details in the session before user submit
                     $_SESSION['requestDetails'][] = [
                         'company' => $_POST['receivercompany'],
@@ -117,20 +122,19 @@
                         'deliverydate' => $_POST['deliverydate'],
                         'receiverEmail' => $_POST['receiverEmail']
                     ];
-                    break;
-                }
-          
-
-            case 'submitRequest':
-                if(!empty($_SESSION['delivery']) && !empty($_SESSION['requestDetails'])){
-                    include ('submit_shiprequest.php');
-                } else{
-                    echo "<script>
-                    alert('Your request failed, Please add product before you make delivery request.');
-                    window.location.href='./delivery_request.php';
-                    </script>";
                 }
             break;
+
+            // case 'submitRequest':
+            //     if(!empty($_SESSION['delivery']) && !empty($_SESSION['requestDetails'])){
+            //         include ('submit_shiprequest.php');
+            //     } else{
+            //         echo "<script>
+            //         alert('Your request failed, Please add product before you make delivery request.');
+            //         window.location.href='./delivery_request.php';
+            //         </script>";
+            //     }
+            // break;
         }
     }
 
@@ -138,10 +142,13 @@
     $ItemDivView='none';
     if(isset($_SESSION['delivery']) && !empty($_SESSION['delivery'])){
         $NoItemDivView='none';
-        $ItemDivView='block';
-        
+        $ItemDivView='block';     
     } 
+
+    $rand=rand();
+    $_SESSION['rand']=$rand;
  
+
 ?>
 
 <style>
@@ -229,7 +236,7 @@
                                         <div id="ItemDiv"  style="display:<?php echo $ItemDivView ?>">
                                             <div class="">
                                                 <h4>Shipment Contents</h4>
-                                                <button class="shipbutton btn btn-1 mb-3"><i class="fa fa-plus"></i> Add Item</button>
+                                                <button id="addItem_two" class="shipbutton btn btn-1 mb-3"><i class="fa fa-plus"></i> Add Item</button>
                                             </div>
 
                                             <div class="table-responsive">
@@ -281,30 +288,30 @@
                                                         <option value="pawtrails_form">PawTrails All In One</option>   
                                                     </select>
                                                     <script>
-                                                    // $("#itemtypeSelect").on("change", function() {
-                                                    //     $("#" + $(this).val()).show().siblings().hide();
-                                                    // });
-
-                                                    function handleSelection(choice) {
-                                                    //document.getElementById('select').disabled=true;
-                                                    if(choice=='flyerForm')
-                                                        {
-                                                        document.getElementById(choice).style.display="block";
-                                                        document.getElementById('pawtrails_form').style.display="none";
+                                              
+                                                        function handleSelection(choice) {
+                                                        //document.getElementById('select').disabled=true;
+                                                        if(choice=='flyerForm')
+                                                            {
+                                                            document.getElementById(choice).style.display="block";
+                                                            document.getElementById('pawtrails_form').style.display="none";
+                                                            }
+                                                            else
+                                                            {
+                                                            document.getElementById(choice).style.display="block";
+                                                            document.getElementById('flyerForm').style.display="none";
+                                                            }
                                                         }
-                                                        else
-                                                        {
-                                                        document.getElementById(choice).style.display="block";
-                                                        document.getElementById('flyerForm').style.display="none";
-                                                        }
-                                                    }
                                                     </script>
 
                                                     <!-- The Form for flyer or posters-->
                               
                                                     <form name="flyerForm" method="POST" id="flyerForm">
                                                         <input type="hidden"  name="makeaction" value="product">
-     
+                                                        <!--set random number to check resumbit on refresh -->
+                                                        <input type="hidden"  name="flyerToken" value="<?php echo $rand; ?>">
+                                        
+                                                        
                                                             <label class="fieldLabel" for="deliveryProduct">Product</label>
                                                         
                                                             <select name="sel_product" id="sel_product" class="form-control" onchange="checkStock();" required>
@@ -345,6 +352,9 @@
                                                     <form name="pawtrails_form" method="POST" id="pawtrails_form" style="display:none">
                                                         <input type="hidden"  name="makeaction" value="pawtrailsSelect">
 
+                                                        <!--set random number to check resumbit on refresh -->
+                                                        <input type="hidden"  name="pawtrailsToken" value="<?php echo $rand; ?>">
+                                               
                                                         <div class="form-group row">
                                                             <div class="col ss-item-required">
                                                                 <label for="deliveryProduct">Color</label>
@@ -400,7 +410,7 @@
                             <div class="row setup-content" id="step-2">
                                 <h2 class="fs-title">Receiver’s Details</h2>
                                 <hr class="seperateLine">
-
+                                                                    
                                 <div class="col-sm-12">
                                 <form  method="POST">
                                     <!--set random number to check resumbit on refresh -->
@@ -408,14 +418,43 @@
                                    
                                     <input type="hidden"  name="makeaction" value="confirmaddress">
                                     
+                                    <?php
+                                    $fullname='';
+                                    if(!empty($_SESSION['requestDetails'])){
+                                        //$fullname=$_SESSION['requestDetails'][0]['fullname'];
+                                                    echo "  <h3>Receiver Details</h3>";
+                                                    // foreach($_SESSION['requestDetails'] as $i=> $k) {
+                                                    //     echo "
+                                                    //         <p>".$k['fullname']."</p>
+                                                    //         <p>".$k['company']."</p>
+                                                    //         <p>".$k['phonenumber']."</p>
+                                                    //         <p>".$k['receiverEmail']."</p>";
+                                                    //         $i++;
+                                                    //     }
+                                                        // print_r($_SESSION['requestDetails']);
+                                                        // exit;
+                                                }
+                                    ?>
+
                                     <div class="form-group row">
                                         <div class="col">
                                             <label for="firstname">Full Contact Name</label>
-                                            <input type="text" class="form-control" name="firstname" placeholder="#####" required>
+                                            <input type="text" class="form-control" name="firstname" placeholder="#####" value="<?php echo  $fullname; ?>" required>
+                                        
+                                          
                                         </div>
                                         <div class="col">
                                             <label for="receivercompany">Company Name</label>
-                                            <input type="text" class="form-control" name="receivercompany" placeholder="receiver company">
+                                            <!-- <input type="text" class="form-control" name="receivercompany" placeholder="receiver company"> -->
+
+                                        <?php  
+                                            if(!empty($_SESSION['requestDetails'])){ ?>
+                                                <input type="text" class="form-control" name="receivercompany"  value="<?php echo $_SESSION['requestDetails']['company']; ?>" >
+                                              
+                                        <?php   }else{ ?>
+                                             <input type="text" class="form-control" name="receivercompany" placeholder="receiver company">
+                                        <?php     }  ?>
+
                                         </div>
                                     </div>
 
@@ -435,7 +474,6 @@
                                     <hr class="seperateLine">
                                             
                                     <div class="form-group row">
-                                      
                                         <div class="col">
                                             <label for="applicantName">Shipping Date</label>
                                             <input id="date" onchange="validateDate()" type="date" class="form-control" name="deliverydate" placeholder="Enter date" required>
@@ -477,12 +515,13 @@
                                             <input type="text" class="form-control" name="inputPostcode" required>
                                         </div>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Submit</button>                              
+                                    <!-- <button type="submit" class="btn btn-primary">Submit</button>     -->
+                                         <input type="button" name="previous" class="cancel previous btn" value="Back" />
+                                        <button class="btn nextBtn next_btn" type="submit" >Next<i class="fa fa-angle-double-right"></i></button>                         
                                 </form>
                               
 
-                                    <input type="button" name="previous" class="cancel previous btn" value="Back" />
-                                    <button class="btn nextBtn next_btn" type="button" >Next<i class="fa fa-angle-double-right"></i></button>
+                               
                                 </div>
                                 
                             </div>
@@ -521,6 +560,7 @@
                                                 <div class="col-lg-6">
                                                         <?php    
                                                             if(!empty($_SESSION['requestDetails'])){
+                                                                echo "  <h3>Shipping Address</h3>";
                                                                 foreach($_SESSION['requestDetails'] as $i=> $k) {
                                                                     echo "
                                                                         <p>".$k['inputAddress1']."</p>
@@ -541,6 +581,7 @@
                                                 <!--Shipment Items in the session-->
                                                 <div class="table-responsive">
                                                     <table class="table table-bordered" id="requestProductTable" width="100%" cellspacing="0">
+                                                    <h3>Shipment Contents</h3>
                                                         <thead>
                                                             <tr>
                                                                 <!-- <th>item id</th> -->
@@ -612,6 +653,9 @@
     // Get the button that opens the modal
     var btn = document.getElementById("addItem");
 
+    // Get the button that opens the modal
+    var btn_two = document.getElementById("addItem_two");
+
     // Get the <span> element that closes the modal
     var span = document.getElementsByClassName("close")[0];
 
@@ -619,6 +663,12 @@
     btn.onclick = function() {
         modal.style.display = "block";
     }
+
+     // When the user clicks the button, open the modal 
+     btn_two.onclick = function() {
+        modal.style.display = "block";
+    }
+
 
     // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
