@@ -109,7 +109,7 @@
 
                 if($_POST['randomcheck']==$_SESSION['rand'] ){  
                     //save all details in the session before user submit
-                    $_SESSION['requestDetails'][] = [
+                    $_SESSION['requestDetails'][0] = [
                         'company' => $_POST['receivercompany'],
                         'fullname' => $_POST['firstname'],
                         'phonenumber' => $_POST['phonenumber'],
@@ -420,20 +420,30 @@
                                     
                                     <?php
                                     $fullname='';
+                                    $company='';
+                                    $phonenumber='';
+                                    $receiverEmail='';
+                                    $inputAddress1='';
+                                    $inputAddress2='';
+                                    $inputAddress3='';
+                                    $inputCity='';
+                                    $inputPostcode='';
+                                    $deliverydate='';
+
                                     if(!empty($_SESSION['requestDetails'])){
-                                        //$fullname=$_SESSION['requestDetails'][0]['fullname'];
-                                                    echo "  <h3>Receiver Details</h3>";
-                                                    // foreach($_SESSION['requestDetails'] as $i=> $k) {
-                                                    //     echo "
-                                                    //         <p>".$k['fullname']."</p>
-                                                    //         <p>".$k['company']."</p>
-                                                    //         <p>".$k['phonenumber']."</p>
-                                                    //         <p>".$k['receiverEmail']."</p>";
-                                                    //         $i++;
-                                                    //     }
-                                                        // print_r($_SESSION['requestDetails']);
-                                                        // exit;
-                                                }
+                                        $fullname=$_SESSION['requestDetails'][0]['fullname'];
+                                        $company=$_SESSION['requestDetails'][0]['company'];
+                                        $phonenumber=$_SESSION['requestDetails'][0]['phonenumber'];
+                                        $receiverEmail=$_SESSION['requestDetails'][0]['receiverEmail'];
+                                        $inputAddress1=$_SESSION['requestDetails'][0]['inputAddress1'];
+                                        $inputAddress2=$_SESSION['requestDetails'][0]['inputAddress2'];
+                                        $inputAddress3=$_SESSION['requestDetails'][0]['inputAddress3'];
+                                        $inputCity=$_SESSION['requestDetails'][0]['inputCity'];
+                                        $inputCountry=$_SESSION['requestDetails'][0]['inputCountry'];
+                                        $inputPostcode=$_SESSION['requestDetails'][0]['inputPostcode'];
+                                        $deliverydate=$_SESSION['requestDetails'][0]['deliverydate'];
+
+                                    }
                                     ?>
 
                                     <div class="form-group row">
@@ -445,28 +455,19 @@
                                         </div>
                                         <div class="col">
                                             <label for="receivercompany">Company Name</label>
-                                            <!-- <input type="text" class="form-control" name="receivercompany" placeholder="receiver company"> -->
-
-                                        <?php  
-                                            if(!empty($_SESSION['requestDetails'])){ ?>
-                                                <input type="text" class="form-control" name="receivercompany"  value="<?php echo $_SESSION['requestDetails']['company']; ?>" >
-                                              
-                                        <?php   }else{ ?>
-                                             <input type="text" class="form-control" name="receivercompany" placeholder="receiver company">
-                                        <?php     }  ?>
-
+                                            <input type="text" class="form-control" name="receivercompany" placeholder="receiver company"  value="<?php echo  $company; ?>">
                                         </div>
                                     </div>
 
                                     <div class="form-group row">
                                         <div class="col">
                                             <label for="receiverEmail">Receiver Email</label>
-                                            <input type="email" class="form-control" name="receiverEmail" placeholder="receiver email" required>
+                                            <input type="email" class="form-control" name="receiverEmail" placeholder="receiver email" required  value="<?php echo  $receiverEmail; ?>">
                                         </div>
 
                                           <div class="col">
                                             <label for="phonenumber">Phone Number</label>
-                                            <input type="text" class="form-control" name="phonenumber" placeholder="#####" required>
+                                            <input type="text" class="form-control" name="phonenumber" placeholder="#####" value="<?php echo  $phonenumber; ?>" required>
                                         </div>
                                     </div>
                                     
@@ -476,7 +477,7 @@
                                     <div class="form-group row">
                                         <div class="col">
                                             <label for="applicantName">Shipping Date</label>
-                                            <input id="date" onchange="validateDate()" type="date" class="form-control" name="deliverydate" placeholder="Enter date" required>
+                                            <input id="date" onchange="validateDate()" type="date" class="form-control" name="deliverydate" placeholder="Enter date" value="<?php echo  $deliverydate; ?>" required>
                                         </div>
                                     </div>
 
@@ -484,16 +485,16 @@
                                     
                                         <div class="form-group col-md-4">
                                             <label for="inputAddress">Street / House No</label>
-                                            <input type="text" class="form-control" name="inputAddress1" placeholder="1234 Main St" required>
+                                            <input type="text" class="form-control" name="inputAddress1" placeholder="1234 Main St" value="<?php echo  $inputAddress1; ?>" required>
                                         </div>
 
                                         <div class="form-group col-md-4">
                                             <label for="inputAddress">Address2</label>
-                                            <input type="text" class="form-control" name="inputAddress2" placeholder="1234 Main St">
+                                            <input type="text" class="form-control" name="inputAddress2" placeholder="1234 Main St" value="<?php echo  $inputAddress2; ?>">
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="inputAddress">Address3</label>
-                                            <input type="text" class="form-control" name="inputAddress3" placeholder="1234 Main St">
+                                            <input type="text" class="form-control" name="inputAddress3" placeholder="1234 Main St" value="<?php echo  $inputAddress3; ?>" required>
                                         </div>
                                     </div>
 
@@ -501,21 +502,21 @@
 
                                         <div class="form-group col-md-4">
                                             <label for="inputCountry">Country</label>
-                                            <input type="text" class="form-control" name="inputCountry" required>
+                                            <input type="text" class="form-control" name="inputCountry" value="<?php echo  $inputCountry; ?>" required>
                                         </div>
 
                                         <div class="form-group col-md-4">
                                             <label for="inputCity">City</label>
-                                            <input type="text" class="form-control" name="inputCity" required>
+                                            <input type="text" class="form-control" name="inputCity" value="<?php echo  $inputCity; ?>" required>
                                         </div>
 
                                       
                                         <div class="form-group col-md-4">
                                             <label for="inputPostcode">Postcode</label>
-                                            <input type="text" class="form-control" name="inputPostcode" required>
+                                            <input type="text" class="form-control" name="inputPostcode" value="<?php echo  $inputPostcode; ?>" required>
                                         </div>
                                     </div>
-                                    <!-- <button type="submit" class="btn btn-primary">Submit</button>     -->
+                               
                                          <input type="button" name="previous" class="cancel previous btn" value="Back" />
                                         <button class="btn nextBtn next_btn" type="submit" >Next<i class="fa fa-angle-double-right"></i></button>                         
                                 </form>
