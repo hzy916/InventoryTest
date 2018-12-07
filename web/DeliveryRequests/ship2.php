@@ -102,26 +102,6 @@
              
             break;
 
-            
-            case 'confirmaddress':
-                if($_POST['randomcheck']==$_SESSION['rand'] ){  
-                    //save all details in the session before user submit
-                    $_SESSION['requestDetails'][0] = [
-                        'company' => $_POST['receivercompany'],
-                        'fullname' => $_POST['firstname'],
-                        'phonenumber' => $_POST['phonenumber'],
-                        'inputAddress1' => $_POST['inputAddress1'],
-                        'inputAddress2' => $_POST['inputAddress2'],
-                        'inputAddress3' => $_POST['inputAddress3'],
-                        'inputCity' => $_POST['inputCity'],
-                        'inputCountry' => $_POST['inputCountry'],
-                        'inputPostcode' => $_POST['inputPostcode'],
-                        'deliverydate' => $_POST['deliverydate'],
-                        'receiverEmail' => $_POST['receiverEmail']
-                    ];
-                }
-            break;
-
             case 'submitRequest':
                 if(!empty($_SESSION['delivery']) && !empty($_SESSION['requestDetails'])){
                     include ('submit_shiprequest.php');
@@ -179,7 +159,7 @@
         
 
     <!-- MultiStep Form -->
-      
+        <div class="container">
             <div id="msform"><!-- form contents -->
             	<!-- progressbar -->
                 <ul id="progressbar">
@@ -195,7 +175,7 @@
                             <div id="NoItemDiv" style="display:<?php echo $NoItemDivView ?>">
                                 <h2 class="fs-title">Shipment Contents</h2>
                                 <hr class="seperateLine">
-                                <img class="emptyItemIMG" src="https://cdn.shopify.com/s/files/1/2590/2182/files/Christmas2018-PawTrailsmin.png?8270276245400105272" src="Empty in your Request">
+                                <img class="emptyItemIMG" src="/assets/img/shipment_item_none.png" src="Empty in your Request">
                                 
                                 <p class="noitemText">No Item in your shipment, please add item into your shipment </p>
                                     <button id="addItem" class="shipbutton btn btn-1 mb-3"><i class="fa fa-plus"></i> Add Item Into My Shipments</button>
@@ -401,65 +381,34 @@
                     <hr class="seperateLine">
                                                         
                     <div class="col-sm-12">
-                        <form  method="POST">
+                        <form method="POST" id='realForm'>
                         <!--set random number to check resumbit on refresh -->
                             <input type="hidden"  name="randomcheck" value="<?php echo $rand; ?>">
-                        
-                            <input type="hidden"  name="makeaction" value="confirmaddress">
-                            
-                            <?php
-                            //save user input in the session and allow user to edit it before submit
-                            $fullname='';
-                            $company='';
-                            $phonenumber='';
-                            $receiverEmail='';
-                            $inputAddress1='';
-                            $inputAddress2='';
-                            $inputAddress3='';
-                            $inputCity='';
-                            $inputPostcode='';
-                            $deliverydate='';
-
-                            if(!empty($_SESSION['requestDetails'])){
-                                $fullname=$_SESSION['requestDetails'][0]['fullname'];
-                                $company=$_SESSION['requestDetails'][0]['company'];
-                                $phonenumber=$_SESSION['requestDetails'][0]['phonenumber'];
-                                $receiverEmail=$_SESSION['requestDetails'][0]['receiverEmail'];
-                                $inputAddress1=$_SESSION['requestDetails'][0]['inputAddress1'];
-                                $inputAddress2=$_SESSION['requestDetails'][0]['inputAddress2'];
-                                $inputAddress3=$_SESSION['requestDetails'][0]['inputAddress3'];
-                                $inputCity=$_SESSION['requestDetails'][0]['inputCity'];
-                                $inputCountry=$_SESSION['requestDetails'][0]['inputCountry'];
-                                $inputPostcode=$_SESSION['requestDetails'][0]['inputPostcode'];
-                                $deliverydate=$_SESSION['requestDetails'][0]['deliverydate'];
-
-                            }
-                            ?>
 
                             <div class="form-group row">
                                 <div class="col">
                                     <label for="firstname">Full Contact Name</label>
-                                    <input type="text" class="form-control" name="firstname" placeholder="#####" value="<?php echo  $fullname; ?>" required>
+                                    <input type="text" class="form-control" name="firstname" placeholder="#####" onChange="javascript:copytoStepThree(this.value,'receiverName')" required>
                                 
                                 
                                 </div>
                                 <div class="col">
                                     <label for="receivercompany">Company Name</label>
-                                    <input type="text" class="form-control" name="receivercompany" placeholder="receiver company"  value="<?php echo  $company; ?>">
+                                    <input type="text" class="form-control" name="receivercompany" placeholder="receiver company"  onChange="javascript:copytoStepThree(this.value,'companyName')">
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <div class="col">
                                     <label for="receiverEmail">Receiver Email</label>
-                                    <input type="email" class="form-control" name="receiverEmail" placeholder="receiver email" required  value="<?php echo  $receiverEmail; ?>">
+                                    <input type="email" class="form-control" name="receiverEmail" placeholder="receiver email" onChange="javascript:copytoStepThree(this.value,'receiverEmail')" required>
                                 </div>
 
                                 <div class="col">
                                     <label for="phonenumber">Phone Number</label>
-                                    <input type="text" class="form-control" name="phonenumber" placeholder="#####" value="<?php echo  $phonenumber; ?>" required>
+                                    <input type="text" class="form-control" name="phonenumber" placeholder="#####" onChange="javascript:copytoStepThree(this.value,'receiverPhone')" required>
                                 </div>
-                            </div>
+                            </div> 
                             
                             <h2 class="fs-title">Shipping ADDRESS</h2>
                             <hr class="seperateLine">
@@ -467,48 +416,47 @@
                             <div class="form-group row">
                                 <div class="col">
                                     <label for="applicantName">Shipping Date</label>
-                                    <input id="date" onchange="validateDate()" type="date" class="form-control" name="deliverydate" placeholder="Enter date" value="<?php echo  $deliverydate; ?>" required>
+                                    <input id="date" onchange="validateDate()" type="date" class="form-control" name="deliverydate" placeholder="Enter date" onChange="javascript:copytoStepThree(this.value,'shipDate')" required>
                                 </div>
-                            </div>
+                            </div> 
 
                             <div class="form-group row">
                             
                                 <div class="form-group col-md-4">
                                     <label for="inputAddress">Street / House No</label>
-                                    <input type="text" class="form-control" name="inputAddress1" placeholder="1234 Main St" value="<?php echo  $inputAddress1; ?>" required>
+                                    <input type="text" class="form-control" name="inputAddress1" placeholder="1234 Main St" onChange="javascript:copytoStepThree(this.value,'receiverAddress1')" required>
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label for="inputAddress">Address2</label>
-                                    <input type="text" class="form-control" name="inputAddress2" placeholder="1234 Main St" value="<?php echo  $inputAddress2; ?>">
+                                    <input type="text" class="form-control" name="inputAddress2" placeholder="1234 Main St" onChange="javascript:copytoStepThree(this.value,'receiverAddress2')">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="inputAddress">Address3</label>
-                                    <input type="text" class="form-control" name="inputAddress3" placeholder="1234 Main St" value="<?php echo  $inputAddress3; ?>" required>
+                                    <input type="text" class="form-control" name="inputAddress3" placeholder="1234 Main St" onChange="javascript:copytoStepThree(this.value,'receiverAddress3')" required>
                                 </div>
-                            </div>
+                            </div> 
 
                             <div class="form-row">
 
                                 <div class="form-group col-md-4">
                                     <label for="inputCountry">Country</label>
-                                    <input type="text" class="form-control" name="inputCountry" value="<?php echo  $inputCountry; ?>" required>
+                                    <input type="text" class="form-control" name="inputCountry" onChange="javascript:copytoStepThree(this.value,'receiverCountry')" required>
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label for="inputCity">City</label>
-                                    <input type="text" class="form-control" name="inputCity" value="<?php echo  $inputCity; ?>" required>
+                                    <input type="text" class="form-control" name="inputCity" onChange="javascript:copytoStepThree(this.value,'receiverCity')" required>
                                 </div>
 
                             
                                 <div class="form-group col-md-4">
                                     <label for="inputPostcode">Postcode</label>
-                                    <input type="text" class="form-control" name="inputPostcode" value="<?php echo  $inputPostcode; ?>" required>
+                                    <input type="text" class="form-control" name="inputPostcode" onChange="javascript:copytoStepThree(this.value,'receiverPostcode')" required>
                                 </div>
+                               
                             </div>
-                    
-                                <!-- <input type="button" name="previous" class="cancel previous btn" value="Back" />
-                            <button class="btn nextBtn next_btn" type="submit" >Next<i class="fa fa-angle-double-right"></i></button>                          -->
+                                         
                         </form>
                     </div>
                     <input type="button" name="previous" class="previous action-button" value="Previous" />
@@ -526,41 +474,21 @@
                                     <div class="row">
                                         <!--Receiver details in the session-->
                                             <div class="col-lg-6">
-                                            
-                                                    <?php    
-                                                        if(!empty($_SESSION['requestDetails'])){
-                                                            echo "  <h3>Receiver Details</h3>";
-                                                            foreach($_SESSION['requestDetails'] as $i=> $k) {
-                                                                echo "
-                                                                    <p>".$k['fullname']."</p>
-                                                                    <p>".$k['company']."</p>
-                                                                    <p>".$k['phonenumber']."</p>
-                                                                    <p>".$k['receiverEmail']."</p>";
-                                                                    $i++;
-                                                                }  
-                                                        }
-                                                    ?>
+                                                <p id="receiverName"></p>
+                                                <p id="companyName"></p>
+                                                <p id="receiverEmail"></p>
+                                                <p id="receiverPhone"></p>
+                                                <p id="shipDate"></p>
                                             </div>
                                     
                                     <!--Shipment address in the session-->
                                             <div class="col-lg-6">
-                                                    <?php    
-                                                        if(!empty($_SESSION['requestDetails'])){
-                                                            echo "  <h3>Shipping Address</h3>";
-                                                            foreach($_SESSION['requestDetails'] as $i=> $k) {
-                                                                echo "
-                                                                    <p>".$k['inputAddress1']."</p>
-                                                                    <p>".$k['inputAddress2']."</p>
-                                                                    <p>".$k['inputAddress3']."</p>
-                                                                    <p>".$k['receiverEmail']."</p>
-                                                                    <p>".$k['inputCity']."</p>
-                                                                    <p>".$k['inputCountry']."</p>
-                                                                    <p>".$k['inputPostcode']."</p>";
-                                                                    
-                                                                    $i++;
-                                                                }  
-                                                        }
-                                                    ?>
+                                                <p id="receiverAddress1"></p>
+                                                <p id="receiverAddress2"></p>
+                                                <p id="receiverAddress3"></p>
+                                                <p id="receiverCity"></p>
+                                                <p id="receiverCountry"></p>
+                                                <p id="receiverPostcode"></p>
                                             </div>
                                     </div>
                                         <!--Shipment Items in the session-->
@@ -608,9 +536,6 @@
                                 <input type="hidden" name="randomcheck" value="<?php echo $rand; ?>">
                                 
                                 <input type="hidden"  name="makeaction" value="submitRequest">
-                                
-                                <!-- <input type="button" name="previous" class="cancel previous btn" value="Back" />
-                                <button type="submit" class="btn btn-primary">Submit</button> -->
                             </form>
              
                 </div>
@@ -618,14 +543,24 @@
 		        <input type="button" name="next" class="next action-button" value="Next" />                      
             </div>  
             <!-- Wizard STEP 3 END -->
-      
+        </div>
     </div>
 </div>
 
 <!-- jQuery easing plugin -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js" type="text/javascript"></script>
 
+
 <script>
+     //check if all required fields are filled in js when user click next//
+     //////////////////////////////////////////////////////////////
+  
+
+    //print all the values on step 3
+    function copytoStepThree($val,$dest) {
+        $('#'+$dest).html($val);
+    }
+
 //jQuery time
 var current_fs, next_fs, previous_fs; //fieldsets
 var left, opacity, scale; //fieldset properties which we will animate
@@ -641,8 +576,92 @@ $(".next").click(function(){
 	//activate next step on progressbar using the index of next_fs
 	$("#progressbar li").eq($(".fieldset").index(next_fs)).addClass("active");
 	
-	//show the next fieldset
-	next_fs.show(); 
+    // //custom validation on next button
+    //  var form = $("#realForm");
+    //     form.validate({
+    //         errorElement: 'span',
+    //         errorClass: 'help-block',
+    //         highlight: function(element, errorClass, validClass) {
+    //             $(element).closest('.form-group').addClass("has-error");
+    //         },
+    //         unhighlight: function(element, errorClass, validClass) {
+    //             $(element).closest('.form-group').removeClass("has-error");
+    //         },
+    //         rules: {
+    //             firstname: {
+    //                 required: true,
+                
+    //             },
+    //             receiverEmail : {
+    //                 required: true,
+    //             },
+    //             phonenumber : {
+    //                 required: true,
+                   
+    //             },
+    //             deliverydate:{
+    //                 required: true,
+    //             },
+    //             inputAddress1:{
+    //                 required: true,
+    //             },
+    //             inputAddress2: {
+    //                 required: true,
+                  
+    //             },
+    //             inputCountry: {
+    //                 required: true,
+                  
+    //             },
+    //             inputCity: {
+    //                 required: true,
+                  
+    //             },
+    //             inputPostcode: {
+    //                 required: true,
+                  
+    //             },
+                
+    //         },
+    //         messages: {
+    //             username: {
+    //                 required: "Username required",
+    //             },
+    //             receiverEmail : {
+    //                 required: "receiver Email required",
+    //             },
+    //             phonenumber : {
+    //                 required: "Password required",
+    //                 equalTo: "Password don't match",
+    //             },
+    //             deliverydate: {
+    //                 required: "Name required",
+    //             },
+    //             inputAddress1: {
+    //                 required: "Address required",
+    //             },
+    //             inputAddress2 : {
+    //                 required: "Password required",
+    //                 equalTo: "Password don't match",
+    //             },
+    //             inputCountry: {
+    //                 required: "Name required",
+    //             },
+    //             inputCity: {
+    //                 required: "Address required",
+    //             },
+    //             inputPostcode: {
+    //                 required: "Postcode required",
+    //             },
+    //         }
+    //     });
+    // //end of custom validation on next button
+    // if (form.valid() === true){
+        //show the next fieldset
+        next_fs.show(); 
+    //}
+
+
 	//hide the current fieldset with style
 	current_fs.animate({opacity: 0}, {
 		step: function(now, mx) {

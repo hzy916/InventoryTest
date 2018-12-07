@@ -6,18 +6,7 @@
 	text-align: center;
 	position: relative;
 }
-/* #msform .fieldset {
-	background: #f7f7f8;
-	border: 0 none;
-	border-radius: 3px;
-	padding: 20px 30px;
-	
-	box-sizing: border-box;
-	width: 100%;
-	
-	/*stacking fieldsets above each other*/
-	/* position: absolute;
-} */ 
+
 /*Hide all except first fieldset*/
 #msform .fieldset:not(:first-of-type) {
 	display: none;
@@ -81,8 +70,9 @@
 #progressbar li:before {
 	content: "Step"counter(step);
 	counter-increment: step;
-	width: 120px;
-	line-height: 20px;
+	width: 200px;
+	height:50px;
+	line-height: 50px;
 	display: block;
 	font-size: 12px;
 	color: #333;
