@@ -11,7 +11,6 @@
 	require_once('../layouts/side_bar.php'); 
   	require_once('../layouts/nav.php'); 
 
-
    //to check if they use resubmit because of reloading
    if(isset($_POST['makeaction'])){
 
@@ -261,6 +260,7 @@
                                                                     <td>".$k['sel_size']."</td>
                                                                     <td>".$k['deliverynumber']."</td>
                                                                     <td class='OperationColumn'>
+                                                                       
                                                                         <button type='button' class='btn btn-danger' onclick='JavaScript:deleteThisProduct(".$i.");'>Remove</button>
                                                                     </td>
                                                                     </tr>";
@@ -270,6 +270,17 @@
                                                     ?>
                                                     </tbody>
                                                 </table>
+                                            </div>
+                                        </div>
+
+                                        <!-- delete alert box -->
+                                        <div id="dialog" title="Alert message" style="display: none">
+                                            <div class="ui-dialog-content ui-widget-content">
+                                                <p>
+                                                    <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0"></span>
+                                                    <label id="lblMessage">
+                                                    </label>
+                                                </p>
                                             </div>
                                         </div>
 
@@ -397,7 +408,7 @@
                                         </div>
 
                                         <hr class="seperateLine">
-                                        <input type="button" name="cancel" class="cancel previous btn" value="Cancel" />
+                                        <a href="/dashboard.php" name="cancel" class="cancel previous btn">Cancel</a>
                                     
                                         <button class="btn nextBtn next_btn" type="button" >Next<i class="fa fa-angle-double-right"></i></button>
                                 
@@ -504,6 +515,14 @@
                                         <div class="form-group col-md-4">
                                             <label for="inputCountry">Country</label>
                                             <input type="text" class="form-control" name="inputCountry" value="<?php echo  $inputCountry; ?>" required>
+
+                                            <!-- <select name="inputCountry" id="inputCountry" class="form-control" onchange="checkPawtrailsStock();">
+                                                <option value="0" selected disabled hidden>Choose here</option>
+                                                <option value="small">Ireland</option>
+                                                <option value="medium">UK</option>
+                                                <option value="large">France</option>
+                                            </select> -->
+
                                         </div>
 
                                         <div class="form-group col-md-4">
@@ -583,20 +602,20 @@
                                                 <!--Shipment Items in the session-->
                                                 <div class="table-responsive">
                                                     <table class="table table-bordered" id="requestProductTable" width="100%" cellspacing="0">
-                                                    <h3>Shipment Contents</h3>
-                                                        <thead>
-                                                            <tr>
-                                                                <!-- <th>item id</th> -->
-                                                                <th>Product Name</th>
-                                                                <th>Size</th>
-                                                                <th>Color</th>
-                                                                <th>Amount</th>
-                                                              
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
                                                         <?php    
                                                             if(!empty($_SESSION['delivery'])){
+                                                            echo "<h3>Shipment Contents</h3>
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>Product Name</th>
+                                                                        <th>Size</th>
+                                                                        <th>Color</th>
+                                                                        <th>Amount</th>
+                                                                      
+                                                                    </tr>
+                                                                </thead>    
+                                                                <tbody>";
+
                                                                 foreach($_SESSION['delivery'] as $i=> $k) {
                                                                     echo "<tr>
                                                                         <td>".$k['productname']."</td>
@@ -628,6 +647,7 @@
                                    
                                     <input type="hidden"  name="makeaction" value="submitRequest">
                                     
+                                    <input type="button" name="previous" class="cancel previous btn" value="Back" />
                                     <button type="submit" class="btn btn-primary">Submit</button>
                                 </form>
                             </div>
@@ -646,6 +666,9 @@
 
 
     <script type="text/javascript">
+   /****************/
+
+
     /****************/
     //Pop up form js
 

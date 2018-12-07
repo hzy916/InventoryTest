@@ -252,16 +252,56 @@ td {
                       </table>
                     </div>
                   </div>
-
-                  <div class="card-footer ">
-                      <hr>
-                      <div class="stats">
-                          <i class="now-ui-icons loader_refresh spin"></i> Updated 3 minutes ago
-                      </div>
-                  </div>
               </div>
           </div>
         </div>
+    
+    <div class="card  card-tasks">   
+        <h4 class="card-title">Video Tutorials</h4>
+        
+        <div class="row">
+            <div class="col-md-4 col-g-4 col-sm-4">
+                <div class="">
+                    <video width="400" controls>
+                        <source src="mov_bbb.mp4" type="video/mp4">
+                        <source src="mov_bbb.ogg" type="video/ogg">
+                        Your browser does not support HTML5 video.
+                    </video>
+                    <p>
+                        How to register a new member?
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-g-4 col-sm-4">
+                <div class="">
+                    <video width="400" controls>
+                        <source src="mov_bbb.mp4" type="video/mp4">
+                        <source src="mov_bbb.ogg" type="video/ogg">
+                        Your browser does not support HTML5 video.
+                    </video>
+                    <p>
+                        How to register a new member?
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-4 col-g-4 col-sm-4">
+                <div class="">
+                    <video width="400" controls>
+                        <source src="mov_bbb.mp4" type="video/mp4">
+                        <source src="mov_bbb.ogg" type="video/ogg">
+                        Your browser does not support HTML5 video.
+                    </video>
+                    <p>
+                        How to register a new member?
+                    </p>
+                </div>
+            </div>    
+        </div>      
+     </div>
+
+
 </div>
 
 

@@ -12,7 +12,7 @@
 	require_once('../layouts/header.php'); 
 	require_once('../layouts/side_bar.php'); 
   	require_once('../layouts/nav.php'); 
-
+	require_once('../inc/shipmentDB.php'); 
 ?>
 
  
@@ -101,10 +101,13 @@
 					</thead>
 						<tbody>
 							<?php
-							$sql = "SELECT Request.RequestID, Request.RequestEmployeeID, Request.RequestDate, Request.ShipDate, Receiver.first_name as first_name, Receiver.last_name as last_name, Receiver.company_name as company_name, Request_status.status_name as status_name, tbl_users.user_name as user_name FROM Request  JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN Receiver ON Request.ReceiverID = Receiver.receiver_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id WHERE Request.RequestStatusID = 1";
+							// $sql = "SELECT Request.RequestID, Request.RequestEmployeeID, Request.RequestDate, Request.ShipDate, Receiver.first_name as first_name, Receiver.last_name as last_name, Receiver.company_name as company_name, Request_status.status_name as status_name, tbl_users.user_name as user_name FROM Request  JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN Receiver ON Request.ReceiverID = Receiver.receiver_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id WHERE Request.RequestStatusID = 1";
 							
-							$result = $conn->query($sql);	
-							$num_rows = mysqli_num_rows($result);
+							// $result = $conn->query($sql);	
+							// $num_rows = mysqli_num_rows($result);
+							
+							$result = getList('1', $conn);
+
 							if($result->num_rows > 0) {
 								while($row = $result->fetch_array()) {
 									$btText='Check';
