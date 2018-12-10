@@ -1,4 +1,91 @@
 
+/*shipment form step 1 styles*/
+	.shipcontent{
+		text-align: left;
+
+	}
+
+	.shipcontent h4{
+		text-transform: uppercase;
+	}
+
+	#requestProductTable td, #requestProductTable th {
+		border-left:none;
+		border-right:none;
+	}
+
+	#requestProductTable tr{
+		text-align: left;
+	}
+
+	.cancel {
+		width: 173.4px;
+		height: 32px;
+		border-radius: 2px;
+		box-shadow: inset 0 -1px 0 0 #e5e5e5;
+		background-color: #f2f2f2;
+		text-transform: uppercase;
+	}
+
+	.next{
+		width: 180px;
+		height: 32px;
+		border-radius: 2px;
+		background-color: #2296f3;
+		color:#ffffff;
+		text-transform: uppercase;
+		float:right;
+	}
+
+	/* ***Pop up alert box*/
+.oneline{
+	text-align: left;
+}
+
+.add_title{
+	text-align: left;
+	color: #525a65;
+}
+
+.itemDetails{
+	color: #525a65;
+	text-align: left;
+}
+
+.selectBox{
+	width:80%;
+	margin: 0 auto;
+}
+
+
+/*end of shipment form step 1 styles*/
+
+/* step 3 styles*/
+.linebreak{
+	height: 1px;
+	opacity: 0.24;
+	background-color: #525a65;
+}
+.contenttable{
+	text-align: left;
+}
+.contenttable p{
+	letter-spacing: 0.6px;
+	color: #525a65;
+}
+
+.submitBtn{
+	border-radius: 2px;
+	background-color: #2296f3;
+	color:#ffffff;
+	float: right;
+}
+.contentheader{
+	text-align: left;
+}
+/*end of shipment form step 3 styles*/
+
+
 /*form styles*/
 #msform {
 	width: 100%;
@@ -11,30 +98,7 @@
 #msform .fieldset:not(:first-of-type) {
 	display: none;
 }
-/*inputs*/
-#msform input, #msform textarea {
-	padding: 15px;
-	border: 1px solid #ccc;
-	border-radius: 3px;
-	margin-bottom: 10px;
-	width: 100%;
-	box-sizing: border-box;
-	font-family: montserrat;
-	color: #2C3E50;
-	font-size: 13px;
-}
-/*buttons*/
-#msform .action-button {
-	width: 100px;
-	background:#2296f3;
-	font-weight: bold;
-	color: white;
-	border: 0 none;
-	border-radius: 1px;
-	cursor: pointer;
-	padding: 10px 5px;
-	margin: 10px 5px;
-}
+
 #msform .action-button:hover, #msform .action-button:focus {
 	box-shadow: 0 0 0 2px white, 0 0 0 3px #67d5bf;
 }
@@ -42,8 +106,10 @@
 .fs-title {
 	font-size: 16px;
 	text-transform: uppercase;
-	color: #63a2cb;
+	letter-spacing: 0.6px;
+	color: #525a65;
 	margin-bottom: 10px;
+	text-align: left;
 }
 .fs-subtitle {
 	font-weight: normal;

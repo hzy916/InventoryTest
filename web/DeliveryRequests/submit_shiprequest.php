@@ -1,4 +1,13 @@
 <?php
+
+require_once('../inc/config.php');
+if(!isset($_SESSION['id'],$_SESSION['user_role_id']))
+{
+    header('location:index.php?lmsg=true');
+    exit;
+    $requestUserID = $_SESSION['id'];
+}
+
     $user_id = $_SESSION['id']; 
  
         $receivercompany = mysqli_real_escape_string($conn,$_POST['receivercompany']);
@@ -54,12 +63,12 @@
                     if($conn->query($sql_four) === TRUE) {
                         //clear the data in the session
                         unset($_SESSION['delivery']);
-                        unset($_SESSION['requestDetails']);
+                
 
-                        echo "<script>
-                        alert('New Request Successfully Submitted.');
+                        // echo "<script>
+                        // alert('New Request Successfully Submitted.');
+                        // </script>";
                         include ('shipmentSuccess.php');
-                        </script>";
                       
 
                     }else{

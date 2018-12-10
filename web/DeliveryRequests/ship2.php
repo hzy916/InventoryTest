@@ -40,8 +40,8 @@
                             $_SESSION['delivery'][] = [
                                 'product_id' => $pId,
                                 'productname' => $pName,
-                                'sel_color' => '/',
-                                'sel_size' => '/',
+                                'sel_color' => '',
+                                'sel_size' => '',
                                 'deliverynumber' => $dNumber
                             ];
                         }
@@ -195,7 +195,7 @@
 
                                 <!-- table to show selected product from the session -->
                             <div id="ItemDiv"  style="display:<?php echo $ItemDivView ?>">
-                                <div class="">
+                                <div class="shipcontent">
                                     <h4>Shipment Contents</h4>
                                     <button id="addItem_two" class="shipbutton btn btn-1 mb-3"><i class="fa fa-plus"></i> Add Item</button>
                                 </div>
@@ -251,31 +251,34 @@
                                 <div class="modal-content">
                                     <span class="close">&times;</span>
 
-                                        <h5>Add Item into Shipment</h5> 
+                                        <h3 class="add_title">Add Item into Shipment</h3> 
                                         <!--button to select which type of product you request-->
-                                        <p>Item Details</p>
-                                        <label class="fieldLabel">Item Type</label>
-                                        <select id="itemtypeSelect"  onChange="handleSelection(value)">
-                                            <option value="" selected="selected"></option>
-                                            <option value="flyerForm">Flyer or Poster</option>
-                                            <option value="pawtrails_form">PawTrails All In One</option>   
-                                        </select>
-                                        <script>
-                                    
-                                            function handleSelection(choice) {
-                                            //document.getElementById('select').disabled=true;
-                                            if(choice=='flyerForm')
-                                                {
-                                                document.getElementById(choice).style.display="block";
-                                                document.getElementById('pawtrails_form').style.display="none";
+                                        <h4 class="itemDetails">Item Details</h4>
+                                        <hr class="seperateLine">
+                                        <div class="selectBox">
+                                            <label class="fieldLabel">Item Type</label>
+                                            <select id="itemtypeSelect"  onChange="handleSelection(value)">
+                                                <option value="" selected="selected"></option>
+                                                <option value="flyerForm">Flyer or Poster</option>
+                                                <option value="pawtrails_form">PawTrails All In One</option>   
+                                            </select>
+                                            <script>
+                                        
+                                                function handleSelection(choice) {
+                                                //document.getElementById('select').disabled=true;
+                                                if(choice=='flyerForm')
+                                                    {
+                                                    document.getElementById(choice).style.display="block";
+                                                    document.getElementById('pawtrails_form').style.display="none";
+                                                    }
+                                                    else
+                                                    {
+                                                    document.getElementById(choice).style.display="block";
+                                                    document.getElementById('flyerForm').style.display="none";
+                                                    }
                                                 }
-                                                else
-                                                {
-                                                document.getElementById(choice).style.display="block";
-                                                document.getElementById('flyerForm').style.display="none";
-                                                }
-                                            }
-                                        </script>
+                                            </script>
+                                      
 
                                         <!-- The Form for flyer or posters-->
                     
@@ -284,40 +287,43 @@
                                             <!--set random number to check resumbit on refresh -->
                                             <input type="hidden"  name="flyerToken" value="<?php echo $rand; ?>">
                             
-                                            
-                                                <label class="fieldLabel" for="deliveryProduct">Product</label>
-                                            
-                                                <select name="sel_product" id="sel_product" class="form-control" onchange="checkStock();" required>
-                                                    <?php
-                                                        $j = 0;
+                                                <div class="oneline">
+                                                    <label class="fieldLabel" for="deliveryProduct">Item</label>
+                                                
+                                                    <select name="sel_product" id="sel_product" class="form-control" onchange="checkStock();" required>
+                                                        <?php
+                                                            $j = 0;
 
-                                                        $sql = mysqli_query($conn, "SELECT id, itemname, amount FROM pawtrails  WHERE itemtype = 'flyer' OR  itemtype =  'poster'");
-                                                        
-                                                        while ($row = $sql->fetch_assoc()){
-                                                            if($j == 0 ){
-                                                                $thisNumber = $row['amount'];
+                                                            $sql = mysqli_query($conn, "SELECT id, itemname, amount FROM pawtrails  WHERE itemtype = 'flyer' OR  itemtype =  'poster'");
+                                                            
+                                                            while ($row = $sql->fetch_assoc()){
+                                                                if($j == 0 ){
+                                                                    $thisNumber = $row['amount'];
+                                                                }
+                                                                echo "<option amount='".$row['amount']."' value='".$row['id']." - ".$row['itemname']." - ".$row['amount']."'>" . $row['itemname'] . "</option>";
+                                                                $j++;
                                                             }
-                                                            echo "<option amount='".$row['amount']."' value='".$row['id']." - ".$row['itemname']." - ".$row['amount']."'>" . $row['itemname'] . "</option>";
-                                                            $j++;
-                                                        }
-                                                    ?>
-                                                </select>
-                                            
+                                                        ?>
+                                                    </select>
+                                                </div>
                                     
-                                            
+                                            <div class="oneline">
                                                 <label class="fieldLabel" for="deliverynumber">Number of Products</label>
                                                 <input type="number" class="form-control" name="deliverynumber" id="deliverynumber" placeholder="number"  min="1" >		
-                                        
+                                            </div>
+
                                             <!-- stock number-->
-                                            
+                                            <div class="oneline">
                                                 <label class="fieldLabel" for="stocknumber">stock Number</label>
 
                                                 <span id="stocknumber"><?php echo $thisNumber; ?></span>
-                                            
-                                                <div>
-                                                    <button type="button" name="AddProduct" onclick="checkBeforeSubmit();" class="btn addBtn">Add Now</button>
-                                                    <button type="button" class=" cancel btn">Close</button>
-                                                </div>
+                                            </div>
+
+                                            <div>
+                                                <button type="button" name="AddProduct" onclick="checkBeforeSubmit();" class="btn addBtn">Add Now</button>
+                                                <button type="button" class=" cancel btn">Close</button>
+                                            </div>
+                                          
                                         </form>
                                 
                                     <!-- The Form for pawtrails all in one -->
@@ -365,7 +371,7 @@
                                             </div>
                                             <button type="button" name="AddProduct"  onclick="checkPawTrailsBeforeSubmit();" class="btn btn-info">Add Product</button>
                                         </form>
-                                    
+                                    </div>
                                 </div>
                             </div>
 
@@ -373,10 +379,11 @@
                         </div>
                     </div>
                     <hr class="seperateLine">
-                      
-                    <a href="/dashboard.php" name="cancel" class="cancel previous btn">Cancel</a>
-                    
-                    <input id="next1" type="button" name="next" class="next action-button" value="Next" <?php echo $disable;  ?> />
+                    <div class="col-sm-12">
+                        <a href="/dashboard.php" name="cancel" class="cancel previous btn">Cancel</a>
+                        
+                        <input id="next1" type="button" name="next" class="next action-button" value="Next" <?php echo $disable;  ?> />
+                    </div>
                 </div>
                 <!-- Wizard STEP 1 END -->
 
@@ -386,7 +393,7 @@
                     <hr class="seperateLine">
                                                         
                     <div class="col-sm-12">
-                    <form method="POST" id='realForm'>
+                    <form action="submit_shiprequest.php" method="POST" id='realForm'>
                         <!--set random number to check resumbit on refresh 
                             <input type="hidden"  name="randomcheck" value="<?php echo $rand; ?>">
 -->
@@ -464,7 +471,7 @@
 <!--                                          
                         </form> -->
                     </div>
-                    <input type="button" name="previous" class="previous action-button" value="Previous" />
+                    <input type="button" name="previous" class="previous cancel action-button" value="Previous" />
 		            <input type="button" name="next" class="next action-button" value="Next" />
                 </div>
                 <!-- Wizard STEP 2 END -->
@@ -472,41 +479,56 @@
                 <!-- Wizard STEP 3 -->
                 <div class="fieldset row setup-content" id="step3">
                     <div class="col-sm-12">
-                            <div class="col-sm-offset-2 col-sm-10">
+                         
                                 <div class="form-check ml-3">
                                     <h2 class="fs-title">Final Review</h2>
                                     <hr class="seperateLine">
                                     <div class="row">
                                         <!--Receiver details in the session-->
-                                            <div class="col-lg-6">
-                                                <p id="receiverName"></p>
-                                                <p id="companyName"></p>
-                                                <p id="receiverEmail"></p>
-                                                <p id="receiverPhone"></p>
-                                                <p id="shipDate"></p>
+                                        <div class="card  card-tasks col-lg-6 col-sm-offset-2">
+                                            <div class="card-header ">
+                                                <h4 class="card-title contentheader">Receiver Details</h4>
+                                            
                                             </div>
-                                    
+                                            <hr class="linebreak">
+                                            <div class="card-body contenttable">
+                                               
+                                                    <p id="receiverName"></p>
+                                                    <p id="companyName"></p>
+                                                    <p id="receiverEmail"></p>
+                                                    <p id="receiverPhone"></p>
+                                                    <p id="shipDate"></p>
+                                             
+                                            </div>
+                                        </div>
+
                                     <!--Shipment address in the session-->
-                                            <div class="col-lg-6">
-                                                <p id="receiverAddress1"></p>
-                                                <p id="receiverAddress2"></p>
-                                                <p id="receiverAddress3"></p>
-                                                <p id="receiverCity"></p>
-                                                <p id="receiverCountry"></p>
-                                                <p id="receiverPostcode"></p>
+                                        <div class="card  card-tasks col-lg-6 col-sm-offset-2">
+                                            <div class="card-header ">
+                                                <h4 class="card-title contentheader">Shipping Address</h4>
+                                              
                                             </div>
+                                            <hr class="linebreak">
+                                            <div class="card-body contenttable">
+                                                    <p id="receiverAddress1"></p>
+                                                    <p id="receiverAddress2"></p>
+                                                    <p id="receiverAddress3"></p>
+                                                    <p id="receiverCity"></p>
+                                                    <p id="receiverCountry"></p>
+                                                    <p id="receiverPostcode"></p>
+                                            </div>   
+                                        </div> 
                                     </div>
                                         <!--Shipment Items in the session-->
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="requestProductTable" width="100%" cellspacing="0">
                                             <?php    
                                                 if(!empty($_SESSION['delivery'])){
-                                                echo "<h3>Shipment Contents</h3>
+                                                echo "<h2 class='fs-title'>Shipment Contents</h2>
                                                     <thead>
                                                         <tr>
                                                             <th>Product Name</th>
-                                                            <th>Size</th>
-                                                            <th>Color</th>
+                                                          
                                                             <th>Amount</th>
                                                             
                                                         </tr>
@@ -515,9 +537,8 @@
 
                                                     foreach($_SESSION['delivery'] as $i=> $k) {
                                                         echo "<tr>
-                                                            <td>".$k['productname']."</td>
-                                                            <td>".$k['sel_color']."</td>
-                                                            <td>".$k['sel_size']."</td>
+                                                            <td>".$k['productname']." ".$k['sel_color']." ".$k['sel_size']."</td>
+                                                        
                                                             <td>".$k['deliverynumber']."</td>
                                                         
                                                             </tr>";
@@ -528,19 +549,19 @@
                                             </tbody>
                                         </table>
                                     </div>
-          
+                                    <hr>
                                     <input class="form-check-input" type="checkbox" id="gridCheck" required>
                                     <label class="form-check-label" for="gridCheck">
                                         I confirm all the information above are correct.
                                     </label>                  
                                 </div>
-                            </div>
-                            <hr>
+                    
+                          
              
                 </div>
-                <input type="button" name="previous" class="previous action-button" value="Previous" />
+                <input type="button" name="previous" class="previous cancel action-button" value="Previous" />
                 <input type="hidden"  name="makeaction" value="submitRequest">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="submitBtn btn btn-primary">Submit</button>
 
                 </form>                
             </div>  
@@ -573,7 +594,7 @@ var animating; //flag to prevent quick multi-click glitches
 
 
 $(".next").click(function(){
-    alert('clicked');
+    // alert('clicked');
     
 	if(animating) return false;
 	animating = true;
@@ -586,7 +607,7 @@ $(".next").click(function(){
 	
     // //custom validation on next button
     var form = $("#realForm");
-    console.log(form);
+    // console.log(form);
     
         form.validate({
             errorElement: 'span',
@@ -600,7 +621,6 @@ $(".next").click(function(){
             rules: {
                 firstname: {
                     required: true,
-                
                 },
                 receiverEmail : {
                     required: true,
@@ -697,7 +717,7 @@ $(".next").click(function(){
 
     } //end of custom validation on if
     else{
-        alert('not good');
+        alert('Please fill all required fields.');
     }
     animating = false;
 

@@ -20,7 +20,9 @@
 .fieldLabel{
     margin-top: 10px;
     margin-left: 10px;
-    text-align: left;
+    text-align: right;
+    margin-right:15px;
+    float:left;
 }
 
 /********************************/
