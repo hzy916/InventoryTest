@@ -83,25 +83,25 @@
                     </li>
 
                     <li class="nav-item active">
-                        <a class="nav-link" href="/DeliveryRequests/submitted_shipment.php">
+                        <a class="nav-link" href="/DeliveryRequests/shipment_list.php?mystatus=submitted">
                             <!-- <img class="nc-icon" src="/assets/img/submitted.svg"> -->
                             <p>Submitted</p>
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="./table.html">
+                        <a class="nav-link" href="/DeliveryRequests/shipment_list.php?mystatus=processing">
                             <i class="nc-icon nc-notes"></i>
                             <p>Processing</p>
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="./typography.html">
+                        <a class="nav-link" href="/DeliveryRequests/shipment_list.php?mystatus=completed">
                             <i class="nc-icon nc-paper-2"></i>
                             <p>Completed</p>
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="./typography.html">
+                        <a class="nav-link" href="/DeliveryRequests/shipment_list.php?mystatus=declined">
                             <i class="nc-icon nc-paper-2"></i>
                             <p>Declined</p>
                         </a>
@@ -111,32 +111,33 @@
                     <hr>
 
                     <li>
-                        <a class="nav-link" href="/DesignRequests/design_request_table.php">
+                        <a class="nav-link" href="/DeliveryRequests/design_request_table.php?mystatus=submitted">
                             <i class="nc-icon nc-atom"></i>
                             <p>Design Requests</p>
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="./maps.html">
+                        <a class="nav-link" href="/DeliveryRequests/design_request_table.php?mystatus=designing">
                             <i class="nc-icon nc-pin-3"></i>
                             <p>Maps</p>
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="./notifications.html">
+                        <a class="nav-link" href="/DeliveryRequests/design_request_table.php?mystatus=completed">
                             <i class="nc-icon nc-bell-55"></i>
                             <p>Notifications</p>
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="./notifications.html">
+                        <a class="nav-link" href="/DeliveryRequests/design_request_table.php?mystatus=declined">
                             <i class="nc-icon nc-bell-55"></i>
                             <p>Notifications</p>
                         </a>
                     </li>
                     <hr>
+
                     <li>
-                        <a class="nav-link" href="/inventory/inventory.php">
+                        <a class="nav-link" href="/DeliveryRequests/design_request_table.php?mystatus=declined">
                             <i class="nc-icon nc-bell-55"></i>
                             <p>Inventory</p>
                         </a>

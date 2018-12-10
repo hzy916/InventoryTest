@@ -325,9 +325,9 @@
                                             </div>
 
 
-                                            <div class="mb-3">
+                                            <div class="mt-3 mb-3">
                                                 <button type="button" name="AddProduct" onclick="checkBeforeSubmit();" class="btn addBtn">Add Now</button>
-                                                <button type="button" class=" cancel btn">Close</button>
+                                              
                                             </div>
                                           
                                         </form>
@@ -555,16 +555,17 @@
                                         </table>
                                     </div>
                                     <hr>
-                                    <input class="form-check-input" type="checkbox" id="gridCheck" required>
-                                    <label class="form-check-label" for="gridCheck">
-                                        I confirm all the information above are correct.
-                                    </label>                  
+                                              
                                 </div>
                     
                           
              
                 </div>
                 <input type="button" name="previous" class="previous cancel action-button" value="Previous" />
+                <input class="form-check-input" type="checkbox" id="gridCheck" required>
+                <label class="form-check-label" for="gridCheck">
+                    I confirm all the information above are correct.
+                </label>    
                 <input type="hidden"  name="makeaction" value="submitRequest">
                 <button type="submit" class="submitBtn btn btn-primary">Submit</button>
 
