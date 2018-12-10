@@ -2,7 +2,6 @@
 /*shipment form step 1 styles*/
 	.shipcontent{
 		text-align: left;
-
 	}
 
 	.shipcontent h4{
@@ -16,6 +15,11 @@
 
 	#requestProductTable tr{
 		text-align: left;
+	}
+	#requestProductTable{
+		border-top:none;
+		border-left:none;
+		border-right:none;
 	}
 
 	.cancel {
@@ -50,12 +54,17 @@
 .itemDetails{
 	color: #525a65;
 	text-align: left;
+	border-bottom:1px solid rgba(186,200,219, 0.4);
 }
 
 .selectBox{
 	width:80%;
 	margin: 0 auto;
 }
+
+/* .topline{
+	border-top:1px solid rgba(186,200,219, 0.4);
+} */
 
 
 /*end of shipment form step 1 styles*/
@@ -161,8 +170,8 @@
 	/*connector not needed before the first step*/
 	content: none; 
 }
-/*marking active/completed steps green*/
-/*The number of the step and the connector before it = green*/
+/*marking active/completed steps blue*/
+/*The number of the step and the connector before it = blue*/
 #progressbar li.active:before,  #progressbar li.active:after{
 	background: #2296f3;
 	color: white;

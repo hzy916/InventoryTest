@@ -197,7 +197,8 @@
                             <div id="ItemDiv"  style="display:<?php echo $ItemDivView ?>">
                                 <div class="shipcontent">
                                     <h4>Shipment Contents</h4>
-                                    <button id="addItem_two" class="shipbutton btn btn-1 mb-3"><i class="fa fa-plus"></i> Add Item</button>
+                                    <hr class="seperateLine">
+                                 
                                 </div>
 
                                 <div class="table-responsive">
@@ -210,6 +211,7 @@
                                                 <th>Color</th>
                                                 <th>Amount</th>
                                                 <th>Operation</th>
+                                                <th><button id="addItem_two" class="shipbutton btn btn-1 mb-3"><i class="fa fa-plus"></i> Add Item</button></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -225,6 +227,7 @@
                                                             
                                                             <button type='button' class='btn btn-danger' onclick='JavaScript:deleteThisProduct(".$i.");'>Remove</button>
                                                         </td>
+                                                        <td></td>
                                                         </tr>";
                                                         $i++;
                                                     }  
@@ -254,30 +257,32 @@
                                         <h3 class="add_title">Add Item into Shipment</h3> 
                                         <!--button to select which type of product you request-->
                                         <h4 class="itemDetails">Item Details</h4>
-                                        <hr class="seperateLine">
+                                      
                                         <div class="selectBox">
-                                            <label class="fieldLabel">Item Type</label>
-                                            <select id="itemtypeSelect"  onChange="handleSelection(value)">
-                                                <option value="" selected="selected"></option>
-                                                <option value="flyerForm">Flyer or Poster</option>
-                                                <option value="pawtrails_form">PawTrails All In One</option>   
-                                            </select>
-                                            <script>
-                                        
-                                                function handleSelection(choice) {
-                                                //document.getElementById('select').disabled=true;
-                                                if(choice=='flyerForm')
-                                                    {
-                                                    document.getElementById(choice).style.display="block";
-                                                    document.getElementById('pawtrails_form').style.display="none";
+                                            <div class="oneline">
+                                                <label class="fieldLabel">Item Type</label>
+                                                <select id="itemtypeSelect" class="form-control" onChange="handleSelection(value)">
+                                                    <option value="" selected="selected"></option>
+                                                    <option value="flyerForm">Flyer or Poster</option>
+                                                    <option value="pawtrails_form">PawTrails All In One</option>   
+                                                </select>
+                                            </div>
+                                                <script>
+                                            
+                                                    function handleSelection(choice) {
+                                                    //document.getElementById('select').disabled=true;
+                                                    if(choice=='flyerForm')
+                                                        {
+                                                        document.getElementById(choice).style.display="block";
+                                                        document.getElementById('pawtrails_form').style.display="none";
+                                                        }
+                                                        else
+                                                        {
+                                                        document.getElementById(choice).style.display="block";
+                                                        document.getElementById('flyerForm').style.display="none";
+                                                        }
                                                     }
-                                                    else
-                                                    {
-                                                    document.getElementById(choice).style.display="block";
-                                                    document.getElementById('flyerForm').style.display="none";
-                                                    }
-                                                }
-                                            </script>
+                                                </script>
                                       
 
                                         <!-- The Form for flyer or posters-->
@@ -306,20 +311,21 @@
                                                         ?>
                                                     </select>
                                                 </div>
-                                    
+                                            
+                                            <!-- stock number-->
+                                            <div class="oneline">
+                                                <label class="fieldLabel" for="stocknumber">Stock Number</label>
+
+                                                <span id="stocknumber"><?php echo $thisNumber; ?></span>
+                                            </div>
+
                                             <div class="oneline">
                                                 <label class="fieldLabel" for="deliverynumber">Number of Products</label>
                                                 <input type="number" class="form-control" name="deliverynumber" id="deliverynumber" placeholder="number"  min="1" >		
                                             </div>
 
-                                            <!-- stock number-->
-                                            <div class="oneline">
-                                                <label class="fieldLabel" for="stocknumber">stock Number</label>
 
-                                                <span id="stocknumber"><?php echo $thisNumber; ?></span>
-                                            </div>
-
-                                            <div>
+                                            <div class="mb-3">
                                                 <button type="button" name="AddProduct" onclick="checkBeforeSubmit();" class="btn addBtn">Add Now</button>
                                                 <button type="button" class=" cancel btn">Close</button>
                                             </div>
@@ -378,8 +384,8 @@
                           
                         </div>
                     </div>
-                    <hr class="seperateLine">
-                    <div class="col-sm-12">
+                  
+                    <div class="col-sm-12 topline">
                         <a href="/dashboard.php" name="cancel" class="cancel previous btn">Cancel</a>
                         
                         <input id="next1" type="button" name="next" class="next action-button" value="Next" <?php echo $disable;  ?> />
@@ -401,9 +407,8 @@
                                 <div class="col">
                                     <label for="firstname">Full Contact Name</label>
                                     <input type="text" class="form-control" name="firstname" placeholder="#####" onChange="javascript:copytoStepThree(this.value,'receiverName')" >
-                                
-                                
                                 </div>
+
                                 <div class="col">
                                     <label for="receivercompany">Company Name</label>
                                     <input type="text" class="form-control" name="receivercompany" placeholder="receiver company"  onChange="javascript:copytoStepThree(this.value,'companyName')">
@@ -602,9 +607,7 @@ $(".next").click(function(){
 	current_fs = $(this).parent();
 	next_fs = $(this).parent().next();
 	
-	//activate next step on progressbar using the index of next_fs
-	$("#progressbar li").eq($(".fieldset").index(next_fs)).addClass("active");
-	
+
     // //custom validation on next button
     var form = $("#realForm");
     // console.log(form);
@@ -690,6 +693,10 @@ $(".next").click(function(){
                 current_fs = $('#step2');
                 next_fs = $('#step3');
             }
+    
+        //activate next step on progressbar using the index of next_fs
+	    $("#progressbar li").eq($(".fieldset").index(next_fs)).addClass("active");
+	
         //show the next fieldset
         next_fs.show(); 
     
