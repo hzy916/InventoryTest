@@ -120,14 +120,19 @@
     
     if(isset($_SESSION['delivery']) && !empty($_SESSION['delivery'])){
         $NoItemDivView='none';
-        $ItemDivView='block';     
-    } 
+        $ItemDivView='block';   
+        $disable='';  
+    } else{
+        $disable='disabled';  
+    }
 
     $rand=rand();
     $_SESSION['rand']=$rand;
  
 
 ?>
+
+
 
 <style>
 	.hidedisplay{
@@ -168,7 +173,7 @@
                     <li></li>
                 </ul>
                 <!-- Wizard STEP 1 -->
-                <div class="fieldset row setup-content">
+                <div class="fieldset row setup-content" id="step1">
                     <div class="col-sm-12">
                         <div class="form-group">
                 
@@ -371,12 +376,12 @@
                       
                     <a href="/dashboard.php" name="cancel" class="cancel previous btn">Cancel</a>
                     
-                    <input type="button" name="next" class="next action-button" value="Next" />
+                    <input id="next1" type="button" name="next" class="next action-button" value="Next" <?php echo $disable;  ?> />
                 </div>
                 <!-- Wizard STEP 1 END -->
 
                 <!-- Wizard STEP 2 -->
-                <div class="fieldset row setup-content">
+                <div class="fieldset row setup-content" id="step2">
                     <h2 class="fs-title">Receiver’s Details</h2>
                     <hr class="seperateLine">
                                                         
@@ -388,7 +393,7 @@
                             <div class="form-group row">
                                 <div class="col">
                                     <label for="firstname">Full Contact Name</label>
-                                    <input type="text" class="form-control" name="firstname" placeholder="#####" onChange="javascript:copytoStepThree(this.value,'receiverName')" required>
+                                    <input type="text" class="form-control" name="firstname" placeholder="#####" onChange="javascript:copytoStepThree(this.value,'receiverName')" >
                                 
                                 
                                 </div>
@@ -401,12 +406,12 @@
                             <div class="form-group row">
                                 <div class="col">
                                     <label for="receiverEmail">Receiver Email</label>
-                                    <input type="email" class="form-control" name="receiverEmail" placeholder="receiver email" onChange="javascript:copytoStepThree(this.value,'receiverEmail')" required>
+                                    <input type="email" class="form-control" name="receiverEmail" placeholder="receiver email" onChange="javascript:copytoStepThree(this.value,'receiverEmail')" >
                                 </div>
 
                                 <div class="col">
                                     <label for="phonenumber">Phone Number</label>
-                                    <input type="text" class="form-control" name="phonenumber" placeholder="#####" onChange="javascript:copytoStepThree(this.value,'receiverPhone')" required>
+                                    <input type="text" class="form-control" name="phonenumber" placeholder="#####" onChange="javascript:copytoStepThree(this.value,'receiverPhone')" >
                                 </div>
                             </div> 
                             
@@ -416,7 +421,7 @@
                             <div class="form-group row">
                                 <div class="col">
                                     <label for="applicantName">Shipping Date</label>
-                                    <input id="date" onchange="validateDate()" type="date" class="form-control" name="deliverydate" placeholder="Enter date" onChange="javascript:copytoStepThree(this.value,'shipDate')" required>
+                                    <input id="date" onchange="validateDate()" type="date" class="form-control" name="deliverydate" placeholder="Enter date" onChange="javascript:copytoStepThree(this.value,'shipDate')" >
                                 </div>
                             </div> 
 
@@ -424,7 +429,7 @@
                             
                                 <div class="form-group col-md-4">
                                     <label for="inputAddress">Street / House No</label>
-                                    <input type="text" class="form-control" name="inputAddress1" placeholder="1234 Main St" onChange="javascript:copytoStepThree(this.value,'receiverAddress1')" required>
+                                    <input type="text" class="form-control" name="inputAddress1" placeholder="1234 Main St" onChange="javascript:copytoStepThree(this.value,'receiverAddress1')" >
                                 </div>
 
                                 <div class="form-group col-md-4">
@@ -441,18 +446,18 @@
 
                                 <div class="form-group col-md-4">
                                     <label for="inputCountry">Country</label>
-                                    <input type="text" class="form-control" name="inputCountry" onChange="javascript:copytoStepThree(this.value,'receiverCountry')" required>
+                                    <input type="text" class="form-control" name="inputCountry" onChange="javascript:copytoStepThree(this.value,'receiverCountry')" >
                                 </div>
 
                                 <div class="form-group col-md-4">
                                     <label for="inputCity">City</label>
-                                    <input type="text" class="form-control" name="inputCity" onChange="javascript:copytoStepThree(this.value,'receiverCity')" required>
+                                    <input type="text" class="form-control" name="inputCity" onChange="javascript:copytoStepThree(this.value,'receiverCity')" >
                                 </div>
 
                             
                                 <div class="form-group col-md-4">
                                     <label for="inputPostcode">Postcode</label>
-                                    <input type="text" class="form-control" name="inputPostcode" onChange="javascript:copytoStepThree(this.value,'receiverPostcode')" required>
+                                    <input type="text" class="form-control" name="inputPostcode" onChange="javascript:copytoStepThree(this.value,'receiverPostcode')" >
                                 </div>
                                
                             </div>
@@ -465,7 +470,7 @@
                 <!-- Wizard STEP 2 END -->
 
                 <!-- Wizard STEP 3 -->
-                <div class="fieldset row setup-content">
+                <div class="fieldset row setup-content" id="step3">
                     <div class="col-sm-12">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <div class="form-check ml-3">
@@ -531,20 +536,13 @@
                                 </div>
                             </div>
                             <hr>
-                    
-                            <!-- <form  method="POST">
-                                <!--set random number to check resumbit on refresh
-                                <input type="hidden" name="randomcheck" value="<?php echo $rand; ?>">
-                                
-                                <input type="hidden"  name="makeaction" value="submitRequest">
-                            </form> -->
              
                 </div>
                 <input type="button" name="previous" class="previous action-button" value="Previous" />
                 <input type="hidden"  name="makeaction" value="submitRequest">
                 <button type="submit" class="btn btn-primary">Submit</button>
 
-            </form>                
+                </form>                
             </div>  
             <!-- Wizard STEP 3 END -->
         </div>
@@ -554,7 +552,7 @@
 <!-- jQuery easing plugin -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js" type="text/javascript"></script>
 
-<!-- jquery validation plugin -->
+<!--jquery validation plugin-->
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.js"></script>
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/additional-methods.js"></script>
 
@@ -562,8 +560,7 @@
 <script>
      //check if all required fields are filled in js when user click next//
      //////////////////////////////////////////////////////////////
-  
-
+                                                
     //print all the values on step 3
     function copytoStepThree($val,$dest) {
         $('#'+$dest).html($val);
@@ -574,7 +571,10 @@ var current_fs, next_fs, previous_fs; //fieldsets
 var left, opacity, scale; //fieldset properties which we will animate
 var animating; //flag to prevent quick multi-click glitches
 
+
 $(".next").click(function(){
+    alert('clicked');
+    
 	if(animating) return false;
 	animating = true;
 	
@@ -585,7 +585,9 @@ $(".next").click(function(){
 	$("#progressbar li").eq($(".fieldset").index(next_fs)).addClass("active");
 	
     // //custom validation on next button
-     var form = $("#realForm");
+    var form = $("#realForm");
+    console.log(form);
+    
         form.validate({
             errorElement: 'span',
             errorClass: 'help-block',
@@ -658,13 +660,19 @@ $(".next").click(function(){
             }
         });
     // //end of custom validation on next button
-
+    // alert(form.valid());
     if (form.valid() === true){
+        // alert('good');
+             if ($('#step1').is(":visible")){
+                current_fs = $('#step1');
+                next_fs = $('#step2');
+            }else if($('#step2').is(":visible")){
+                current_fs = $('#step2');
+                next_fs = $('#step3');
+            }
         //show the next fieldset
         next_fs.show(); 
     
-
-
 	//hide the current fieldset with style
 	current_fs.animate({opacity: 0}, {
 		step: function(now, mx) {
@@ -688,6 +696,10 @@ $(".next").click(function(){
 	});
 
     } //end of custom validation on if
+    else{
+        alert('not good');
+    }
+    animating = false;
 
 });
 
@@ -726,10 +738,7 @@ $(".previous").click(function(){
 	});
 });
 
- 
-// $(".submit").click(function(){
-// 	return false;
-// })
+
 </script>
 
 
