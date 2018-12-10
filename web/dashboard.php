@@ -73,21 +73,23 @@ td {
                   <div class="card-body ">
                     <div class="table-full-width">
                     <table class="table">
-                            <thead>
-                                <tr>
-                                    <th class="Companyrow">Title</th>
-                                    <th class="td-actions text-right Companyrow">
-                                        Status
-                                    </th>
-                                </tr>
-                            </thead> 
 
-                         	<tbody>
                                 <?php
                                     $sql = "SELECT Receiver.first_name as fullname, Request_status.status_name as status_name FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN Receiver ON Request.ReceiverID = Receiver.receiver_id  WHERE Request.RequestStatusID != 5 LIMIT 0,2;";
                                     $result = $conn->query($sql);
             
                                     if($result->num_rows > 0) {
+                                        echo "      
+                                        <thead>
+                                            <tr>
+                                                <th class='Companyrow'>Title</th>
+                                                <th class='td-actions text-right Companyrow'>
+                                                    Status
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>";
+
                                         while($row = $result->fetch_assoc()) {
                                             echo 
                                             "<tr>
@@ -96,7 +98,7 @@ td {
                                             </tr>";
                                         }
                                     } else {
-                                            echo "<tr><td colspan='5'><center>No Data Avaliable</center></td></tr>";
+                                            echo "<tr><img src='assets/img/shipment_r_d_none.png' alt='no incomplete shipment request'></tr>";
                                     }
                                     ?>
                             </tbody>
@@ -139,7 +141,7 @@ td {
                                             </tr>";
                                         }
                                     } else {
-                                            echo "<tr><td colspan='5'><center>No Data Avaliable</center></td></tr>";
+                                        echo "<tr><img src='assets/img/design_request_dashboard_none.png' alt='no incomplete shipment request'></tr>";
                                     }
                                     ?>
                             </tbody>

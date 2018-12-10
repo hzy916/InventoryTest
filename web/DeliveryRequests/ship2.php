@@ -103,7 +103,7 @@
             break;
 
             case 'submitRequest':
-                if(!empty($_SESSION['delivery']) && !empty($_SESSION['requestDetails'])){
+                if(!empty($_SESSION['delivery'])){
                     include ('submit_shiprequest.php');
                 } else{
                     echo 
@@ -381,10 +381,10 @@
                     <hr class="seperateLine">
                                                         
                     <div class="col-sm-12">
-                        <form method="POST" id='realForm'>
-                        <!--set random number to check resumbit on refresh -->
+                    <form method="POST" id='realForm'>
+                        <!--set random number to check resumbit on refresh 
                             <input type="hidden"  name="randomcheck" value="<?php echo $rand; ?>">
-
+-->
                             <div class="form-group row">
                                 <div class="col">
                                     <label for="firstname">Full Contact Name</label>
@@ -433,7 +433,7 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="inputAddress">Address3</label>
-                                    <input type="text" class="form-control" name="inputAddress3" placeholder="1234 Main St" onChange="javascript:copytoStepThree(this.value,'receiverAddress3')" required>
+                                    <input type="text" class="form-control" name="inputAddress3" placeholder="1234 Main St" onChange="javascript:copytoStepThree(this.value,'receiverAddress3')" >
                                 </div>
                             </div> 
 
@@ -456,8 +456,8 @@
                                 </div>
                                
                             </div>
-                                         
-                        </form>
+<!--                                          
+                        </form> -->
                     </div>
                     <input type="button" name="previous" class="previous action-button" value="Previous" />
 		            <input type="button" name="next" class="next action-button" value="Next" />
@@ -523,7 +523,7 @@
                                             </tbody>
                                         </table>
                                     </div>
-
+          
                                     <input class="form-check-input" type="checkbox" id="gridCheck" required>
                                     <label class="form-check-label" for="gridCheck">
                                         I confirm all the information above are correct.
@@ -531,16 +531,20 @@
                                 </div>
                             </div>
                             <hr>
-                            <form  method="POST">
-                                <!--set random number to check resumbit on refresh -->
+                    
+                            <!-- <form  method="POST">
+                                <!--set random number to check resumbit on refresh
                                 <input type="hidden" name="randomcheck" value="<?php echo $rand; ?>">
                                 
                                 <input type="hidden"  name="makeaction" value="submitRequest">
-                            </form>
+                            </form> -->
              
                 </div>
                 <input type="button" name="previous" class="previous action-button" value="Previous" />
-		        <input type="button" name="next" class="next action-button" value="Next" />                      
+                <input type="hidden"  name="makeaction" value="submitRequest">
+                <button type="submit" class="btn btn-primary">Submit</button>
+
+            </form>                
             </div>  
             <!-- Wizard STEP 3 END -->
         </div>
@@ -549,6 +553,10 @@
 
 <!-- jQuery easing plugin -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js" type="text/javascript"></script>
+
+<!-- jquery validation plugin -->
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.js"></script>
+<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/additional-methods.js"></script>
 
 
 <script>
@@ -577,89 +585,84 @@ $(".next").click(function(){
 	$("#progressbar li").eq($(".fieldset").index(next_fs)).addClass("active");
 	
     // //custom validation on next button
-    //  var form = $("#realForm");
-    //     form.validate({
-    //         errorElement: 'span',
-    //         errorClass: 'help-block',
-    //         highlight: function(element, errorClass, validClass) {
-    //             $(element).closest('.form-group').addClass("has-error");
-    //         },
-    //         unhighlight: function(element, errorClass, validClass) {
-    //             $(element).closest('.form-group').removeClass("has-error");
-    //         },
-    //         rules: {
-    //             firstname: {
-    //                 required: true,
+     var form = $("#realForm");
+        form.validate({
+            errorElement: 'span',
+            errorClass: 'help-block',
+            highlight: function(element, errorClass, validClass) {
+                $(element).closest('.form-group').addClass("has-error");
+            },
+            unhighlight: function(element, errorClass, validClass) {
+                $(element).closest('.form-group').removeClass("has-error");
+            },
+            rules: {
+                firstname: {
+                    required: true,
                 
-    //             },
-    //             receiverEmail : {
-    //                 required: true,
-    //             },
-    //             phonenumber : {
-    //                 required: true,
+                },
+                receiverEmail : {
+                    required: true,
+                },
+                phonenumber : {
+                    required: true,
                    
-    //             },
-    //             deliverydate:{
-    //                 required: true,
-    //             },
-    //             inputAddress1:{
-    //                 required: true,
-    //             },
-    //             inputAddress2: {
-    //                 required: true,
+                },
+                deliverydate:{
+                    required: true,
+                },
+                inputAddress1:{
+                    required: true,
+                },
+           
+                inputCountry: {
+                    required: true,
                   
-    //             },
-    //             inputCountry: {
-    //                 required: true,
+                },
+                inputCity: {
+                    required: true,
                   
-    //             },
-    //             inputCity: {
-    //                 required: true,
+                },
+                inputPostcode: {
+                    required: true,
                   
-    //             },
-    //             inputPostcode: {
-    //                 required: true,
-                  
-    //             },
+                },
                 
-    //         },
-    //         messages: {
-    //             username: {
-    //                 required: "Username required",
-    //             },
-    //             receiverEmail : {
-    //                 required: "receiver Email required",
-    //             },
-    //             phonenumber : {
-    //                 required: "Password required",
-    //                 equalTo: "Password don't match",
-    //             },
-    //             deliverydate: {
-    //                 required: "Name required",
-    //             },
-    //             inputAddress1: {
-    //                 required: "Address required",
-    //             },
-    //             inputAddress2 : {
-    //                 required: "Password required",
-    //                 equalTo: "Password don't match",
-    //             },
-    //             inputCountry: {
-    //                 required: "Name required",
-    //             },
-    //             inputCity: {
-    //                 required: "Address required",
-    //             },
-    //             inputPostcode: {
-    //                 required: "Postcode required",
-    //             },
-    //         }
-    //     });
+            },
+            messages: {
+                username: {
+                    required: "This field is required",
+                },
+                receiverEmail : {
+                    required: "receiver Email required",
+                },
+                phonenumber : {
+                    required:"This field is required",
+                 
+                },
+                deliverydate: {
+                    required: "This field is required",
+                },
+                inputAddress1: {
+                    required: "This field is required",
+                },
+           
+                inputCountry: {
+                    required: "This field is required",
+                },
+                inputCity: {
+                    required: "This field is required",
+                },
+                inputPostcode: {
+                    required: "This field is required",
+                },
+            }
+        });
     // //end of custom validation on next button
-    // if (form.valid() === true){
+
+    if (form.valid() === true){
         //show the next fieldset
         next_fs.show(); 
-    //}
+    
 
 
 	//hide the current fieldset with style
@@ -683,6 +686,9 @@ $(".next").click(function(){
 		//this comes from the custom easing plugin
 		easing: 'easeOutQuint'
 	});
+
+    } //end of custom validation on if
+
 });
 
 $(".previous").click(function(){
@@ -720,6 +726,7 @@ $(".previous").click(function(){
 	});
 });
 
+ 
 // $(".submit").click(function(){
 // 	return false;
 // })

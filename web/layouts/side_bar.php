@@ -71,7 +71,7 @@
                         <p class="caption"><?php echo getUserName($_SESSION['id']); ?></p>
                     </div>
 
-                    <a href="/DeliveryRequests/shipment_request.php" class="shipbutton btn btn-1 mb-3"><i class="fa fa-plus"></i> New Shipment Request</a>
+                    <a href="/DeliveryRequests/ship2.php" class="shipbutton btn btn-1 mb-3"><i class="fa fa-plus"></i> New Shipment Request</a>
                </div>
 
                 <ul class="nav">

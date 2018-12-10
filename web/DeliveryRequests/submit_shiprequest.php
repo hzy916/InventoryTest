@@ -1,22 +1,21 @@
 <?php
     $user_id = $_SESSION['id']; 
-    if(!empty($_SESSION['requestDetails'])){
-        $fullname=mysqli_real_escape_string($conn,$_SESSION['requestDetails'][0]['fullname']);
-        $company=mysqli_real_escape_string($conn,$_SESSION['requestDetails'][0]['company']);
-        $phonenumber=mysqli_real_escape_string($conn,$_SESSION['requestDetails'][0]['phonenumber']);
-        $receiverEmail=mysqli_real_escape_string($conn,$_SESSION['requestDetails'][0]['receiverEmail']);
-        $inputAddress1=mysqli_real_escape_string($conn,$_SESSION['requestDetails'][0]['inputAddress1']);
-        $inputAddress2=mysqli_real_escape_string($conn,$_SESSION['requestDetails'][0]['inputAddress2']);
-        $inputAddress3=mysqli_real_escape_string($conn,$_SESSION['requestDetails'][0]['inputAddress3']);
-        $inputCity=mysqli_real_escape_string($conn,$_SESSION['requestDetails'][0]['inputCity']);
-        $inputCountry=mysqli_real_escape_string($conn,$_SESSION['requestDetails'][0]['inputCountry']);
-        $inputPostcode=mysqli_real_escape_string($conn,$_SESSION['requestDetails'][0]['inputPostcode']);
-        $deliverydate=mysqli_real_escape_string($conn,$_SESSION['requestDetails'][0]['deliverydate']);
-
+ 
+        $receivercompany = mysqli_real_escape_string($conn,$_POST['receivercompany']);
+        $fullname =  mysqli_real_escape_string($conn,$_POST['firstname']);
+        $phonenumber =  mysqli_real_escape_string($conn,$_POST['phonenumber']);
+        $inputAddress1 =  mysqli_real_escape_string($conn,$_POST['inputAddress1']);
+        $inputAddress2 =  mysqli_real_escape_string($conn,$_POST['inputAddress2']);
+        $inputAddress3 = mysqli_real_escape_string($conn,$_POST['inputAddress3']);
+        $inputCity =  mysqli_real_escape_string($conn,$_POST['inputCity']);
+        $inputCountry =  mysqli_real_escape_string($conn,$_POST['inputCountry']);
+        $inputPostcode =  mysqli_real_escape_string($conn,$_POST['inputPostcode']);
+        $deliverydate =  mysqli_real_escape_string($conn,$_POST['deliverydate']);
+        $receiverEmail =  mysqli_real_escape_string($conn,$_POST['receiverEmail']);
 
         //check if company field is empty
         if (!empty($company)) {
-            $sql = "INSERT INTO Receiver (company_name, first_name, phone, address1, address2, address3, city, country, postalcode, receiver_email ) VALUES ('$company', '$fullname',  '$phonenumber', '$inputAddress1', '$inputAddress2','$inputAddress3', '$inputCity', '$inputCountry', '$inputPostcode', '$receiverEmail')";
+            $sql = "INSERT INTO Receiver (company_name, first_name, phone, address1, address2, address3, city, country, postalcode, receiver_email ) VALUES ('$receivercompany', '$fullname',  '$phonenumber', '$inputAddress1', '$inputAddress2','$inputAddress3', '$inputCity', '$inputCountry', '$inputPostcode', '$receiverEmail')";
        
         } else {
             $sql = "INSERT INTO Receiver (first_name, phone, address1, address2, address3, city, country, postalcode, receiver_email) VALUES ('$fullname', '$phonenumber', '$inputAddress1', '$inputAddress2','$inputAddress3', '$inputCity', '$inputCountry', '$inputPostcode','$receiverEmail')";
@@ -83,9 +82,6 @@
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
-    }  else{
-        echo "Error: No data available";
-    }
       
    
 ?>
