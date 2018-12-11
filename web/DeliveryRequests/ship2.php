@@ -149,22 +149,7 @@
 
 
 
-    .redNote {
-    position: relative;
-}
-.redNote:after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-	width: 0; 
-	height: 0; 
-    display: block;
-	border-left: 5px solid transparent;
-	border-bottom: 5px solid transparent;
-	
-	border-top: 5px solid #f00;
-}
+
 
 .form-group {
    margin-left:10px;
@@ -582,7 +567,7 @@
                                                         echo "<tr>
                                                             <td>".$k['productname']." ".$k['sel_color']." ".$k['sel_size']."</td>
                                                         
-                                                            <td> ".$k['deliverynumber']."</td>
+                                                            <td> x ".$k['deliverynumber']."</td>
                                                         
                                                             </tr>";
                                                             $i++;

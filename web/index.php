@@ -95,14 +95,14 @@ if(isset($_GET['lmsg']) && $_GET['lmsg'] == true)
 	
         <form action="<?php echo $_SERVER['PHP_SELF']?>" class="LoginForm" method="post">
           <label for="exampleInputEmail1">Username (Email)</label>
-          <div class="form-group inner-addon left-addon">
+          <div class="form-group inner-addon left-addon redNote">
                     <!--icon -->
             <img class="glyphicon" src="assets/img/usernameicon.svg">
             <input class="form-control requiredRed" id="exampleInputEmail1" name="email" type="email" placeholder="Enter email" required>
           </div>
          
           <label for="exampleInputPassword1">Password</label>
-          <div class="form-group inner-addon left-addon">
+          <div class="form-group inner-addon left-addon redNote">
             <img class="glyphicon" src="assets/img/passwordicon.svg">
             <input class="form-control requiredRed" id="exampleInputPassword1" name="password" type="password" placeholder="Password" required>
           </div>
