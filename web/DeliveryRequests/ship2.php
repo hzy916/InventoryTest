@@ -146,6 +146,25 @@
         border: 1px solid #ccc;
         border-top: none;
     }
+
+
+
+    .redNote {
+    position: relative;
+}
+.redNote:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+	width: 0; 
+	height: 0; 
+    display: block;
+	border-left: 5px solid transparent;
+	border-bottom: 5px solid transparent;
+	
+	border-top: 5px solid #f00;
+}
 </style>
 
   <link href="/assets/css/shipment.css" rel="stylesheet" />
@@ -404,25 +423,30 @@
                             <input type="hidden"  name="randomcheck" value="<?php echo $rand; ?>">
 -->
                             <div class="form-group row">
-                                <div class="col">
-                                    <label for="firstname">Full Contact Name</label>
+                                <label class="fieldLabel" for="firstname">Full Contact Name</label>
+                                <div class="redNote"> 
                                     <input type="text" class="form-control" name="firstname" placeholder="#####" onChange="javascript:copytoStepThree(this.value,'receiverName')" >
-                                </div>
-
-                                <div class="col">
-                                    <label for="receivercompany">Company Name</label>
-                                    <input type="text" class="form-control" name="receivercompany" placeholder="receiver company"  onChange="javascript:copytoStepThree(this.value,'companyName')">
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <div class="col">
-                                    <label for="receiverEmail">Receiver Email</label>
+                                <label  class="fieldLabel" for="receivercompany">Company Name</label>
+                                <div class="redNote">
+                                    <input type="text" class="form-control" name="receivercompany" placeholder="receiver company"  onChange="javascript:copytoStepThree(this.value,'companyName')">
+                                </div>
+                            </div>
+
+
+                            <div class="form-group row">
+                                <label  class="fieldLabel" for="receiverEmail">Receiver Email</label>
+                                <div class="redNote">
                                     <input type="email" class="form-control" name="receiverEmail" placeholder="receiver email" onChange="javascript:copytoStepThree(this.value,'receiverEmail')" >
                                 </div>
-
-                                <div class="col">
-                                    <label for="phonenumber">Phone Number</label>
+                            </div>    
+                            
+                            <div class="form-group row">
+                                <label class="fieldLabel" for="phonenumber">Phone Number</label>
+                                <div class="redNote">
                                     <input type="text" class="form-control" name="phonenumber" placeholder="#####" onChange="javascript:copytoStepThree(this.value,'receiverPhone')" >
                                 </div>
                             </div> 
@@ -432,41 +456,48 @@
                             
 
                             <div class="form-group row">
-                            
-                                <div class="form-group col-md-4">
-                                    <label for="inputAddress">Street / House No</label>
+                                <label class="fieldLabel" for="inputAddress">Street / House No</label>
+                                <div class="redNote">
                                     <input type="text" class="form-control" name="inputAddress1" placeholder="1234 Main St" onChange="javascript:copytoStepThree(this.value,'receiverAddress1')" >
                                 </div>
+                            </div>
 
-                                <div class="form-group col-md-4">
-                                    <label for="inputAddress">Address2</label>
+                            <div class="form-group row">
+                                <label class="fieldLabel" for="inputAddress">Address2</label>
+                                <div class="redNote">
                                     <input type="text" class="form-control" name="inputAddress2" placeholder="1234 Main St" onChange="javascript:copytoStepThree(this.value,'receiverAddress2')">
                                 </div>
-                                <div class="form-group col-md-4">
-                                    <label for="inputAddress">Address3</label>
+                            </div>   
+                            
+                            <div class="form-group row">
+                                <label class="fieldLabel" for="inputAddress">Address3</label>
+                                <div class="redNote">
                                     <input type="text" class="form-control" name="inputAddress3" placeholder="1234 Main St" onChange="javascript:copytoStepThree(this.value,'receiverAddress3')" >
                                 </div>
                             </div> 
 
-                            <div class="form-row">
 
-                                <div class="form-group col-md-4">
-                                    <label for="inputCountry">Country</label>
+                            <div class="form-group row">
+                                <label class="fieldLabel" for="inputCountry">Country</label>
+                                <div class="redNote">  
                                     <input type="text" class="form-control" name="inputCountry" onChange="javascript:copytoStepThree(this.value,'receiverCountry')" >
                                 </div>
+                            </div>
 
-                                <div class="form-group col-md-4">
-                                    <label for="inputCity">City</label>
+                            <div class="form-group row">
+                                <label for="inputCity">City</label>
+                                <div class="redNote">
                                     <input type="text" class="form-control" name="inputCity" onChange="javascript:copytoStepThree(this.value,'receiverCity')" >
                                 </div>
-
+                            </div>
                             
-                                <div class="form-group col-md-4">
-                                    <label for="inputPostcode">Postcode</label>
+                            <div class="form-group row">
+                                <label for="inputPostcode">Postcode</label>
+                                <div class="redNote">
                                     <input type="text" class="form-control" name="inputPostcode" onChange="javascript:copytoStepThree(this.value,'receiverPostcode')" >
                                 </div>
-                               
-                            </div>
+                           
+                        </div>
 <!--                                          
                         </form> -->
                     </div>
@@ -810,7 +841,6 @@ $(".previous").click(function(){
 
             $("#prod2del").val(id);
            $("#productDelete").submit();
-       
         }
     });
 
