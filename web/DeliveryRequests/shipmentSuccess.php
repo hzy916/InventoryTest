@@ -37,17 +37,15 @@
     
         <!-- MultiStep Form -->
             <div class="container">
-                <img class="emptyItemIMG" src="https://cdn.shopify.com/s/files/1/2590/2182/files/Christmas2018-PawTrailsmin.png?8270276245400105272" src="Empty in your Request">
+                <img class="emptyItemIMG" src="/assets/img/successrequest.png" src="Empty in your Request">
                                            
                 <h3 class="successText">Your Shipment Request has been submitted successfully.</h3>
                 <a href="ship2.php" class="shipbutton btn btn-1 mb-3"><i class="fa fa-plus"></i> Make Another Shipment Request</a>
                 <br>
                 <a href="/dashboard.php" class="cancel btn  mb-3">Back to Dashboard</a>
             </div>               
-      
     </div>
 </div>
-
 
 
 <?php require_once('../layouts/footer.php'); ?>	

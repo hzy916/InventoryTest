@@ -1,0 +1,134 @@
+
+  .show{
+    display: inline-block;
+  }
+
+  .navbar .navbar-nav .notification {
+      left: 23px;
+  }
+  
+  .dropdown-toggle {
+    cursor: pointer;
+  }
+  
+  .keep-open{
+    display: inline-block;
+  }
+  
+  /* DropDown SubMenu */
+  .dropdown-submenu {
+    position: relative;
+  }
+  
+  /* .dropdown-submenu.a {
+    display:inline-block;
+  } */
+  
+  .dropdown .dropdown-menu {
+    width: 260px;
+    max-width: 260px;
+  }
+  
+  .dropdown .dropdown-menu li a,
+  .dropdown-submenu .dropdown-menu li a {
+    width: -webkit-calc(100% - 2px);
+    width: -moz-calc(100% - 2px);
+    width: calc(100% - 2px);
+    white-space: normal;
+    position:relative;
+  }
+  
+  .dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: 100%;
+    width: 260px;
+    max-width: 260px;
+    margin-top: -1px;
+    white-space: normal;
+  }
+  
+  .fixRight {
+    left: -100% !important;
+  }
+  
+  .fixBottom {
+    bottom: -1px !important;
+    top:auto !important;
+  }
+  
+  .myCaret {
+    top:12px;
+    right: 9px;
+    position:absolute;
+    text-align: right;
+    display:block;
+  }
+  
+  /* SIDEBAR */
+  
+  .clearBoth {
+    clear:both;
+  }
+  
+  .sidebar .dropdown-menu {
+    left:0;
+  }
+  
+  .sidebar .dropdown .dropdown-menu li a,
+  .sidebar .dropdown-submenu .dropdown-menu li a {
+    width:215px;
+    white-space: normal;
+    position:relative;
+  }
+  
+  .sidebar .dropdown-menu li a:hover,
+  .sidebar .dropdown-menu li a:focus,
+  .sidebar .dropdown-menu li.open a:hover,
+  .sidebar .dropdown-menu li.open a:focus{
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    background-color: transparent;
+    width:215px;
+  }
+  
+  .sidebar .dropdown-menu li.active > a {
+    color: #FFFFFF;
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.23);
+    width:215px;
+  }
+  
+  .activePageMenu {
+    color: #0000FF;
+  }
+  
+  /* .sidebar .dropdown-menu li:last-child:after {
+    content: "---------------";
+  } */
+  
+  
+  .sidebar .dropdown-menu {
+    position: relative;
+    width:215px;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    border: none;
+    background-color: transparent;
+    box-shadow: none;
+  }
+  
+  .dropdown-menu {
+    display: none;
+  }
+  
+  .sidebar .nav .caret {
+    margin-top: 0px;
+    top: 20px;
+    position: absolute;
+    right: 10px;
+  }
+  
+  /* END SIDEBAR */
+ 

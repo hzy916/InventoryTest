@@ -51,6 +51,15 @@
 .shipbutton:hover {
   background-position: right center; /* change the direction of the change here */
 }
+.customstyle{
+    top:10px!important;
+    left: 50px!important;
+    position:relative!important;
+}
+
+.statusIcon{
+    margin-right:5px;
+}
 
 </style>
 
@@ -75,65 +84,54 @@
                </div>
 
                 <ul class="nav">
-                    <li>
-                        <a class="nav-link" href="/DeliveryRequests/delivery_table.php">
+
+<!-- ***********Dropdown Menu with sub tab********** -->
+                    <li class="dropdown multiSide">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
                             <i class="nc-icon nc-chart-pie-35"></i>
                             <p>Shipment Requests</p>
                         </a>
+                        <ul class="dropdown-menu customstyle">
+                            <li>
+                            <a class="nav-link" href="/DeliveryRequests/shipment_list.php?mystatus=submitted"><img class="statusIcon" src="/assets/img/submitted.svg"><span class="">Submitted</span></a>
+                            </li>
+                            <li>
+                            <a class="nav-link"  href="/DeliveryRequests/shipment_list.php?mystatus=processing"><img class="statusIcon" src="/assets/img/processing.svg"><span class="">Processing</span></a>
+                            </li>
+                            <li>
+                            <a class="nav-link"  href="/DeliveryRequests/shipment_list.php?mystatus=completed"><img class="statusIcon" src="/assets/img/completed.svg"><span class="">Completed</span></a>
+                            </li>
+                            <li>
+                            <a class="nav-link"   href="/DeliveryRequests/shipment_list.php?mystatus=declined"><img class="statusIcon" src="/assets/img/declined.svg"><span class="">Declined</span></a>
+                            </li>
+                        </ul>
                     </li>
 
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/DeliveryRequests/shipment_list.php?mystatus=submitted">
-                            <!-- <img class="nc-icon" src="/assets/img/submitted.svg"> -->
-                            <p>Submitted</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="/DeliveryRequests/shipment_list.php?mystatus=processing">
-                            <i class="nc-icon nc-notes"></i>
-                            <p>Processing</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="/DeliveryRequests/shipment_list.php?mystatus=completed">
-                            <i class="nc-icon nc-paper-2"></i>
-                            <p>Completed</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="/DeliveryRequests/shipment_list.php?mystatus=declined">
-                            <i class="nc-icon nc-paper-2"></i>
-                            <p>Declined</p>
-                        </a>
-                    </li>
-                    
-                    
                     <hr>
 
-                    <li>
-                        <a class="nav-link" href="/DeliveryRequests/design_request_table.php?mystatus=submitted">
-                            <i class="nc-icon nc-atom"></i>
+
+
+                    <li class="dropdown multiSide">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                            <i class="nc-icon nc-chart-pie-35"></i>
                             <p>Design Requests</p>
                         </a>
+                        <ul class="dropdown-menu customstyle">
+                            <li>
+                            <a class="nav-link" href="/DeliveryRequests/design_request_table.php?mystatus=submitted"><img class="statusIcon" src="/assets/img/submitted.svg"><span class="">Submitted</span></a>
+                            </li>
+                            <li>
+                            <a class="nav-link"  href="/DeliveryRequests/design_request_table.php?mystatus=designing"><img class="statusIcon" src="/assets/img/processing.svg"><span class="">Processing</span></a>
+                            </li>
+                            <li>
+                            <a class="nav-link"  href="/DeliveryRequests/design_request_table.php?mystatus=completed"><img class="statusIcon" src="/assets/img/completed.svg"><span class="">Completed</span></a>
+                            </li>
+                            <li>
+                            <a class="nav-link"  href="/DeliveryRequests/design_request_table.php?mystatus=declined"><img class="statusIcon" src="/assets/img/declined.svg"><span class="">Declined</span></a>
+                            </li>
+                        </ul>
                     </li>
-                    <li>
-                        <a class="nav-link" href="/DeliveryRequests/design_request_table.php?mystatus=designing">
-                            <i class="nc-icon nc-pin-3"></i>
-                            <p>Maps</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="/DeliveryRequests/design_request_table.php?mystatus=completed">
-                            <i class="nc-icon nc-bell-55"></i>
-                            <p>Notifications</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="/DeliveryRequests/design_request_table.php?mystatus=declined">
-                            <i class="nc-icon nc-bell-55"></i>
-                            <p>Notifications</p>
-                        </a>
-                    </li>
+
                     <hr>
 
                     <li>

@@ -430,12 +430,12 @@
                             <h2 class="fs-title">Shipping ADDRESS</h2>
                             <hr class="seperateLine">
                                 
-                            <div class="form-group row">
+                            <!-- <div class="form-group row">
                                 <div class="col">
                                     <label for="applicantName">Shipping Date</label>
                                     <input id="date" onchange="validateDate()" type="date" class="form-control" name="deliverydate" placeholder="Enter date" onChange="javascript:copytoStepThree(this.value,'shipDate')" >
                                 </div>
-                            </div> 
+                            </div>  -->
 
                             <div class="form-group row">
                             
@@ -633,9 +633,7 @@ $(".next").click(function(){
                     required: true,
                    
                 },
-                deliverydate:{
-                    required: true,
-                },
+            
                 inputAddress1:{
                     required: true,
                 },
@@ -665,9 +663,7 @@ $(".next").click(function(){
                     required:"This field is required",
                  
                 },
-                deliverydate: {
-                    required: "This field is required",
-                },
+            
                 inputAddress1: {
                     required: "This field is required",
                 },

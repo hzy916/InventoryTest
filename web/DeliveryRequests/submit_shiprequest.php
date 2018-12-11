@@ -19,7 +19,6 @@ if(!isset($_SESSION['id'],$_SESSION['user_role_id']))
         $inputCity =  mysqli_real_escape_string($conn,$_POST['inputCity']);
         $inputCountry =  mysqli_real_escape_string($conn,$_POST['inputCountry']);
         $inputPostcode =  mysqli_real_escape_string($conn,$_POST['inputPostcode']);
-        $deliverydate =  mysqli_real_escape_string($conn,$_POST['deliverydate']);
         $receiverEmail =  mysqli_real_escape_string($conn,$_POST['receiverEmail']);
 
         //check if company field is empty
@@ -35,7 +34,7 @@ if(!isset($_SESSION['id'],$_SESSION['user_role_id']))
             $last_id = $conn->insert_id;
             // echo "Receiver id is " .  $last_id . "<br>";
             //update Request details
-            $sql_two= "INSERT INTO Request (ReceiverID, ShipDate, RequestStatusID, RequestEmployeeID) VALUES ('$last_id', '$deliverydate',  '1', '$user_id')";
+            $sql_two= "INSERT INTO Request (ReceiverID,  RequestStatusID, RequestEmployeeID) VALUES ('$last_id', '1', '$user_id')";
          
             if($conn->query($sql_two) === TRUE) {
                 $request_id = $conn->insert_id;
