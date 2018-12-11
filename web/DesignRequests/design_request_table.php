@@ -9,7 +9,10 @@
 
 	require_once('../layouts/header.php'); 
 	require_once('../layouts/side_bar.php'); 
-  	require_once('../layouts/nav.php'); 
+	require_once('../layouts/nav.php'); 
+	require_once('../inc/shipmentDB.php'); 
+
+
 ?>
 
 
@@ -52,18 +55,27 @@
 					</thead>
 						<tbody>
 							<?php
-							//only show approved design requests to designers
-							if($_SESSION['user_role_id'] == 4) {
-								$sql = "SELECT CustomRequest.customrequestID, CustomRequest.voucherCode, CustomRequest.quantity, CustomRequest.companyName, CustomRequest.itemtype, CustomRequest.c_RequestEmployeeID, CustomRequest.c_RequestDate, CustomRequest.UseDate,  Request_status.status_name as status_name, tbl_users.user_name as user_name FROM CustomRequest  JOIN Request_status ON CustomRequest.c_RequestStatusID = Request_status.status_id JOIN tbl_users ON  CustomRequest.c_RequestEmployeeID = tbl_users.id WHERE c_is_archived = 0 AND CustomRequest.c_RequestStatusID = 9 OR CustomRequest.c_RequestStatusID = 3";
-							}
-							 else{
-								$sql = "SELECT CustomRequest.customrequestID, CustomRequest.voucherCode, CustomRequest.quantity, CustomRequest.companyName, CustomRequest.itemtype, CustomRequest.c_RequestEmployeeID, CustomRequest.c_RequestDate, CustomRequest.UseDate,  Request_status.status_name as status_name, tbl_users.user_name as user_name FROM CustomRequest  JOIN Request_status ON CustomRequest.c_RequestStatusID = Request_status.status_id JOIN tbl_users ON  CustomRequest.c_RequestEmployeeID = tbl_users.id WHERE c_is_archived = 0";
+					
+							//get status value based on users'click
+							$myStatusArr=array(
+								'submitted'=>1,
+								'approved'=>9,
+								'completed'=>5,
+								'declined'=>6
+							);
+							$mystatus=1;
+
+							//if status name exists in the array then do this
+							if(isset($_GET['mystatus']) && !empty($myStatusArr[$_GET['mystatus']])) {
+								$mystatus=$myStatusArr[$_GET['mystatus']];
 							}
 							
+							$result = getdesignList($mystatus, $conn);
+						
+							// $result = $conn->query($sql);	
 
-                            $result = $conn->query($sql);	
-							$num_rows = mysqli_num_rows($result);
 							if($result->num_rows > 0) {
+						
 								while($row = $result->fetch_array()) {
 									$btText='Check';
 									$btId='check'.$row['customrequestID'];

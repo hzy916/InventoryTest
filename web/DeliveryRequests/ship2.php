@@ -186,11 +186,11 @@
                                     <button id="addItem" class="shipbutton btn btn-1 mb-3"><i class="fa fa-plus"></i> Add Item Into My Shipments</button>
                                 <br>
 
-                                    <!-- form to remove selected product from the session -->
+                                    <!-- form to remove selected product from the session-->
                                 <form id="productDelete" method="POST">
                                     <input type="hidden"  name="makeaction" value="productDelete">
                                     <input id="prod2del" type="hidden"  name="prod2del" value="">
-                                </form>
+                                </form> 
                             </div>   
 
                                 <!-- table to show selected product from the session -->
@@ -225,7 +225,7 @@
                                                         <td>".$k['deliverynumber']."</td>
                                                         <td class='OperationColumn'>
                                                             
-                                                            <button type='button' class='btn btn-danger' onclick='JavaScript:deleteThisProduct(".$i.");'>Remove</button>
+                                                            <button type='button' class='btn btn-danger removeItem' id=".$i.">Remove</button>
                                                         </td>
                                                         <td></td>
                                                         </tr>";
@@ -262,7 +262,7 @@
                                             <div class="oneline">
                                                 <label class="fieldLabel">Item Type</label>
                                                 <select id="itemtypeSelect" class="form-control" onChange="handleSelection(value)">
-                                                    <option value="" selected="selected"></option>
+                                                    <option value="" selected="selected">Please select type</option>
                                                     <option value="flyerForm">Flyer or Poster</option>
                                                     <option value="pawtrails_form">PawTrails All In One</option>   
                                                 </select>
@@ -326,7 +326,7 @@
 
 
                                             <div class="mt-3 mb-3">
-                                                <button type="button" name="AddProduct" onclick="checkBeforeSubmit();" class="btn addBtn">Add Now</button>
+                                                <button type="button" name="AddProduct" onclick="checkBeforeSubmit();" class=" addBtn">Add Now</button>
                                               
                                             </div>
                                           
@@ -429,13 +429,7 @@
                             
                             <h2 class="fs-title">Shipping ADDRESS</h2>
                             <hr class="seperateLine">
-                                
-                            <!-- <div class="form-group row">
-                                <div class="col">
-                                    <label for="applicantName">Shipping Date</label>
-                                    <input id="date" onchange="validateDate()" type="date" class="form-control" name="deliverydate" placeholder="Enter date" onChange="javascript:copytoStepThree(this.value,'shipDate')" >
-                                </div>
-                            </div>  -->
+                            
 
                             <div class="form-group row">
                             
@@ -493,7 +487,6 @@
                                         <div class="card  card-tasks col-lg-6 col-sm-offset-2">
                                             <div class="card-header ">
                                                 <h4 class="card-title contentheader">Receiver Details</h4>
-                                            
                                             </div>
                                             <hr class="linebreak">
                                             <div class="card-body contenttable">
@@ -806,22 +799,22 @@ $(".previous").click(function(){
     }
 
   
-        /****************/
-        //check ship date to be at least one day after today
-        function validateDate(){
-            var userdate = new Date(document.getElementById("date").value).toJSON().slice(0,10);
-            var today = new Date().toJSON().slice(0,10);
-            if(userdate < today){
-            alert('Please select future date only!');
-            }
-        }
 
-        //Remove selected product from the session
-        function deleteThisProduct(idP){
-            $("#prod2del").val(idP);
-            $("#productDelete").submit();
-        }
+        //Remove selected product from the session and pop up confirm box before delete
+        $(".removeItem").click(function(){
+        var id = $(this).attr("id");
+        alert(id);
 
+        if(confirm('Are you sure?'))
+        {
+
+            $("#prod2del").val(id);
+           $("#productDelete").submit();
+       
+        }
+    });
+
+  
         //check request item number is smaller than the stock
         function checkStock(){
              

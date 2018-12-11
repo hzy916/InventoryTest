@@ -118,16 +118,16 @@
                         </a>
                         <ul class="dropdown-menu customstyle">
                             <li>
-                            <a class="nav-link" href="/DeliveryRequests/design_request_table.php?mystatus=submitted"><img class="statusIcon" src="/assets/img/submitted.svg"><span class="">Submitted</span></a>
+                            <a class="nav-link" href="/DesignRequests/design_request_table.php?mystatus=submitted"><img class="statusIcon" src="/assets/img/submitted.svg"><span class="">Submitted</span></a>
                             </li>
                             <li>
-                            <a class="nav-link"  href="/DeliveryRequests/design_request_table.php?mystatus=designing"><img class="statusIcon" src="/assets/img/processing.svg"><span class="">Processing</span></a>
+                            <a class="nav-link"  href="/DesignRequests/design_request_table.php?mystatus=approved"><img class="statusIcon" src="/assets/img/processing.svg"><span class="">Approved</span></a>
                             </li>
                             <li>
-                            <a class="nav-link"  href="/DeliveryRequests/design_request_table.php?mystatus=completed"><img class="statusIcon" src="/assets/img/completed.svg"><span class="">Completed</span></a>
+                            <a class="nav-link"  href="/DesignRequests/design_request_table.php?mystatus=completed"><img class="statusIcon" src="/assets/img/completed.svg"><span class="">Completed</span></a>
                             </li>
                             <li>
-                            <a class="nav-link"  href="/DeliveryRequests/design_request_table.php?mystatus=declined"><img class="statusIcon" src="/assets/img/declined.svg"><span class="">Declined</span></a>
+                            <a class="nav-link"  href="/DesignRequests/design_request_table.php?mystatus=declined"><img class="statusIcon" src="/assets/img/declined.svg"><span class="">Declined</span></a>
                             </li>
                         </ul>
                     </li>

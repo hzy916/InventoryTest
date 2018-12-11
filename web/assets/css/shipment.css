@@ -2,12 +2,12 @@
 /*****Add Item POp up*********/
 /*******************************/
 
-
 .addBtn{
+    color:#ffffff!important;
+    width: 140px;
+    height: 32px;
     border-radius: 2px;
     background-color: #2296f3;
-    color:#ffffff!important;
-    border: none;
 }
 
 .cancel{
@@ -22,7 +22,6 @@
     margin-left: 10px;
     text-align: right;
     margin-right:15px;
-    float:left;
     color: #a8acb2;
 }
 
