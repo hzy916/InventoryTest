@@ -1,29 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="12px" height="18px" viewBox="0 0 12 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="20px" height="13px" viewBox="0 0 20 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
-    <title>Icons/24px/star</title>
+    <title>enter-arrow</title>
     <desc>Created with Sketch.</desc>
     <defs>
-        <path d="M0,0 L12,0 L12,5.48062485 L6,10.2806248 L0,5.48062485 L0,0 Z M2,2 L2,4.51937515 L6,7.71937515 L10,4.51937515 L10,2 L2,2 Z M0,18 L0,12.5193752 L6,7.5 L12,12.5193752 L12,18 L0,18 Z M2,16 L10,16 L10,13.4806248 L6,10.0612497 L2,13.4806248 L2,16 Z" id="path-1"></path>
+        <polygon id="path-1" points="0.0782608696 0.52173913 19.8247826 0.52173913 19.8247826 13.046087 0.0782608696 13.046087"></polygon>
     </defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.75">
-        <g id="Dashboard" transform="translate(-54.000000, -373.000000)">
-            <g id="slidebar-icons">
-                <g id="Menu" transform="translate(0.000000, 310.000000)">
-                    <g id="Components/Menu-2" transform="translate(54.000000, 63.000000)">
-                        <g id="Icons/24px/star">
-                            <mask id="mask-2" fill="white">
-                                <use xlink:href="#path-1"></use>
-                            </mask>
-                            <use id="Combined-Shape" fill="#525A65" fill-rule="nonzero" xlink:href="#path-1"></use>
-                            <g id="Colors/White" mask="url(#mask-2)" fill="#FFFFFF">
-                                <g transform="translate(-6.000000, -3.000000)" id="Colors/Wait">
-                                    <rect x="0" y="0" width="24" height="24"></rect>
-                                </g>
-                            </g>
-                        </g>
-                    </g>
-                </g>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Shipment-Request-Step-2" transform="translate(-43.000000, -375.000000)">
+            <g id="enter-arrow" transform="translate(43.000000, 375.000000)">
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="Clip-2"></g>
+                <polygon id="Fill-1" fill="#FFFFFF" mask="url(#mask-2)" points="17.7417391 1.56652174 17.7417391 5.73913043 3.96391304 5.73913043 7.72434783 1.98391304 6.26217391 0.52173913 0 6.78391304 6.26217391 13.046087 7.72434783 11.5826087 3.96391304 7.82869565 19.8247826 7.82869565 19.8247826 1.56652174"></polygon>
             </g>
         </g>
     </g>

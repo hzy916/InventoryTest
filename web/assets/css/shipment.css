@@ -8,6 +8,7 @@
     height: 32px;
     border-radius: 2px;
     background-color: #2296f3;
+    float: right;
 }
 
 .cancel{
@@ -20,9 +21,25 @@
 .fieldLabel{
     margin-top: 10px;
     margin-left: 10px;
-    text-align: right;
+    text-align: left;
     margin-right:15px;
     color: #a8acb2;
+   
+    display: inline;
+}
+
+.halfwidth{
+    width: 50%;
+    margin-left: 20%;
+    text-align: center;
+}
+
+h3,h4 {
+    margin-top:10px!important;
+}
+
+.selectBox{
+    text-align: left;
 }
 
 /********************************/
@@ -103,6 +120,18 @@
 
 
 
+/********************************/
+/*****2 Step Form ***************/
+/*******************************/
+
+/* .fieldbox{
+    width: 50%; /*can be in percentage also.
+    height: auto;
+    margin: 0 auto;
+    padding: 10px;
+    position: relative;
+    display: inline-block;
+} */
 /********************************/
 /*****3 Step Form ***************/
 /*******************************/

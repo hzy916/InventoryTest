@@ -62,21 +62,12 @@
 	margin: 0 auto;
 }
 
-/* .topline{
-	border-top:1px solid rgba(186,200,219, 0.4);
-} */
-
 
 /*end of shipment form step 1 styles*/
 
-/* step 3 styles*/
-.linebreak{
-	height: 1px;
-	opacity: 0.24;
-	background-color: #525a65;
-}
 .contenttable{
 	text-align: left;
+
 }
 .contenttable p{
 	letter-spacing: 0.6px;
@@ -91,6 +82,7 @@
 }
 .contentheader{
 	text-align: left;
+	border-bottom:1px solid #525a65;
 }
 /*end of shipment form step 3 styles*/
 

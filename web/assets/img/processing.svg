@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
-    <title>Combined Shape</title>
+    <title>process</title>
     <desc>Created with Sketch.</desc>
     <defs>
-        <path d="M2,2 L2,14 L14,14 L14,2 L2,2 Z M0,0 L16,0 L16,16 L0,16 L0,0 Z M6,1 L10,1 L10,5 L6,7 L6,1 Z" id="path-1"></path>
+        <polygon id="path-1" points="0 8.8817842e-15 24 8.8817842e-15 24 23.9934375 0 23.9934375"></polygon>
     </defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" opacity="0.75">
-        <g id="Dashboard" transform="translate(-52.000000, -422.000000)">
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Shipment-Request-Step-2" transform="translate(-43.000000, -419.000000)">
             <g id="slidebar-icons">
                 <g id="Menu" transform="translate(0.000000, 310.000000)">
-                    <g id="Components/Menu-2" transform="translate(52.000000, 111.000000)">
-                        <g id="Icons/24px/star" transform="translate(0.000000, 1.000000)">
-                            <mask id="mask-2" fill="white">
-                                <use xlink:href="#path-1"></use>
-                            </mask>
-                            <use id="Combined-Shape" fill="#525A65" fill-rule="nonzero" xlink:href="#path-1"></use>
+                    <g id="Components/Menu-2" transform="translate(41.000000, 63.000000)">
+                        <g id="process" transform="translate(0.000000, 44.000000)">
+                            <g id="Group-3">
+                                <mask id="mask-2" fill="white">
+                                    <use xlink:href="#path-1"></use>
+                                </mask>
+                                <g id="Clip-2"></g>
+                            </g>
+                            <g id="Group-7" transform="translate(2.000000, 2.000000)" fill="#FFFFFF">
+                                <path d="M18.9043403,15.1017361 L15.0154514,11.6989583 L13.7345486,13.1621528 L15.6761979,14.8611111 L10,14.8611111 C7.31970486,14.8611111 5.13888889,12.6802951 5.13888889,10 L3.19444444,10 C3.19444444,13.7526563 6.24734375,16.8055556 10,16.8055556 L15.6761979,16.8055556 L13.7345486,18.5045139 L15.0154514,19.9677083 L18.9043403,16.5649306 C19.1150694,16.3806944 19.2361111,16.113941 19.2361111,15.8333333 C19.2361111,15.5532118 19.1150694,15.2864583 18.9043403,15.1017361 Z" id="Fill-5"></path>
+                                <path d="M6.26545139,6.83748264 L4.32380208,5.13888889 L10,5.13888889 C12.6802951,5.13888889 14.8611111,7.31970486 14.8611111,10 L16.8055556,10 C16.8055556,6.24734375 13.7526562,3.19444444 10,3.19444444 L4.32380208,3.19444444 L6.26545139,1.49548611 L4.98454861,0.0322916667 L1.09565972,3.43506944 C0.884930556,3.61930556 0.763888889,3.88605903 0.763888889,4.16666667 C0.763888889,4.44678819 0.884930556,4.71354167 1.09565972,4.89826389 L4.98454861,8.30104167 L6.26545139,6.83748264 Z" id="Fill-6"></path>
+                            </g>
                         </g>
                     </g>
                 </g>

@@ -165,6 +165,10 @@
 	
 	border-top: 5px solid #f00;
 }
+
+.form-group {
+   margin-left:10px;
+}
 </style>
 
   <link href="/assets/css/shipment.css" rel="stylesheet" />
@@ -278,14 +282,18 @@
                                         <h4 class="itemDetails">Item Details</h4>
                                       
                                         <div class="selectBox">
-                                            <div class="oneline">
+
+                                            <div class="form-group">
                                                 <label class="fieldLabel">Item Type</label>
-                                                <select id="itemtypeSelect" class="form-control" onChange="handleSelection(value)">
-                                                    <option value="" selected="selected">Please select type</option>
-                                                    <option value="flyerForm">Flyer or Poster</option>
-                                                    <option value="pawtrails_form">PawTrails All In One</option>   
-                                                </select>
+                                                <div class="oneline redNote">
+                                                    <select id="itemtypeSelect" class="form-control" onChange="handleSelection(value)">
+                                                        <option value="" selected="selected">Please select type</option>
+                                                        <option value="flyerForm">Flyer or Poster</option>
+                                                        <option value="pawtrails_form">PawTrails All In One</option>   
+                                                    </select>
+                                                </div>
                                             </div>
+
                                                 <script>
                                             
                                                     function handleSelection(choice) {
@@ -310,10 +318,10 @@
                                             <input type="hidden"  name="makeaction" value="product">
                                             <!--set random number to check resumbit on refresh -->
                                             <input type="hidden"  name="flyerToken" value="<?php echo $rand; ?>">
-                            
-                                                <div class="oneline">
-                                                    <label class="fieldLabel" for="deliveryProduct">Item</label>
                                                 
+                                                <label class="fieldLabel" for="deliveryProduct">Item</label>
+                                                
+                                                <div class="oneline redNote">
                                                     <select name="sel_product" id="sel_product" class="form-control" onchange="checkStock();" required>
                                                         <?php
                                                             $j = 0;
@@ -337,15 +345,16 @@
 
                                                 <span id="stocknumber"><?php echo $thisNumber; ?></span>
                                             </div>
-
-                                            <div class="oneline">
-                                                <label class="fieldLabel" for="deliverynumber">Number of Products</label>
+                                            
+                                            <label class="fieldLabel" for="deliverynumber">Number</label>
+                                            <div class="oneline redNote">
+                                               
                                                 <input type="number" class="form-control" name="deliverynumber" id="deliverynumber" placeholder="number"  min="1" >		
                                             </div>
 
 
                                             <div class="mt-3 mb-3">
-                                                <button type="button" name="AddProduct" onclick="checkBeforeSubmit();" class=" addBtn">Add Now</button>
+                                                <button type="button" name="AddProduct" onclick="checkBeforeSubmit();" class="addBtn">Add Now</button>
                                               
                                             </div>
                                           
@@ -360,41 +369,45 @@
                                             <input type="hidden"  name="pawtrailsToken" value="<?php echo $rand; ?>">
                                     
                                             <div class="form-group row">
-                                                <div class="col ss-item-required">
-                                                    <label for="deliveryProduct">Color</label>
-                                                    <br>
+                                                <label class="fieldLabel" for="deliveryProduct">Color</label>
+
+                                                <div class="redNote">
                                                     <select name="sel_color" id="sel_color" class="form-control" onchange="checkPawtrailsStock();">
                                                             <option value="0" selected disabled hidden>Choose here</option>
                                                             <option value="red">red</option>
                                                             <option value="black">black</option>
                                                     </select>
                                                 </div>
-
-                                                <div class="col ss-item-required">
-                                                    <label for="deliverynumber">Size</label>
-                                                    <br>
-                                                    <select name="sel_size" id="sel_size" class="form-control" onchange="checkPawtrailsStock();">
-                                                        <option value="0" selected disabled hidden>Choose here</option>
-                                                        <option value="small">small</option>
-                                                        <option value="medium">medium</option>
-                                                        <option value="large">large</option>
-                                                    </select>
-                                                </div>
                                             </div>
 
                                             <div class="form-group row">
-                                                    <div class="col ss-item-required">
-                                                        <label for="deliverynumber">Number of Products</label>
-                                                        <input type="number" class="form-control" name="deliverynumber" id="deliverynumber2" placeholder="number"  min="1" required>		
+                                              
+                                                    <label class="fieldLabel" for="deliverynumber">Size</label>
+                                                    <div class="redNote">
+                                                        <select name="sel_size" id="sel_size" class="form-control" onchange="checkPawtrailsStock();">
+                                                            <option value="0" selected disabled hidden>Choose here</option>
+                                                            <option value="small">small</option>
+                                                            <option value="medium">medium</option>
+                                                            <option value="large">large</option>
+                                                        </select>
                                                     </div>
+                                                
+                                            </div>
 
-                                                    <div class="col ss-item-required">
-                                                        <label for="deliverynumber">Stock Number</label>
-                                                        <br>
+                                            <div class="form-group row">
+                                                <label class="fieldLabel" for="deliverynumber">Stock Number</label>
+                                                    <div class="">
                                                         <span id="pawtrails_stock"></span>
                                                     </div>
+                                            </div>      
+                                            <div class="form-group row">  
+                                                <label class="fieldLabel" for="deliverynumber">Number</label>    
+                                                    <div class="redNote">
+                                                        <input type="number" class="form-control" name="deliverynumber" id="deliverynumber2" placeholder="number"  min="1" required>		
+                                                    </div>  
                                             </div>
-                                            <button type="button" name="AddProduct"  onclick="checkPawTrailsBeforeSubmit();" class="btn btn-info">Add Product</button>
+
+                                            <button type="button" name="AddProduct"  onclick="checkPawTrailsBeforeSubmit();" class=" addBtn">Add Now</button>
                                         </form>
                                     </div>
                                 </div>
@@ -422,29 +435,31 @@
                         <!--set random number to check resumbit on refresh 
                             <input type="hidden"  name="randomcheck" value="<?php echo $rand; ?>">
 -->
-                            <div class="form-group row">
-                                <label class="fieldLabel" for="firstname">Full Contact Name</label>
-                                <div class="redNote"> 
-                                    <input type="text" class="form-control" name="firstname" placeholder="#####" onChange="javascript:copytoStepThree(this.value,'receiverName')" >
-                                </div>
+                            <div class="form-group row halfwidth">
+                              
+                                    <label class="fieldLabel" for="firstname">Full Contact Name</label>
+                                    <div class="redNote"> 
+                                        <input type="text" class="form-control" name="firstname" placeholder="#####" onChange="javascript:copytoStepThree(this.value,'receiverName')" >
+                                    </div>
+                               
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row halfwidth">
                                 <label  class="fieldLabel" for="receivercompany">Company Name</label>
-                                <div class="redNote">
+                                <div class="">
                                     <input type="text" class="form-control" name="receivercompany" placeholder="receiver company"  onChange="javascript:copytoStepThree(this.value,'companyName')">
                                 </div>
                             </div>
 
 
-                            <div class="form-group row">
+                            <div class="form-group row halfwidth">
                                 <label  class="fieldLabel" for="receiverEmail">Receiver Email</label>
                                 <div class="redNote">
                                     <input type="email" class="form-control" name="receiverEmail" placeholder="receiver email" onChange="javascript:copytoStepThree(this.value,'receiverEmail')" >
                                 </div>
                             </div>    
                             
-                            <div class="form-group row">
+                            <div class="form-group row halfwidth">
                                 <label class="fieldLabel" for="phonenumber">Phone Number</label>
                                 <div class="redNote">
                                     <input type="text" class="form-control" name="phonenumber" placeholder="#####" onChange="javascript:copytoStepThree(this.value,'receiverPhone')" >
@@ -455,51 +470,50 @@
                             <hr class="seperateLine">
                             
 
-                            <div class="form-group row">
+                            <div class="form-group row halfwidth">
                                 <label class="fieldLabel" for="inputAddress">Street / House No</label>
                                 <div class="redNote">
                                     <input type="text" class="form-control" name="inputAddress1" placeholder="1234 Main St" onChange="javascript:copytoStepThree(this.value,'receiverAddress1')" >
                                 </div>
                             </div>
 
-                            <div class="form-group row">
+                            <div class="form-group row halfwidth">
                                 <label class="fieldLabel" for="inputAddress">Address2</label>
                                 <div class="redNote">
                                     <input type="text" class="form-control" name="inputAddress2" placeholder="1234 Main St" onChange="javascript:copytoStepThree(this.value,'receiverAddress2')">
                                 </div>
                             </div>   
                             
-                            <div class="form-group row">
+                            <div class="form-group row halfwidth">
                                 <label class="fieldLabel" for="inputAddress">Address3</label>
-                                <div class="redNote">
+                                <div class="">
                                     <input type="text" class="form-control" name="inputAddress3" placeholder="1234 Main St" onChange="javascript:copytoStepThree(this.value,'receiverAddress3')" >
                                 </div>
                             </div> 
 
 
-                            <div class="form-group row">
+                            <div class="form-group row halfwidth">
                                 <label class="fieldLabel" for="inputCountry">Country</label>
                                 <div class="redNote">  
                                     <input type="text" class="form-control" name="inputCountry" onChange="javascript:copytoStepThree(this.value,'receiverCountry')" >
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <label for="inputCity">City</label>
+                            <div class="form-group row halfwidth">
+                                <label class="fieldLabel" for="inputCity">City</label>
                                 <div class="redNote">
                                     <input type="text" class="form-control" name="inputCity" onChange="javascript:copytoStepThree(this.value,'receiverCity')" >
                                 </div>
                             </div>
                             
-                            <div class="form-group row">
-                                <label for="inputPostcode">Postcode</label>
+                            <div class="form-group row halfwidth">
+                                <label class="fieldLabel" for="inputPostcode">Postcode</label>
                                 <div class="redNote">
                                     <input type="text" class="form-control" name="inputPostcode" onChange="javascript:copytoStepThree(this.value,'receiverPostcode')" >
                                 </div>
                            
                         </div>
-<!--                                          
-                        </form> -->
+
                     </div>
                     <input type="button" name="previous" class="previous cancel action-button" value="Previous" />
 		            <input type="button" name="next" class="next action-button" value="Next" />
@@ -516,10 +530,10 @@
                                     <div class="row">
                                         <!--Receiver details in the session-->
                                         <div class="card  card-tasks col-lg-6 col-sm-offset-2">
-                                            <div class="card-header ">
+                                            <div class="card-header">
                                                 <h4 class="card-title contentheader">Receiver Details</h4>
                                             </div>
-                                            <hr class="linebreak">
+                                          <hr>
                                             <div class="card-body contenttable">
                                                
                                                     <p id="receiverName"></p>
@@ -533,11 +547,11 @@
 
                                     <!--Shipment address in the session-->
                                         <div class="card  card-tasks col-lg-6 col-sm-offset-2">
-                                            <div class="card-header ">
+                                            <div class="card-header">
                                                 <h4 class="card-title contentheader">Shipping Address</h4>
                                               
                                             </div>
-                                            <hr class="linebreak">
+                                            <hr>
                                             <div class="card-body contenttable">
                                                     <p id="receiverAddress1"></p>
                                                     <p id="receiverAddress2"></p>
@@ -568,7 +582,7 @@
                                                         echo "<tr>
                                                             <td>".$k['productname']." ".$k['sel_color']." ".$k['sel_size']."</td>
                                                         
-                                                            <td>".$k['deliverynumber']."</td>
+                                                            <td> ".$k['deliverynumber']."</td>
                                                         
                                                             </tr>";
                                                             $i++;
@@ -585,13 +599,16 @@
                           
              
                 </div>
-                <input type="button" name="previous" class="previous cancel action-button" value="Previous" />
-                <input class="form-check-input" type="checkbox" id="gridCheck" required>
-                <label class="form-check-label" for="gridCheck">
-                    I confirm all the information above are correct.
-                </label>    
-                <input type="hidden"  name="makeaction" value="submitRequest">
-                <button type="submit" class="submitBtn btn btn-primary">Submit</button>
+                    <input type="button" name="previous" class="previous cancel action-button" value="Previous" />
+
+                    <!--checkbox for user to confirm-->
+                    <input class="form-check-input" type="checkbox" id="gridCheck" required>
+                    <label class="form-check-label" for="gridCheck">
+                        I confirm all the information above are correct.
+                    </label>    
+
+                    <input type="hidden"  name="makeaction" value="submitRequest">
+                    <button type="submit" class="submitBtn btn btn-primary">Submit</button>
 
                 </form>                
             </div>  
@@ -661,6 +678,9 @@ $(".next").click(function(){
                 inputAddress1:{
                     required: true,
                 },
+                inputAddress2:{
+                    required: true,
+                },
            
                 inputCountry: {
                     required: true,
@@ -691,7 +711,9 @@ $(".next").click(function(){
                 inputAddress1: {
                     required: "This field is required",
                 },
-           
+                inputAddress2: {
+                    required: "This field is required",
+                },
                 inputCountry: {
                     required: "This field is required",
                 },
@@ -834,7 +856,7 @@ $(".previous").click(function(){
         //Remove selected product from the session and pop up confirm box before delete
         $(".removeItem").click(function(){
         var id = $(this).attr("id");
-        alert(id);
+        // alert(id);
 
         if(confirm('Are you sure?'))
         {

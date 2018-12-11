@@ -135,8 +135,8 @@
                     <hr>
 
                     <li>
-                        <a class="nav-link" href="/DeliveryRequests/design_request_table.php?mystatus=declined">
-                            <i class="nc-icon nc-bell-55"></i>
+                        <a class="nav-link" href="/inventory/inventory.php">
+                            <img class="statusIcon" src="/assets/img/inventory.svg">
                             <p>Inventory</p>
                         </a>
                     </li>
