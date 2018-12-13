@@ -42,9 +42,8 @@
 	}
 
 	/* ***Pop up alert box*/
-.oneline{
-	text-align: left;
-}
+
+
 
 .add_title{
 	text-align: left;
@@ -118,7 +117,7 @@
 }
 /*progressbar*/
 #progressbar {
-	margin-bottom: 30px;
+	
 	overflow: hidden;
 	/*CSS counters to number the steps*/
 	counter-reset: step;
@@ -135,8 +134,7 @@
 #progressbar li:before {
 	content: "Step"counter(step);
 	counter-increment: step;
-	width: 350px;
-	height:50px;
+
 	line-height: 50px;
 	display: block;
 	font-size: 12px;

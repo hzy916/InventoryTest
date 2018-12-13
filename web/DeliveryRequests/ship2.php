@@ -147,13 +147,37 @@
         border-top: none;
     }
 
-
-
-
-
 .form-group {
    margin-left:10px;
 }
+
+/***custom alert style**/
+    #confirm {
+    display: none;
+    background-color: #91FF00;
+    border: 1px solid #aaa;
+    position: fixed;
+    width: 250px;
+    left: 50%;
+    margin-left: -100px;
+    padding: 6px 8px 8px;
+    box-sizing: border-box;
+    text-align: center;
+    }
+    #confirm button {
+    background-color: #48E5DA;
+    display: inline-block;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    padding: 5px;
+    text-align: center;
+    width: 80px;
+    cursor: pointer;
+    }
+    #confirm .message {
+    text-align: left;
+    }
+
 </style>
 
   <link href="/assets/css/shipment.css" rel="stylesheet" />
@@ -184,7 +208,6 @@
                 <div class="fieldset row setup-content" id="step1">
                     <div class="col-sm-12">
                         <div class="form-group">
-                
                             <div id="NoItemDiv" style="display:<?php echo $NoItemDivView ?>">
                                 <h2 class="fs-title">Shipment Contents</h2>
                                 <hr class="seperateLine">
@@ -246,8 +269,8 @@
                                 </div>
                             </div>
 
-                            <!-- delete alert box -->
-                            <div id="dialog" title="Alert message" style="display: none">
+                     
+                            <!-- <div id="dialog" title="Alert message" style="display: none">
                                 <div class="ui-dialog-content ui-widget-content">
                                     <p>
                                         <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0"></span>
@@ -255,7 +278,7 @@
                                         </label>
                                     </p>
                                 </div>
-                            </div>
+                            </div> -->
 
                             <!-- The Modal -->
                             <div id="myModal" class="modal">
@@ -267,9 +290,9 @@
                                         <h4 class="itemDetails">Item Details</h4>
                                       
                                         <div class="selectBox">
-
+                                            <label class="fieldLabel">Item Type</label>
                                             <div class="form-group">
-                                                <label class="fieldLabel">Item Type</label>
+                                                
                                                 <div class="oneline redNote">
                                                     <select id="itemtypeSelect" class="form-control" onChange="handleSelection(value)">
                                                         <option value="" selected="selected">Please select type</option>
@@ -325,9 +348,8 @@
                                                 </div>
                                             
                                             <!-- stock number-->
+                                            <label class="fieldLabel" for="stocknumber">Stock Number</label>
                                             <div class="oneline">
-                                                <label class="fieldLabel" for="stocknumber">Stock Number</label>
-
                                                 <span id="stocknumber"><?php echo $thisNumber; ?></span>
                                             </div>
                                             
@@ -338,10 +360,9 @@
                                             </div>
 
 
-                                            <div class="mt-3 mb-3">
-                                                <button type="button" name="AddProduct" onclick="checkBeforeSubmit();" class="addBtn">Add Now</button>
-                                              
-                                            </div>
+                                           
+                                                <button type="button" name="AddProduct" onclick="checkBeforeSubmit();" class="addBtn mt-5  mb-3">Add Now</button>
+                                            
                                           
                                         </form>
                                 
@@ -352,47 +373,43 @@
 
                                             <!--set random number to check resumbit on refresh -->
                                             <input type="hidden"  name="pawtrailsToken" value="<?php echo $rand; ?>">
+                                            
+                                            <label class="fieldLabel" for="deliveryProduct">Color</label>
+                                          
+                                            <div class="oneline redNote">
+                                                <select name="sel_color" id="sel_color" class="form-control" onchange="checkPawtrailsStock();">
+                                                        <option value="0" selected disabled hidden>Choose here</option>
+                                                        <option value="red">red</option>
+                                                        <option value="black">black</option>
+                                                </select>
+                                            </div>
+                                          
+                                            <label class="fieldLabel" for="deliverynumber">Size</label>
+                                           
+                                            <div class="oneline redNote">
+                                                <select name="sel_size" id="sel_size" class="form-control" onchange="checkPawtrailsStock();">
+                                                    <option value="0" selected disabled hidden>Choose here</option>
+                                                    <option value="small">small</option>
+                                                    <option value="medium">medium</option>
+                                                    <option value="large">large</option>
+                                                </select>
+                                            </div>
+                                          
+
+                                            <label class="fieldLabel" for="deliverynumber">Stock Number</label>
+                                         
+                                            <div class="oneline">
+                                                <span id="pawtrails_stock"></span>
+                                            </div>
+                                          
+                                            <label class="fieldLabel" for="deliverynumber">Number</label>       
                                     
-                                            <div class="form-group row">
-                                                <label class="fieldLabel" for="deliveryProduct">Color</label>
+                                            <div class="oneline redNote">
+                                                <input type="number" class="form-control" name="deliverynumber" id="deliverynumber2" placeholder="number"  min="1" required>		
+                                            </div>  
+                                           
 
-                                                <div class="redNote">
-                                                    <select name="sel_color" id="sel_color" class="form-control" onchange="checkPawtrailsStock();">
-                                                            <option value="0" selected disabled hidden>Choose here</option>
-                                                            <option value="red">red</option>
-                                                            <option value="black">black</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row">
-                                              
-                                                    <label class="fieldLabel" for="deliverynumber">Size</label>
-                                                    <div class="redNote">
-                                                        <select name="sel_size" id="sel_size" class="form-control" onchange="checkPawtrailsStock();">
-                                                            <option value="0" selected disabled hidden>Choose here</option>
-                                                            <option value="small">small</option>
-                                                            <option value="medium">medium</option>
-                                                            <option value="large">large</option>
-                                                        </select>
-                                                    </div>
-                                                
-                                            </div>
-
-                                            <div class="form-group row">
-                                                <label class="fieldLabel" for="deliverynumber">Stock Number</label>
-                                                    <div class="">
-                                                        <span id="pawtrails_stock"></span>
-                                                    </div>
-                                            </div>      
-                                            <div class="form-group row">  
-                                                <label class="fieldLabel" for="deliverynumber">Number</label>    
-                                                    <div class="redNote">
-                                                        <input type="number" class="form-control" name="deliverynumber" id="deliverynumber2" placeholder="number"  min="1" required>		
-                                                    </div>  
-                                            </div>
-
-                                            <button type="button" name="AddProduct"  onclick="checkPawTrailsBeforeSubmit();" class=" addBtn">Add Now</button>
+                                            <button type="button" name="AddProduct"  onclick="checkPawTrailsBeforeSubmit();" class="mt-5 mb-3 addBtn">Add Now</button>
                                         </form>
                                     </div>
                                 </div>
@@ -495,10 +512,8 @@
                                 <label class="fieldLabel" for="inputPostcode">Postcode</label>
                                 <div class="redNote">
                                     <input type="text" class="form-control" name="inputPostcode" onChange="javascript:copytoStepThree(this.value,'receiverPostcode')" >
-                                </div>
-                           
-                        </div>
-
+                                </div> 
+                            </div>
                     </div>
                     <input type="button" name="previous" class="previous cancel action-button" value="Previous" />
 		            <input type="button" name="next" class="next action-button" value="Next" />
@@ -842,14 +857,16 @@ $(".previous").click(function(){
         $(".removeItem").click(function(){
         var id = $(this).attr("id");
         // alert(id);
-
+   
         if(confirm('Are you sure?'))
         {
-
             $("#prod2del").val(id);
            $("#productDelete").submit();
         }
     });
+
+        //custom style for alert before remove items
+  
 
   
         //check request item number is smaller than the stock
