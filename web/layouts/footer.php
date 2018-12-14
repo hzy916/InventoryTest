@@ -36,30 +36,31 @@
   }
   </style>
   
-          <!-- <footer class="footer">
-              <div class="container">
-                    <div class="row">
-                      <div class="col-sm-6">
-                        <div class="copyright-text">
-                          <p class="footerleft">Staff Portal V.2.0 |  Copyright © 2018 Attitude Technologies Ltd.  All rights reserved.  </p>
-                        </div>
-                      </div> 
-                      <div class="col-sm-6">							
-                        <ul id="customlinklist" class="pull-right">
-                          <li><a href="">Privacy Policy |</a></li>						
-                          <li><a href="">Terms of Use |</a></li>
-                          <li><a href="">PawTrails Website | </a></li>
-                          <li><a href="">Help</a></li>
-                        </ul>							
-                      </div> 
-                    </div>
-                </div>
-            </div>
-          </footer> -->
 
           
+    </div>
+<!--     
+          <footer class="footer">
+          <div class="container">
+                <div class="row clearfix">
+                  <div class="col-lg-6 col-sm-12 float-left">
+                    <div class="copyright-text">
+                      <p class="footerleft">Staff Portal V.2.0 |  Copyright © 2018 Attitude Technologies Ltd.  All rights reserved.  </p>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-sm-12 pull-right">							
+                    <ul id="customlinklist">
+                      <li><a href="">Privacy Policy |</a></li>						
+                      <li><a href="">Terms of Use |</a></li>
+                      <li><a href="">PawTrails Website | </a></li>
+                      <li><a href="">Help</a></li>
+                    </ul>							
+                  </div> 
+
+                </div>
+            </div>
         </div>
-    
+      </footer> -->
 </body>
 <!--   Core JS Files   -->
 

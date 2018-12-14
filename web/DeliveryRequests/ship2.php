@@ -290,10 +290,10 @@
                                         <h4 class="itemDetails">Item Details</h4>
                                       
                                         <div class="selectBox">
-                                            <label class="fieldLabel">Item Type</label>
+                                            
                                             <div class="form-group">
-                                                
-                                                <div class="oneline redNote">
+                                                <label class="fieldLabel col-xs-2">Item Type</label>
+                                                <div class="col-xs-10 oneline redNote">
                                                     <select id="itemtypeSelect" class="form-control" onChange="handleSelection(value)">
                                                         <option value="" selected="selected">Please select type</option>
                                                         <option value="flyerForm">Flyer or Poster</option>
@@ -322,14 +322,15 @@
 
                                         <!-- The Form for flyer or posters-->
                     
-                                        <form name="flyerForm" method="POST" id="flyerForm">
+                                        <form name="flyerForm" class="form-horizontal" method="POST" id="flyerForm">
                                             <input type="hidden"  name="makeaction" value="product">
                                             <!--set random number to check resumbit on refresh -->
                                             <input type="hidden"  name="flyerToken" value="<?php echo $rand; ?>">
+
+                                            <div class="form-group">    
+                                                <label class="fieldLabel col-xs-2" for="deliveryProduct">Item</label>
                                                 
-                                                <label class="fieldLabel" for="deliveryProduct">Item</label>
-                                                
-                                                <div class="oneline redNote">
+                                                <div class="col-xs-10 oneline redNote">
                                                     <select name="sel_product" id="sel_product" class="form-control" onchange="checkStock();" required>
                                                         <?php
                                                             $j = 0;
@@ -346,22 +347,26 @@
                                                         ?>
                                                     </select>
                                                 </div>
-                                            
-                                            <!-- stock number-->
-                                            <label class="fieldLabel" for="stocknumber">Stock Number</label>
-                                            <div class="oneline">
-                                                <span id="stocknumber"><?php echo $thisNumber; ?></span>
-                                            </div>
-                                            
-                                            <label class="fieldLabel" for="deliverynumber">Number</label>
-                                            <div class="oneline redNote">
-                                               
-                                                <input type="number" class="form-control" name="deliverynumber" id="deliverynumber" placeholder="number"  min="1" >		
                                             </div>
 
+                                            <!-- stock number-->
+                                            <div class="form-group">    
+                                                <label class="fieldLabel col-xs-2" for="stocknumber">Stock Number</label>
+                                                <div class="col-xs-10 oneline">
+                                                    <span id="stocknumber"><?php echo $thisNumber; ?></span>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group">   
+                                                <label class="fieldLabel col-xs-2" for="deliverynumber">Number</label>
+                                                <div class="col-xs-10 oneline redNote">
+                                                
+                                                    <input type="number" class="form-control" name="deliverynumber" id="deliverynumber" placeholder="number"  min="1" >		
+                                                </div>
+                                            </div>
 
                                            
-                                                <button type="button" name="AddProduct" onclick="checkBeforeSubmit();" class="addBtn mt-5  mb-3">Add Now</button>
+                                                <button type="button" name="AddProduct" onclick="checkBeforeSubmit();" class="addBtn mt-5 btn mb-3">Add Now</button>
                                             
                                           
                                         </form>
@@ -439,7 +444,7 @@
 -->
                             <div class="form-group row halfwidth">
                               
-                                    <label class="fieldLabel" for="firstname">Full Contact Name</label>
+                                    <label class="confirmLabel" for="firstname">Full Contact Name</label>
                                     <div class="redNote"> 
                                         <input type="text" class="form-control" name="firstname" placeholder="#####" onChange="javascript:copytoStepThree(this.value,'receiverName')" >
                                     </div>
@@ -447,7 +452,7 @@
                             </div>
 
                             <div class="form-group row halfwidth">
-                                <label  class="fieldLabel" for="receivercompany">Company Name</label>
+                                <label  class="confirmLabel" for="receivercompany">Company Name</label>
                                 <div class="">
                                     <input type="text" class="form-control" name="receivercompany" placeholder="receiver company"  onChange="javascript:copytoStepThree(this.value,'companyName')">
                                 </div>
@@ -455,14 +460,14 @@
 
 
                             <div class="form-group row halfwidth">
-                                <label  class="fieldLabel" for="receiverEmail">Receiver Email</label>
+                                <label  class="confirmLabel" for="receiverEmail">Receiver Email</label>
                                 <div class="redNote">
                                     <input type="email" class="form-control" name="receiverEmail" placeholder="receiver email" onChange="javascript:copytoStepThree(this.value,'receiverEmail')" >
                                 </div>
                             </div>    
                             
                             <div class="form-group row halfwidth">
-                                <label class="fieldLabel" for="phonenumber">Phone Number</label>
+                                <label class="confirmLabel" for="phonenumber">Phone Number</label>
                                 <div class="redNote">
                                     <input type="text" class="form-control" name="phonenumber" placeholder="#####" onChange="javascript:copytoStepThree(this.value,'receiverPhone')" >
                                 </div>
@@ -473,21 +478,21 @@
                             
 
                             <div class="form-group row halfwidth">
-                                <label class="fieldLabel" for="inputAddress">Street / House No</label>
+                                <label class="confirmLabel" for="inputAddress">Street / House No</label>
                                 <div class="redNote">
                                     <input type="text" class="form-control" name="inputAddress1" placeholder="1234 Main St" onChange="javascript:copytoStepThree(this.value,'receiverAddress1')" >
                                 </div>
                             </div>
 
                             <div class="form-group row halfwidth">
-                                <label class="fieldLabel" for="inputAddress">Address2</label>
+                                <label class="confirmLabel" for="inputAddress">Address2</label>
                                 <div class="redNote">
                                     <input type="text" class="form-control" name="inputAddress2" placeholder="1234 Main St" onChange="javascript:copytoStepThree(this.value,'receiverAddress2')">
                                 </div>
                             </div>   
                             
                             <div class="form-group row halfwidth">
-                                <label class="fieldLabel" for="inputAddress">Address3</label>
+                                <label class="confirmLabel" for="inputAddress">Address3</label>
                                 <div class="">
                                     <input type="text" class="form-control" name="inputAddress3" placeholder="1234 Main St" onChange="javascript:copytoStepThree(this.value,'receiverAddress3')" >
                                 </div>
@@ -495,21 +500,21 @@
 
 
                             <div class="form-group row halfwidth">
-                                <label class="fieldLabel" for="inputCountry">Country</label>
+                                <label class="confirmLabel" for="inputCountry">Country</label>
                                 <div class="redNote">  
                                     <input type="text" class="form-control" name="inputCountry" onChange="javascript:copytoStepThree(this.value,'receiverCountry')" >
                                 </div>
                             </div>
 
                             <div class="form-group row halfwidth">
-                                <label class="fieldLabel" for="inputCity">City</label>
+                                <label class="confirmLabel" for="inputCity">City</label>
                                 <div class="redNote">
                                     <input type="text" class="form-control" name="inputCity" onChange="javascript:copytoStepThree(this.value,'receiverCity')" >
                                 </div>
                             </div>
                             
                             <div class="form-group row halfwidth">
-                                <label class="fieldLabel" for="inputPostcode">Postcode</label>
+                                <label class="confirmLabel" for="inputPostcode">Postcode</label>
                                 <div class="redNote">
                                     <input type="text" class="form-control" name="inputPostcode" onChange="javascript:copytoStepThree(this.value,'receiverPostcode')" >
                                 </div> 
