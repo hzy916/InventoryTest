@@ -39,7 +39,7 @@
       </div>
     </div>
     
-        <footer class="footer">
+        <!-- <footer class="footer">
           <div class="container">
                 <div class="row clearfix">
                   <div class="col-lg-6 col-sm-12 float-left">
@@ -58,7 +58,7 @@
 
                 </div>
           </div>
-      </footer>
+      </footer> -->
 </body>
 <!--   Core JS Files   -->
 

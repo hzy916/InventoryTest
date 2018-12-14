@@ -1,33 +1,40 @@
 <?php
 session_start();
 
-require_once "Auth.php";
-require_once "Util.php";
+// require_once "Auth.php";
+// require_once "Util.php";
 
-$auth = new Auth();
-$db_handle = new DBController();
-$util = new Util();
+// $auth = new Auth();
+// $db_handle = new DBController();
+// //$util = new Util();
 
 require_once "authCookieSessionValidate.php";
 
 if ($isLoggedIn) {
     $util->redirect("dashboard.php");
+    exit;
 }
 
 if (! empty($_POST["login"])) {
     $isAuthenticated = false;
     
     $username = $_POST["member_name"];
-    $password = $_POST["member_password"];
+
+    $password 	= trim($_POST['member_password']);
+		
+    $md5Password = md5($password);
+    echo $md5Password;
+    echo "<br>";
     
     $user = $auth->getMemberByUsername($username);
-    if (password_verify($password, $user[0]["member_password"])) {
+    echo $user[0]["password"];
+    if ($md5Password === $user[0]["password"]) {
         $isAuthenticated = true;
     }
-    
+
     if ($isAuthenticated) {
-        $_SESSION["member_id"] = $user[0]["member_id"];
-        
+        $_SESSION["member_id"] = $user[0]["id"];
+
         // Set Auth Cookies if 'Remember Me' checked
         if (! empty($_POST["remember"])) {
             setcookie("member_login", $username, $cookie_expiration_time);
@@ -60,9 +67,7 @@ if (! empty($_POST["login"])) {
 }
 ?>
 <style>
-body {
-    font-family: Arial;
-}
+
 
 #frmLogin {
     padding: 20px 40px 40px 40px;

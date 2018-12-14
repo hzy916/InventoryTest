@@ -1,15 +1,18 @@
 <?php 
+
+// print('hjgjhgjhgjhg');
+// exit;
 	require_once('inc/config.php');
 	
 	if(!isset($_SESSION['id'],$_SESSION['user_role_id']))
 	{
-		header('location:index.php?lmsg=true');
-		exit;
+        header('location:index.php?lmsg=true');
+        // print('ALL OK');
+		// exit;
 	}		
-	
 
   require_once('./layouts/header.php'); 
-	require_once('./layouts/side_bar.php'); 
+  require_once('./layouts/side_bar.php'); 
   require_once('./layouts/nav.php'); 
 
 ?>

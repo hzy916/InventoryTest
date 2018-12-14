@@ -9,9 +9,6 @@ class Auth {
         return $result;
     }
 
-
-
-    
     
 	function getTokenByUsername($username,$expired) {
 	    $db_handle = new DBController();

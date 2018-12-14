@@ -43,6 +43,27 @@ else if (! empty($_COOKIE["member_login"]) && ! empty($_COOKIE["random_password"
     if($userToken[0]["expiry_date"] >= $current_date) {
         $isExpiryDareVerified = true;
     }
+
+/****************create the session */
+
+    $email 		= trim($_POST['member_name']);
+    $password 	= trim($_POST['member_password']);
+    
+    $md5Password = md5($password);
+    
+    $sql = "select * from tbl_users where email = '".$email."' and password = '".$md5Password."'";
+    $rs = mysqli_query($conn,$sql);
+    $getNumRows = mysqli_num_rows($rs);
+    
+    if($getNumRows == 1)
+    {
+        $getUserRow = mysqli_fetch_assoc($rs);
+        unset($getUserRow['password']);
+        
+        $_SESSION = $getUserRow;
+                    
+    }
+/************ end of ****create the session */
     
     // Redirect if all cookie based validation retuens true
     // Else, mark the token as expired and clear cookies
@@ -55,5 +76,5 @@ else if (! empty($_COOKIE["member_login"]) && ! empty($_COOKIE["random_password"
         // clear cookies
         $util->clearAuthCookie();
     }
-}
+} 
 ?>

@@ -23,7 +23,7 @@
                                     <span class="no-icon">Account</span>
                                 </a>
                             </li>
-                            <li class="nav-item dropdown">
+                            <!-- <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="no-icon">Dropdown</span>
                                 </a>
@@ -35,7 +35,7 @@
                                     <div class="divider"></div>
                                     <a class="dropdown-item" href="#">Separated link</a>
                                 </div>
-                            </li>
+                            </li> -->
                             <li class="nav-item">
                                 <a class="nav-link" href="/index.php?logout=true">
                                     <!-- <span class="no-icon">Log out</span>  -->

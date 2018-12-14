@@ -47,14 +47,19 @@
     width: 120px;
 }
 
+/**center user image and name**/
 .caption {
     display: block;
 }
 
 .logo{
     text-align: center;
-
 }
+
+.caption{
+    float:none;
+}
+
 
 .shipbutton{
     transition: 0.5s;

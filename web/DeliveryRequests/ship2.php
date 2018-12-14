@@ -195,7 +195,7 @@
                 
                 <div class="selectBox">
                     
-                    <div class="form-group">
+                    <div class="form-group" style="margin-left:8px;">
                         <label class="fieldLabel col-xs-2">Item Type</label>
                         <div class="col-xs-10 oneline redNote">
                             <select id="itemtypeSelect" class="form-control" onChange="handleSelection(value)">
