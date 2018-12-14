@@ -185,7 +185,7 @@
 
 
     <!-- The Modal for adding products -->
-  <div id="myModal" class="modal">
+    <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
 

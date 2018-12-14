@@ -14,25 +14,6 @@
         // $num_rows = mysqli_num_rows($result);
     }
 
-    //get number of Shipment Request in different status
-    function getNumberRequest($status, $conn){
-        $sql = "SELECT * FROM Request Where Request.RequestStatusID =". $status;
 
-        $result =   $conn->query($sql);
-        $data = mysqli_num_rows($result);
-    
-        return $data;   
-    }
-
-     //get number of Design Request in different status
-    function getNumberDesignRequest($status, $conn){
-        $sql = "SELECT * FROM CustomRequest Where CustomRequest.c_RequestStatusID =". $status;
-
-        $result =   $conn->query($sql);
-        $data = mysqli_num_rows($result);
-    
-        return $data;   
-    }
-    
 
 ?>

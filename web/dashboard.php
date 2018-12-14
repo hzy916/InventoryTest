@@ -55,143 +55,177 @@ td {
   <div class="content">
     <div class="container-fluid">
       <!-- Breadcrumbs-->
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="dashboard.php">Home</a>
-        </li>
-		<li class="breadcrumb-item active"> Dashboard</li>
-      </ol>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                <a href="dashboard.php">Home</a>
+                </li>
+                <li class="breadcrumb-item active"> Dashboard</li>
+            </ol>
  
     
-      <div class="row">
-          <div class="col-md-6 col-lg-6">
-              <div class="card  card-tasks">
-                  <div class="card-header ">
-                      <h4 class="card-title highlight">Un-Completed Shipment Request</h4>
-                      <a href="DeliveryRequests/delivery_table.php" class="card-category">See all Requests  →</a>
-                  </div>
-                  <div class="card-body ">
-                    <div class="table-full-width">
-                    <table class="table">
+            <div class="row">
+                <div class="col-md-6 col-lg-6">
+                    <div class="card  card-tasks">
+                        <div class="card-header ">
+                            <h4 class="card-title highlight">Un-Completed Shipment Request</h4>
+                            <a href="DeliveryRequests/delivery_table.php" class="card-category">See all Requests  →</a>
+                        </div>
+                        <div class="card-body ">
+                            <div class="table-full-width">
+                            <table class="table">
 
-                                <?php
-                                    $sql = "SELECT Receiver.first_name as fullname, Request_status.status_name as status_name FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN Receiver ON Request.ReceiverID = Receiver.receiver_id  WHERE Request.RequestStatusID != 5 LIMIT 0,2;";
-                                    $result = $conn->query($sql);
-            
-                                    if($result->num_rows > 0) {
-                                        echo "      
-                                        <thead>
-                                            <tr>
-                                                <th class='Companyrow'>Title</th>
-                                                <th class='td-actions text-right Companyrow'>
-                                                    Status
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>";
+                                        <?php
+                                            $sql = "SELECT Receiver.first_name as fullname, Request_status.status_name as status_name FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN Receiver ON Request.ReceiverID = Receiver.receiver_id  WHERE Request.RequestStatusID != 5 LIMIT 0,2;";
+                                            $result = $conn->query($sql);
+                    
+                                            if($result->num_rows > 0) {
+                                                echo "      
+                                                <thead>
+                                                    <tr>
+                                                        <th class='Companyrow'>Title</th>
+                                                        <th class='td-actions text-right Companyrow'>
+                                                            Status
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>";
 
-                                        while($row = $result->fetch_assoc()) {
-                                            echo 
-                                            "<tr>
-                                                <td class='Companyrow'>".$row['fullname']."</td>
-                                                <td class='td-actions text-right Companyrow'><span style='color:#ffffff; text-align:center; width:6em;background-color:#f5a623;'>".$row['status_name']."</span></td>
-                                            </tr>";
-                                        }
-                                    } else {
-                                            echo "<tr><img src='assets/img/shipment_r_d_none.png' alt='no incomplete shipment request'></tr>";
-                                    }
-                                    ?>
-                            </tbody>
-                         
-                      </table>
+                                                while($row = $result->fetch_assoc()) {
+                                                    echo 
+                                                    "<tr>
+                                                        <td class='Companyrow'>".$row['fullname']."</td>
+                                                        <td class='td-actions text-right Companyrow'><span style='color:#ffffff; text-align:center; width:6em;background-color:#f5a623;'>".$row['status_name']."</span></td>
+                                                    </tr>";
+                                                }
+                                            } else {
+                                                    echo "<tr><img src='assets/img/shipment_r_d_none.png' alt='no incomplete shipment request'></tr>";
+                                            }
+                                            ?>
+                                    </tbody>
+                                
+                            </table>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-              </div>
-          </div>
+                </div>
 
-            <div class="col-md-6 col-lg-6">
-              <div class="card  card-tasks">
-                  <div class="card-header ">
-                      <h4 class="card-title highlight">Un-Completed Design Request</h4>
-                      <a href="DesignRequests/design_request_table.php" class="card-category">See all Requests  →</a>
-                  </div>
-                  <div class="card-body ">
-                    <div class="table-full-width">
-                      <table class="table">
-                            <thead>
+                    <div class="col-md-6 col-lg-6">
+                    <div class="card  card-tasks">
+                        <div class="card-header ">
+                            <h4 class="card-title highlight">Un-Completed Design Request</h4>
+                            <a href="DesignRequests/design_request_table.php" class="card-category">See all Requests  →</a>
+                        </div>
+                        <div class="card-body ">
+                            <div class="table-full-width">
+                            <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th class="Companyrow">Title</th>
+                                            <th class="td-actions text-right Companyrow">
+                                                Status
+                                            </th>
+                                        </tr>
+                                    </thead> 
+
+                                    <tbody>
+                                        <?php
+                                            $sql = "SELECT CustomRequest.companyName as companyName, Request_status.status_name as status_name FROM CustomRequest JOIN Request_status ON CustomRequest.c_RequestStatusID = Request_status.status_id  WHERE CustomRequest.c_RequestStatusID = 1 LIMIT 0,2;";
+                                            $result = $conn->query($sql);
+                    
+                                            if($result->num_rows > 0) {
+                                                while($row = $result->fetch_assoc()) {
+                                                    echo 
+                                                    "<tr>
+                                                        <td class='Companyrow'>".$row['companyName']."</td>
+                                                        <td class='td-actions text-right Companyrow'><span style='color:#ffffff; text-align:center; width:6em;background-color:#f5a623;'>".$row['status_name']."</span></td>
+                                                    </tr>";
+                                                }
+                                            } else {
+                                                echo "<tr><img src='assets/img/design_request_dashboard_none.png' alt='no incomplete shipment request'></tr>";
+                                            }
+                                            ?>
+                                    </tbody>
+                                
+                            </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <div class="card  card-tasks">
+                    <div class="card-header ">
+                        <h4 class="card-title">Inventory Overview</h4>
+                        <p class="card-category">See all Inventory  →</p>
+                    </div>
+                    <div class="card-body ">
+                        <div class="table-full-width">
+                        <table class="table">
+                            <tbody>
                                 <tr>
-                                    <th class="Companyrow">Title</th>
-                                    <th class="td-actions text-right Companyrow">
-                                        Status
-                                    </th>
+                                    <td class="td-actions  requestTitle">Product Name</td>
+                                    <td class="td-actions  requestTitle">
+                                        Color
+                                    </td>
+                                    <td class="td-actions requestTitle">
+                                        Size
+                                    </td>
+                                    <td class="td-actions  requestTitle">
+                                    Stock on Hand
+                                    </td>
+                                    <td class="td-actions requestTitle">
+                                    Status
+                                    </td>
                                 </tr>
-                            </thead> 
 
-                         	<tbody>
-                                <?php
-                                    $sql = "SELECT CustomRequest.companyName as companyName, Request_status.status_name as status_name FROM CustomRequest JOIN Request_status ON CustomRequest.c_RequestStatusID = Request_status.status_id  WHERE CustomRequest.c_RequestStatusID = 1 LIMIT 0,2;";
-                                    $result = $conn->query($sql);
-            
-                                    if($result->num_rows > 0) {
-                                        while($row = $result->fetch_assoc()) {
-                                            echo 
-                                            "<tr>
-                                                <td class='Companyrow'>".$row['companyName']."</td>
-                                                <td class='td-actions text-right Companyrow'><span style='color:#ffffff; text-align:center; width:6em;background-color:#f5a623;'>".$row['status_name']."</span></td>
-                                            </tr>";
-                                        }
-                                    } else {
-                                        echo "<tr><img src='assets/img/design_request_dashboard_none.png' alt='no incomplete shipment request'></tr>";
-                                    }
-                                    ?>
-                            </tbody>
-                         
-                      </table>
-                    </div>
-                  </div>
-
-              </div>
-          </div>
-    </div>
-
-      <div class="row">
-         <div class="col-md-12 col-lg-12">
-              <div class="card  card-tasks">
-                  <div class="card-header ">
-                      <h4 class="card-title">Inventory Overview</h4>
-                      <p class="card-category">See all Inventory  →</p>
-                  </div>
-                  <div class="card-body ">
-                    <div class="table-full-width">
-                      <table class="table">
-                          <tbody>
-                              <tr>
-                                  <td class="td-actions  requestTitle">Product Name</td>
-                                  <td class="td-actions  requestTitle">
-                                    Color
-                                  </td>
-                                  <td class="td-actions requestTitle">
-                                    Size
-                                  </td>
-                                  <td class="td-actions  requestTitle">
-                                  Stock on Hand
-                                  </td>
-                                  <td class="td-actions requestTitle">
-                                  Status
-                                  </td>
-                              </tr>
-
-                              <tr>
-                                  <td class="td-actions requestTitle">PawTrails All in One</td>
-                                  <td class="td-actions  requestTitle">
-                                    Red
-                                  </td>
-                                  <td class="td-actions  requestTitle">
-                                     Small
-                                  </td>
-                                  <td class="td-actions  requestTitle">
+                                <tr>
+                                    <td class="td-actions requestTitle">PawTrails All in One</td>
+                                    <td class="td-actions  requestTitle">
+                                        Red
+                                    </td>
+                                    <td class="td-actions  requestTitle">
+                                        Small
+                                    </td>
+                                    <td class="td-actions  requestTitle">
+                                        <?php
+                                                $sql = "SELECT * FROM pawtrails WHERE id = 27";
+                                                $result = $conn->query($sql);
+                                        
+                                                if($result->num_rows > 0) {
+                                                    while($row = $result->fetch_assoc()) {
+                                                        // set styles the way you want
+                                                        if($row['amount'] > 0) {
+                                                            $tdStyle='background-color:#ADFF2F';
+                                                            $stocktext = 'In Stock';
+                                                        } else {
+                                                            $tdStyle='background-color:#d4143d';
+                                                            $stocktext = 'Out of Stock';
+                                                        }
+                                                        echo  $row['amount'];
+                                                    }
+                                                } else {
+                                                        echo "No Data Avaliable";
+                                                }
+                                                ?>
+                                        </td>
+                                        <td class="td-actions requestTitle">
+                                            <span style="text-align:center; width:6em; <?php echo $tdStyle; ?>"><?php echo $stocktext; ?></span>
+                                        </td>
+                                </tr>
+                                <tr>
+                                    <td class="td-actions requestTitle">PawTrails All in One</td>
+                                    <td class="td-actions  requestTitle">
+                                        Black
+                                    </td>
+                                    <td class="td-actions  requestTitle">
+                                        Small
+                                    </td>
+                                    <td class="td-actions  requestTitle">
                                     <?php
-                                            $sql = "SELECT * FROM pawtrails WHERE id = 27";
+                                            $sql = "SELECT * FROM pawtrails WHERE id = 28";
                                             $result = $conn->query($sql);
                                     
                                             if($result->num_rows > 0) {
@@ -214,96 +248,62 @@ td {
                                     <td class="td-actions requestTitle">
                                         <span style="text-align:center; width:6em; <?php echo $tdStyle; ?>"><?php echo $stocktext; ?></span>
                                     </td>
-                              </tr>
-                              <tr>
-                                  <td class="td-actions requestTitle">PawTrails All in One</td>
-                                  <td class="td-actions  requestTitle">
-                                    Black
-                                  </td>
-                                  <td class="td-actions  requestTitle">
-                                     Small
-                                  </td>
-                                  <td class="td-actions  requestTitle">
-                                  <?php
-                                        $sql = "SELECT * FROM pawtrails WHERE id = 28";
-                                        $result = $conn->query($sql);
-                                 
-                                        if($result->num_rows > 0) {
-                                            while($row = $result->fetch_assoc()) {
-                                                // set styles the way you want
-                                                if($row['amount'] > 0) {
-                                                    $tdStyle='background-color:#ADFF2F';
-                                                    $stocktext = 'In Stock';
-                                                } else {
-                                                    $tdStyle='background-color:#d4143d';
-                                                    $stocktext = 'Out of Stock';
-                                                }
-                                                echo  $row['amount'];
-                                            }
-                                        } else {
-                                                echo "No Data Avaliable";
-                                        }
-                                        ?>
-                                  </td>
-                                  <td class="td-actions requestTitle">
-                                     <span style="text-align:center; width:6em; <?php echo $tdStyle; ?>"><?php echo $stocktext; ?></span>
-                                  </td>
-                              </tr>
+                                </tr>
 
-                          </tbody>
-                      </table>
+                            </tbody>
+                        </table>
+                        </div>
                     </div>
-                  </div>
-              </div>
-          </div>
-        </div>
+                </div>
+            </div>
+            </div>
     
-    <div class="card  card-tasks">   
-        <h4 class="card-title">Video Tutorials</h4>
-        
-        <div class="row">
-            <div class="col-md-4 col-g-4 col-sm-4">
-                <div class="">
-                    <video width="400" controls>
-                        <source src="mov_bbb.mp4" type="video/mp4">
-                        <source src="mov_bbb.ogg" type="video/ogg">
-                        Your browser does not support HTML5 video.
-                    </video>
-                    <p>
-                        How to register a new member?
-                    </p>
-                </div>
+            <div class="card  card-tasks">   
+            <h4 class="card-title">Video Tutorials</h4>
+            
+                <div class="row">
+                    <div class="col-md-4 col-g-4 col-sm-4">
+                        <div class="">
+                            <video width="400" controls>
+                                <source src="mov_bbb.mp4" type="video/mp4">
+                                <source src="mov_bbb.ogg" type="video/ogg">
+                                Your browser does not support HTML5 video.
+                            </video>
+                            <p>
+                                How to register a new member?
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-g-4 col-sm-4">
+                        <div class="">
+                            <video width="400" controls>
+                                <source src="mov_bbb.mp4" type="video/mp4">
+                                <source src="mov_bbb.ogg" type="video/ogg">
+                                Your browser does not support HTML5 video.
+                            </video>
+                            <p>
+                                How to register a new member?
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-g-4 col-sm-4">
+                        <div class="">
+                            <video width="400" controls>
+                                <source src="mov_bbb.mp4" type="video/mp4">
+                                <source src="mov_bbb.ogg" type="video/ogg">
+                                Your browser does not support HTML5 video.
+                            </video>
+                            <p>
+                                How to register a new member?
+                            </p>
+                        </div>
+                    </div>    
+                </div>      
             </div>
-
-            <div class="col-md-4 col-g-4 col-sm-4">
-                <div class="">
-                    <video width="400" controls>
-                        <source src="mov_bbb.mp4" type="video/mp4">
-                        <source src="mov_bbb.ogg" type="video/ogg">
-                        Your browser does not support HTML5 video.
-                    </video>
-                    <p>
-                        How to register a new member?
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-md-4 col-g-4 col-sm-4">
-                <div class="">
-                    <video width="400" controls>
-                        <source src="mov_bbb.mp4" type="video/mp4">
-                        <source src="mov_bbb.ogg" type="video/ogg">
-                        Your browser does not support HTML5 video.
-                    </video>
-                    <p>
-                        How to register a new member?
-                    </p>
-                </div>
-            </div>    
-        </div>      
-     </div>
-
-
+        </div>
+    </div>
 </div>
 
 

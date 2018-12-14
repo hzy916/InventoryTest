@@ -35,12 +35,11 @@
       line-height:50px;
   }
   </style>
-  
-
           
+      </div>
     </div>
-<!--     
-          <footer class="footer">
+    
+        <footer class="footer">
           <div class="container">
                 <div class="row clearfix">
                   <div class="col-lg-6 col-sm-12 float-left">
@@ -58,9 +57,8 @@
                   </div> 
 
                 </div>
-            </div>
-        </div>
-      </footer> -->
+          </div>
+      </footer>
 </body>
 <!--   Core JS Files   -->
 
