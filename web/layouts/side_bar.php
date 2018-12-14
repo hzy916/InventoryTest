@@ -7,7 +7,7 @@
 		header('location:index.php?lmsg=true');
 		exit;
 	}		
-	
+    require_once('./inc/shipmentDB.php');
 ?>
 
 <style>
@@ -53,7 +53,7 @@
 }
 .customstyle{
     top:10px!important;
-    left: 50px!important;
+    left: 40px!important;
     position:relative!important;
 }
 
@@ -93,16 +93,16 @@
                         </a>
                         <ul class="dropdown-menu customstyle">
                             <li>
-                            <a class="nav-link" href="/DeliveryRequests/shipment_list.php?mystatus=submitted"><img class="statusIcon" src="/assets/img/submitted.svg"><span class="">Submitted</span></a>
+                            <a class="nav-link" href="/DeliveryRequests/shipment_list.php?mystatus=submitted"><img class="statusIcon" src="/assets/img/submitted.svg"><span class="">Submitted</span><span class="numberfloat"><?php echo getNumberRequest(1 , $conn); ?></span></a>
                             </li>
                             <li>
-                            <a class="nav-link"  href="/DeliveryRequests/shipment_list.php?mystatus=processing"><img class="statusIcon" src="/assets/img/processing.svg"><span class="">Processing</span></a>
+                            <a class="nav-link"  href="/DeliveryRequests/shipment_list.php?mystatus=processing"><img class="statusIcon" src="/assets/img/processing.svg"><span class="">Processing</span><span class="numberfloat"><?php echo getNumberRequest(2, $conn); ?></span></a>
                             </li>
                             <li>
-                            <a class="nav-link"  href="/DeliveryRequests/shipment_list.php?mystatus=completed"><img class="statusIcon" src="/assets/img/completed.svg"><span class="">Completed</span></a>
+                            <a class="nav-link"  href="/DeliveryRequests/shipment_list.php?mystatus=completed"><img class="statusIcon" src="/assets/img/completed.svg"><span class="">Completed</span><span class="numberfloat"><?php echo getNumberRequest(5, $conn); ?></span></a>
                             </li>
                             <li>
-                            <a class="nav-link"   href="/DeliveryRequests/shipment_list.php?mystatus=declined"><img class="statusIcon" src="/assets/img/declined.svg"><span class="">Declined</span></a>
+                            <a class="nav-link"   href="/DeliveryRequests/shipment_list.php?mystatus=declined"><img class="statusIcon" src="/assets/img/declined.svg"><span class="">Declined</span>  <span class="numberfloat"><?php echo getNumberRequest(6, $conn); ?></span></a>
                             </li>
                         </ul>
                     </li>
@@ -118,16 +118,17 @@
                         </a>
                         <ul class="dropdown-menu customstyle">
                             <li>
-                            <a class="nav-link" href="/DesignRequests/design_request_table.php?mystatus=submitted"><img class="statusIcon" src="/assets/img/submitted.svg"><span class="">Submitted</span></a>
+                            <a class="nav-link" href="/DesignRequests/design_request_table.php?mystatus=submitted"><img class="statusIcon" src="/assets/img/submitted.svg"><span class="">Submitted</span><span class="numberfloat"><?php echo getNumberDesignRequest( 1, $conn); ?></span></a>
                             </li>
                             <li>
-                            <a class="nav-link"  href="/DesignRequests/design_request_table.php?mystatus=approved"><img class="statusIcon" src="/assets/img/processing.svg"><span class="">Approved</span></a>
+                            <a class="nav-link"  href="/DesignRequests/design_request_table.php?mystatus=approved"><img class="statusIcon" src="/assets/img/processing.svg"><span class="">Approved</span><span class="numberfloat"><?php echo getNumberDesignRequest( 9, $conn); ?></span></a>
                             </li>
                             <li>
-                            <a class="nav-link"  href="/DesignRequests/design_request_table.php?mystatus=completed"><img class="statusIcon" src="/assets/img/completed.svg"><span class="">Completed</span></a>
+                            <a class="nav-link"  href="/DesignRequests/design_request_table.php?mystatus=completed"><img class="statusIcon" src="/assets/img/completed.svg"><span class="">Completed</span><span class="numberfloat"><?php echo getNumberDesignRequest( 5, $conn); ?></span></a>
                             </li>
                             <li>
-                            <a class="nav-link"  href="/DesignRequests/design_request_table.php?mystatus=declined"><img class="statusIcon" src="/assets/img/declined.svg"><span class="">Declined</span></a>
+                            <a class="nav-link"  href="/DesignRequests/design_request_table.php?mystatus=declined"><img class="statusIcon" src="/assets/img/declined.svg"><span class="">Declined</span><span class="numberfloat"><?php echo getNumberDesignRequest( 6, $conn); ?></span></a>
+                          
                             </li>
                         </ul>
                     </li>

@@ -340,10 +340,10 @@
         <div class="container">
             <div id="msform"><!-- form contents -->
             	<!-- progressbar -->
-                <ul id="progressbar">
-                    <li class="active"></li>
-                    <li></li>
-                    <li></li>
+                <ul id="progressbar" class="arrow-steps">
+                    <li class="active step"></li>
+                    <li class="step"></li>
+                    <li class="step"></li>
                 </ul>
                 <!-- Wizard STEP 1 -->
                 <div class="fieldset row setup-content" id="step1">
@@ -396,8 +396,8 @@
                                                         <td>".$k['sel_size']."</td>
                                                         <td>".$k['deliverynumber']."</td>
                                                         <td class='OperationColumn'>
-                                                            
-                                                            <button type='button' class='btn btn-danger removeItem' id=".$i.">Remove</button>
+                                                          
+                                                            <a class='removeItem' id=".$i."><i class='fa fa-trash'></i></a>
                                                         </td>
                                                         <td></td>
                                                         </tr>";
@@ -429,7 +429,7 @@
                     </div>
                   
                     <div class="col-sm-12 topline">
-                        <a href="/dashboard.php" name="cancel" class="cancel previous btn">Cancel</a>
+                        <button name="cancel" onclick="getConfirmation();" class="cancel previous btn">Cancel</button>
                         
                         <input id="next1" type="button" name="next" class="next action-button" value="Next" <?php echo $disable;  ?> />
                     </div>
@@ -583,49 +583,39 @@
                                         </div> 
                                     </div>
                                         <!--Shipment Items in the session-->
+                                        <h2 class='fs-title'>Shipment Contents</h2>
+                                        <hr>
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="requestProductTable" width="100%" cellspacing="0">
+                                        <div class="table row" id="requestProductTable" width="100%" cellspacing="0">
                                             <?php    
                                                 if(!empty($_SESSION['delivery'])){
-                                                echo "<h2 class='fs-title'>Shipment Contents</h2>
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Product Name</th>
-                                                          
-                                                            <th>Amount</th>
-                                                            
-                                                        </tr>
-                                                    </thead>    
-                                                    <tbody>";
-
                                                     foreach($_SESSION['delivery'] as $i=> $k) {
-                                                        echo "<tr>
-                                                            <td>".$k['productname']." ".$k['sel_color']." ".$k['sel_size']."</td>
-                                                        
-                                                            <td> x ".$k['deliverynumber']."</td>
-                                                        
-                                                            </tr>";
+                                                        echo "<div class='col-md-4'>
+                                                                <p class='itemlist'>".$k['productname']." ".$k['sel_color']." ".$k['sel_size'].    "    x    ".$k['deliverynumber']."</p>
+                                                            
+                                                               
+                                                            </div>";
                                                             $i++;
                                                         }  
                                                 }
                                             ?>
-                                            </tbody>
-                                        </table>
+                                         
+                                        </div>
                                     </div>
                                     <hr>
                                               
                                 </div>
-                    
-                          
-             
+
                 </div>
                     <input type="button" name="previous" class="previous cancel action-button" value="Previous" />
 
                     <!--checkbox for user to confirm-->
-                    <input class="form-check-input" type="checkbox" id="gridCheck" required>
-                    <label class="form-check-label" for="gridCheck">
-                        I confirm all the information above are correct.
-                    </label>    
+                    <div class="checkboxlabel">
+                        <input class="form-check-input" type="checkbox" id="gridCheck" required>
+                        <label class="form-check-label" for="gridCheck">
+                            I confirm all the information above are correct.
+                        </label>    
+                    </div>
 
                     <input type="hidden"  name="makeaction" value="submitRequest">
                     <button type="submit" class="submitBtn btn btn-primary">Submit</button>
@@ -885,8 +875,27 @@ $(".previous").click(function(){
         }
     });
 
-        //custom style for alert before remove items
-  
+        //custom style for alert when user click cancel button
+        function getConfirmation(){
+            var retVal = confirm("Do you want to cancel this request, your input form data will not be saved.");
+               if( retVal == true ){
+                   //clear the item session and redirect to dashboard
+                    sessionStorage.removeItem('delivery');
+                    window.location.href = "../dashboard.php";
+                    // $.ajax({
+                    //     type: 'GET',
+                    //     url: '/deleteItem_Session.php',
+                    //     success: function(msg) {
+                            
+                    //     }
+                    // });
+                return true;
+               }
+               else{
+                  
+                  return false;
+               }
+        }
 
   
         //check request item number is smaller than the stock

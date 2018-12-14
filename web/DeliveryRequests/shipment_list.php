@@ -114,8 +114,7 @@
 								'submitted'=>1,
 								'processing'=>2,
 								'completed'=>5,
-								'declined'=>6
-								
+								'declined'=>6	
 							);
 							$mystatus=1;
 

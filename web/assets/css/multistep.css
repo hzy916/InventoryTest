@@ -79,7 +79,7 @@
 }
 .contentheader{
 	text-align: left;
-	border-bottom:1px solid #525a65;
+	border-bottom:1px solid #cccccc;
 }
 /*end of shipment form step 3 styles*/
 
@@ -130,6 +130,9 @@
 	width: 33%;
 	float: left;
 	position: relative;
+	/* border:1px solid #e5e5e5; */
+
+
 }
 #progressbar li:before {
 	content: "Step"counter(step);
@@ -142,9 +145,15 @@
 	background: white;
 	border-radius: 3px;
 	margin: 0 auto;
+
+	/* border-top: 19px solid transparent;
+	border-bottom: 17px solid transparent;
+	border-left: 17px solid #2296f3; */
 }
+
+
 /*progressbar connectors*/
-#progressbar li:after {
+#progressbar li.active:after {
 	content: '';
 	width: 100%;
 	height: 2px;
@@ -153,7 +162,32 @@
 	left: -50%;
 	top: 9px;
 	z-index: -1; /*put it behind the numbers*/
+	
+	/* right: -17px;
+	border-top: 19px solid transparent;
+	border-bottom: 17px solid transparent;
+	border-left: 19px solid #2296f3;
+	 */
 }
+
+/* .arrow-steps .step:before {
+	right: auto;
+	left: 0;
+	border-left: 17px solid #fff;	
+	z-index: 0;
+}
+
+.arrow-steps .step:first-child:before {
+	border: none;
+} */
+
+
+/* .arrow-steps .step:first-child {
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+} */
+
+
 #progressbar li:first-child:after {
 	/*connector not needed before the first step*/
 	content: none; 
