@@ -184,6 +184,147 @@
   <link href="/assets/css/multistep.css" rel="stylesheet" />
 
 
+    <!-- The Modal for adding products -->
+  <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+
+                <h3 class="add_title">Add Item into Shipment</h3> 
+                <!--button to select which type of product you request-->
+                <h4 class="itemDetails">Item Details</h4>
+                
+                <div class="selectBox">
+                    
+                    <div class="form-group">
+                        <label class="fieldLabel col-xs-2">Item Type</label>
+                        <div class="col-xs-10 oneline redNote">
+                            <select id="itemtypeSelect" class="form-control" onChange="handleSelection(value)">
+                                <option value="" selected="selected">Please select type</option>
+                                <option value="flyerForm">Flyer or Poster</option>
+                                <option value="pawtrails_form">PawTrails All In One</option>   
+                            </select>
+                        </div>
+                    </div>
+
+                        <script>
+                    
+                            function handleSelection(choice) {
+                            //document.getElementById('select').disabled=true;
+                            if(choice=='flyerForm')
+                                {
+                                document.getElementById(choice).style.display="block";
+                                document.getElementById('pawtrails_form').style.display="none";
+                                }
+                                else
+                                {
+                                document.getElementById(choice).style.display="block";
+                                document.getElementById('flyerForm').style.display="none";
+                                }
+                            }
+                        </script>
+                
+
+                <!-- The Form for flyer or posters-->
+
+                <form name="flyerForm" class="form-horizontal" method="POST" id="flyerForm">
+                    <input type="hidden"  name="makeaction" value="product">
+                    <!--set random number to check resumbit on refresh -->
+                    <input type="hidden"  name="flyerToken" value="<?php echo $rand; ?>">
+
+                    <div class="form-group">    
+                        <label class="fieldLabel col-xs-2" for="deliveryProduct">Item</label>
+                        
+                        <div class="col-xs-10 oneline redNote">
+                            <select name="sel_product" id="sel_product" class="form-control" onchange="checkStock();" required>
+                                <?php
+                                    $j = 0;
+
+                                    $sql = mysqli_query($conn, "SELECT id, itemname, amount FROM pawtrails  WHERE itemtype = 'flyer' OR  itemtype =  'poster'");
+                                    
+                                    while ($row = $sql->fetch_assoc()){
+                                        if($j == 0 ){
+                                            $thisNumber = $row['amount'];
+                                        }
+                                        echo "<option amount='".$row['amount']."' value='".$row['id']." - ".$row['itemname']." - ".$row['amount']."'>" . $row['itemname'] . "</option>";
+                                        $j++;
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- stock number-->
+                    <div class="form-group">    
+                        <label class="fieldLabel col-xs-2" for="stocknumber">Stock Number</label>
+                        <div class="col-xs-10 oneline">
+                            <span id="stocknumber"><?php echo $thisNumber; ?></span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">   
+                        <label class="fieldLabel col-xs-2" for="deliverynumber">Number</label>
+                        <div class="col-xs-10 oneline redNote">
+                        
+                            <input type="number" class="form-control" name="deliverynumber" id="deliverynumber" placeholder="number"  min="1" >		
+                        </div>
+                    </div>
+
+                    
+                        <button type="button" name="AddProduct" onclick="checkBeforeSubmit();" class="addBtn mt-5 btn mb-3">Add Now</button>
+                    
+                    
+                </form>
+        
+            <!-- The Form for pawtrails all in one -->
+        
+                <form name="pawtrails_form" method="POST" id="pawtrails_form" style="display:none">
+                    <input type="hidden"  name="makeaction" value="pawtrailsSelect">
+
+                    <!--set random number to check resumbit on refresh -->
+                    <input type="hidden"  name="pawtrailsToken" value="<?php echo $rand; ?>">
+                    
+                    <label class="fieldLabel" for="deliveryProduct">Color</label>
+                    
+                    <div class="oneline redNote">
+                        <select name="sel_color" id="sel_color" class="form-control" onchange="checkPawtrailsStock();">
+                                <option value="0" selected disabled hidden>Choose here</option>
+                                <option value="red">red</option>
+                                <option value="black">black</option>
+                        </select>
+                    </div>
+                    
+                    <label class="fieldLabel" for="deliverynumber">Size</label>
+                    
+                    <div class="oneline redNote">
+                        <select name="sel_size" id="sel_size" class="form-control" onchange="checkPawtrailsStock();">
+                            <option value="0" selected disabled hidden>Choose here</option>
+                            <option value="small">small</option>
+                            <option value="medium">medium</option>
+                            <option value="large">large</option>
+                        </select>
+                    </div>
+                    
+
+                    <label class="fieldLabel" for="deliverynumber">Stock Number</label>
+                    
+                    <div class="oneline">
+                        <span id="pawtrails_stock"></span>
+                    </div>
+                    
+                    <label class="fieldLabel" for="deliverynumber">Number</label>       
+            
+                    <div class="oneline redNote">
+                        <input type="number" class="form-control" name="deliverynumber" id="deliverynumber2" placeholder="number"  min="1" required>		
+                    </div>  
+                    
+
+                    <button type="button" name="AddProduct"  onclick="checkPawTrailsBeforeSubmit();" class="mt-5 mb-3 addBtn">Add Now</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- ENd of The alert Modal -->
+
 <div class="content-wrapper">
     <div class="container-fluid">
         <!-- Breadcrumbs-->
@@ -280,148 +421,11 @@
                                 </div>
                             </div> -->
 
-                            <!-- The Modal -->
-                            <div id="myModal" class="modal">
-                                <div class="modal-content">
-                                    <span class="close">&times;</span>
-
-                                        <h3 class="add_title">Add Item into Shipment</h3> 
-                                        <!--button to select which type of product you request-->
-                                        <h4 class="itemDetails">Item Details</h4>
-                                      
-                                        <div class="selectBox">
-                                            
-                                            <div class="form-group">
-                                                <label class="fieldLabel col-xs-2">Item Type</label>
-                                                <div class="col-xs-10 oneline redNote">
-                                                    <select id="itemtypeSelect" class="form-control" onChange="handleSelection(value)">
-                                                        <option value="" selected="selected">Please select type</option>
-                                                        <option value="flyerForm">Flyer or Poster</option>
-                                                        <option value="pawtrails_form">PawTrails All In One</option>   
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                                <script>
-                                            
-                                                    function handleSelection(choice) {
-                                                    //document.getElementById('select').disabled=true;
-                                                    if(choice=='flyerForm')
-                                                        {
-                                                        document.getElementById(choice).style.display="block";
-                                                        document.getElementById('pawtrails_form').style.display="none";
-                                                        }
-                                                        else
-                                                        {
-                                                        document.getElementById(choice).style.display="block";
-                                                        document.getElementById('flyerForm').style.display="none";
-                                                        }
-                                                    }
-                                                </script>
-                                      
-
-                                        <!-- The Form for flyer or posters-->
-                    
-                                        <form name="flyerForm" class="form-horizontal" method="POST" id="flyerForm">
-                                            <input type="hidden"  name="makeaction" value="product">
-                                            <!--set random number to check resumbit on refresh -->
-                                            <input type="hidden"  name="flyerToken" value="<?php echo $rand; ?>">
-
-                                            <div class="form-group">    
-                                                <label class="fieldLabel col-xs-2" for="deliveryProduct">Item</label>
-                                                
-                                                <div class="col-xs-10 oneline redNote">
-                                                    <select name="sel_product" id="sel_product" class="form-control" onchange="checkStock();" required>
-                                                        <?php
-                                                            $j = 0;
-
-                                                            $sql = mysqli_query($conn, "SELECT id, itemname, amount FROM pawtrails  WHERE itemtype = 'flyer' OR  itemtype =  'poster'");
-                                                            
-                                                            while ($row = $sql->fetch_assoc()){
-                                                                if($j == 0 ){
-                                                                    $thisNumber = $row['amount'];
-                                                                }
-                                                                echo "<option amount='".$row['amount']."' value='".$row['id']." - ".$row['itemname']." - ".$row['amount']."'>" . $row['itemname'] . "</option>";
-                                                                $j++;
-                                                            }
-                                                        ?>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <!-- stock number-->
-                                            <div class="form-group">    
-                                                <label class="fieldLabel col-xs-2" for="stocknumber">Stock Number</label>
-                                                <div class="col-xs-10 oneline">
-                                                    <span id="stocknumber"><?php echo $thisNumber; ?></span>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="form-group">   
-                                                <label class="fieldLabel col-xs-2" for="deliverynumber">Number</label>
-                                                <div class="col-xs-10 oneline redNote">
-                                                
-                                                    <input type="number" class="form-control" name="deliverynumber" id="deliverynumber" placeholder="number"  min="1" >		
-                                                </div>
-                                            </div>
-
-                                           
-                                                <button type="button" name="AddProduct" onclick="checkBeforeSubmit();" class="addBtn mt-5 btn mb-3">Add Now</button>
-                                            
-                                          
-                                        </form>
-                                
-                                    <!-- The Form for pawtrails all in one -->
-                                
-                                        <form name="pawtrails_form" method="POST" id="pawtrails_form" style="display:none">
-                                            <input type="hidden"  name="makeaction" value="pawtrailsSelect">
-
-                                            <!--set random number to check resumbit on refresh -->
-                                            <input type="hidden"  name="pawtrailsToken" value="<?php echo $rand; ?>">
-                                            
-                                            <label class="fieldLabel" for="deliveryProduct">Color</label>
-                                          
-                                            <div class="oneline redNote">
-                                                <select name="sel_color" id="sel_color" class="form-control" onchange="checkPawtrailsStock();">
-                                                        <option value="0" selected disabled hidden>Choose here</option>
-                                                        <option value="red">red</option>
-                                                        <option value="black">black</option>
-                                                </select>
-                                            </div>
-                                          
-                                            <label class="fieldLabel" for="deliverynumber">Size</label>
-                                           
-                                            <div class="oneline redNote">
-                                                <select name="sel_size" id="sel_size" class="form-control" onchange="checkPawtrailsStock();">
-                                                    <option value="0" selected disabled hidden>Choose here</option>
-                                                    <option value="small">small</option>
-                                                    <option value="medium">medium</option>
-                                                    <option value="large">large</option>
-                                                </select>
-                                            </div>
-                                          
-
-                                            <label class="fieldLabel" for="deliverynumber">Stock Number</label>
-                                         
-                                            <div class="oneline">
-                                                <span id="pawtrails_stock"></span>
-                                            </div>
-                                          
-                                            <label class="fieldLabel" for="deliverynumber">Number</label>       
-                                    
-                                            <div class="oneline redNote">
-                                                <input type="number" class="form-control" name="deliverynumber" id="deliverynumber2" placeholder="number"  min="1" required>		
-                                            </div>  
-                                           
-
-                                            <button type="button" name="AddProduct"  onclick="checkPawTrailsBeforeSubmit();" class="mt-5 mb-3 addBtn">Add Now</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-
-                          
+                        
+                            
                         </div>
+
+                        
                     </div>
                   
                     <div class="col-sm-12 topline">
@@ -499,10 +503,21 @@
                             </div> 
 
 
-                            <div class="form-group row halfwidth">
+                            <!-- <div class="form-group row halfwidth">
                                 <label class="confirmLabel" for="inputCountry">Country</label>
                                 <div class="redNote">  
                                     <input type="text" class="form-control" name="inputCountry" onChange="javascript:copytoStepThree(this.value,'receiverCountry')" >
+                                </div>
+                            </div> -->
+                            <div class="form-group row halfwidth">
+                                <label class="confirmLabel" for="inputCountry">Country</label>
+                                <div class="redNote">
+                                    <select name="inputCountry" class="redNote form-control" onChange="javascript:copytoStepThree(this.value,'receiverCountry')"> 
+                                        <option value="" selected="selected">Please select country</option>
+                                        <option value="Ireland">Ireland</option>
+                                        <option value="UK">UK</option>
+                                        <option value="France">France</option>
+                                    </select>
                                 </div>
                             </div>
 
