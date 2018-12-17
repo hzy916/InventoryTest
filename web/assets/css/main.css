@@ -1,5 +1,17 @@
 @import url(https://fonts.googleapis.com/css?family=Montserrat);
 
+/***************Log in page style*************/
+/* .contentHeight{
+    min-height: calc(100vh - 140px);
+    margin-bottom:5em;
+} */
+.wrapperLogin{
+    min-height: 650px;
+    margin-bottom: 50px;
+}
+
+
+/************end of ***Log in page style*************/
 /***sidebar */
 .numberfloat{
     float: right;

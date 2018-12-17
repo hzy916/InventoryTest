@@ -442,7 +442,7 @@
                     <hr class="seperateLine">
                                                         
                     <div class="col-sm-12">
-                    <form action="submit_shiprequest.php" method="POST" id='realForm'>
+                    <form action="submit_shiprequest.php" data-toggle="validator" role="form" method="POST" id='realForm'>
                         <!--set random number to check resumbit on refresh 
                             <input type="hidden"  name="randomcheck" value="<?php echo $rand; ?>">
 -->
@@ -611,7 +611,7 @@
 
                     <!--checkbox for user to confirm-->
                     <div class="checkboxlabel">
-                        <input class="form-check-input" type="checkbox" id="gridCheck" required>
+                        <input class="form-check-input" type="checkbox" id="gridCheck" data-validation-required-message="You must agree to the terms and conditions"  required>
                         <label class="form-check-label" for="gridCheck">
                             I confirm all the information above are correct.
                         </label>    
@@ -704,6 +704,7 @@ $(".next").click(function(){
                     required: true,
                   
                 },
+          
                 
             },
             messages: {
@@ -733,6 +734,7 @@ $(".next").click(function(){
                 inputPostcode: {
                     required: "This field is required",
                 },
+           
             }
         });
     // //end of custom validation on next button

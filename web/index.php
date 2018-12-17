@@ -53,6 +53,7 @@ if(isset($_GET['lmsg']) && $_GET['lmsg'] == true)
   <title>PawTrails Portal</title>
    <!--     Fonts and icons     -->
    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
   <!-- CSS Files -->
   
@@ -71,7 +72,7 @@ if(isset($_GET['lmsg']) && $_GET['lmsg'] == true)
     </a>
   
 
-
+<div class="wrapperLogin">
   <div class="container">
     <h1 class="Hey-Welcome mx-auto mt-5">HEY, WELCOME!</h1>
     	<?php 
@@ -141,7 +142,7 @@ if(isset($_GET['lmsg']) && $_GET['lmsg'] == true)
       </div>
     </div>
   </div>
-
+</div>
     <footer class="footer">
         <div class="container">
               <div class="row clearfix">

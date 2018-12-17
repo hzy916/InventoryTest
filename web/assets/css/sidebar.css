@@ -19,10 +19,11 @@
   .dropdown-submenu {
     position: relative;
   }
-  
-  /* .dropdown-submenu.a {
-    display:inline-block;
-  } */
+
+.caption{
+  float:none!important;
+}
+
   
   .dropdown .dropdown-menu {
     width: 260px;
