@@ -8,6 +8,7 @@ if(!isset($_SESSION['id'],$_SESSION['user_role_id']))
     $requestUserID = $_SESSION['id'];
 }
 
+
     $user_id = $_SESSION['id']; 
  
         $receivercompany = mysqli_real_escape_string($conn,$_POST['receivercompany']);
@@ -63,7 +64,8 @@ if(!isset($_SESSION['id'],$_SESSION['user_role_id']))
                         //clear the data in the session
                         unset($_SESSION['delivery']);
                 
-
+                   
+                     
                         // echo "<script>
                         // alert('New Request Successfully Submitted.');
                         // </script>";
@@ -73,7 +75,7 @@ if(!isset($_SESSION['id'],$_SESSION['user_role_id']))
                     }else{
                         echo "Error " . $sql_four . ' ' . $conn->connect_error;
                         echo "<script type=\"text/javascript\">".
-                        "alert('Your Delivery Request submit failed.');".
+                        "alert('Your shipment Request submit failed.');".
                         "</script>";
                     }
                 }

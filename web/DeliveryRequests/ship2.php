@@ -103,12 +103,14 @@
             break;
 
             case 'submitRequest':
-                if(!empty($_SESSION['delivery'])){
+                if(!empty($_SESSION['delivery']) && $_POST['randomcheck']==$_SESSION['rand']){
+                    //refresh the token in the session before user reload
+                    $_SESSION['rand']=rand();
                     include ('submit_shiprequest.php');
                 } else{
                     echo 
                     "<script>
-                        alert('Your request failed, Please add product before you make delivery request.');
+                        alert('you are not allowed to refreshing page.');
                     </script>";
                 }
             break;
@@ -442,10 +444,10 @@
                     <hr class="seperateLine">
                                                         
                     <div class="col-sm-12">
-                    <form action="submit_shiprequest.php" data-toggle="validator" role="form" method="POST" id='realForm'>
-                        <!--set random number to check resumbit on refresh 
+                    <form data-toggle="validator" role="form" method="POST" id='realForm'>
+                        <!--set random number to check resumbit on refresh -->
                             <input type="hidden"  name="randomcheck" value="<?php echo $rand; ?>">
--->
+
                             <div class="form-group row halfwidth">
                               
                                     <label class="confirmLabel" for="firstname">Full Contact Name</label>
