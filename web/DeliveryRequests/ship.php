@@ -88,7 +88,7 @@
                                 echo '<script> alert("You have to enter a positive number");</script>';
                                 $doAction = false;
                             break;
-                            case ($dNumber < $maxQty && $dNumber > 0):
+                            case ($dNumber <= $maxQty && $dNumber > 0):
                                 $_SESSION['delivery'][] = [
                                     'product_id' => $sel_id,
                                     'productname' => 'PawTrails',
@@ -450,10 +450,11 @@
 
                             <div class="form-group row halfwidth">
                               
-                                    <label class="confirmLabel" for="firstname">Full Contact Name</label>
-                                    <div class="redNote"> 
-                                        <input type="text" class="form-control" name="firstname" placeholder="#####" onChange="javascript:copytoStepThree(this.value,'receiverName')" >
-                                    </div>
+                                <label class="confirmLabel" for="firstname">Full Contact Name</label>
+                                <div class="redNote"> 
+                                    <input type="text" class="form-control" name="firstname" placeholder="#####" onChange="javascript:copytoStepThree(this.value,'receiverName')" >
+                                </div>
+                              
                                
                             </div>
 
@@ -462,6 +463,7 @@
                                 <div class="">
                                     <input type="text" class="form-control" name="receivercompany" placeholder="receiver company"  onChange="javascript:copytoStepThree(this.value,'companyName')">
                                 </div>
+                               
                             </div>
 
 
@@ -470,6 +472,7 @@
                                 <div class="redNote">
                                     <input type="email" class="form-control" name="receiverEmail" placeholder="receiver email" onChange="javascript:copytoStepThree(this.value,'receiverEmail')" >
                                 </div>
+                                
                             </div>    
                             
                             <div class="form-group row halfwidth">
@@ -477,6 +480,7 @@
                                 <div class="redNote">
                                     <input type="text" class="form-control" name="phonenumber" placeholder="#####" onChange="javascript:copytoStepThree(this.value,'receiverPhone')" >
                                 </div>
+                                
                             </div> 
                             
                             <h2 class="fs-title">Shipping ADDRESS</h2>
@@ -488,6 +492,7 @@
                                 <div class="redNote">
                                     <input type="text" class="form-control" name="inputAddress1" placeholder="1234 Main St" onChange="javascript:copytoStepThree(this.value,'receiverAddress1')" >
                                 </div>
+                                
                             </div>
 
                             <div class="form-group row halfwidth">
@@ -495,6 +500,7 @@
                                 <div class="redNote">
                                     <input type="text" class="form-control" name="inputAddress2" placeholder="1234 Main St" onChange="javascript:copytoStepThree(this.value,'receiverAddress2')">
                                 </div>
+                               
                             </div>   
                             
                             <div class="form-group row halfwidth">
@@ -502,14 +508,9 @@
                                 <div class="">
                                     <input type="text" class="form-control" name="inputAddress3" placeholder="1234 Main St" onChange="javascript:copytoStepThree(this.value,'receiverAddress3')" >
                                 </div>
+                              
                             </div> 
 
-                            <!-- <div class="form-group row halfwidth">
-                                <label class="confirmLabel" for="inputCountry">Country</label>
-                                <div class="redNote">  
-                                    <input type="text" class="form-control" name="inputCountry" onChange="javascript:copytoStepThree(this.value,'receiverCountry')" >
-                                </div>
-                            </div> -->
 
                             <div class="form-group row halfwidth">
                                 <label class="confirmLabel" for="inputCountry">Country</label>
@@ -521,6 +522,7 @@
                                         <option value="France">France</option>
                                     </select>
                                 </div>
+                               
                             </div>
 
                             <div class="form-group row halfwidth">
@@ -528,6 +530,7 @@
                                 <div class="redNote">
                                     <input type="text" class="form-control" name="inputCity" onChange="javascript:copytoStepThree(this.value,'receiverCity')" >
                                 </div>
+                               
                             </div>
                             
                             <div class="form-group row halfwidth">
@@ -535,6 +538,7 @@
                                 <div class="redNote">
                                     <input type="text" class="form-control" name="inputPostcode" onChange="javascript:copytoStepThree(this.value,'receiverPostcode')" >
                                 </div> 
+                               
                             </div>
                     </div>
 
@@ -618,7 +622,7 @@
                     <!--checkbox for user to confirm-->
                     <div class="checkboxlabel">
                         <input class="form-check-input" type="checkbox" name="checkbox" id="gridCheck" required>
-                        <label class="form-check-label" for="gridCheck">
+                        <label id="confirmLabel" class="form-check-label" for="gridCheck">
                             I confirm all the data submitted are correct.
                         </label>    
                     </div>
@@ -627,7 +631,7 @@
                     <input type="button" name="previous" class="previous cancel action-button" value="Previous" />
 
                     <input type="hidden"  name="makeaction" value="submitRequest">
-                    <button type="submit" class="next btn btn-primary">Submit</button>
+                    <button type="button" class="floatright btn btn-primary" onclick="return IsTermChecked();">Submit</button>
 
                 </form>                
             </div>  
@@ -638,16 +642,28 @@
 
 <!-- jQuery easing plugin -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js" type="text/javascript"></script>
-
 <!--jquery validation plugin-->
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.js"></script>
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/additional-methods.js"></script>
 
 
 <script>
+
+ //check checkbox is checked on step3 //
+ function IsTermChecked() {
+        if (!$("#gridCheck").is(":checked")) {
+            $("#confirmLabel").addClass("becomeRed");
+            alert('Please confirm all the data first');
+            return;
+        }
+        else
+     
+        document.getElementById('realForm').submit();
+    }
+
      //check if all required fields are filled in js when user click next//
      //////////////////////////////////////////////////////////////
-                                                
+                                           
     //print all the values on step 3
     function copytoStepThree($val,$dest) {
         $('#'+$dest).html($val);
@@ -711,10 +727,6 @@ $(".next").click(function(){
                 inputPostcode: {
                     required: true,
                 },
-                // checkbox:{
-                //     required:true,
-                //     minlength:1
-                // } 
             },
             messages: {
                 username: {
@@ -743,8 +755,9 @@ $(".next").click(function(){
                 inputPostcode: {
                     required: "This field is required",
                 },
-           
             }
+            // errorElement: 'span',
+            // errorLabelContainer:'.errorTxt'
         });
     // //end of custom validation on next button
     // alert(form.valid());
@@ -956,8 +969,8 @@ $(".previous").click(function(){
                 alert('Out of Stock');
                 // return false;
             } else{
-                alert('submit');
-                // document.getElementById('pawtrails_form').submit();
+                // alert('submit');
+                document.getElementById('pawtrails_form').submit();
             } 
             return;
         }

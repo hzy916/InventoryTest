@@ -49,9 +49,16 @@
 	z-index: 2;
 
 } */
+.floatright{
+    float:right;
+}
+
+.becomeRed{
+    color: #d0021b;
+}
 .itemlist{
     text-align: left;
-    border-bottom: 1px solid #525a65;
+    border-bottom: 1px solid rgba(82,90,101, 0.24);
 }
 
 .checkboxlabel{
@@ -61,8 +68,6 @@
 .form-check-input, .form-check-label{
     display: inline;
 }
-
-
 
 .arrow-steps .step:before {
 	right: auto;
