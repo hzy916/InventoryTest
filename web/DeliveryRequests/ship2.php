@@ -839,6 +839,7 @@ $(".previous").click(function(){
        
         var finalProductvalue = productid + " - " +productname + " - " +deliverynumber;
         alert(productid);
+        
         // var myId=$(this).attr('id');
         // alert("My Id: "+$(this).attr('id')+"\nItem Type: "+$(this).attr('itemType')+"\nproductname: " +$(this).attr('productname')+"\nselected color: "+$(this).attr('selcolor')+"\nselected size: "+$(this).attr('selsize')+"\ndelivery number: "+$(this).attr('deliverynumber'));
 
@@ -849,25 +850,24 @@ $(".previous").click(function(){
 
         // $("#itemtypeSelect [myId='"+productid+"']").attr('selected', 'selected');
  
-        $("#itemtypeSelect option[myId='"+productid+"']").prop('selected', true);
+        // $("#itemtypeSelect option[myId='"+productid+"']").prop('selected', true);
 
-        $('#itemtypeSelect').val(itemType);
+        // $('#itemtypeSelect').val(itemType);
 
         // myId
     
-        // switch (itemType){
+        switch (itemType){
 
-        //     case 'flyerform':
+            case 'flyerform':
+                $('#deliverynumber').val(deliverynumber);
+            // $('#sel_product').val(finalProductvalue);
             
-        //     $('#deliverynumber').val(deliverynumber);
-        //     // $('#sel_product').val(finalProductvalue);
-            
-        //     break;
-        //     case 'pawtrails_form':
-        //         $('#sel_color').val(selcolor);
-        //         $('#sel_size').val(selsize);
-        //         $('#deliverynumber2').val(deliverynumber);
-        //     break;
+            break;
+            case 'pawtrails_form':
+                $('#sel_color').val(selcolor);
+                $('#sel_size').val(selsize);
+                $('#deliverynumber2').val(deliverynumber);
+            break;
             
          
         // }

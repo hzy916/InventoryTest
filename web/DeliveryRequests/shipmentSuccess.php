@@ -45,7 +45,7 @@
                 <a href="/dashboard.php" class="cancel btn  mb-3">Back to Dashboard</a>
             </div>               
     </div>
-</div>
+
 
 
 <?php require_once('../layouts/footer.php');

@@ -71,12 +71,6 @@
 	color: #525a65;
 }
 
-.submitBtn{
-	border-radius: 2px;
-	background-color: #2296f3;
-	color:#ffffff;
-	float: right;
-}
 .contentheader{
 	text-align: left;
 	border-bottom:1px solid #cccccc;
@@ -87,9 +81,11 @@
 /*form styles*/
 #msform {
 	width: 100%;
-	margin: 50px auto;
+	height:100%;
+	margin: 50px 0px;
 	text-align: center;
 	position: relative;
+	
 }
 
 /*Hide all except first fieldset*/

@@ -34,7 +34,7 @@
                         echo '<script> alert("You have to enter a positive number");</script>';
                         $doAction = false;
                     break;
-                    case ($dNumber < $maxAmount && $dNumber > 0):
+                    case ($dNumber <= $maxAmount && $dNumber > 0):
                             //check if resubmit on reload the page
                         if($_POST['flyerToken']==$_SESSION['rand'] ){   
                             $_SESSION['delivery'][] = [
@@ -47,6 +47,9 @@
                         }
                     break;
                 }
+            //    print('number '.$dNumber .'<br>');
+            //    print('max '.$maxAmount);
+            //     exit;
           
             break;
 
@@ -346,7 +349,7 @@
                 </ul>
                 <!-- Wizard STEP 1 -->
                 <div class="fieldset row setup-content" id="step1">
-                    <div class="col-sm-12">
+                    <div class="col-sm-12 form_content">
                         <div class="form-group">
                             <div id="NoItemDiv" style="display:<?php echo $NoItemDivView ?>">
                                 <h2 class="fs-title">Shipment Contents</h2>
@@ -501,13 +504,13 @@
                                 </div>
                             </div> 
 
-
                             <!-- <div class="form-group row halfwidth">
                                 <label class="confirmLabel" for="inputCountry">Country</label>
                                 <div class="redNote">  
                                     <input type="text" class="form-control" name="inputCountry" onChange="javascript:copytoStepThree(this.value,'receiverCountry')" >
                                 </div>
                             </div> -->
+
                             <div class="form-group row halfwidth">
                                 <label class="confirmLabel" for="inputCountry">Country</label>
                                 <div class="redNote">
@@ -534,6 +537,9 @@
                                 </div> 
                             </div>
                     </div>
+
+                    <hr class="seperateLine">
+
                     <input type="button" name="previous" class="previous cancel action-button" value="Previous" />
 		            <input type="button" name="next" class="next action-button" value="Next" />
                 </div>
@@ -548,11 +554,12 @@
                                     <hr class="seperateLine">
                                     <div class="row">
                                         <!--Receiver details in the session-->
-                                        <div class="card  card-tasks col-lg-6 col-sm-offset-2">
+                                        <div class="card card-tasks col-md-6">
+
                                             <div class="card-header">
                                                 <h4 class="card-title contentheader">Receiver Details</h4>
                                             </div>
-                                          <hr>
+                                            <hr>
                                             <div class="card-body contenttable">
                                                
                                                     <p id="receiverName"></p>
@@ -565,10 +572,9 @@
                                         </div>
 
                                     <!--Shipment address in the session-->
-                                        <div class="card  card-tasks col-lg-6 col-sm-offset-2">
+                                        <div class="card  card-tasks col-md-6">
                                             <div class="card-header">
                                                 <h4 class="card-title contentheader">Shipping Address</h4>
-                                              
                                             </div>
                                             <hr>
                                             <div class="card-body contenttable">
@@ -581,16 +587,18 @@
                                             </div>   
                                         </div> 
                                     </div>
+                                  
+                                    <div class="row card table-responsive">
                                         <!--Shipment Items in the session-->
-                                        <h2 class='fs-title'>Shipment Contents</h2>
-                                        <hr>
-                                    <div class="table-responsive">
-                                        <div class="table row" id="requestProductTable" width="100%" cellspacing="0">
+                                        <div class="card-header">
+                                            <h4 class="card-title contentheader">Shipment Contents</h4>
+                                        </div>
+                                        <div class="card-body contenttable table row" id="requestProductTable" width="100%" cellspacing="0">
                                             <?php    
                                                 if(!empty($_SESSION['delivery'])){
                                                     foreach($_SESSION['delivery'] as $i=> $k) {
                                                         echo "<div class='col-md-4'>
-                                                                <p class='itemlist'>".$k['productname']." ".$k['sel_color']." ".$k['sel_size'].    "    x    ".$k['deliverynumber']."</p>
+                                                                <p class='itemlist'>".$k['productname']." ".$k['sel_color']." ".$k['sel_size'].    "             x           ".$k['deliverynumber']."</p>
                                                             
                                                                
                                                             </div>";
@@ -606,18 +614,20 @@
                                 </div>
 
                 </div>
-                    <input type="button" name="previous" class="previous cancel action-button" value="Previous" />
-
+                
                     <!--checkbox for user to confirm-->
                     <div class="checkboxlabel">
                         <input class="form-check-input" type="checkbox" name="checkbox" id="gridCheck" required>
                         <label class="form-check-label" for="gridCheck">
-                            I confirm all the information above are correct.
+                            I confirm all the data submitted are correct.
                         </label>    
                     </div>
+                  
+
+                    <input type="button" name="previous" class="previous cancel action-button" value="Previous" />
 
                     <input type="hidden"  name="makeaction" value="submitRequest">
-                    <button type="submit" class="submitBtn btn btn-primary">Submit</button>
+                    <button type="submit" class="next btn btn-primary">Submit</button>
 
                 </form>                
             </div>  
@@ -924,6 +934,7 @@ $(".previous").click(function(){
                 alert('Out of Stock');
                 return false;
             }
+           
             document.getElementById('flyerForm').submit();
             return;
           
@@ -945,7 +956,8 @@ $(".previous").click(function(){
                 alert('Out of Stock');
                 // return false;
             } else{
-                document.getElementById('pawtrails_form').submit();
+                alert('submit');
+                // document.getElementById('pawtrails_form').submit();
             } 
             return;
         }

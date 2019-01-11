@@ -1,30 +1,10 @@
 <style>
+html,
+body {
+ height: 100%;
+ position: relative;
+}
 
-  /*****footer style*****/
-
-  .footerleft {
-      font-family: 'OpenSans';
-      font-size: 13px;
-      font-weight: normal;
-      font-style: normal;
-      font-stretch: normal;
-      line-height: normal;
-      letter-spacing: normal;
-      color: #525a65;
-      line-height: 60px;
-  }
-
-  #customlinklist li {
-      display: inline;
-      font-family: 'OpenSans';
-      font-size: 13px;
-      font-weight: normal;
-      font-style: normal;
-      font-stretch: normal;
-      line-height: normal;
-      letter-spacing: normal;
-      text-align: right;
-  }
 
   #customlinklist li a {
       color: #525a65!important;
@@ -35,30 +15,33 @@
       line-height:50px;
   }
   </style>
-          
+    
       </div>
+         <footer class="footer">
+              <div class="container">
+                  <div class="footerrow">  
+                    <div class="column_half">
+                        <div class="copyright-text">
+                          <p class="footerleft">Staff Portal V.2.0 |  Copyright © 2018 Attitude Technologies Ltd.  All rights reserved.  </p>
+                        </div>
+                      </div>
+                    <div class="column_half">							
+                        <ul id="customlinklist">
+                          <li><a href="">Privacy Policy |</a></li>						
+                          <li><a href="">Terms of Use |</a></li>
+                          <li><a href="">PawTrails Website | </a></li>
+                          <li><a href="">Help</a></li>
+                        </ul>							
+                    </div> 
+                  </div> 
+              </div>
+          </footer>
+ 
     </div>
     
-        <!-- <footer class="footer">
-          <div class="container">
-                <div class="row clearfix">
-                  <div class="col-lg-6 col-sm-12 float-left">
-                    <div class="copyright-text">
-                      <p class="footerleft">Staff Portal V.2.0 |  Copyright © 2018 Attitude Technologies Ltd.  All rights reserved.  </p>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 col-sm-12 pull-right">							
-                    <ul id="customlinklist">
-                      <li><a href="">Privacy Policy |</a></li>						
-                      <li><a href="">Terms of Use |</a></li>
-                      <li><a href="">PawTrails Website | </a></li>
-                      <li><a href="">Help</a></li>
-                    </ul>							
-                  </div> 
 
-                </div>
-          </div>
-      </footer> -->
+ 
+     
 </body>
 <!--   Core JS Files   -->
 
