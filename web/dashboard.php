@@ -22,6 +22,10 @@
 	display: none!important;
 }
 
+.statusTH{
+    float:right;
+}
+
 td { 
     padding: 10px;
 }
@@ -86,7 +90,7 @@ td {
                                                 <thead>
                                                     <tr>
                                                         <th class='Companyrow'>Title</th>
-                                                        <th class='td-actions text-right Companyrow'>
+                                                        <th class='td-actions text-right statusTH Companyrow'>
                                                             Status
                                                         </th>
                                                     </tr>
@@ -124,7 +128,7 @@ td {
                                     <thead>
                                         <tr>
                                             <th class="Companyrow">Title</th>
-                                            <th class="td-actions text-right Companyrow">
+                                            <th class="td-actions text-right statusTH Companyrow">
                                                 Status
                                             </th>
                                         </tr>

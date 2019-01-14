@@ -151,9 +151,9 @@
         border: 1px solid #ccc;
         border-top: none;
     }
-
-.form-group {
-   margin-left:10px;
+/*center the form input */
+.halfwidth {
+   margin-left:20%;
 }
 
 /***custom alert style**/
@@ -200,7 +200,7 @@
                 
                 <div class="selectBox">
                     
-                    <div class="form-group" style="margin-left:8px;">
+                    <div class="form-group">
                         <label class="fieldLabel col-xs-2">Item Type</label>
                         <div class="col-xs-10 oneline redNote">
                             <select id="itemtypeSelect" class="form-control" onChange="handleSelection(value)">
@@ -273,7 +273,7 @@
                             <input type="number" class="form-control" name="deliverynumber" id="deliverynumber" placeholder="number"  min="1" >		
                         </div>
                     </div>  
-                        <button type="button" name="AddProduct" onclick="checkBeforeSubmit();" class="addBtn mt-5 btn mb-3">Add Now</button>
+                        <button type="button" name="AddProduct" onclick="checkBeforeSubmit();" class="addBtn mt-5 mb-3">Add Now</button>
    
                 </form>
         
@@ -350,7 +350,7 @@
                 <!-- Wizard STEP 1 -->
                 <div class="fieldset row setup-content" id="step1">
                     <div class="col-sm-12 form_content">
-                        <div class="form-group">
+                        <div class="">
                             <div id="NoItemDiv" style="display:<?php echo $NoItemDivView ?>">
                                 <h2 class="fs-title">Shipment Contents</h2>
                                 <hr class="seperateLine">
@@ -443,8 +443,8 @@
                     <h2 class="fs-title">Receiver’s Details</h2>
                     <hr class="seperateLine">
                                                         
-                    <div class="col-sm-12">
-                    <form data-toggle="validator" role="form" method="POST" id='realForm'>
+                    <div class="col-sm-12 centerFormdiv">
+                        <form data-toggle="validator" role="form" method="POST" id='realForm'>
                         <!--set random number to check resumbit on refresh -->
                             <input type="hidden"  name="randomcheck" value="<?php echo $rand; ?>">
 
@@ -459,7 +459,7 @@
                             </div>
 
                             <div class="form-group row halfwidth">
-                                <label  class="confirmLabel" for="receivercompany">Company Name</label>
+                                <label class="confirmLabel" for="receivercompany">Company Name</label>
                                 <div class="">
                                     <input type="text" class="form-control" name="receivercompany" placeholder="receiver company"  onChange="javascript:copytoStepThree(this.value,'companyName')">
                                 </div>
@@ -500,7 +500,7 @@
                                 <div class="redNote">
                                     <input type="text" class="form-control" name="inputAddress2" placeholder="1234 Main St" onChange="javascript:copytoStepThree(this.value,'receiverAddress2')">
                                 </div>
-                               
+                                <!-- <span id="firstname-error">This field is required.</span> -->
                             </div>   
                             
                             <div class="form-group row halfwidth">
@@ -530,7 +530,7 @@
                                 <div class="redNote">
                                     <input type="text" class="form-control" name="inputCity" onChange="javascript:copytoStepThree(this.value,'receiverCity')" >
                                 </div>
-                               
+                              
                             </div>
                             
                             <div class="form-group row halfwidth">
@@ -538,7 +538,7 @@
                                 <div class="redNote">
                                     <input type="text" class="form-control" name="inputPostcode" onChange="javascript:copytoStepThree(this.value,'receiverPostcode')" >
                                 </div> 
-                               
+                              
                             </div>
                     </div>
 
@@ -692,6 +692,11 @@ $(".next").click(function(){
         form.validate({
             errorElement: 'span',
             errorClass: 'help-block',
+            // errorPlacement: function ($error, $element) {
+            //     var name = $element.attr("name");  
+            //     $("#error" + name).append($error);
+            // }
+
             highlight: function(element, errorClass, validClass) {
                 $(element).closest('.form-group').addClass("has-error");
             },
@@ -756,11 +761,13 @@ $(".next").click(function(){
                     required: "This field is required",
                 },
             }
+        
             // errorElement: 'span',
             // errorLabelContainer:'.errorTxt'
         });
     // //end of custom validation on next button
     // alert(form.valid());
+
     if (form.valid() === true){
         // alert('good');
              if ($('#step1').is(":visible")){
@@ -904,15 +911,20 @@ $(".previous").click(function(){
             var retVal = confirm("Do you want to cancel this request, your input form data will not be saved.");
                if( retVal == true ){
                    //clear the item session and redirect to dashboard
-                    sessionStorage.removeItem('delivery');
-                    window.location.href = "../dashboard.php";
-                    // $.ajax({
-                    //     type: 'GET',
-                    //     url: '/deleteItem_Session.php',
-                    //     success: function(msg) {
-                            
-                    //     }
-                    // });
+                    $.ajax({
+                        type: 'POST',
+                        url: '/DeliveryRequests/deleteItem_Session.php',
+                        data: "action=unsetsession",
+                        success: function(msg) {
+                            header('Location: ../dashboard.php'); 
+
+                        },
+                        error:function(msg){
+                            alert('wrong error');
+                            console.log(msg);
+                        }
+                
+                    });
                 return true;
                }
                else{

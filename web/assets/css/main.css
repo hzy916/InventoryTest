@@ -6,6 +6,8 @@
     display: block!important;
 }
 
+
+
 /***************Log in page style*************/
 /* .contentHeight{
     min-height: calc(100vh - 140px);
@@ -78,6 +80,9 @@
     display: inline;
 }
 
+
+
+
 .arrow-steps .step:before {
 	right: auto;
 	left: 0;
@@ -89,6 +94,8 @@
 }
 
 
+
+
 /*******Form input and labels style**********/
 .confirmLabel{
     display: inline-block;
@@ -96,15 +103,24 @@
     width: 200px;
 }
 
+.centerFormdiv{
+    text-align: center;
+}
+#realForm{
+    /* display: inline-block; */
+    /* display:table;
+    margin:auto; */
+}
+
 .help-block{
-    display:inline;
-   
+    display:inline; 
 }
 
 
 /******/
 .redNote {
     position: relative;
+  
 }
 .redNote:after {
     content: "";
