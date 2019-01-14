@@ -1,6 +1,7 @@
 <?php
 
     require_once('../inc/config.php');
+    
 
     if(!isset($_SESSION['id'],$_SESSION['user_role_id']))
     {
@@ -11,7 +12,11 @@
 
 	require_once('../layouts/header.php'); 
 	require_once('../layouts/side_bar.php'); 
-  	require_once('../layouts/nav.php'); 
+    require_once('../layouts/nav.php'); 
+      
+    include '../mail.php';
+
+    $send_email_action = false;
 
 if($_GET['id']) {
     $id = $_GET['id'];
@@ -50,42 +55,43 @@ if($_GET['id']) {
         ),
     );
 
-    if(isset($_POST['postAction']) && $_POST['randomcheck']==$_SESSION['rand']){
-        $send_email_action = false;
-
-        if($_POST['postAction'] == 'approve'){
-            //get the product id and number requested, and update inventory when request is completed. 
-            $sql_updatestock = "UPDATE pawtrails JOIN Pawtrails_Request_junction ON pawtrails.id = Pawtrails_Request_junction.pawtrails_id && Pawtrails_Request_junction.request_id = '$id' SET pawtrails.amount = pawtrails.amount - Pawtrails_Request_junction.Qty"; 
-        
-            //check if update stock successfully
-            if ($conn->query($sql_updatestock) === TRUE) {
-                echo "<script>
-                alert('The related product inventory is updated!'); 
-                </script>";
-                // include 'mail.php';
-            
-
-            } else {
-                echo "Error updating record: " . $conn->error;
-            } 
-        }
-
     
-            $sql_udpate = $myArr[$_POST['postAction']]['sql'];
-            if ($conn->query($sql_udpate) === TRUE) {
-                //alert notifications about the status change
-                echo "<script>
-                alert('".$myArr[$_POST['postAction']]['alert']."');
-                </script>";
+        if(isset($_POST['postAction']) && $_POST['randomcheck']==$_SESSION['rand']){
+            // $send_email_action = false;
 
-                $send_email_action = true;
+            if($_POST['postAction'] == 'approve'){
+                //get the product id and number requested, and update inventory when request is completed. 
+                $sql_updatestock = "UPDATE pawtrails JOIN Pawtrails_Request_junction ON pawtrails.id = Pawtrails_Request_junction.pawtrails_id && Pawtrails_Request_junction.request_id = '$id' SET pawtrails.amount = pawtrails.amount - Pawtrails_Request_junction.Qty"; 
+            
+                //check if update stock successfully
+                if ($conn->query($sql_updatestock) === TRUE) {
+                    echo "<script>
+                    alert('The related product inventory is updated!'); 
+                    </script>";
+                
 
-            } else {
-                echo "Error updating record: " . $conn->error;
-            } 
-        }
+                } else {
+                    echo "Error updating record: " . $conn->error;
+                } 
+            }
+
+        
+                $sql_udpate = $myArr[$_POST['postAction']]['sql'];
+                if ($conn->query($sql_udpate) === TRUE) {
+                    //alert notifications about the status change
+                    echo "<script>
+                    alert('".$myArr[$_POST['postAction']]['alert']."');
+                    </script>";
+                    
+                    //find the email receivers
+                    $receivers = array();
+         
+                    $send_email_action = $_POST['postAction'];
  
-        $msg = "";
+                } else {
+                    echo "Error updating record: " . $conn->error;
+                } 
+        }
 
         //get all the request details
 
@@ -94,30 +100,41 @@ if($_GET['id']) {
         $result = $conn->query($sql);
         
         $data = $result->fetch_assoc();
-    
+
+        $msg = "";
+
         //get receiver details
         $sql_two = "SELECT * FROM Receiver JOIN Request ON Receiver.receiver_id = Request.ReceiverID  WHERE Request.RequestID = '{$id}' ";
         $result_two = $conn->query($sql_two);  
 
         //get request item list
         $sql_three = "SELECT pawtrails.itemname as name, pawtrails.id as id, pawtrails.color as color, pawtrails.size as size,  Pawtrails_Request_junction.Qty as quantity FROM pawtrails, Pawtrails_Request_junction WHERE Pawtrails_Request_junction.request_id = '{$id}' AND Pawtrails_Request_junction.pawtrails_id = pawtrails.id" ;
-       
+    
         $result_three = $conn->query($sql_three);  
 
-         if(isset($send_email_action)){
-              //sending emails after status changed
+        //send email after getting info
+        if($send_email_action){
+          //find the subject based on status change
+            $subject = array(
+                'approve' => 'Approved Request',
+                'decline' => 'Declined Request',
+                'finish' => 'Completed Request',
+                'delay' => 'Delayed Request',
+            );
+            $body = array(
+                'approve' => 'The request id ' .$data['RequestID']. ' is approved by the admin.',
+                'decline' => 'The request id' .$data['RequestID']. ' is declined by the admin.',
+                'finish' => 'The request id' .$data['RequestID']. ' is completed by the admin.',
+                'delay' => 'The request id' .$data['RequestID']. ' is delayed by the admin.',
+            );
 
-                $output = $data['user_name'] . '  request status changed to ' .$data['status_name'] . ' and the request ID is '.$id ;
-                
-                $to = $data['email'];
-                $subject = "Request Status changed";
+            $subject = $subject[$send_email_action];
+            $body = $body[$send_email_action];
             
-                $headers = "From: test@test.com" . "\r\n" .
-                "CC: somebodyelse@example.com";
-                
-                mail($to,$subject,$output,$headers);
-          //end of sending emails after status changed   
-         }
+            $receivers[$data['email']]= $data['user_name'];
+            sendMail($receivers,$subject,$body);
+        }
+     
     }
 
     //create a random string and save it in session

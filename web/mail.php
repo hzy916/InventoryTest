@@ -3,72 +3,45 @@
     /* Include the Composer generated autoload.php file. */
     require 'vendor/autoload.php';
  
-//   $id = $_POST["requestID"];
 
-//     $output = null;
-
-//     if(!empty($id)){
-//         $sql = "SELECT Request.RequestEmployeeID, Request.RequestStatusID, Request_status.status_name, tbl_users.user_name, tbl_users.email FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id WHERE Request.RequestID = '{$id}'";
-
-//         $result = $conn->query($sql);
-        
-//         $data = $result->fetch_assoc();
-
-//         $output = $data['user_name'] . '  request status changed to ' .$data['status_name'] . 'The request ID is '.$data['RequestID'] ;
-        
-//         $to = $data['email'];
-//         $subject = "Request Status changed";
-      
-//         $headers = "From: test@test.com" . "\r\n" .
-//         "CC: somebodyelse@example.com";
-        
-//         mail($to,$subject,$output,$headers);
-    // }
-
-
-    if($output === null){
-        header('HTTP/1.0 400 Bad Request');
-    }else{
-        echo $output;
-    }
-
-    /* Create a new PHPMailer object. */
-    $mail = new PHPMailer();
-
-    $mailBody = '';
-
-    $sql = '';
-
-    while($row = mysqli_fetch_array($result)){
-        $mailBody .= $row['Expiration_Message'] . "<br>\n";
-    }
-
-    try{
+    function sendMail($receivers=array(),$subject,$body){
+         /* Create a new PHPMailer object. */
+        $mail = new PHPMailer\PHPMailer\PHPMailer();
+ 
+         try{
         /* Set the mail sender. */
-        $mail->setFrom('test@pawtrails.com', 'Ziyun He');
+        $mail->setFrom('notification-no-reply@pawtrails.com', 'PawTrails Portal');
         /* Add a recipient. */
-        $mail->addAddress($requestEmployee, 'Test');
-        $mail->addAddress($admin, 'Songtao');
+        if(empty($receivers)) {
+            return false;
+        }
+        foreach($receivers as $k => $v) {
+            $mail->addAddress($k, $v);
+        }
+        
+    
         /* Add a cc recipient. */
-        // $mail->addCC('admiral@empire.com', 'Fleet Admiral');
+        // $mail->addCC('andrea@attitudetech.ie', 'andrea');
+        
+        
         /* Set the subject. */
         $mail->Subject = $subject;
         /* Set the mail message body. */
-        $mail->Body = 'There is one new delivery request submitted.';
+        $mail->Body = $body;
          /* SMTP parameters. */
    
         /* Tells PHPMailer to use SMTP. */
         $mail->isSMTP(); 
         /* SMTP server address. */
-        $mail->Host = 'smtp.empire.com';
+        $mail->Host = 'smtp.gmail.com';
         /* Use SMTP authentication. */
         $mail->SMTPAuth = TRUE;
         /* Set the encryption system. */
         $mail->SMTPSecure = 'tls';
         /* SMTP authentication username. */
-        $mail->Username = 'smtp@empire.com';
+        $mail->Username = 'notification-no-reply@pawtrails.com';
         /* SMTP authentication password. */
-        $mail->Password = 'hhhh';
+        $mail->Password = 'Attitudetech2017';
         
         /* Set the SMTP port. */
         $mail->Port = 587;
@@ -81,16 +54,18 @@
             )
         );
         /* Finally send the mail. */
-        $mail->send();
+            $mail->send();
         }
-
         catch (Exception $e)
         {
-        echo $e->errorMessage();
+            echo $e->errorMessage();
         }
-        catch (\Exception $e)
-        {
-        echo $e->getMessage();
-        }
+    }
+
+   
+    // }
+
+
+
 
 ?>

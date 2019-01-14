@@ -1,5 +1,11 @@
 @import url(https://fonts.googleapis.com/css?family=Montserrat);
 
+/**********Request Table page style**********/
+/*remove display:inline-flex; */
+.card .table tbody td:last-child, .card .table thead th:last-child { 
+    display: block!important;
+}
+
 /***************Log in page style*************/
 /* .contentHeight{
     min-height: calc(100vh - 140px);
@@ -49,9 +55,12 @@
 	z-index: 2;
 
 } */
-.floatright{
-    float:right;
-}
+/* @media (min-width: 992px){ */
+    .Customcontainer{
+        margin: 0 50px;
+    }
+/* } */
+
 
 .becomeRed{
     color: #d0021b;

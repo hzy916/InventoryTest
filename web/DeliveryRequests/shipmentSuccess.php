@@ -17,11 +17,21 @@
 <style>
     .successText{   
         color: #5da214;
+        font-size:20px;
     }
 
     .container{
         text-align: center;
     }
+    .backBtn{
+		width: 290px;
+		height: 32px;
+		border-radius: 2px;
+		box-shadow: inset 0 -1px 0 0 #e5e5e5;
+		background-color: #f2f2f2;
+        text-transform: uppercase;
+        border:none;
+	}
 </style>
 
     <div class="content-wrapper">
@@ -42,7 +52,7 @@
                 <h3 class="successText">Your Shipment Request has been submitted successfully.</h3>
                 <a href="ship2.php" class="shipbutton btn btn-1 mb-3"><i class="fa fa-plus"></i> Make Another Shipment Request</a>
                 <br>
-                <a href="/dashboard.php" class="cancel btn  mb-3">Back to Dashboard</a>
+                <a href="/dashboard.php" class="backBtn btn  mb-3">Back to Dashboard</a>
             </div>               
     </div>
 

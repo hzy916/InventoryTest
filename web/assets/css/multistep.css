@@ -31,7 +31,8 @@
 		text-transform: uppercase;
 	}
 
-	.next{
+
+	.submitBTN, .next{
 		width: 180px;
 		height: 32px;
 		border-radius: 2px;

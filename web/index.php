@@ -71,7 +71,6 @@ if(isset($_GET['lmsg']) && $_GET['lmsg'] == true)
       <img src="assets/img/com_logo.png" width="180" height="47" alt="">
     </a>
   
-
 <div class="wrapperLogin">
   <div class="container">
     <h1 class="Hey-Welcome mx-auto mt-5">HEY, WELCOME!</h1>

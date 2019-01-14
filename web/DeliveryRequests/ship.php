@@ -339,7 +339,7 @@
         
 
     <!-- MultiStep Form -->
-        <div class="container">
+        <div class="Customcontainer"> 
             <div id="msform"><!-- form contents -->
             	<!-- progressbar -->
                 <ul id="progressbar" class="arrow-steps">
@@ -631,12 +631,12 @@
                     <input type="button" name="previous" class="previous cancel action-button" value="Previous" />
 
                     <input type="hidden"  name="makeaction" value="submitRequest">
-                    <button type="button" class="floatright btn btn-primary" onclick="return IsTermChecked();">Submit</button>
+                    <button type="button" class="submitBTN btn btn-primary" onclick="return IsTermChecked();">Submit</button>
 
                 </form>                
             </div>  
             <!-- Wizard STEP 3 END -->
-        </div>
+        </div> 
     </div>
 </div>
 
