@@ -1,171 +1,124 @@
-<?php 
-require_once('inc/config.php');
-if(isset($_POST['login']))
-{
-	if(!empty($_POST['email']) && !empty($_POST['password']))
-	{
-		$email 		= trim($_POST['email']);
-		$password 	= trim($_POST['password']);
+<?php
+	require_once('inc/config.php');
+
+    // Check if $_SESSION or $_COOKIE already set
+    if( isset($_SESSION['userid']) ){
+        header('Location: dashboard.php');
+        exit;
+    }else if( isset($_COOKIE['rememberme'] )){
+    
+        // Decrypt cookie variable value
+        $userid = decryptCookie($_COOKIE['rememberme']);
+        
+        $sql_query = "select count(*) as cntUser,id from users where id='".$userid."'";
+        $result = mysqli_query($con,$sql_query);
+        $row = mysqli_fetch_array($result);
+
+        $count = $row['cntUser'];
+
+        if( $count > 0 ){
+        $_SESSION['userid'] = $userid; 
+        header('Location: home.php');
+        exit;
+        }
+    }
+
+    // Encrypt cookie
+    function encryptCookie( $value ) {
+        $key = 'youkey';
+        $newvalue = base64_encode( mcrypt_encrypt( MCRYPT_RIJNDAEL_256, md5( $key ), $value, MCRYPT_MODE_CBC, md5( md5( $key ) ) ) );
+        return( $newvalue );
+    }
+
+    // Decrypt cookie
+    function decryptCookie( $value ) {
+        $key = 'youkey';
+        $newvalue = rtrim( mcrypt_decrypt( MCRYPT_RIJNDAEL_256, md5( $key ), base64_decode( $value ), MCRYPT_MODE_CBC, md5( md5( $key ) ) ), "\0");
+        return( $newvalue );
+    }
+
+    // On submit
+    if(isset($_POST['but_submit'])){
+  
+        $email 		= trim($_POST['txt_uname']);
+		$password 	= trim($_POST['txt_pwd']);
 		
 		$md5Password = md5($password);
-		
-		$sql = "select * from tbl_users where email = '".$email."' and password = '".$md5Password."'";
-		$rs = mysqli_query($conn,$sql);
-		$getNumRows = mysqli_num_rows($rs);
-		
-		if($getNumRows == 1)
-		{
-			$getUserRow = mysqli_fetch_assoc($rs);
-			unset($getUserRow['password']);
-			
-      $_SESSION = $getUserRow;
-						
-			header('location:dashboard.php');
-			exit;
-		}
-		else
-		{
-			$errorMsg = "Username or password incorrect. Please try again.";
-		}
-	}
-}
-if(isset($_GET['logout']) && $_GET['logout'] == true)
-{
-	session_destroy();
-	header("location:index.php");
-	exit;
-}
-if(isset($_GET['lmsg']) && $_GET['lmsg'] == true)
-{
-	$errorMsg = "Login required to access dashboard";
-}
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <title>PawTrails Portal</title>
-   <!--     Fonts and icons     -->
-   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
-
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
-  <!-- CSS Files -->
-  
-  <link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="assets/css/sb-admin.css" rel="stylesheet">
-
-  <link href="assets/css/main.css" rel="stylesheet">
-
-</head>
-
-<body class="bg-light">
-    <!-- Just an image -->
-  
-    <a class="navbar-brand ml-5 mt-5" href="http://www.attitudetech.ie">
-      <img src="assets/img/com_logo.png" width="180" height="47" alt="">
-    </a>
-  
-<div class="wrapperLogin">
-  <div class="container">
-    <h1 class="Hey-Welcome mx-auto mt-5">HEY, WELCOME!</h1>
-    	<?php 
-			if(isset($errorMsg))
-			{
-				echo '<div class="alert alert-danger">';
-				echo $errorMsg;
-				echo '</div>';
-				unset($errorMsg);
-			}
-    ?>
     
-    <div class="card card-login mx-auto mt-5 customCard">
-      <div class="card-header">PLEASE LOG IN</div>
-      <div class="card-body">
-	
-        <form action="<?php echo $_SERVER['PHP_SELF']?>" class="LoginForm" method="post">
-          <label for="exampleInputEmail1">Username (Email)</label>
-          <div class="form-group inner-addon left-addon redNote">
-                    <!--icon -->
-            <img class="glyphicon" src="assets/img/usernameicon.svg">
-            <input class="form-control requiredRed" id="exampleInputEmail1"  value="<?php if(isset($_COOKIE["member_login"])) { echo $_COOKIE["member_login"]; } ?>" name="email" type="email" placeholder="Enter email" required>
-          </div>
-         
-          <label for="exampleInputPassword1">Password</label>
-          <div class="form-group inner-addon left-addon redNote">
-            <img class="glyphicon" src="assets/img/passwordicon.svg">
-            <input class="form-control requiredRed" id="exampleInputPassword1" value="<?php if(isset($_COOKIE["member_password"])) { echo $_COOKIE["member_password"]; } ?>" name="password" type="password" placeholder="Password" required>
-          </div>
+    if ($email != "" && $md5Password != ""){
 
-          <!--remember me -->
-           <div class="field-group">
-              <div>
-                  <input type="checkbox" name="remember" id="remember"
-                      <?php if(isset($_COOKIE["member_login"])) { ?> checked
-                  <?php } ?> /> 
-                  <label for="remember-me">Remember me</label>
-              </div>
-          </div>
+        $sql_query = "select count(*) as cntUser,id from tbl_users where email='".$email."' and password='".$md5Password."'";
 
-        <!--Switch Button in bootstrap -->
-        <!-- <div class="toggle-group">
-            <label for="on-off-switch">
-              Remember Me <span class="aural">Show:</span> 
-            </label>
-            <input type="checkbox invisible" name="on-off-switch" id="on-off-switch" checked="" tabindex="1">
-          
-            <div class="onoffswitch pull-right" aria-hidden="true">
-                <div class="onoffswitch-label">
-                    <div class="onoffswitch-inner"></div>
-                    <div class="onoffswitch-switch"></div>
+        $result = mysqli_query($conn,$sql_query);
+        $row = mysqli_fetch_array($result);
+
+        // $sql = "select * from tbl_users where email = '".$uname."' and password = '".$password."'";
+		// $rs = mysqli_query($conn,$sql);
+		// $getNumRows = mysqli_num_rows($rs);
+
+        $count = $row['cntUser'];
+        if($count > 0){
+            $userid = $row['id'];
+            if( isset($_POST['rememberme']) ){
+
+                // Set cookie variables
+                $days = 20;
+                $value = encryptCookie($userid);
+                setcookie ("rememberme",$value,time()+ ($days * 24 * 60 * 60 * 1000));
+            }
+        
+                $_SESSION['userid'] = $userid; 
+                header('Location: dashboard.php');
+                exit;
+            }else{
+                echo "Invalid username and password";
+            }
+        }
+    }
+?> 
+<html>  
+ <head>  
+  <title>Webslesson - Tutorial</title>  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>  
+  <style>  
+  body  
+  {  
+   margin:0;  
+   padding:0;  
+   background-color:#f1f1f1;  
+  }  
+        .box  
+        {  
+   width:700px;  
+   padding:20px;  
+   background-color:#fff;  
+  }  
+  </style>  
+ </head>  
+ <body>  
+    <div class="container">
+        <form method="post" action="">
+            <div id="div_login">
+                <h1>Login</h1>
+                <div>
+                <input type="email" class="textbox" name="txt_uname" placeholder="Username" />
+                </div>
+
+                <div>
+                <input type="password" class="textbox" name="txt_pwd" placeholder="Password"/>
+                </div>
+
+                <div>
+                <input type="checkbox" name="rememberme" value="1" />&nbsp;Remember Me
+                </div>
+
+                <div>
+                <input type="submit" value="Submit" name="but_submit" />
                 </div>
             </div>
-        </div> -->
-       
-        <p class="notmember">NOT A MEMBER? <br><a href="#" class="applymember text-center">APPLY FOR MEMBERSHIP NOW</a></p>
-        <hr>
-          <div class="row">
-            <hr>
-            <div class="col-sm-12 text-center mt-3 mb-3">
-              <button class="btn btn-login uppercase" type="submit" name="login">Login</button>
-              <a class="btn btn-close uppercase" href="http://www.pawtrails.com">Close</a>
-            </div>
-          </div>
         </form>
-       
-      </div>
     </div>
-  </div>
-</div>
-    <footer class="footer">
-        <div class="container">
-              <div class="row clearfix">
-                <div class="col-lg-6 col-sm-12 float-left">
-                  <div class="copyright-text">
-                    <p class="footerleft">Staff Portal V.2.0 |  Copyright © 2018 Attitude Technologies Ltd.  All rights reserved.  </p>
-                  </div>
-                </div> <!-- End Col -->
-                <div class="col-lg-6 col-sm-12 pull-right">							
-                  <ul id="customlinklist">
-                    <li><a href="">Privacy Policy |</a></li>						
-                    <li><a href="">Terms of Use |</a></li>
-                    <li><a href="">PawTrails Website | </a></li>
-                    <li><a href="">Help</a></li>
-                  </ul>							
-                </div> <!-- End Col -->
-
-              </div>
-          </div>
-      </div>
-    </footer>
-
-
-</body>
-
+ </body>  
 </html>
-

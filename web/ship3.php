@@ -34,10 +34,11 @@
                         echo '<script> alert("You have to enter a positive number");</script>';
                         $doAction = false;
                     break;
-                    case ($dNumber <= $maxAmount && $dNumber > 0):
+                    case ($dNumber < $maxAmount && $dNumber > 0):
                             //check if resubmit on reload the page
                         if($_POST['flyerToken']==$_SESSION['rand'] ){   
                             $_SESSION['delivery'][] = [
+                                'item_type' => 'flyerForm',
                                 'product_id' => $pId,
                                 'productname' => $pName,
                                 'sel_color' => '',
@@ -47,9 +48,6 @@
                         }
                     break;
                 }
-            //    print('number '.$dNumber .'<br>');
-            //    print('max '.$maxAmount);
-            //     exit;
           
             break;
 
@@ -65,16 +63,17 @@
                         $sel_color = $_POST['sel_color'];
                         $sel_size = $_POST['sel_size'];
 
-                        $sql = "SELECT id, amount FROM pawtrails  WHERE color = '$sel_color' AND size = '$sel_size'";
+                        $sql = "SELECT id, itemtype, amount FROM pawtrails  WHERE color = '$sel_color' AND size = '$sel_size'";
                         $result = $conn->query($sql);
                         while ($row = $result->fetch_array()) {
                             
                         $sel_id = $row['id']; 
                         $maxQty = $row['amount'];
+                        //select itemtype from database
+                        $itemtype = $row['itemtype'];
                         }
                         
                         $dNumber = intval($_POST['deliverynumber']);
-
                         switch(true) {
                             case ($dNumber == 0):
                                 echo '<script> alert("You have to enter a valid number");</script>';
@@ -88,8 +87,9 @@
                                 echo '<script> alert("You have to enter a positive number");</script>';
                                 $doAction = false;
                             break;
-                            case ($dNumber <= $maxQty && $dNumber > 0):
+                            case ($dNumber < $maxQty && $dNumber > 0):
                                 $_SESSION['delivery'][] = [
+                                    'item_type' => 'pawtrails_form',
                                     'product_id' => $sel_id,
                                     'productname' => 'PawTrails',
                                     'sel_color' => $sel_color,
@@ -151,9 +151,9 @@
         border: 1px solid #ccc;
         border-top: none;
     }
-/*center the form input */
-.halfwidth {
-   margin-left:20%;
+
+.form-group {
+   margin-left:10px;
 }
 
 /***custom alert style**/
@@ -200,7 +200,7 @@
                 
                 <div class="selectBox">
                     
-                    <div class="form-group">
+                    <div class="form-group" style="margin-left:8px;">
                         <label class="fieldLabel col-xs-2">Item Type</label>
                         <div class="col-xs-10 oneline redNote">
                             <select id="itemtypeSelect" class="form-control" onChange="handleSelection(value)">
@@ -236,8 +236,10 @@
                     <!--set random number to check resumbit on refresh -->
                     <input type="hidden"  name="flyerToken" value="<?php echo $rand; ?>">
 
+                    <input type="text" class="sel_productId" name="sel_productId" value="0">
+
                     <div class="form-group">    
-                        <label class="fieldLabel col-xs-2" for="deliveryProduct">Item</label>
+                        <label class="fieldLabel col-xs-2" for="deliveryProduct">Item Name</label>
                         
                         <div class="col-xs-10 oneline redNote">
                             <select name="sel_product" id="sel_product" class="form-control" onchange="checkStock();" required>
@@ -250,7 +252,7 @@
                                         if($j == 0 ){
                                             $thisNumber = $row['amount'];
                                         }
-                                        echo "<option amount='".$row['amount']."' value='".$row['id']." - ".$row['itemname']." - ".$row['amount']."'>" . $row['itemname'] . "</option>";
+                                        echo "<option myId=".$row['id']." amount='".$row['amount']."' value='".$row['id']." - ".$row['itemname']." - ".$row['amount']."'>" . $row['itemname'] . "</option>";
                                         $j++;
                                     }
                                 ?>
@@ -273,7 +275,7 @@
                             <input type="number" class="form-control" name="deliverynumber" id="deliverynumber" placeholder="number"  min="1" >		
                         </div>
                     </div>  
-                        <button type="button" name="AddProduct" onclick="checkBeforeSubmit();" class="addBtn mt-5 mb-3">Add Now</button>
+                        <button type="button" name="AddProduct" onclick="checkBeforeSubmit();" class="addBtn mt-5 btn mb-3">Add Now</button>
    
                 </form>
         
@@ -284,6 +286,8 @@
 
                     <!--set random number to check resumbit on refresh -->
                     <input type="hidden"  name="pawtrailsToken" value="<?php echo $rand; ?>">
+
+                    <input type="text" class="sel_productId" name="sel_productId" value="0">
                     
                     <label class="fieldLabel" for="deliveryProduct">Color</label>
                     
@@ -339,7 +343,7 @@
         
 
     <!-- MultiStep Form -->
-        <div class="Customcontainer"> 
+        <div class="container">
             <div id="msform"><!-- form contents -->
             	<!-- progressbar -->
                 <ul id="progressbar" class="arrow-steps">
@@ -349,8 +353,8 @@
                 </ul>
                 <!-- Wizard STEP 1 -->
                 <div class="fieldset row setup-content" id="step1">
-                    <div class="col-sm-12 form_content">
-                        <div class="">
+                    <div class="col-sm-12">
+                        <div class="form-group">
                             <div id="NoItemDiv" style="display:<?php echo $NoItemDivView ?>">
                                 <h2 class="fs-title">Shipment Contents</h2>
                                 <hr class="seperateLine">
@@ -398,7 +402,8 @@
                                                         <td>".$k['sel_size']."</td>
                                                         <td>".$k['deliverynumber']."</td>
                                                         <td class='OperationColumn'>
-                                                          
+                                                            <a class='editBtn' id='edit-".$i."' productID='".$k['product_id']."'  itemType='".$k['item_type']."' productname='".$k['productname']."' 
+                                                            selcolor='".$k['sel_color']."' selsize='".$k['sel_size']."'  deliverynumber='".$k['deliverynumber']."'><i class='fa fa-edit'></i></a>
                                                             <a class='removeItem' id=".$i."><i class='fa fa-trash'></i></a>
                                                         </td>
                                                         <td></td>
@@ -411,23 +416,7 @@
                                     </table>
                                 </div>
                             </div>
-
-                     
-                            <!-- <div id="dialog" title="Alert message" style="display: none">
-                                <div class="ui-dialog-content ui-widget-content">
-                                    <p>
-                                        <span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0"></span>
-                                        <label id="lblMessage">
-                                        </label>
-                                    </p>
-                                </div>
-                            </div> -->
-
-                        
-                            
                         </div>
-
-                        
                     </div>
                   
                     <div class="col-sm-12 topline">
@@ -443,27 +432,25 @@
                     <h2 class="fs-title">Receiver’s Details</h2>
                     <hr class="seperateLine">
                                                         
-                    <div class="col-sm-12 centerFormdiv">
-                        <form data-toggle="validator" role="form" method="POST" id='realForm'>
+                    <div class="col-sm-12">
+                    <form data-toggle="validator" role="form" method="POST" id='realForm'>
                         <!--set random number to check resumbit on refresh -->
                             <input type="hidden"  name="randomcheck" value="<?php echo $rand; ?>">
 
                             <div class="form-group row halfwidth">
                               
-                                <label class="confirmLabel" for="firstname">Full Contact Name</label>
-                                <div class="redNote"> 
-                                    <input type="text" class="form-control" name="firstname" placeholder="#####" onChange="javascript:copytoStepThree(this.value,'receiverName')" >
-                                </div>
-                              
+                                    <label class="confirmLabel" for="firstname">Full Contact Name</label>
+                                    <div class="redNote"> 
+                                        <input type="text" class="form-control" name="firstname" placeholder="#####" onChange="javascript:copytoStepThree(this.value,'receiverName')" >
+                                    </div>
                                
                             </div>
 
                             <div class="form-group row halfwidth">
-                                <label class="confirmLabel" for="receivercompany">Company Name</label>
+                                <label  class="confirmLabel" for="receivercompany">Company Name</label>
                                 <div class="">
                                     <input type="text" class="form-control" name="receivercompany" placeholder="receiver company"  onChange="javascript:copytoStepThree(this.value,'companyName')">
                                 </div>
-                               
                             </div>
 
 
@@ -472,7 +459,6 @@
                                 <div class="redNote">
                                     <input type="email" class="form-control" name="receiverEmail" placeholder="receiver email" onChange="javascript:copytoStepThree(this.value,'receiverEmail')" >
                                 </div>
-                                
                             </div>    
                             
                             <div class="form-group row halfwidth">
@@ -480,7 +466,6 @@
                                 <div class="redNote">
                                     <input type="text" class="form-control" name="phonenumber" placeholder="#####" onChange="javascript:copytoStepThree(this.value,'receiverPhone')" >
                                 </div>
-                                
                             </div> 
                             
                             <h2 class="fs-title">Shipping ADDRESS</h2>
@@ -492,7 +477,6 @@
                                 <div class="redNote">
                                     <input type="text" class="form-control" name="inputAddress1" placeholder="1234 Main St" onChange="javascript:copytoStepThree(this.value,'receiverAddress1')" >
                                 </div>
-                                
                             </div>
 
                             <div class="form-group row halfwidth">
@@ -500,7 +484,6 @@
                                 <div class="redNote">
                                     <input type="text" class="form-control" name="inputAddress2" placeholder="1234 Main St" onChange="javascript:copytoStepThree(this.value,'receiverAddress2')">
                                 </div>
-                                <!-- <span id="firstname-error">This field is required.</span> -->
                             </div>   
                             
                             <div class="form-group row halfwidth">
@@ -508,9 +491,7 @@
                                 <div class="">
                                     <input type="text" class="form-control" name="inputAddress3" placeholder="1234 Main St" onChange="javascript:copytoStepThree(this.value,'receiverAddress3')" >
                                 </div>
-                              
                             </div> 
-
 
                             <div class="form-group row halfwidth">
                                 <label class="confirmLabel" for="inputCountry">Country</label>
@@ -522,7 +503,6 @@
                                         <option value="France">France</option>
                                     </select>
                                 </div>
-                               
                             </div>
 
                             <div class="form-group row halfwidth">
@@ -530,7 +510,6 @@
                                 <div class="redNote">
                                     <input type="text" class="form-control" name="inputCity" onChange="javascript:copytoStepThree(this.value,'receiverCity')" >
                                 </div>
-                              
                             </div>
                             
                             <div class="form-group row halfwidth">
@@ -538,12 +517,8 @@
                                 <div class="redNote">
                                     <input type="text" class="form-control" name="inputPostcode" onChange="javascript:copytoStepThree(this.value,'receiverPostcode')" >
                                 </div> 
-                              
                             </div>
                     </div>
-
-                    <hr class="seperateLine">
-
                     <input type="button" name="previous" class="previous cancel action-button" value="Previous" />
 		            <input type="button" name="next" class="next action-button" value="Next" />
                 </div>
@@ -558,12 +533,11 @@
                                     <hr class="seperateLine">
                                     <div class="row">
                                         <!--Receiver details in the session-->
-                                        <div class="card card-tasks col-md-6">
-
+                                        <div class="card  card-tasks col-lg-6 col-sm-offset-2">
                                             <div class="card-header">
                                                 <h4 class="card-title contentheader">Receiver Details</h4>
                                             </div>
-                                            <hr>
+                                          <hr>
                                             <div class="card-body contenttable">
                                                
                                                     <p id="receiverName"></p>
@@ -576,7 +550,7 @@
                                         </div>
 
                                     <!--Shipment address in the session-->
-                                        <div class="card  card-tasks col-md-6">
+                                        <div class="card  card-tasks col-lg-6 col-sm-offset-2">
                                             <div class="card-header">
                                                 <h4 class="card-title contentheader">Shipping Address</h4>
                                             </div>
@@ -591,20 +565,16 @@
                                             </div>   
                                         </div> 
                                     </div>
-                                  
-                                    <div class="row card table-responsive">
                                         <!--Shipment Items in the session-->
-                                        <div class="card-header">
-                                            <h4 class="card-title contentheader">Shipment Contents</h4>
-                                        </div>
-                                        <div class="card-body contenttable table row" id="requestProductTable" width="100%" cellspacing="0">
+                                        <h2 class='fs-title'>Shipment Contents</h2>
+                                        <hr>
+                                    <div class="table-responsive">
+                                        <div class="table row" id="requestProductTable" width="100%" cellspacing="0">
                                             <?php    
                                                 if(!empty($_SESSION['delivery'])){
                                                     foreach($_SESSION['delivery'] as $i=> $k) {
                                                         echo "<div class='col-md-4'>
-                                                                <p class='itemlist'>".$k['productname']." ".$k['sel_color']." ".$k['sel_size'].    "             x           ".$k['deliverynumber']."</p>
-                                                            
-                                                               
+                                                                <p class='itemlist'>".$k['productname']." ".$k['sel_color']." ".$k['sel_size'].    "    x    ".$k['deliverynumber']."</p>
                                                             </div>";
                                                             $i++;
                                                         }  
@@ -618,52 +588,38 @@
                                 </div>
 
                 </div>
-                
+                    <input type="button" name="previous" class="previous cancel action-button" value="Previous" />
+
                     <!--checkbox for user to confirm-->
                     <div class="checkboxlabel">
                         <input class="form-check-input" type="checkbox" name="checkbox" id="gridCheck" required>
-                        <label id="confirmLabel" class="form-check-label" for="gridCheck">
-                            I confirm all the data submitted are correct.
+                        <label class="form-check-label" for="gridCheck">
+                            I confirm all the information above are correct.
                         </label>    
                     </div>
-                  
-
-                    <input type="button" name="previous" class="previous cancel action-button" value="Previous" />
 
                     <input type="hidden"  name="makeaction" value="submitRequest">
-                    <button type="button" class="submitBTN btn btn-primary" onclick="return IsTermChecked();">Submit</button>
+                    <button type="submit" class="submitBtn btn btn-primary">Submit</button>
 
                 </form>                
             </div>  
             <!-- Wizard STEP 3 END -->
-        </div> 
+        </div>
     </div>
 </div>
 
 <!-- jQuery easing plugin -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js" type="text/javascript"></script>
+
 <!--jquery validation plugin-->
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.js"></script>
 <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/additional-methods.js"></script>
 
 
 <script>
-
- //check checkbox is checked on step3 //
- function IsTermChecked() {
-        if (!$("#gridCheck").is(":checked")) {
-            $("#confirmLabel").addClass("becomeRed");
-            alert('Please confirm all the data first');
-            return;
-        }
-        else
-     
-        document.getElementById('realForm').submit();
-    }
-
      //check if all required fields are filled in js when user click next//
      //////////////////////////////////////////////////////////////
-                                           
+                                                
     //print all the values on step 3
     function copytoStepThree($val,$dest) {
         $('#'+$dest).html($val);
@@ -692,11 +648,6 @@ $(".next").click(function(){
         form.validate({
             errorElement: 'span',
             errorClass: 'help-block',
-            // errorPlacement: function ($error, $element) {
-            //     var name = $element.attr("name");  
-            //     $("#error" + name).append($error);
-            // }
-
             highlight: function(element, errorClass, validClass) {
                 $(element).closest('.form-group').addClass("has-error");
             },
@@ -732,6 +683,10 @@ $(".next").click(function(){
                 inputPostcode: {
                     required: true,
                 },
+                // checkbox:{
+                //     required:true,
+                //     minlength:1
+                // } 
             },
             messages: {
                 username: {
@@ -760,14 +715,11 @@ $(".next").click(function(){
                 inputPostcode: {
                     required: "This field is required",
                 },
+           
             }
-        
-            // errorElement: 'span',
-            // errorLabelContainer:'.errorTxt'
         });
     // //end of custom validation on next button
     // alert(form.valid());
-
     if (form.valid() === true){
         // alert('good');
              if ($('#step1').is(":visible")){
@@ -874,6 +826,55 @@ $(".previous").click(function(){
         modal.style.display = "block";
     }
 
+    // var editBtn = document.getElementById("editBtn");
+
+    ///edit button click funciton
+    $(".editBtn").click(function(){
+        var itemType=$(this).attr('itemType');
+        var selcolor=$(this).attr('selcolor');
+        var selsize=$(this).attr('selsize');
+        var deliverynumber=$(this).attr('deliverynumber');
+        var productname=$(this).attr('productname');
+        var productid =$(this).attr('productID');
+       
+        var finalProductvalue = productid + " - " +productname + " - " +deliverynumber;
+        alert(productid);
+        
+        // var myId=$(this).attr('id');
+        // alert("My Id: "+$(this).attr('id')+"\nItem Type: "+$(this).attr('itemType')+"\nproductname: " +$(this).attr('productname')+"\nselected color: "+$(this).attr('selcolor')+"\nselected size: "+$(this).attr('selsize')+"\ndelivery number: "+$(this).attr('deliverynumber'));
+
+        modal.style.display = "block";
+
+        handleSelection(itemType);
+        $('#itemtypeSelect').val(itemType);
+
+        // $("#itemtypeSelect [myId='"+productid+"']").attr('selected', 'selected');
+ 
+        // $("#itemtypeSelect option[myId='"+productid+"']").prop('selected', true);
+
+        // $('#itemtypeSelect').val(itemType);
+
+        // myId
+    
+        switch (itemType){
+
+            case 'flyerform':
+                $('#deliverynumber').val(deliverynumber);
+            // $('#sel_product').val(finalProductvalue);
+            
+            break;
+            case 'pawtrails_form':
+                $('#sel_color').val(selcolor);
+                $('#sel_size').val(selsize);
+                $('#deliverynumber2').val(deliverynumber);
+            break;
+            
+         
+        // }
+       
+      
+    });
+
      // When the user clicks the button, open the modal 
      btn_two.onclick = function() {
         modal.style.display = "block";
@@ -911,25 +912,19 @@ $(".previous").click(function(){
             var retVal = confirm("Do you want to cancel this request, your input form data will not be saved.");
                if( retVal == true ){
                    //clear the item session and redirect to dashboard
-                    $.ajax({
-                        type: 'POST',
-                        url: '/DeliveryRequests/deleteItem_Session.php',
-                        data: "action=unsetsession",
-                        success: function(msg) {
-                            header('Location: ../dashboard.php'); 
-
-                        },
-                        error:function(msg){
-                            alert('wrong error');
-                            console.log(msg);
-                        }
-                
-                    });
+                    sessionStorage.removeItem('delivery');
+                    window.location.href = "../dashboard.php";
+                    // $.ajax({
+                    //     type: 'GET',
+                    //     url: '/deleteItem_Session.php',
+                    //     success: function(msg) {
+                            
+                    //     }
+                    // });
                 return true;
                }
-               else{
-                  
-                  return false;
+               else{ 
+                window.location.href = "./ship2.php";
                }
         }
 
@@ -959,7 +954,6 @@ $(".previous").click(function(){
                 alert('Out of Stock');
                 return false;
             }
-           
             document.getElementById('flyerForm').submit();
             return;
           
@@ -981,7 +975,6 @@ $(".previous").click(function(){
                 alert('Out of Stock');
                 // return false;
             } else{
-                // alert('submit');
                 document.getElementById('pawtrails_form').submit();
             } 
             return;
@@ -1018,4 +1011,3 @@ $(".previous").click(function(){
 
 
 <?php require_once('../layouts/footer.php'); ?>	
-

@@ -1,20 +1,28 @@
 <?php 
 
-// print('hjgjhgjhgjhg');
-// exit;
 	require_once('inc/config.php');
 	
 	if(!isset($_SESSION['id'],$_SESSION['user_role_id']))
 	{
         header('location:index.php?lmsg=true');
-        // print('ALL OK');
-		// exit;
-	}		
+    }	
 
-  require_once('./layouts/header.php'); 
-  require_once('./layouts/side_bar.php'); 
-  require_once('./layouts/nav.php'); 
 
+    require_once('./layouts/header.php'); 
+    require_once('./layouts/side_bar.php'); 
+    require_once('./layouts/nav.php'); 
+
+
+// logout
+// if(isset($_POST['but_logout'])){
+//  session_destroy();
+
+//  // Remove cookie variables
+//  $days = 30;
+//  setcookie ("rememberme","", time() - ($days * 24 * 60 * 60 * 1000));
+
+//  header('Location: index.php');
+// }
 ?>
 
 <style>
@@ -101,7 +109,7 @@ td {
                                                     echo 
                                                     "<tr>
                                                         <td class='Companyrow'>".$row['fullname']."</td>
-                                                        <td class='td-actions text-right Companyrow'><span style='color:#ffffff; text-align:center; width:6em;background-color:#f5a623;'>".$row['status_name']."</span></td>
+                                                        <td class='td-actions text-right Companyrow'><span style='color:#ffffff; margin-right:10px;text-align:center; background-color:#f5a623; padding: 6px;'>".$row['status_name']."</span></td>
                                                     </tr>";
                                                 }
                                             } else {
@@ -144,7 +152,7 @@ td {
                                                     echo 
                                                     "<tr>
                                                         <td class='Companyrow'>".$row['companyName']."</td>
-                                                        <td class='td-actions text-right Companyrow'><span style='color:#ffffff; text-align:center; width:6em;background-color:#f5a623;'>".$row['status_name']."</span></td>
+                                                        <td class='td-actions text-right Companyrow'><span style='color:#ffffff; text-align:center; margin-right:10px; padding: 6px;background-color:#f5a623;'>".$row['status_name']."</span></td>
                                                     </tr>";
                                                 }
                                             } else {
@@ -219,7 +227,7 @@ td {
                                                 ?>
                                         </td>
                                         <td class="td-actions requestTitle">
-                                            <span style="text-align:center; width:6em; <?php echo $tdStyle; ?>"><?php echo $stocktext; ?></span>
+                                            <span style="text-align:center; padding: 6px; <?php echo $tdStyle; ?>"><?php echo $stocktext; ?></span>
                                         </td>
                                 </tr>
                                 <tr>
@@ -239,10 +247,10 @@ td {
                                                 while($row = $result->fetch_assoc()) {
                                                     // set styles the way you want
                                                     if($row['amount'] > 0) {
-                                                        $tdStyle='background-color:#ADFF2F';
+                                                        $tdStyle='background-color:#ADFF2F; ';
                                                         $stocktext = 'In Stock';
                                                     } else {
-                                                        $tdStyle='background-color:#d4143d';
+                                                        $tdStyle='background-color:#d4143d;';
                                                         $stocktext = 'Out of Stock';
                                                     }
                                                     echo  $row['amount'];
@@ -253,7 +261,7 @@ td {
                                             ?>
                                     </td>
                                     <td class="td-actions requestTitle">
-                                        <span style="text-align:center; width:6em; <?php echo $tdStyle; ?>"><?php echo $stocktext; ?></span>
+                                        <span style="text-align:center; padding: 6px; <?php echo $tdStyle; ?>"><?php echo $stocktext; ?></span>
                                     </td>
                                 </tr>
 
@@ -265,8 +273,10 @@ td {
             </div>
             </div>
     
-            <div class="card  card-tasks">   
-            <h4 class="card-title">Video Tutorials</h4>
+            <div class="card  card-tasks">  
+                <div class="card-header "> 
+                    <h4 class="card-title">Video Tutorials</h4>
+                </div>
             
                 <div class="row">
                     <div class="col-md-4 col-g-4 col-sm-4">
@@ -310,8 +320,8 @@ td {
                 </div>      
             </div>
         </div>
-    </div>
-</div>
+
+
 
 
     <!-- /.container-fluid-->
