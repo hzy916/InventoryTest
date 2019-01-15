@@ -29,7 +29,7 @@ if($_GET['id']) {
     $myArr=array(
         'comment'=> array(
             'sql'=>"UPDATE Request SET Comments = '".$myCommReq."' WHERE Request.RequestID = '$id'",
-            'alert'=>'You send comments this request',
+            'alert'=>'You send comments about this request',
         ),
         'approve'=> array(
             //get the product id and number requested, and update inventory when request is completed. 
@@ -114,25 +114,33 @@ if($_GET['id']) {
 
         //send email after getting info
         if($send_email_action){
-          //find the subject based on status change
-            $subject = array(
-                'approve' => 'Approved Request',
-                'decline' => 'Declined Request',
-                'finish' => 'Completed Request',
-                'delay' => 'Delayed Request',
-            );
-            $body = array(
-                'approve' => 'The request id ' .$data['RequestID']. ' is approved by the admin.',
-                'decline' => 'The request id' .$data['RequestID']. ' is declined by the admin.',
-                'finish' => 'The request id' .$data['RequestID']. ' is completed by the admin.',
-                'delay' => 'The request id' .$data['RequestID']. ' is delayed by the admin.',
-            );
+            //if it is comment or archive action, we don't send email notifications
+            if($send_email_action == 'comment' || $send_email_action == 'archive' ){
+                $send_email_action = false;
+            } else{
+                //find the subject based on status change
+                $subject = array(
+                    'approve' => 'Approved Request',
+                    'decline' => 'Declined Request',
+                    'finish' => 'Completed Request',
+                    'delay' => 'Delayed Request',
+                    // 'comment' => 'New Comment about Request',
+                );
+                $body = array(
+                    'approve' => 'The request id ' .$data['RequestID']. ' is approved by the admin.',
+                    'decline' => 'The request id' .$data['RequestID']. ' is declined by the admin.',
+                    'finish' => 'The request id' .$data['RequestID']. ' is completed by the admin.',
+                    'delay' => 'The request id' .$data['RequestID']. ' is delayed by the admin.',
+                    // 'comment' => 'The request id' .$data['RequestID']. ' is commented by the admin.',
+                
+                );
 
-            $subject = $subject[$send_email_action];
-            $body = $body[$send_email_action];
-            
-            $receivers[$data['email']]= $data['user_name'];
-            sendMail($receivers,$subject,$body);
+                $subject = $subject[$send_email_action];
+                $body = $body[$send_email_action];
+
+                $receivers[$data['email']]= $data['user_name'];
+                sendMail($receivers,$subject,$body);
+            }
         }
      
     }
@@ -151,14 +159,14 @@ if($_GET['id']) {
           <a href="/dashboard.php">Dashboard</a>
         </li> 
       </ol>
-      <h1>Process Delivery Request</h1>
+      <h2>Process Delivery Request</h2>
   
 	<!-- DataTables Example -->
 	<div class="card mb-3">
 		<div class="card-header">
         <h2>Request Details</h2>
         <div class="card-body">
-			<div class="table-responsive">
+			<div class="table-responsive" cellspacing="10">
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 					<thead>
 						<tr>
@@ -287,10 +295,12 @@ if($_GET['id']) {
         if($_SESSION['user_role_id'] == 1 ) {  ?>
                 <form method="post" id="ciaociao">
                     <input type="hidden"  name="randomcheck" value="<?php echo $rand; ?>">
-                    <div class="form-group">
+                    <div class="form-group commentDiv">
                         <input type="hidden" name="postAction" value="" id="postAction"/>
-                        <label for="comment">Comments:</label>
-                        <textarea class="form-control" rows="5" name="commentRequest" id="comment_details"></textarea>
+                        <label class="commentstitle" for="comment">Comments:</label>
+                        <br>
+                        <textarea class="form-group" rows="4" cols="50" name="commentRequest" id="comment_details"></textarea>
+                        <br>
                         <input type="button" class='btn btn-secondary' value="Send" onclick="JavaScript:makeMyAction('comment')"/>
                     </div>
 
@@ -324,7 +334,7 @@ if($_GET['id']) {
 
                 <script language="JavaScript">
                  function makeMyAction(val){
-                    //  alert(val);
+                      alert(val);
                      document.getElementById('postAction').value = val;
                      document.getElementById('ciaociao').submit();
                      return;

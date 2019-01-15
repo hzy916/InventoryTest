@@ -574,12 +574,8 @@
                     </div>
 
                     <hr class="seperateLine">
-                
-                  
                         <input type="button" name="previous" class="previous cancel action-button" value="Previous" />
                         <input type="button" name="next" class="next action-button" value="Next" />
-                  
-
                 </div>
                 <!-- Wizard STEP 2 END -->
 
@@ -726,10 +722,9 @@ $(".next").click(function(){
         form.validate({
             errorElement: 'span',
             errorClass: 'help-block',
-            // errorPlacement: function ($error, $element) {
-            //     var name = $element.attr("name");  
-            //     $("#error" + name).append($error);
-            // }
+            // errorPlacement: function (error, element) {
+            //     error.insertAfter('.redNote');
+            // },
 
             highlight: function(element, errorClass, validClass) {
                 $(element).closest('.form-group').addClass("has-error");
@@ -769,14 +764,14 @@ $(".next").click(function(){
             },
             messages: {
                 username: {
-                    required: "This field is required",
+                    required: 
+                    "This field is required",
                 },
                 receiverEmail : {
                     required: "receiver Email required",
                 },
                 phonenumber : {
                     required:"This field is required",
-                 
                 },
             
                 inputAddress1: {

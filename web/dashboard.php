@@ -176,7 +176,7 @@ td {
                 <div class="card  card-tasks">
                     <div class="card-header ">
                         <h4 class="card-title">Inventory Overview</h4>
-                        <p class="card-category">See all Inventory  →</p>
+                        <a href="./inventory/inventory.php" class="card-category">See all Inventory  →</a>
                     </div>
                     <div class="card-body ">
                         <div class="table-full-width">
