@@ -916,11 +916,11 @@ $(".previous").click(function(){
                         url: '/DeliveryRequests/deleteItem_Session.php',
                         data: "action=unsetsession",
                         success: function(msg) {
-                            header('Location: ../dashboard.php'); 
-
+                           window.location.href = '../dashboard.php';
+                           
                         },
                         error:function(msg){
-                            alert('wrong error');
+                            alert('your item is not cleared in the session, you can do your request later');
                             console.log(msg);
                         }
                 

@@ -4,6 +4,7 @@
 	
 	if(!isset($_SESSION['id'],$_SESSION['user_role_id']))
 	{
+        // echo "session not set";
         header('location:index.php?lmsg=true');
     }	
 
@@ -13,16 +14,19 @@
     require_once('./layouts/nav.php'); 
 
 
-// logout
-// if(isset($_POST['but_logout'])){
-//  session_destroy();
+// Check user login or not
 
-//  // Remove cookie variables
-//  $days = 30;
-//  setcookie ("rememberme","", time() - ($days * 24 * 60 * 60 * 1000));
-
-//  header('Location: index.php');
-// }
+   //log out
+    if(isset($_GET['logout']) && $_GET['logout'] == true)
+    {
+        session_destroy();
+        header("location:index.php");
+        exit;
+    }
+    if(isset($_GET['lmsg']) && $_GET['lmsg'] == true)
+    {
+        $errorMsg = "Login required to access dashboard";
+    }
 ?>
 
 <style>

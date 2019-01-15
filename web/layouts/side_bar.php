@@ -4,7 +4,8 @@
 	
 	if(!isset($_SESSION['id'],$_SESSION['user_role_id']))
 	{
-		header('location:index.php?lmsg=true');
+        header('location:index.php?lmsg=true');
+        // echo "sidebar";
 		exit;
     }	
     	
