@@ -114,7 +114,7 @@
 }
 /*progressbar*/
 #progressbar {
-	
+	padding: 0;
 	overflow: hidden;
 	/*CSS counters to number the steps*/
 	counter-reset: step;
@@ -127,7 +127,7 @@
 	width: 33%;
 	float: left;
 	position: relative;
-	/* border:1px solid #e5e5e5; */
+	/* border:1px solid #e5e5e5; /***for step border/ */
 
 
 }
@@ -143,6 +143,7 @@
 	border-radius: 3px;
 	margin: 0 auto;
 
+	border: 1px solid #e5e5e5; /***for step border/ */
 	/* border-top: 19px solid transparent;
 	border-bottom: 17px solid transparent;
 	border-left: 17px solid #2296f3; */

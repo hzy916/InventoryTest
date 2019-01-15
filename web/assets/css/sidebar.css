@@ -77,7 +77,7 @@
   
   .sidebar .dropdown .dropdown-menu li a,
   .sidebar .dropdown-submenu .dropdown-menu li a {
-    width:215px;
+    width:90%;
     white-space: normal;
     position:relative;
   }

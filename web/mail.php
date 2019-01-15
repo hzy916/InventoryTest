@@ -28,6 +28,9 @@
         $mail->Subject = $subject;
         /* Set the mail message body. */
         $mail->Body = $body;
+
+        //setting cc email receiver 
+        $ccEmailaddress = 'songtao@attitudetech.ie';
          /* SMTP parameters. */
    
         /* Tells PHPMailer to use SMTP. */

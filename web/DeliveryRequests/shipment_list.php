@@ -36,7 +36,7 @@
       <hr>
       <p><?php echo getUserName($_SESSION['id']); ?>  are login as <strong><?php echo getUserAccessRoleByID($_SESSION['user_role_id']); ?></strong></p>
 
-		<div>
+		<!-- <div>
 			<div class="card card-body">
 			<h3>Request Items List</h3>
 			<table class="table table-bordered table-sm table-hover" id='requestProductTable' width='100%' cellspacing='0'>
@@ -81,7 +81,7 @@
 					</tbody>
 				</table>
 			</div>
-		</div>
+		</div> -->
 
    	<!-- DataTables Example -->
 	<div class="card mb-3 mt-3">
@@ -101,7 +101,7 @@
 							<th class="EmployeeColumn">Employee</th>
 							<th>Submit date</th>
 							<th>Ship date</th>
-                            <th class="no-sort">Request Items</th>
+                            <!-- <th class="no-sort">Request Items</th> -->
 							<th>Status</th>
 							<th class="OperationColumn no-sort">operation</th>
 						</tr>
@@ -147,7 +147,9 @@
 												break;
 										}
 				
-
+										// <td>
+										// 	<button type='button' class='btn btn-info' onclick='JavaScript:GetRequestID(".$row['RequestID'].");'>See Request Items</button>
+										// </td>
 									echo 
 									"<tr>
 										<td>".$row['RequestID']."</td>
@@ -156,9 +158,7 @@
 										<td class='EmployeeColumn'>".$row['user_name']."</td>
 										<td>".$row['RequestDate']."</td>
 										<td>".$row['ShipDate']."</td>
-										<td>
-											<button type='button' class='btn btn-info' onclick='JavaScript:GetRequestID(".$row['RequestID'].");'>See Request Items</button>
-										</td>
+									
 										<td style='".$status_style."'>
 										".$row['status_name']."
 										</td>

@@ -151,10 +151,6 @@
         border: 1px solid #ccc;
         border-top: none;
     }
-/*center the form input */
-.halfwidth {
-   margin-left:20%;
-}
 
 /***custom alert style**/
     #confirm {
@@ -182,6 +178,40 @@
     #confirm .message {
     text-align: left;
     }
+
+    .add_item_btn{
+        float:right;
+    }
+    
+    /**prev and next button on the same row and responsive stack in mobile*/
+ 
+  
+    @media screen and (max-width: 400px) {
+        .previous { 
+            width: 100px!important;
+        }
+        .next { 
+            width: 100px!important;
+        }
+    }
+
+    /*center the form input for bigger screens*/
+    /**not using common center method cause the hr and h1 element inside the form*/
+   
+       .halfwidth{
+           margin-left:20%;
+       } 
+  
+    @media (max-width:400px){
+        .confirmLabel{
+           text-align:left;
+       }
+       .halfwidth{
+           margin-left:-15px;
+       } 
+    }
+
+    
 
 </style>
 
@@ -385,7 +415,7 @@
                                                 <th>Color</th>
                                                 <th>Amount</th>
                                                 <th>Operation</th>
-                                                <th><button id="addItem_two" class="shipbutton btn btn-1 mb-3"><i class="fa fa-plus"></i> Add Item</button></th>
+                                                <th class="add_item_btn"><button id="addItem_two" class="shipbutton btn btn-1 mb-3"><i class="fa fa-plus"></i> Add Item</button></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -431,6 +461,7 @@
                     </div>
                   
                     <div class="col-sm-12 topline">
+                        <hr class="seperateLine">
                         <button name="cancel" onclick="getConfirmation();" class="cancel previous btn">Cancel</button>
                         
                         <input id="next1" type="button" name="next" class="next action-button" value="Next" <?php echo $disable;  ?> />
@@ -543,9 +574,12 @@
                     </div>
 
                     <hr class="seperateLine">
+                
+                  
+                        <input type="button" name="previous" class="previous cancel action-button" value="Previous" />
+                        <input type="button" name="next" class="next action-button" value="Next" />
+                  
 
-                    <input type="button" name="previous" class="previous cancel action-button" value="Previous" />
-		            <input type="button" name="next" class="next action-button" value="Next" />
                 </div>
                 <!-- Wizard STEP 2 END -->
 
@@ -917,26 +951,24 @@ $(".previous").click(function(){
                         data: "action=unsetsession",
                         success: function(msg) {
                            window.location.href = '../dashboard.php';
-                           
                         },
                         error:function(msg){
                             alert('your item is not cleared in the session, you can do your request later');
                             console.log(msg);
                         }
-                
                     });
                 return true;
                }
                else{
                   
                   return false;
+                  window.location.href = './DeliveryRequests/ship.php';
                }
         }
 
   
         //check request item number is smaller than the stock
         function checkStock(){
-             
             var e = document.getElementById("sel_product");
       
             var amount = e.options[e.selectedIndex].getAttribute('amount');

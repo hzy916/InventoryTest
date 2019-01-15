@@ -106,11 +106,7 @@
 .centerFormdiv{
     text-align: center;
 }
-#realForm{
-    /* display: inline-block; */
-    /* display:table;
-    margin:auto; */
-}
+
 
 .help-block{
     display:inline; 
@@ -173,11 +169,7 @@ body{
     padding-bottom:20px;
 }
 
-/* 
-.topline{
-    bottom: -320px;
-    position: absolute;
-} */
+
 
 .footer {
     display: -webkit-box;

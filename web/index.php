@@ -104,14 +104,14 @@ if(isset($_GET['lmsg']) && $_GET['lmsg'] == true)
           </div>
 
           <!--remember me -->
-           <div class="field-group">
+           <!-- <div class="field-group">
               <div>
                   <input type="checkbox" name="remember" id="remember"
                       <?php if(isset($_COOKIE["member_login"])) { ?> checked
                   <?php } ?> /> 
                   <label for="remember-me">Remember me</label>
               </div>
-          </div>
+          </div> -->
 
         <!--Switch Button in bootstrap -->
         <!-- <div class="toggle-group">

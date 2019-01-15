@@ -13,9 +13,7 @@
     require_once('./layouts/side_bar.php'); 
     require_once('./layouts/nav.php'); 
 
-
 // Check user login or not
-
    //log out
     if(isset($_GET['logout']) && $_GET['logout'] == true)
     {
