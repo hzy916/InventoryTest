@@ -1,5 +1,10 @@
-@import url(https://fonts.googleapis.com/css?family=Montserrat);
+/* @import url(https://fonts.googleapis.com/css?family=Montserrat); */
 
+body{
+    font-family: 'Open Sans', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
+    margin:0;
+  }
 /*****comment div style******/
 
 .commentstitle{
@@ -142,10 +147,7 @@
     padding-left: 35px!important;
 }
 
-body{
-    font-family: 'Montserrat', sans-serif;
-    margin:0;
-  }
+
 
 /*****footer style*****/
 

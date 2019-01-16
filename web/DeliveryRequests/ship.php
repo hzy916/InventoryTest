@@ -18,7 +18,8 @@
 
         switch($_POST['makeaction']) {
             case 'product': 
-                list($pId,$pName,$maxAmount)=explode('-', $_POST['sel_product']);
+                list($pId,$pName,$maxAmount) = explode('-', $_POST['sel_product']);
+
                 $dNumber = intval($_POST['deliverynumber']);
 
                 switch(true) {
@@ -145,6 +146,7 @@
     function OperateOnProductSessionflyerForm($id,$op,$am,$nm){
         if(empty($_SESSION['delivery'])){
             if($op=='upd') {
+                
                 return;
             } 
             $_SESSION['delivery']=array();
@@ -359,7 +361,7 @@
                                         if($j == 0 ){
                                             $thisNumber = $row['amount'];
                                         }
-                                        echo "<option amount='".$row['amount']."' value='".$row['id']." - ".$row['itemname']." - ".$row['amount']."'>" . $row['itemname'] . "</option>";
+                                        echo "<option myId='".$row['id']."' amount='".$row['amount']."' value='".$row['id']." - ".$row['itemname']." - ".$row['amount']."'>" . $row['itemname'] . "</option>";
                                         $j++;
                                     }
                                 ?>
@@ -497,6 +499,10 @@
                                         </thead>
                                         <tbody>
 
+                                        <!-- <a class='editItem' id='edit-".$i."' productID='".$k['product_id']."'  itemType='".$k['item_type']."' productname='".$k['productname']."' 
+                                        selcolor='".$k['sel_color']."' selsize='".$k['sel_size']."'  deliverynumber='".$k['deliverynumber']."'><i class='fa fa-edit'></i>
+                                        </a>  -->
+                                        
                                         <?php    
                                             if(!empty($_SESSION['delivery'])){
                                                 foreach($_SESSION['delivery'] as $i=> $k) {
@@ -506,9 +512,7 @@
                                                         <td>".$k['sel_size']."</td>
                                                         <td>".$k['deliverynumber']."</td>
                                                         <td class='OperationColumn'>
-                                                            <a class='editItem' id='edit-".$i."' productID='".$k['product_id']."'  itemType='".$k['item_type']."' productname='".$k['productname']."' 
-                                                            selcolor='".$k['sel_color']."' selsize='".$k['sel_size']."'  deliverynumber='".$k['deliverynumber']."'><i class='fa fa-edit'></i>
-                                                            </a>
+                                            
                                                            
                                                             <a class='removeItem' id=".$i."><i class='fa fa-trash'></i></a>
                                                         </td>
@@ -1008,19 +1012,24 @@ $(".previous").click(function(){
         //to set the product type to be user's previous option when user edit
         $('#itemtypeSelect').val(itemType);
 
-        if(itemtype == 'flyerForm'){
-            $("#sel_product option[value='"+productname+"']").prop('selected', true);
+         //disable the product type edit
+        // $("#itemtypeSelect").attr('disabled','disabled');
+
+        if(itemType == 'flyerForm'){
+            $("#sel_product option[myId="+productid+"]").attr('selected', true);
             $('#deliverynumber').val(deliverynumber);
 
-            OperateOnProductSessionflyerForm(productid,'upd', deliverynumber, productname);
+            // OperateOnProductSessionflyerForm(productid,'upd', deliverynumber, productname);
             
-        }else if(itemtype == 'pawtrails_form'){
+        }else if(itemType == 'pawtrails_form'){
             $('#deliverynumber2').val(deliverynumber);
             $('#sel_color').val(selcolor);
             $('#sel_size').val(selsize);
 
-            OperateOnProductSessionPawTrailsForm(productid,'upd', selcolor, selsize, deliverynumber,productname)
+            // OperateOnProductSessionPawTrailsForm(productid,'upd', selcolor, selsize, deliverynumber,productname)
         }
+        //disable the product item edit
+        // $("#sel_product").attr('disabled','disabled');
        
     });
   
