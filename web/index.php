@@ -74,7 +74,7 @@ if(isset($_GET['lmsg']) && $_GET['lmsg'] == true)
   
 <div class="wrapperLogin">
   <div class="container">
-    <h1 class="Hey-Welcome mx-auto mt-5">HEY, WELCOME!</h1>
+    <h1 class="Hey-Welcome mx-auto mt-5">Hey, Welcome!</h1>
     	<?php 
 			if(isset($errorMsg))
 			{
@@ -86,18 +86,18 @@ if(isset($_GET['lmsg']) && $_GET['lmsg'] == true)
     ?>
     
     <div class="card card-login mx-auto mt-5 customCard">
-      <div class="card-header">PLEASE LOG IN</div>
+      <div class="card-header login_header">Please log in</div>
       <div class="card-body">
 	
         <form action="<?php echo $_SERVER['PHP_SELF']?>" class="LoginForm" method="post">
-          <label for="exampleInputEmail1">Username (Email)</label>
+          <label class="login_label" for="exampleInputEmail1">Username (Email)</label>
           <div class="form-group inner-addon left-addon redNote">
                     <!--icon -->
             <img class="glyphicon" src="assets/img/usernameicon.svg">
             <input class="form-control requiredRed" id="exampleInputEmail1"  value="<?php if(isset($_COOKIE["member_login"])) { echo $_COOKIE["member_login"]; } ?>" name="email" type="email" placeholder="Enter email" required>
           </div>
          
-          <label for="exampleInputPassword1">Password</label>
+          <label class="login_label" for="exampleInputPassword1">Password</label>
           <div class="form-group inner-addon left-addon redNote">
             <img class="glyphicon" src="assets/img/passwordicon.svg">
             <input class="form-control requiredRed" id="exampleInputPassword1" value="<?php if(isset($_COOKIE["member_password"])) { echo $_COOKIE["member_password"]; } ?>" name="password" type="password" placeholder="Password" required>

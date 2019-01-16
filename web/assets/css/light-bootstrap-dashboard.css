@@ -54,7 +54,7 @@
 
 /*           Font Smoothing      */
 
-body,
+/* body,
 h1,
 .h1,
 h2,
@@ -78,9 +78,10 @@ td,
 button.close {
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
-    font-family: "Roboto", "Helvetica Neue", Arial, sans-serif;
-    font-weight: 400;
-}
+    /* font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif; 
+    font-family: 'Open Sans', sans-serif;
+ font-weight: 400; 
+} */
 
 h1,
 .h1,
@@ -406,7 +407,7 @@ body>.navbar-collapse .logo p {
     margin: 10px 10px;
     color: #FFFFFF;
     line-height: 20px;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .sidebar .logo .simple-text,
@@ -549,7 +550,7 @@ body>.navbar-collapse .logo p {
     margin: 10px 10px;
     color: #FFFFFF;
     line-height: 20px;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .sidebar .logo .simple-text,
