@@ -334,7 +334,7 @@ if($_GET['id']) {
 
                 <script language="JavaScript">
                  function makeMyAction(val){
-                      alert(val);
+                    //   alert(val);
                      document.getElementById('postAction').value = val;
                      document.getElementById('ciaociao').submit();
                      return;

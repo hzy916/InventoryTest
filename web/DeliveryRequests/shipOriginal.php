@@ -37,16 +37,14 @@
                     case ($dNumber <= $maxAmount && $dNumber > 0):
                             //check if resubmit on reload the page
                         if($_POST['flyerToken']==$_SESSION['rand'] ){   
-                            // $_SESSION['delivery'][] = [
-                            //     'item_type' => 'flyerForm',
-                            //     'product_id' => $pId,
-                            //     'productname' => $pName,
-                            //     'sel_color' => '',
-                            //     'sel_size' => '',
-                            //     'deliverynumber' => $dNumber
-                            // ];
+                            $_SESSION['delivery'][] = [
+                                'product_id' => $pId,
+                                'productname' => $pName,
+                                'sel_color' => '',
+                                'sel_size' => '',
+                                'deliverynumber' => $dNumber
+                            ];
                         }
-                        OperateOnProductSessionflyerForm($pId,'add',$dNumber,$pName);
                     break;
                 }
             //    print('number '.$dNumber .'<br>');
@@ -67,15 +65,12 @@
                         $sel_color = $_POST['sel_color'];
                         $sel_size = $_POST['sel_size'];
 
-                        $sql = "SELECT id, itemtype,amount FROM pawtrails  WHERE color = '$sel_color' AND size = '$sel_size'";
+                        $sql = "SELECT id, amount FROM pawtrails  WHERE color = '$sel_color' AND size = '$sel_size'";
                         $result = $conn->query($sql);
                         while ($row = $result->fetch_array()) {
                             
                         $sel_id = $row['id']; 
                         $maxQty = $row['amount'];
-
-                        //select itemtype from database
-                        $itemtype = $row['itemtype'];
                         }
                         
                         $dNumber = intval($_POST['deliverynumber']);
@@ -94,15 +89,13 @@
                                 $doAction = false;
                             break;
                             case ($dNumber <= $maxQty && $dNumber > 0):
-                                // $_SESSION['delivery'][] = [
-                                //     'item_type' => 'pawtrails_form',
-                                //     'product_id' => $sel_id,
-                                //     'productname' => 'PawTrails',
-                                //     'sel_color' => $sel_color,
-                                //     'sel_size' => $sel_size,
-                                //     'deliverynumber' => $dNumber
-                                // ];
-                                OperateOnProductSessionPawTrailsForm($sel_id,'add', $sel_color, $sel_size,$dNumber,'PawTrails');
+                                $_SESSION['delivery'][] = [
+                                    'product_id' => $sel_id,
+                                    'productname' => 'PawTrails',
+                                    'sel_color' => $sel_color,
+                                    'sel_size' => $sel_size,
+                                    'deliverynumber' => $dNumber
+                                ];
                             break;
                         }  
                     }else{
@@ -141,77 +134,6 @@
     $rand=rand();
     $_SESSION['rand']=$rand;
  
-    //to check if flyer product exist in the session
-    function OperateOnProductSessionflyerForm($id,$op,$am,$nm){
-        if(empty($_SESSION['delivery'])){
-            if($op=='upd') {
-                return;
-            } 
-            $_SESSION['delivery']=array();
-        } 
-        //change the product number of the product in the session
-        foreach($_SESSION['delivery'] as $k => $v){
-            if($v['product_id']==$id) {
-                if($op='add') {
-                    $_SESSION['delivery'][$k]['deliverynumber']=$v['deliverynumber']+$am;
-                } else {
-                    $_SESSION['delivery'][$k]['deliverynumber']=$am;
-                }
-                return;
-            }
-        }
-        if($op=='add') {
-            $_SESSION['delivery'][] = [
-                'item_type' => 'flyerForm',
-                'product_id' => $id,
-                'productname' => $nm,
-                'sel_color' => '',
-                'sel_size' => '',
-                'deliverynumber' => $am
-            ];
-            return;
-        }
-        return;
-    }
-
-    /****************************************/
-    //for pawtrails all in one adding products 
-    /****************************************/
-    function OperateOnProductSessionPawTrailsForm($id,$op, $color, $size, $am,$nm){
-        if(empty($_SESSION['delivery'])){
-            if($op=='upd') {
-                return;
-            } 
-            $_SESSION['delivery']=array();
-        } 
-        //change the product number of the product in the session
-        foreach($_SESSION['delivery'] as $k => $v){
-            if($v['product_id']==$id) {
-                if($op='add') {
-                    $_SESSION['delivery'][$k]['deliverynumber'] = $v['deliverynumber']+$am;
-                    $_SESSION['delivery'][$k]['sel_color'] = $v['sel_color'];
-                    $_SESSION['delivery'][$k]['sel_size'] = $v['sel_size'];
-                } else {
-                    $_SESSION['delivery'][$k]['deliverynumber']=$am;
-                    $_SESSION['delivery'][$k]['sel_color'] = $v['sel_color'];
-                    $_SESSION['delivery'][$k]['sel_size'] = $v['sel_size'];
-                }
-                return;
-            }
-        }
-        if($op=='add') {
-             $_SESSION['delivery'][] = [
-                'item_type' => 'pawtrails_form',
-                'product_id' => $id,
-                'productname' => 'PawTrails',
-                'sel_color' => $color,
-                'sel_size' => $size,
-                'deliverynumber' => $am
-            ];
-            return;
-        }
-        return;
-    }
 
 ?>
 
@@ -289,9 +211,6 @@
        } 
     }
 
-    .hide_btn{
-        display:none;
-    }
     
 
 </style>
@@ -322,24 +241,26 @@
                         </div>
                     </div>
 
-                <!--hide or show the form -->
-                <script>
-                    function handleSelection(choice) {
-                    //document.getElementById('select').disabled=true;
-                    if(choice=='flyerForm')
-                        {
-                            document.getElementById(choice).style.display="block";
-                            document.getElementById('pawtrails_form').style.display="none";
-                        }
-                        else
-                        {
-                            document.getElementById(choice).style.display="block";
-                            document.getElementById('flyerForm').style.display="none";
-                        }
-                    }
-                </script>
+                        <script>
+                    
+                            function handleSelection(choice) {
+                            //document.getElementById('select').disabled=true;
+                            if(choice=='flyerForm')
+                                {
+                                document.getElementById(choice).style.display="block";
+                                document.getElementById('pawtrails_form').style.display="none";
+                                }
+                                else
+                                {
+                                document.getElementById(choice).style.display="block";
+                                document.getElementById('flyerForm').style.display="none";
+                                }
+                            }
+                        </script>
                 
+
                 <!-- The Form for flyer or posters-->
+
                 <form name="flyerForm" class="form-horizontal" method="POST" id="flyerForm">
                     <input type="hidden"  name="makeaction" value="product">
                     <!--set random number to check resumbit on refresh -->
@@ -371,22 +292,23 @@
                     <div class="form-group">    
                         <label class="fieldLabel col-xs-2" for="stocknumber">Stock Number</label>
                         <div class="col-xs-10 oneline">
-                            <span id="stocknumber"><?php echo $thisNumber; ?>
-                            </span>
+                            <span id="stocknumber"><?php echo $thisNumber; ?></span>
                         </div>
                     </div>
-
+                    
                     <div class="form-group">   
                         <label class="fieldLabel col-xs-2" for="deliverynumber">Number</label>
                         <div class="col-xs-10 oneline redNote">
+                        
                             <input type="number" class="form-control" name="deliverynumber" id="deliverynumber" placeholder="number"  min="1" >		
                         </div>
                     </div>  
                         <button type="button" name="AddProduct" onclick="checkBeforeSubmit();" class="addBtn mt-5 mb-3">Add Now</button>
-  
+   
                 </form>
         
             <!-- The Form for pawtrails all in one -->
+        
                 <form name="pawtrails_form" method="POST" id="pawtrails_form" style="display:none">
                     <input type="hidden"  name="makeaction" value="pawtrailsSelect">
 
@@ -427,6 +349,7 @@
                         <input type="number" class="form-control" name="deliverynumber" id="deliverynumber2" placeholder="number"  min="1" required>		
                     </div>  
                     
+
                     <button type="button" name="AddProduct"  onclick="checkPawTrailsBeforeSubmit();" class="mt-5 mb-3 addBtn">Add Now</button>
                 </form>
             </div>
@@ -496,7 +419,6 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-
                                         <?php    
                                             if(!empty($_SESSION['delivery'])){
                                                 foreach($_SESSION['delivery'] as $i=> $k) {
@@ -506,10 +428,7 @@
                                                         <td>".$k['sel_size']."</td>
                                                         <td>".$k['deliverynumber']."</td>
                                                         <td class='OperationColumn'>
-                                                            <a class='editItem' id='edit-".$i."' productID='".$k['product_id']."'  itemType='".$k['item_type']."' productname='".$k['productname']."' 
-                                                            selcolor='".$k['sel_color']."' selsize='".$k['sel_size']."'  deliverynumber='".$k['deliverynumber']."'><i class='fa fa-edit'></i>
-                                                            </a>
-                                                           
+                                                            <a class='removeItem' id=".$i."><i class='fa fa-edit'></i></a>
                                                             <a class='removeItem' id=".$i."><i class='fa fa-trash'></i></a>
                                                         </td>
                                                         <td></td>
@@ -871,6 +790,8 @@ $(".next").click(function(){
                 },
             }
         
+            // errorElement: 'span',
+            // errorLabelContainer:'.errorTxt'
         });
     // //end of custom validation on next button
     // alert(form.valid());
@@ -986,44 +907,7 @@ $(".previous").click(function(){
         modal.style.display = "block";
     }
 
-    //when user click edit, it will clear the session  pop up modal selection box
-    $(".editItem").on("click", function(){
-        //get attributes
-        var itemType = $(this).attr('itemType');
-        var selcolor = $(this).attr('selcolor');
-        var selsize = $(this).attr('selsize');
-        var deliverynumber = $(this).attr('deliverynumber');
-        var productname = $(this).attr('productname');
-        var productid = $(this).attr('productID');
-       
-        var finalProductvalue = productid + " - " +productname + " - " + deliverynumber;
-        alert(itemType);
-        alert(productid);
-        alert(productname);
 
-        //pop up product selection box
-        modal.style.display = "block";
-
-        handleSelection(itemType);
-        //to set the product type to be user's previous option when user edit
-        $('#itemtypeSelect').val(itemType);
-
-        if(itemtype == 'flyerForm'){
-            $("#sel_product option[value='"+productname+"']").prop('selected', true);
-            $('#deliverynumber').val(deliverynumber);
-
-            OperateOnProductSessionflyerForm(productid,'upd', deliverynumber, productname);
-            
-        }else if(itemtype == 'pawtrails_form'){
-            $('#deliverynumber2').val(deliverynumber);
-            $('#sel_color').val(selcolor);
-            $('#sel_size').val(selsize);
-
-            OperateOnProductSessionPawTrailsForm(productid,'upd', selcolor, selsize, deliverynumber,productname)
-        }
-       
-    });
-  
     // When the user clicks on <span> (x), close the modal
     span.onclick = function() {
         modal.style.display = "none";
