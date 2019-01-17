@@ -262,6 +262,11 @@
     .add_item_btn{
         float:right;
     }
+
+    .no_uppercase > th{
+        text-transform:none!important;
+        font-size:14px!important;
+    }
     
     /**prev and next button on the same row and responsive stack in mobile*/
  
@@ -498,7 +503,7 @@
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="requestProductTable" width="100%" cellspacing="0">
                                         <thead>
-                                            <tr>
+                                            <tr class="no_uppercase">
                                                 <!-- <th>item id</th> -->
                                                 <th>Product Name</th>
                                                 <th>Size</th>
@@ -566,7 +571,7 @@
                 <!-- Wizard STEP 1 END -->
 
                 <!-- Wizard STEP 2 -->
-                <div class="fieldset row setup-content" id="step2">
+                <div class="fieldset setup-content" id="step2">
                     <h2 class="fs-title">Receiver’s Details</h2>
                     <hr class="seperateLine">
                                                         

@@ -5,6 +5,11 @@ body {
  position: relative;
 }
 
+@media (min-width: 500px){
+      #customlinklist{
+        text-align:right;
+    }
+}
 
   #customlinklist li a {
       color: #525a65!important;

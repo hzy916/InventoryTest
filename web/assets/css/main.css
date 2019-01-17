@@ -239,6 +239,7 @@ body>.navbar-collapse .nav li.active .nav-link {
     letter-spacing: normal;
     color: #525a65;
     line-height: 60px;
+    margin-bottom:0px!important;
 }
 
 #customlinklist li {

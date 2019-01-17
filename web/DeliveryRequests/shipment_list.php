@@ -21,17 +21,18 @@
 
 
 
-
+     <!-- Breadcrumbs-->
+	 <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="../dashboard.php">Dashboard<i class="fa fa-angle-right"></i></a>
+		</li>
+		<br>
+		<li class="breadcrumb-item active">Shipment Requests</li>
+      </ol>
  
   <div class="content-wrapper">
     <div class="container-fluid">
-      <!-- Breadcrumbs-->
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="../dashboard.php">Dashboard</a>
-        </li>
-		<li class="breadcrumb-item active">Shipment Requests</li>
-      </ol>
+ 
       <h1>Delivery request table</h1>
       <hr>
       <p><?php echo getUserName($_SESSION['id']); ?>  are login as <strong><?php echo getUserAccessRoleByID($_SESSION['user_role_id']); ?></strong></p>

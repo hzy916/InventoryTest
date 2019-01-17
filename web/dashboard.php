@@ -52,13 +52,14 @@ td {
 .Companyrow{
   color: #525a65;
   font-family: Montserrat;
-  font-size: 13px;
+  font-size: 13px!important;
   text-transform:none!important;
 }
 
 .requestTitle{
   letter-spacing: 0.6px;
-  color: #525a65;
+  color:  #a8acb2;
+  font-size:13px!important;
 } 
 
 .card .table tbody td:first-child, .card .table thead th:first-child {
@@ -110,6 +111,11 @@ td {
 .margin_left{
     margin-left:1rem!important;
 }
+
+.table .td-actions {
+    margin-right: 20px;
+}
+
 </style>
       <!-- Breadcrumbs-->
     <div class="full_width">
@@ -262,14 +268,14 @@ td {
                                 </tr>
 
                                 <tr>
-                                    <td class="td-actions requestTitle">PawTrails All in One</td>
-                                    <td class="td-actions  requestTitle">
+                                    <td class="td-actions Companyrow">PawTrails All in One</td>
+                                    <td class="td-actions Companyrow">
                                         Red
                                     </td>
-                                    <td class="td-actions  requestTitle">
+                                    <td class="td-actions Companyrow">
                                         Small
                                     </td>
-                                    <td class="td-actions  requestTitle">
+                                    <td class="td-actions Companyrow">
                                         <?php
                                                 $sql = "SELECT * FROM pawtrails WHERE id = 27";
                                                 $result = $conn->query($sql);
@@ -291,19 +297,19 @@ td {
                                                 }
                                                 ?>
                                         </td>
-                                        <td class="td-actions requestTitle">
+                                        <td class="td-actions">
                                             <span style="text-align:center; padding: 6px 20px; color: #fff; <?php echo $tdStyle; ?>"><?php echo $stocktext; ?></span>
                                         </td>
                                 </tr>
                                 <tr>
-                                    <td class="td-actions requestTitle">PawTrails All in One</td>
-                                    <td class="td-actions  requestTitle">
+                                    <td class="td-actions Companyrow">PawTrails All in One</td>
+                                    <td class="td-actions Companyrow">
                                         Black
                                     </td>
-                                    <td class="td-actions  requestTitle">
+                                    <td class="td-actions Companyrow">
                                         Small
                                     </td>
-                                    <td class="td-actions  requestTitle">
+                                    <td class="td-actions Companyrow">
                                     <?php
                                             $sql = "SELECT * FROM pawtrails WHERE id = 28";
                                             $result = $conn->query($sql);
@@ -325,7 +331,7 @@ td {
                                             }
                                             ?>
                                     </td>
-                                    <td class="td-actions requestTitle">
+                                    <td class="td-actions Companyrow">
                                         <span style="text-align:center; padding: 6px 20px; color: #fff;  <?php echo $tdStyle; ?>"><?php echo $stocktext; ?></span>
                                     </td>
                                 </tr>

@@ -85,7 +85,7 @@ body {
 }
 
 .wrapperLogin{
-    min-height: calc(100% - 160px);
+    min-height: calc(100% - 60px);
     margin-bottom: 50px;
     /**in order to center the log in form both horizontally and vertically*/
     height: 100%;
@@ -115,9 +115,6 @@ body {
 
 <body class="bg-light">
     <!-- Just an image -->
-  
- 
-  
 <div class="wrapperLogin">
   <div class="container center_login">
       <a class="navbar-brand ml-5 mt-5" href="http://www.attitudetech.ie">

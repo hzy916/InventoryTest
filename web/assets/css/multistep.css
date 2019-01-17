@@ -4,10 +4,6 @@
 		text-align: left;
 	}
 
-	.shipcontent h4{
-		text-transform: uppercase;
-	}
-
 	#requestProductTable td, #requestProductTable th {
 		border-left:none;
 		border-right:none;
@@ -32,7 +28,6 @@
 		font-size:13px;
 	}
 
-
 	.submitBTN, .next{
 		width: 180px;
 		height: 32px;
@@ -42,6 +37,7 @@
 		text-transform: uppercase;
 		float:right;
 		font-size:13px;
+		font-weight: 200;
 	}
 
 	.submitBTN:hover{
@@ -54,12 +50,16 @@
 .add_title{
 	text-align: left;
 	color: #525a65;
+	opacity: 0.8;
+	letter-spacing: normal;
+	font-size: 1.3em;
 }
 
 .itemDetails{
 	color: #525a65;
 	text-align: left;
 	border-bottom:1px solid rgba(186,200,219, 0.4);
+	font-size:1.1rem;
 }
 
 .selectBox{
@@ -99,8 +99,8 @@
 	display: none;
 }
 
-#msform .action-button:hover, #msform .action-button:focus {
-	box-shadow: 0 0 0 2px white, 0 0 0 3px #67d5bf;
+#next1:hover{
+	opacity: 0.8;
 }
 /*headings*/
 .fs-title {
