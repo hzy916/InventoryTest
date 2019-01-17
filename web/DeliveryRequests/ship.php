@@ -16,9 +16,6 @@
 
     if($_POST['oldVALUES']!='0') {
         list($oCLASS,$oPID,$oCOLOR,$oSIZE)=explode('@',$_POST['oldVALUES']);
-        // if($oCLASS!=$_POST['makeaction']){
-        //         print('DELETE ITEM <br>ADD NEW<BR>');
-        // } 
     }
 
         $doAction = true;
@@ -324,7 +321,10 @@
     .hide_btn{
         display:none;
     }
- 
+    
+    .editItem, .removeItem{
+        cursor: pointer;
+    }
 
 </style>
 
@@ -1037,11 +1037,8 @@ $(".previous").click(function(){
         var productid = $(this).attr('productID');
        
         var finalProductvalue = productid + " - " +productname + " - " + deliverynumber;
-        // alert(itemType);
-        // alert(productid);
-        // alert(productname);
+      
         $('.add_title').html('Edit the Item');
-        
         
         var oldValues = itemType + '@' + parseInt(productid) + '@' + selcolor + '@' +  selsize;
         //set the old values in the hidden field text
