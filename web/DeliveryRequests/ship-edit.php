@@ -16,10 +16,12 @@
 
     if($_POST['oldVALUES']!='0') {
         list($oCLASS,$oPID,$oCOLOR,$oSIZE)=explode('@',$_POST['oldVALUES']);
-        // if($oCLASS!=$_POST['makeaction']){
-        //         print('DELETE ITEM <br>ADD NEW<BR>');
-        // } 
+        if($oCLASS!=$_POST['makeaction']){
+                print('DELETE ITEM <br>ADD NEW<BR>');
+        } 
     }
+
+
 
         $doAction = true;
 
@@ -28,8 +30,7 @@
                 list($pId,$pName,$maxAmount) = explode('-', $_POST['sel_product']);
 
                 if(isSet($oPID) && $oPID!=$pId){
-                    //delete the product in the session
-                    OperateOnProductSessionflyerForm($oPID,'del',0,0);
+                    print('DELETE ITEM <br>ADD NEW flyer<BR>');
                 } 
 
                 $dNumber = intval($_POST['deliverynumber']);
@@ -49,14 +50,17 @@
                     break;
                     case ($dNumber <= $maxAmount && $dNumber > 0):
                             //check if resubmit on reload the page
-                        if($_POST['flyerToken']==$_SESSION['rand'] ){
-                            $myOp='add';
-                            if(isSet($oPID) && $oPID==$pId){
-                                $myOp='upd';
-                            }
-                            OperateOnProductSessionflyerForm($pId,$myOp,$dNumber,$pName);
+                        if($_POST['flyerToken']==$_SESSION['rand'] ){   
+                            // $_SESSION['delivery'][] = [
+                            //     'item_type' => 'flyerForm',
+                            //     'product_id' => $pId,
+                            //     'productname' => $pName,
+                            //     'sel_color' => '',
+                            //     'sel_size' => '',
+                            //     'deliverynumber' => $dNumber
+                            // ];
                         }
-                      
+                        OperateOnProductSessionflyerForm($pId,'add',$dNumber,$pName);
                     break;
                 }
 
@@ -89,11 +93,11 @@
                         //check if is the same product id, if not delete in the session and add new 
 
                         if(isSet($oPID) && $oPID!=$sel_id){
-                  
-                            OperateOnProductSessionPawTrailsForm($oPID,'del',0,0,0,0);
+                            print('DELETE ITEM <br>ADD NEW pawtrails<BR>');
                         }
                         
                         $dNumber = intval($_POST['deliverynumber']);
+
                         switch(true) {
                             case ($dNumber == 0):
                                 echo '<script> alert("You have to enter a valid number");</script>';
@@ -108,12 +112,15 @@
                                 $doAction = false;
                             break;
                             case ($dNumber <= $maxQty && $dNumber > 0):
-                                $myOp='add';
-                                if(isSet($oPID) && $oPID==$sel_id){
-                                    $myOp='upd';
-                                }
-                                OperateOnProductSessionPawTrailsForm($sel_id,$myOp,$sel_color, $sel_size,$dNumber,'PawTrails');
-                         
+                                // $_SESSION['delivery'][] = [
+                                //     'item_type' => 'pawtrails_form',
+                                //     'product_id' => $sel_id,
+                                //     'productname' => 'PawTrails',
+                                //     'sel_color' => $sel_color,
+                                //     'sel_size' => $sel_size,
+                                //     'deliverynumber' => $dNumber
+                                // ];
+                                OperateOnProductSessionPawTrailsForm($sel_id,'add', $sel_color, $sel_size,$dNumber,'PawTrails');
                             break;
                         }  
                     }else{
@@ -155,29 +162,23 @@
     //to check if flyer product exist in the session
     function OperateOnProductSessionflyerForm($id,$op,$am,$nm){
         if(empty($_SESSION['delivery'])){
-            if($op=='upd' || $op=='del') {
+            if($op=='upd') {
+                
                 return;
             } 
             $_SESSION['delivery']=array();
-        }
-        //returns the integer value of id variable.
-        $id=intval($id); 
+        } 
         //change the product number of the product in the session
         foreach($_SESSION['delivery'] as $k => $v){
-            $v['product_id']=intval($v['product_id']);
             if($v['product_id']==$id) {
-              
-                if($op=='add') {
+                if($op='add') {
                     $_SESSION['delivery'][$k]['deliverynumber']=$v['deliverynumber']+$am;
-                } elseif($op=='del') {
-                    unset($_SESSION['delivery'][$k]);
                 } else {
                     $_SESSION['delivery'][$k]['deliverynumber']=$am;
                 }
                 return;
             }
         }
-
         if($op=='add') {
             $_SESSION['delivery'][] = [
                 'item_type' => 'flyerForm',
@@ -197,31 +198,22 @@
     /****************************************/
     function OperateOnProductSessionPawTrailsForm($id,$op, $color, $size, $am,$nm){
         if(empty($_SESSION['delivery'])){
-            if($op=='upd'|| $op=='del') {
+            if($op=='upd') {
                 return;
             } 
             $_SESSION['delivery']=array();
         } 
-        //returns the integer value of id variable.
-        $id=intval($id); 
-
         //change the product number of the product in the session
         foreach($_SESSION['delivery'] as $k => $v){
-            $v['product_id']=intval($v['product_id']);
-
             if($v['product_id']==$id) {
-                if($op=='add') {
+                if($op='add') {
                     $_SESSION['delivery'][$k]['deliverynumber'] = $v['deliverynumber']+$am;
-                    // $_SESSION['delivery'][$k]['sel_color'] = $v['sel_color'];
-                    // $_SESSION['delivery'][$k]['sel_size'] = $v['sel_size'];
-                } elseif($op=='del') {
-                    unset($_SESSION['delivery'][$k]);
-                } 
-                
-                else {
+                    $_SESSION['delivery'][$k]['sel_color'] = $v['sel_color'];
+                    $_SESSION['delivery'][$k]['sel_size'] = $v['sel_size'];
+                } else {
                     $_SESSION['delivery'][$k]['deliverynumber']=$am;
-                    // $_SESSION['delivery'][$k]['sel_color'] = $v['sel_color'];
-                    // $_SESSION['delivery'][$k]['sel_size'] = $v['sel_size'];
+                    $_SESSION['delivery'][$k]['sel_color'] = $v['sel_color'];
+                    $_SESSION['delivery'][$k]['sel_size'] = $v['sel_size'];
                 }
                 return;
             }
