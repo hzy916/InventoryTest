@@ -294,7 +294,7 @@
     .hide_btn{
         display:none;
     }
-    
+ 
 
 </style>
 
@@ -435,16 +435,27 @@
         </div>
     </div>
     <!-- ENd of The alert Modal -->
+     <!-- Breadcrumbs-->
+     <div class="full_width">
+        <ol class="breadcrumb nav_border_bottom">
+            <li class="breadcrumb-item">
+            <a href="../dashboard.php">Dashboard<i class="fa fa-angle-right"></i></a>
+            </li>
+            <br>
+            <li class="breadcrumb-item active"> New Shipment Request</li>
+        </ol>
+    </div>
+     <!-- END of  Breadcrumbs-->
 
 <div class="content-wrapper">
     <div class="container-fluid">
-        <!-- Breadcrumbs-->
+        <!-- Breadcrumbs
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a href="../dashboard.php">Dashboard</a>
             </li>
             <li class="breadcrumb-item active">New Shipment Request</li>
-        </ol>
+        </ol> -->
         
 
     <!-- MultiStep Form -->
@@ -745,7 +756,7 @@
                     <input type="button" name="previous" class="previous cancel action-button" value="Previous" />
 
                     <input type="hidden"  name="makeaction" value="submitRequest">
-                    <button type="button" class="submitBTN btn btn-primary" onclick="return IsTermChecked();">Submit</button>
+                    <button type="button" class="submitBTN" onclick="return IsTermChecked();">Submit</button>
 
                 </form>                
             </div>  

@@ -14,11 +14,17 @@ body {
       float: right;
       line-height:50px;
   }
+  @media (min-width: 1500px){
+    .custom_container_large{
+        max-width: 1440px!important;
+    }
+  }
+
   </style>
     
       </div>
          <footer class="footer">
-              <div class="container">
+              <div class="container custom_container_large">
                   <div class="footerrow">  
                     <div class="column_half">
                         <div class="copyright-text">

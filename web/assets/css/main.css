@@ -1,8 +1,6 @@
-/* @import url(https://fonts.googleapis.com/css?family=Montserrat); */
 
 body{
     font-family: 'Open Sans', sans-serif;
-    /* font-family: 'Montserrat', sans-serif; */
     margin:0;
   }
 
@@ -16,6 +14,36 @@ body{
 
 .login_label{
     color: #a8acb2;
+}
+
+/*****Dashboard style********/
+
+.sidebar .nav li .nav-link p, body>.navbar-collapse .nav li .nav-link p {
+    text-transform: none!important;
+    font-weight: 300!important;
+}
+/**remove hover background effects**/
+.sidebar .nav li .nav-link:hover, body>.navbar-collapse .nav li .nav-link:hover {
+    background: transparent !important;
+}
+
+.sidebar .nav li.active .nav-link,
+body>.navbar-collapse .nav li.active .nav-link {
+    background: transparent !important;
+}
+
+.sidebar .nav .nav-link, body>.navbar-collapse .nav .nav-link {
+    text-transform: none!important;
+    font-size: 13px!important;
+    font-weight: 300!important;
+}
+
+.sidebar .dropdown-menu li a:hover, .sidebar .dropdown-menu li a:focus, .sidebar .dropdown-menu li.open a:hover, .sidebar .dropdown-menu li.open a:focus {
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    background-color: transparent;
+    width: 215px;
 }
 
 
@@ -121,7 +149,6 @@ body{
 
 
 
-
 /*******Form input and labels style**********/
 .confirmLabel{
     display: inline-block;
@@ -177,7 +204,6 @@ body{
       display:table-cell;
       width:50%;
       padding:0 20px;
-      
     }
   }  
 
@@ -192,8 +218,6 @@ body{
     padding-bottom:20px;
 }
 
-
-
 .footer {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -207,8 +231,7 @@ body{
 }
 
 .footerleft {
-    font-family: 'OpenSans';
-    font-size: 11px;
+    font-size: 12px;
     font-weight: normal;
     font-style: normal;
     font-stretch: normal;
@@ -220,8 +243,7 @@ body{
 
 #customlinklist li {
     display: inline;
-    font-family: 'OpenSans';
-    font-size: 11px;
+    font-size: 12px;
     font-weight: normal;
     font-style: normal;
     font-stretch: normal;
@@ -237,23 +259,28 @@ body{
 
 /***NAV bar style***/
 .navbar{
-    background-color:#e9ecef!important;
+    background-color:#f7f7f8!important;
 }
 
 .breadcrumb{
     background-color: #ffffff;
-    padding: 2rem 1rem;
+    padding: 1rem 2rem;
 }
 .breadcrumb-item a{
     color:#868e96!important;
 }
 
 .breadcrumb-item.active {
-    text-transform: uppercase;
+    text-transform: none;
     color: #2991ca;
-    font-size: 1.2em;
+    font-size: 1.4em;
+    opacity: 0.8;
+    font-weight: 300;
 }
 
+.nav_border_bottom{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
 
 /*************************************/
 /**Login Page Style******/

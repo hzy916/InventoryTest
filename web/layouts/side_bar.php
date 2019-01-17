@@ -89,7 +89,7 @@
 
 </style>
 
-<div class="sidebar" data-image="../assets/img/sidebar-2.jpg">
+<div class="sidebar">
             <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
 
@@ -133,9 +133,9 @@
                         </ul>
                     </li>
 
-                    <hr>
+                    <hr style="border-top: 1px solid #6b7077;">
 
-
+               
 
                     <li class="dropdown multiSide">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
@@ -159,7 +159,7 @@
                         </ul>
                     </li>
 
-                    <hr>
+                    <hr style="border-top: 1px solid #6b7077;">
 
                     <li>
                         <a class="nav-link" href="/inventory/inventory.php">
@@ -167,6 +167,8 @@
                             <p>Inventory</p>
                         </a>
                     </li>
+                    <hr style="border-top: 1px solid #6b7077;">
+
                 </ul>
             </div>
         </div>

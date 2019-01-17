@@ -50,9 +50,10 @@ td {
   color: #525a65;
 }
 .Companyrow{
-  color: #a8acb2;
+  color: #525a65;
   font-family: Montserrat;
   font-size: 13px;
+  text-transform:none!important;
 }
 
 .requestTitle{
@@ -66,52 +67,102 @@ td {
 
 .highlight{
   font-weight: 400;
+  text-transform:none;
+}
+
+.table_bottom_custom{
+    margin-bottom:0px;
+}
+
+.breadcrumb-item.active {
+    text-transform: none!important;
+}
+
+.grey_title > td{
+    color: #a8acb2;
+}
+
+.text_right{
+    text-align:right!important;
+}
+
+.no_top_border{
+    border-top:none!important;
+}
+
+.text_color{
+    color: #525a65!important;
+}
+
+.th_top{
+    border-top: 1px solid #e9ecef;
+}
+.custom_table_bottom{
+    margin-bottom:0px!important;
+}
+.video_box{
+    padding:25px;
+}
+.video_container{
+    width:100%;
+    margin:0 10px;
+}
+.margin_left{
+    margin-left:1rem!important;
 }
 </style>
-
-  <div class="content">
-    <div class="container-fluid">
       <!-- Breadcrumbs-->
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                <a href="dashboard.php">Home</a>
-                </li>
-                <li class="breadcrumb-item active"> Dashboard</li>
-            </ol>
+    <div class="full_width">
+        <ol class="breadcrumb nav_border_bottom">
+            <li class="breadcrumb-item">
+            <a href="dashboard.php">Home<i class="fa fa-angle-right"></i></a>
+            </li>
+            <br>
+            <li class="breadcrumb-item active"> Dashboard</li>
+        </ol>
+    </div>
+  <div class="content">
  
-    
+    <div class="container-fluid">
             <div class="row">
                 <div class="col-md-6 col-lg-6">
                     <div class="card  card-tasks">
                         <div class="card-header ">
-                            <h4 class="card-title highlight">Un-Completed Shipment Request</h4>
-                            <a href="DeliveryRequests/delivery_table.php" class="card-category">See all Requests  →</a>
+                            <table class="table table-full-width custom_table_bottom">
+                                <tr>
+                                    <td class="no_top_border"><h4 class="card-title text_color">Un-Completed Design Request</h4></td>
+                                    <td class="no_top_border text_right"><a href="./DesignRequests/design_request_table.php" class="card-category">See all Requests  →</a></td>
+                                </tr>
+                            </table>
                         </div>
+                    
                         <div class="card-body ">
                             <div class="table-full-width">
-                            <table class="table">
-
+                                <table class="table table_bottom_custom">
+                                   
+                                      
                                         <?php
                                             $sql = "SELECT Receiver.first_name as fullname, Request_status.status_name as status_name FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN Receiver ON Request.ReceiverID = Receiver.receiver_id  WHERE Request.RequestStatusID != 5 LIMIT 0,2;";
                                             $result = $conn->query($sql);
                     
                                             if($result->num_rows > 0) {
                                                 echo "      
-                                                <thead>
+                                                <thead class='th_top'>
                                                     <tr>
                                                         <th class='Companyrow'>Title</th>
-                                                        <th class='td-actions text-right statusTH Companyrow'>
+                                                        <th class='td-actions statusTH Companyrow'>
                                                             Status
                                                         </th>
                                                     </tr>
-                                                </thead>
-                                                <tbody>";
+                                                </thead> 
+                                                <tbody>
+                                               ";
 
                                                 while($row = $result->fetch_assoc()) {
                                                     echo 
                                                     "<tr>
                                                         <td class='Companyrow'>".$row['fullname']."</td>
-                                                        <td class='td-actions text-right Companyrow'><span style='color:#ffffff; margin-right:10px;text-align:center; background-color:#f5a623; padding: 6px;'>".$row['status_name']."</span></td>
+                                                        <td class='td-actions text-right Companyrow'><span style='color:#ffffff; margin-right:10px;text-align:center; background-color:#f5a623;  padding: 6px 10px;'>".$row['status_name']."</span></td>
                                                     </tr>";
                                                 }
                                             } else {
@@ -128,33 +179,41 @@ td {
 
                     <div class="col-md-6 col-lg-6">
                     <div class="card  card-tasks">
+                
                         <div class="card-header ">
-                            <h4 class="card-title highlight">Un-Completed Design Request</h4>
-                            <a href="DesignRequests/design_request_table.php" class="card-category">See all Requests  →</a>
+                            <table class="table table-full-width custom_table_bottom">
+                                <tr>
+                                    <td class="no_top_border"><h4 class="card-title text_color">Un-Completed Design Request</h4></td>
+                                    <td class="no_top_border text_right"><a href="./DesignRequests/design_request_table.php" class="card-category">See all Requests  →</a></td>
+                                </tr>
+                            </table>
                         </div>
                         <div class="card-body ">
                             <div class="table-full-width">
-                            <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th class="Companyrow">Title</th>
-                                            <th class="td-actions text-right statusTH Companyrow">
-                                                Status
-                                            </th>
-                                        </tr>
-                                    </thead> 
-
+                            <table class="table table_bottom_custom">
                                     <tbody>
                                         <?php
                                             $sql = "SELECT CustomRequest.companyName as companyName, Request_status.status_name as status_name FROM CustomRequest JOIN Request_status ON CustomRequest.c_RequestStatusID = Request_status.status_id  WHERE CustomRequest.c_RequestStatusID = 1 LIMIT 0,2;";
                                             $result = $conn->query($sql);
                     
                                             if($result->num_rows > 0) {
+                                                echo"
+                                                <thead class='th_top'>
+                                                    <tr>
+                                                        <th class='Companyrow'>Title</th>
+                                                        <th class='td-actions text-right statusTH Companyrow'>
+                                                            Status
+                                                        </th>
+                                                    </tr>
+                                                </thead> 
+                                                <tbody>
+                                                ";
+
                                                 while($row = $result->fetch_assoc()) {
                                                     echo 
                                                     "<tr>
                                                         <td class='Companyrow'>".$row['companyName']."</td>
-                                                        <td class='td-actions text-right Companyrow'><span style='color:#ffffff; text-align:center; margin-right:10px; padding: 6px;background-color:#f5a623;'>".$row['status_name']."</span></td>
+                                                        <td class='td-actions text-right Companyrow'><span style='color:#ffffff; text-align:center; margin-right:10px; padding: 6px 10px;background-color:#f5a623;'>".$row['status_name']."</span></td>
                                                     </tr>";
                                                 }
                                             } else {
@@ -175,14 +234,18 @@ td {
             <div class="col-md-12 col-lg-12">
                 <div class="card  card-tasks">
                     <div class="card-header ">
-                        <h4 class="card-title">Inventory Overview</h4>
-                        <a href="./inventory/inventory.php" class="card-category">See all Inventory  →</a>
+                        <table class="table table-full-width">
+                            <tr>
+                                <td class="no_top_border"><h4 class="card-title text_color">Inventory Overview</h4></td>
+                                <td class="no_top_border text_right"><a href="./inventory/inventory.php" class="card-category">See all Inventory  →</a></td>
+                            </tr>
+                        </table>
                     </div>
                     <div class="card-body ">
                         <div class="table-full-width">
-                        <table class="table">
+                        <table class="table table_bottom_custom">
                             <tbody>
-                                <tr>
+                                <tr class="grey_title">
                                     <td class="td-actions  requestTitle">Product Name</td>
                                     <td class="td-actions  requestTitle">
                                         Color
@@ -215,7 +278,7 @@ td {
                                                     while($row = $result->fetch_assoc()) {
                                                         // set styles the way you want
                                                         if($row['amount'] > 0) {
-                                                            $tdStyle='background-color:#ADFF2F';
+                                                            $tdStyle='background-color:#8ac44a;';
                                                             $stocktext = 'In Stock';
                                                         } else {
                                                             $tdStyle='background-color:#d4143d';
@@ -229,7 +292,7 @@ td {
                                                 ?>
                                         </td>
                                         <td class="td-actions requestTitle">
-                                            <span style="text-align:center; padding: 6px; <?php echo $tdStyle; ?>"><?php echo $stocktext; ?></span>
+                                            <span style="text-align:center; padding: 6px 20px; color: #fff; <?php echo $tdStyle; ?>"><?php echo $stocktext; ?></span>
                                         </td>
                                 </tr>
                                 <tr>
@@ -249,7 +312,7 @@ td {
                                                 while($row = $result->fetch_assoc()) {
                                                     // set styles the way you want
                                                     if($row['amount'] > 0) {
-                                                        $tdStyle='background-color:#ADFF2F; ';
+                                                        $tdStyle='background-color:#8ac44a; ';
                                                         $stocktext = 'In Stock';
                                                     } else {
                                                         $tdStyle='background-color:#d4143d;';
@@ -263,7 +326,7 @@ td {
                                             ?>
                                     </td>
                                     <td class="td-actions requestTitle">
-                                        <span style="text-align:center; padding: 6px; <?php echo $tdStyle; ?>"><?php echo $stocktext; ?></span>
+                                        <span style="text-align:center; padding: 6px 20px; color: #fff;  <?php echo $tdStyle; ?>"><?php echo $stocktext; ?></span>
                                     </td>
                                 </tr>
 
@@ -277,49 +340,50 @@ td {
     
             <div class="card  card-tasks">  
                 <div class="card-header "> 
-                    <h4 class="card-title">Video Tutorials</h4>
+                    <h4 class="card-title text_color margin_left">Video Tutorials</h4>
                 </div>
-            
-                <div class="row">
-                    <div class="col-md-4 col-g-4 col-sm-4">
-                        <div class="">
-                            <video width="400" controls>
-                                <source src="mov_bbb.mp4" type="video/mp4">
-                                <source src="mov_bbb.ogg" type="video/ogg">
-                                Your browser does not support HTML5 video.
-                            </video>
-                            <p>
-                                How to register a new member?
-                            </p>
+                <div class="video_container">                         
+                    <div class="row">
+                        <div class="col-md-4 col-g-4 col-sm-4">
+                            <div class="video_box">
+                                <video width="400" controls>
+                                    <source src="mov_bbb.mp4" type="video/mp4">
+                                    <source src="mov_bbb.ogg" type="video/ogg">
+                                    Your browser does not support HTML5 video.
+                                </video>
+                                <p class="text_color">
+                                    How to register a new member?
+                                </p>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-4 col-g-4 col-sm-4">
-                        <div class="">
-                            <video width="400" controls>
-                                <source src="mov_bbb.mp4" type="video/mp4">
-                                <source src="mov_bbb.ogg" type="video/ogg">
-                                Your browser does not support HTML5 video.
-                            </video>
-                            <p>
-                                How to register a new member?
-                            </p>
+                        <div class="col-md-4 col-g-4 col-sm-4">
+                            <div class="video_box">
+                                <video width="400" controls>
+                                    <source src="mov_bbb.mp4" type="video/mp4">
+                                    <source src="mov_bbb.ogg" type="video/ogg">
+                                    Your browser does not support HTML5 video.
+                                </video>
+                                <p class="text_color">
+                                    How to register a new member?
+                                </p>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-4 col-g-4 col-sm-4">
-                        <div class="">
-                            <video width="400" controls>
-                                <source src="mov_bbb.mp4" type="video/mp4">
-                                <source src="mov_bbb.ogg" type="video/ogg">
-                                Your browser does not support HTML5 video.
-                            </video>
-                            <p>
-                                How to register a new member?
-                            </p>
-                        </div>
-                    </div>    
-                </div>      
+                        <div class="col-md-4 col-g-4 col-sm-4">
+                            <div class="video_box">
+                                <video width="400" controls>
+                                    <source src="mov_bbb.mp4" type="video/mp4">
+                                    <source src="mov_bbb.ogg" type="video/ogg">
+                                    Your browser does not support HTML5 video.
+                                </video>
+                                <p class="text_color">
+                                    How to register a new member?
+                                </p>
+                            </div>
+                        </div>    
+                    </div>   
+                </div>    
             </div>
         </div>
 
