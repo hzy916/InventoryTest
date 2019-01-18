@@ -67,6 +67,7 @@
     background-size: 200% auto;
     color: white;
     border-radius: 2px;
+    
 }
 
 .btn-1 {
@@ -76,6 +77,7 @@
 
 .shipbutton:hover {
   background-position: right center; /* change the direction of the change here */
+  color:#ffffff!important;
 }
 .customstyle{
     top:10px!important;

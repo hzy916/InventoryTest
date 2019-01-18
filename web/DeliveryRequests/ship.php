@@ -164,13 +164,20 @@
         foreach($_SESSION['delivery'] as $k => $v){
             $v['product_id']=intval($v['product_id']);
             if($v['product_id']==$id) {
-              
-                if($op=='add') {
-                    $_SESSION['delivery'][$k]['deliverynumber']=$v['deliverynumber']+$am;
-                } elseif($op=='del') {
-                    unset($_SESSION['delivery'][$k]);
-                } else {
-                    $_SESSION['delivery'][$k]['deliverynumber']=$am;
+                switch ($op) {
+                    case "add":
+                        //check if add more product is still enough in stock
+                        // if(($v['deliverynumber']+$am) < $maxAmount){
+                            $_SESSION['delivery'][$k]['deliverynumber'] = $v['deliverynumber']+$am;
+                        // }else{
+                        //     //don't allow user to add this
+                        // }
+                        break;
+                    case "del":
+                        unset($_SESSION['delivery'][$k]);
+                        break;
+                    default:
+                        $_SESSION['delivery'][$k]['deliverynumber']=$am;
                 }
                 return;
             }
@@ -208,19 +215,20 @@
             $v['product_id']=intval($v['product_id']);
 
             if($v['product_id']==$id) {
-                if($op=='add') {
-                    //  alert('you are adding the same product in list, edit instead please.');
-                    $_SESSION['delivery'][$k]['deliverynumber'] = $v['deliverynumber']+$am;
-                    // $_SESSION['delivery'][$k]['sel_color'] = $v['sel_color'];
-                    // $_SESSION['delivery'][$k]['sel_size'] = $v['sel_size'];
-                } elseif($op=='del') {
-                    unset($_SESSION['delivery'][$k]);
-                } 
-                
-                else {
-                    $_SESSION['delivery'][$k]['deliverynumber']=$am;
-                    // $_SESSION['delivery'][$k]['sel_color'] = $v['sel_color'];
-                    // $_SESSION['delivery'][$k]['sel_size'] = $v['sel_size'];
+                switch ($op) {
+                    case "add":
+                        //check if add more product is still enough in stock
+                        // if(($v['deliverynumber']+$am) < $maxAmount){
+                            $_SESSION['delivery'][$k]['deliverynumber'] = $v['deliverynumber']+$am;
+                        // }else{
+                        //     //don't allow user to add this
+                        // }
+                        break;
+                    case "del":
+                        unset($_SESSION['delivery'][$k]);
+                        break;
+                    default:
+                        $_SESSION['delivery'][$k]['deliverynumber']=$am;
                 }
                 return;
             }
@@ -376,7 +384,7 @@
                 <!-- The Form for flyer or posters-->
                 <form name="flyerForm" class="form-horizontal" method="POST" id="flyerForm">
                    
-                    <input type="text"  length="80" name="oldVALUES" id="oldFLYER" value="" >
+                    <input type="hidden"  length="80" name="oldVALUES" id="oldFLYER" value="" >
 
                     <input type="hidden"  name="makeaction" value="flyerForm">
                     <!--set random number to check resumbit on refresh -->
@@ -419,13 +427,13 @@
                             <input type="number" class="form-control" name="deliverynumber" id="deliverynumber" placeholder="number"  min="1" >		
                         </div>
                     </div>  
-                        <button type="button" name="AddProduct" onclick="checkBeforeSubmit();" class="addBtn mt-5 mb-3">Add Now</button>
+                        <button type="button" name="AddProduct" id="addnow1" onclick="checkBeforeSubmit();" class="addBtn mt-5 mb-3">Add Now</button>
   
                 </form>
         
             <!-- The Form for pawtrails all in one -->
                 <form name="pawtrails_form" method="POST" id="pawtrails_form" style="display:none">
-                     <input type="text"  length="80"  name="oldVALUES" id="oldPawtrails" value="" ><br>
+                     <input type="hidden"  length="80"  name="oldVALUES" id="oldPawtrails" value="" ><br>
 
                     <input type="hidden"  name="makeaction" value="pawtrails_form">
 
@@ -466,7 +474,7 @@
                         <input type="number" class="form-control" name="deliverynumber" id="deliverynumber2" placeholder="number"  min="1" required>		
                     </div>  
                     
-                    <button type="button" name="AddProduct"  onclick="checkPawTrailsBeforeSubmit();" class="mt-5 mb-3 addBtn">Add Now</button>
+                    <button type="button" name="AddProduct" id="addnow2" onclick="checkPawTrailsBeforeSubmit();" class="mt-5 mb-3 addBtn">Add Now</button>
                 </form>
             </div>
         </div>
@@ -506,7 +514,7 @@
                                 <img class="emptyItemIMG" src="/assets/img/shipment_item_none.png" src="Empty in your Request">
                                 
                                 <p class="noitemText">No Item in your shipment, please add item into your shipment </p>
-                                    <button id="addItem" class="shipbutton btn btn-1 mb-3"><i class="fa fa-plus"></i> Add Item Into My Shipments</button>
+                                    <button id="addItem" class="addProductBTN shipbutton btn-1 mb-3"><i class="fa fa-plus"></i> Add Item Into My Shipments</button>
                                 <br>
 
                                     <!-- form to remove selected product from the session-->
@@ -534,7 +542,7 @@
                                                 <th>Color</th>
                                                 <th>Amount</th>
                                                 <th>Operation</th>
-                                                <th class="add_item_btn"><button id="addItem_two" class="shipbutton btn btn-1 mb-3"><i class="fa fa-plus"></i> Add Item</button></th>
+                                                <th class="add_item_btn"><button id="addItem_two" class="addProductBTN shipbutton btn btn-1 mb-3"><i class="fa fa-plus"></i> Add Item</button></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -999,35 +1007,19 @@ $(".previous").click(function(){
     // Get the modal
     var modal = document.getElementById('myModal');
 
-    // Get the button that opens the modal
-    var btn = document.getElementById("addItem");
-
-    // Get the button that opens the modal
-    var btn_two = document.getElementById("addItem_two");
-
     // Get the <span> element that closes the modal
     var span = document.getElementsByClassName("close")[0];
 
-    // When the user clicks the button, open the modal 
-    btn.onclick = function() {
+    // When the user clicks the add product button, open the modal 
+    $(".addProductBTN").on("click", function(){
         modal.style.display = "block";
         $('.add_title').html('Add the Item');
         var oldValues = 0;
         //set the old values in the hidden field text
         $('#oldFLYER').val(oldValues);
         $('#oldPawtrails').val(oldValues);
-    }
-
-     // When the user clicks the button, open the modal 
-     btn_two.onclick = function() {
-        modal.style.display = "block";
-        $('.add_title').html('Add the Item');
-        var oldValues = 0;
-        //set the old values in the hidden field text
-        $('#oldFLYER').val(oldValues);
-        $('#oldPawtrails').val(oldValues);
-    }
-
+    });
+    
     //when user click edit, it will clear the session  pop up modal selection box
     $(".editItem").on("click", function(){
         //get attributes
@@ -1040,7 +1032,11 @@ $(".previous").click(function(){
        
         var finalProductvalue = productid + " - " +productname + " - " + deliverynumber;
       
+        //change pop up alert box button text to edit
         $('.add_title').html('Edit the Item');
+        $('#addnow1').html('Edit Now');
+        $('#addnow2').html('Edit Now');
+        
         
         // var oldValues = itemType + '@' + parseInt(productid) + '@' + selcolor + '@' +  selsize;
         var oldValues = parseInt(productid);
@@ -1060,16 +1056,11 @@ $(".previous").click(function(){
             $("#sel_product option[myId="+productid+"]").attr('selected', true);
             $('#deliverynumber').val(deliverynumber);
 
-            // OperateOnProductSessionflyerForm(productid,'upd', deliverynumber, productname);
-            
         }else if(itemType == 'pawtrails_form'){
             $('#deliverynumber2').val(deliverynumber);
             $('#sel_color').val(selcolor);
             $('#sel_size').val(selsize);
-
-            // OperateOnProductSessionPawTrailsForm(productid,'upd', selcolor, selsize, deliverynumber,productname)
         }
-       
     });
   
     // When the user clicks on <span> (x), close the modal
@@ -1086,10 +1077,10 @@ $(".previous").click(function(){
 
   
 
-        //Remove selected product from the session and pop up confirm box before delete
-        $(".removeItem").click(function(){
-        var id = $(this).attr("id");
-        // alert(id);
+    //Remove selected product from the session and pop up confirm box before delete
+    $(".removeItem").click(function(){
+            var id = $(this).attr("id");
+            // alert(id);
    
         if(confirm('Are you sure?'))
         {
@@ -1134,7 +1125,7 @@ $(".previous").click(function(){
             return amount;
         }
 
-        //
+        //check flyer or poster before submit
         function checkBeforeSubmit(){
             var qty =  document.getElementById('deliverynumber').value;
             qty = parseInt(qty);

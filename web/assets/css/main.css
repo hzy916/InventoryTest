@@ -46,7 +46,14 @@ body>.navbar-collapse .nav li.active .nav-link {
     width: 215px;
 }
 
+.shipbutton{
+    padding: 8px 16px;
+}
 
+/**add cursor to all buttons*/
+.btn{
+    cursor:pointer;
+}
 
 /*****comment div style******/
 
