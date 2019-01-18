@@ -101,8 +101,7 @@
 							<th>Company Name</th>
 							<th class="EmployeeColumn">Employee</th>
 							<th>Submit date</th>
-							<th>Ship date</th>
-                            <!-- <th class="no-sort">Request Items</th> -->
+						
 							<th>Status</th>
 							<th class="OperationColumn no-sort">operation</th>
 						</tr>
@@ -137,7 +136,6 @@
 									$status_name = $row['status_name'];
 										switch ($status_name) {
 											case "Completed":
-									
 												$status_style = 'color:#008000;';
 												break;
 											case "Delayed":
@@ -147,10 +145,7 @@
 												$status_style = 'color:#DC143C;';
 												break;
 										}
-				
-										// <td>
-										// 	<button type='button' class='btn btn-info' onclick='JavaScript:GetRequestID(".$row['RequestID'].");'>See Request Items</button>
-										// </td>
+
 									echo 
 									"<tr>
 										<td>".$row['RequestID']."</td>
@@ -158,7 +153,7 @@
 										<td>".$row['company_name']."</td>
 										<td class='EmployeeColumn'>".$row['user_name']."</td>
 										<td>".$row['RequestDate']."</td>
-										<td>".$row['ShipDate']."</td>
+								
 									
 										<td style='".$status_style."'>
 										".$row['status_name']."

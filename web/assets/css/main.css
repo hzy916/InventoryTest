@@ -23,9 +23,13 @@ body{
     font-weight: 300!important;
 }
 /**remove hover background effects**/
-.sidebar .nav li .nav-link:hover, body>.navbar-collapse .nav li .nav-link:hover {
+
+.sidebar .nav li:hover .nav-link, body>.navbar-collapse .nav li:hover .nav-link {
     background: transparent !important;
+    opacity: 1; 
 }
+
+
 
 .sidebar .nav li.active .nav-link,
 body>.navbar-collapse .nav li.active .nav-link {
@@ -54,6 +58,7 @@ body>.navbar-collapse .nav li.active .nav-link {
 .btn{
     cursor:pointer;
 }
+
 
 /*****comment div style******/
 

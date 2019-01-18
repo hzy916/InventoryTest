@@ -64,37 +64,45 @@ if($_GET['id']) {
                 //write function to check if everything is in stock
 
 
-                //
-                $sql_updatestock = "UPDATE pawtrails JOIN Pawtrails_Request_junction ON pawtrails.id = Pawtrails_Request_junction.pawtrails_id && Pawtrails_Request_junction.request_id = '$id' SET pawtrails.amount = pawtrails.amount - Pawtrails_Request_junction.Qty"; 
-            
-                //check if update stock successfully
-                if ($conn->query($sql_updatestock) === TRUE) {
-                    echo "<script>
-                    alert('The related product inventory is updated!'); 
-                    </script>";
+                //query to find the items id and qty requested in one request
+             
+                $sql_checkstock = "SELECT Pawtrails_Request_junction.pawtrails_id, Pawtrails_Request_junction.Qty, pawtrails.amount FROM Pawtrails_Request_junction, pawtrails WHERE pawtrails.id=Pawtrails_Request_junction.pawtrails_id AND Pawtrails_Request_junction.request_id='$id' AND pawtrails.amount < Pawtrails_Request_junction.Qty";
+
+                $checkStock = mysqli_query($conn, $sql_checkstock);
+
+                if(mysqli_num_rows($checkStock) > 0){
+                    echo "<script>alert('updating stock failed, there are items out of stock in this request');</script>";
+                } else{
+                     //update stock query
+                    $sql_updatestock = "UPDATE pawtrails JOIN Pawtrails_Request_junction ON pawtrails.id = Pawtrails_Request_junction.pawtrails_id && Pawtrails_Request_junction.request_id = '$id' SET pawtrails.amount = pawtrails.amount - Pawtrails_Request_junction.Qty"; 
+                    //check if update stock successfully
+                    if ($conn->query($sql_updatestock) === TRUE) {
+                        echo "<script>
+                        alert('The related product inventory is updated!'); 
+                        </script>";
+                        
+                        //update reqeust status 
+                        $sql_udpate = $myArr[$_POST['postAction']]['sql'];
+                        if ($conn->query($sql_udpate) === TRUE) {
+                            //alert notifications about the status change
+                            echo "<script>
+                            alert('".$myArr[$_POST['postAction']]['alert']."');
+                            </script>";
+                            
+                            //find the email receivers
+                            $receivers = array();
                 
-
-                } else {
-                    echo "Error updating record: " . $conn->error;
-                } 
-            }
-
+                            $send_email_action = $_POST['postAction'];
         
-                $sql_udpate = $myArr[$_POST['postAction']]['sql'];
-                if ($conn->query($sql_udpate) === TRUE) {
-                    //alert notifications about the status change
-                    echo "<script>
-                    alert('".$myArr[$_POST['postAction']]['alert']."');
-                    </script>";
-                    
-                    //find the email receivers
-                    $receivers = array();
-         
-                    $send_email_action = $_POST['postAction'];
- 
-                } else {
-                    echo "Error updating record: " . $conn->error;
-                } 
+                        } else {
+                            echo "Error updating record: " . $conn->error;
+                        } 
+
+                    } else {
+                        echo "Error updating record: " . $conn->error;
+                    } 
+                }
+            }
         }
 
         //get all the request details
@@ -258,8 +266,7 @@ if($_GET['id']) {
                                                 </tr>
                                               
                                                 <tr>
-                                                    <td><strong>First Name:</strong> ".$row_two['first_name']."</td>
-                                                    <td><strong>Last Name:</strong> ".$row_two['last_name']."</td>
+                                                    <td><strong>Full Name:</strong> ".$row_two['first_name']."</td>
                                                 </tr>
 
                                                 <tr>
@@ -333,7 +340,9 @@ if($_GET['id']) {
 
                     ?>
         <?php  } ?> 
-                    <td><a href="delivery_table.php"><button type="button" class="btn btn-primary">Back</button></a></td>
+                    <!-- <td><a href="shipment_list.php"><button type="button" class="btn btn-primary">Back</button></a></td> -->
+                    <td><a href="javascript:history.go(-1)"><button type="button" class="btn btn-primary">Back</button></a></td>
+                   
                 </form>
 
                 <script language="JavaScript">

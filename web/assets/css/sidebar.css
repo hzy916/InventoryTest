@@ -86,17 +86,17 @@
   .sidebar .dropdown-menu li a:focus,
   .sidebar .dropdown-menu li.open a:hover,
   .sidebar .dropdown-menu li.open a:focus{
-    color: #fff;
+    /* color: #fff; */
     text-decoration: none;
     border-radius: 4px;
     background-color: transparent;
-    width:215px;
+    /* width:215px; */
   }
   
   .sidebar .dropdown-menu li.active > a {
     color: #FFFFFF;
     opacity: 1;
-    background: rgba(255, 255, 255, 0.23);
+    /* background: rgba(255, 255, 255, 0.23); */
     width:215px;
   }
   

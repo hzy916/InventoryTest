@@ -5,9 +5,17 @@ body {
  position: relative;
 }
 
-@media (min-width: 500px){
+
       #customlinklist{
         text-align:right;
+    }
+
+@media (max-width: 768px){
+    #customlinklist{
+        padding-inline-start: 0px!important;
+    }
+    #customlinklist{
+        text-align:left;
     }
 }
 
@@ -30,13 +38,13 @@ body {
       </div>
          <footer class="footer">
               <div class="container custom_container_large">
-                  <div class="footerrow">  
-                    <div class="column_half">
-                        <div class="copyright-text">
+                  <div class="row">  
+                    <div class="column_half col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <!-- <div class="copyright-text"> -->
                           <p class="footerleft">Staff Portal V.2.0 |  Copyright © 2018 Attitude Technologies Ltd.  All rights reserved.  </p>
-                        </div>
+                        <!-- </div> -->
                       </div>
-                    <div class="column_half">							
+                    <div class="column_half col-lg-6 col-md-6 col-sm-12 col-xs-12">				
                         <ul id="customlinklist">
                           <li><a href="">Privacy Policy |</a></li>						
                           <li><a href="">Terms of Use |</a></li>
