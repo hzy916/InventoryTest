@@ -427,13 +427,12 @@
                             <input type="number" class="form-control" name="deliverynumber" id="deliverynumber" placeholder="number"  min="1" >		
                         </div>
                     </div>  
-                        <button type="button" name="AddProduct" id="addnow1" onclick="checkBeforeSubmit();" class="addBtn mt-5 mb-3">Add Now</button>
-  
+                        <button type="button" name="AddProduct" id="addnow1" onclick="checkBeforeSubmit('flyerForm');" class="addBtn mt-5 mb-3">Add Now</button>
                 </form>
         
             <!-- The Form for pawtrails all in one -->
                 <form name="pawtrails_form" method="POST" id="pawtrails_form" style="display:none">
-                     <input type="hidden"  length="80"  name="oldVALUES" id="oldPawtrails" value="" ><br>
+                     <input type="hidden"  length="80"  name="oldVALUES" id="oldPawtrails" value="">
 
                     <input type="hidden"  name="makeaction" value="pawtrails_form">
 
@@ -474,7 +473,7 @@
                         <input type="number" class="form-control" name="deliverynumber" id="deliverynumber2" placeholder="number"  min="1" required>		
                     </div>  
                     
-                    <button type="button" name="AddProduct" id="addnow2" onclick="checkPawTrailsBeforeSubmit();" class="mt-5 mb-3 addBtn">Add Now</button>
+                    <button type="button" name="AddProduct" id="addnow2" onclick="checkBeforeSubmit('pawtrails_form');" class="mt-5 mb-3 addBtn">Add Now</button>
                 </form>
             </div>
         </div>
@@ -1010,84 +1009,84 @@ $(".previous").click(function(){
     // Get the <span> element that closes the modal
     var span = document.getElementsByClassName("close")[0];
 
-    // When the user clicks the add product button, open the modal 
-    $(".addProductBTN").on("click", function(){
-        modal.style.display = "block";
-        $('.add_title').html('Add the Item');
-        var oldValues = 0;
-        //set the old values in the hidden field text
-        $('#oldFLYER').val(oldValues);
-        $('#oldPawtrails').val(oldValues);
-    });
+        // When the user clicks the add product button, open the modal 
+        $(".addProductBTN").on("click", function(){
+            modal.style.display = "block";
+            $('.add_title').html('Add the Item');
+            var oldValues = 0;
+            //set the old values in the hidden field text
+            $('#oldFLYER').val(oldValues);
+            $('#oldPawtrails').val(oldValues);
+        });
     
-    //when user click edit, it will clear the session  pop up modal selection box
-    $(".editItem").on("click", function(){
-        //get attributes
-        var itemType = $(this).attr('itemType');
-        var selcolor = $(this).attr('selcolor');
-        var selsize = $(this).attr('selsize');
-        var deliverynumber = $(this).attr('deliverynumber');
-        var productname = $(this).attr('productname');
-        var productid = $(this).attr('productID');
-       
-        var finalProductvalue = productid + " - " +productname + " - " + deliverynumber;
-      
-        //change pop up alert box button text to edit
-        $('.add_title').html('Edit the Item');
-        $('#addnow1').html('Edit Now');
-        $('#addnow2').html('Edit Now');
+        //when user click edit, it will clear the session  pop up modal selection box
+        $(".editItem").on("click", function(){
+            //get attributes
+            var itemType = $(this).attr('itemType');
+            var selcolor = $(this).attr('selcolor');
+            var selsize = $(this).attr('selsize');
+            var deliverynumber = $(this).attr('deliverynumber');
+            var productname = $(this).attr('productname');
+            var productid = $(this).attr('productID');
         
+            var finalProductvalue = productid + " - " +productname + " - " + deliverynumber;
         
-        // var oldValues = itemType + '@' + parseInt(productid) + '@' + selcolor + '@' +  selsize;
-        var oldValues = parseInt(productid);
-        //set the old values in the hidden field text
-        $('#oldFLYER').val(oldValues);
-        $('#oldPawtrails').val(oldValues);
-        
-        //pop up product selection box
-        modal.style.display = "block";
+            //change pop up alert box button text to edit
+            $('.add_title').html('Edit the Item');
+            $('#addnow1').html('Edit Now');
+            $('#addnow2').html('Edit Now');
+            
+            
+            // var oldValues = itemType + '@' + parseInt(productid) + '@' + selcolor + '@' +  selsize;
+            var oldValues = parseInt(productid);
+            //set the old values in the hidden field text
+            $('#oldFLYER').val(oldValues);
+            $('#oldPawtrails').val(oldValues);
+            
+            //pop up product selection box
+            modal.style.display = "block";
 
-        handleSelection(itemType);
-        //to set the product type to be user's previous option when user edit
-        $('#itemtypeSelect').val(itemType);
+            handleSelection(itemType);
+            //to set the product type to be user's previous option when user edit
+            $('#itemtypeSelect').val(itemType);
 
 
-        if(itemType == 'flyerForm'){
-            $("#sel_product option[myId="+productid+"]").attr('selected', true);
-            $('#deliverynumber').val(deliverynumber);
+            if(itemType == 'flyerForm'){
+                $("#sel_product option[myId="+productid+"]").attr('selected', true);
+                $('#deliverynumber').val(deliverynumber);
 
-        }else if(itemType == 'pawtrails_form'){
-            $('#deliverynumber2').val(deliverynumber);
-            $('#sel_color').val(selcolor);
-            $('#sel_size').val(selsize);
-        }
-    });
+            }else if(itemType == 'pawtrails_form'){
+                $('#deliverynumber2').val(deliverynumber);
+                $('#sel_color').val(selcolor);
+                $('#sel_size').val(selsize);
+            }
+        });
   
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
             modal.style.display = "none";
         }
-    }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
 
   
 
-    //Remove selected product from the session and pop up confirm box before delete
-    $(".removeItem").click(function(){
-            var id = $(this).attr("id");
-            // alert(id);
-   
-        if(confirm('Are you sure?'))
-        {
-            $("#prod2del").val(id);
-           $("#productDelete").submit();
-        }
-    });
+        //Remove selected product from the session and pop up confirm box before delete
+        $(".removeItem").click(function(){
+                var id = $(this).attr("id");
+                // alert(id);
+    
+            if(confirm('Are you sure?'))
+            {
+                $("#prod2del").val(id);
+            $("#productDelete").submit();
+            }
+        });
 
         //custom style for alert when user click cancel button
         function getConfirmation(){
@@ -1116,7 +1115,7 @@ $(".previous").click(function(){
         }
 
   
-        //check request item number is smaller than the stock
+        //get flyer or poster product stock
         function checkStock(){
             var e = document.getElementById("sel_product");
       
@@ -1125,53 +1124,41 @@ $(".previous").click(function(){
             return amount;
         }
 
-        //check flyer or poster before submit
-        function checkBeforeSubmit(){
-            var qty =  document.getElementById('deliverynumber').value;
-            qty = parseInt(qty);
-
-            if(isNaN(qty) || qty == 0){
-                alert('You have to enter a valid number');
-                return false;
-            }
-
-            var maxQty = checkStock();
-            if(qty > maxQty){
-                alert('Out of Stock');
-                return false;
-            }
-           
-            document.getElementById('flyerForm').submit();
-            return;
-          
-        }
-
-
-        //check pawtrails before submit
-        function checkPawTrailsBeforeSubmit(){
-            var qty =  document.getElementById('deliverynumber2').value;
-            qty = parseInt(qty);
+        //check product stock before submit
+        function checkBeforeSubmit(myForm){
+            var myNum={
+                'flyerForm': 'deliverynumber',
+                'pawtrails_form': 'deliverynumber2'
+            };
+            
+            var qty =  parseInt(document.getElementById(myNum[myForm]).value);
             
             if(isNaN(qty) || qty == 0){
                 alert('You have to enter a valid number');
                 return false;
             }
-
-            var maxQty = document.getElementById('pawtrails_stock').value;
+            //submit different forms based on user's selection
+            switch(myForm) {
+                case 'flyerForm':
+                    var maxQty = checkStock();
+                break;
+                case 'pawtrails_form':
+                    var maxQty = document.getElementById('pawtrails_stock').value;
+                break;
+            }
             if(qty > maxQty){
                 alert('Out of Stock');
-                // return false;
-            } else{
-                // alert('submit');
-                document.getElementById('pawtrails_form').submit();
-            } 
+                return false;
+            }else{
+                document.getElementById(myForm).submit();
+            }
             return;
         }
 
          //check pawtrails stock
          function checkPawtrailsStock(){
-             var color = document.getElementById('sel_color').options[document.getElementById('sel_color').selectedIndex].value;
-             var size = document.getElementById('sel_size').options[document.getElementById('sel_size').selectedIndex].value;
+            var color = document.getElementById('sel_color').options[document.getElementById('sel_color').selectedIndex].value;
+            var size = document.getElementById('sel_size').options[document.getElementById('sel_size').selectedIndex].value;
 
            if(color != '0' && size != '0'){
               
