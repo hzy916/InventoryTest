@@ -61,6 +61,10 @@ if($_GET['id']) {
 
             if($_POST['postAction'] == 'approve'){
                 //get the product id and number requested, and update inventory when request is completed. 
+                //write function to check if everything is in stock
+
+
+                //
                 $sql_updatestock = "UPDATE pawtrails JOIN Pawtrails_Request_junction ON pawtrails.id = Pawtrails_Request_junction.pawtrails_id && Pawtrails_Request_junction.request_id = '$id' SET pawtrails.amount = pawtrails.amount - Pawtrails_Request_junction.Qty"; 
             
                 //check if update stock successfully

@@ -166,9 +166,11 @@
             if($v['product_id']==$id) {
                 switch ($op) {
                     case "add":
+                        $message = "You have the same product added, please edit instead.";
+                        echo "<script type='text/javascript'>alert('$message');</script>";
                         //check if add more product is still enough in stock
                         // if(($v['deliverynumber']+$am) < $maxAmount){
-                            $_SESSION['delivery'][$k]['deliverynumber'] = $v['deliverynumber']+$am;
+                            // $_SESSION['delivery'][$k]['deliverynumber'] = $v['deliverynumber']+$am;
                         // }else{
                         //     //don't allow user to add this
                         // }
@@ -217,9 +219,12 @@
             if($v['product_id']==$id) {
                 switch ($op) {
                     case "add":
+                        //check if user is adding the same product, then ask her to edit instead.
+                        $message = "You have the same product added, please edit instead.";
+                        echo "<script type='text/javascript'>alert('$message');</script>";
                         //check if add more product is still enough in stock
                         // if(($v['deliverynumber']+$am) < $maxAmount){
-                            $_SESSION['delivery'][$k]['deliverynumber'] = $v['deliverynumber']+$am;
+                            // $_SESSION['delivery'][$k]['deliverynumber'] = $v['deliverynumber']+$am;
                         // }else{
                         //     //don't allow user to add this
                         // }
