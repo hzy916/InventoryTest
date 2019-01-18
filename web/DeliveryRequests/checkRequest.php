@@ -55,17 +55,15 @@ if($_GET['id']) {
         ),
     );
 
+
     
         if(isset($_POST['postAction']) && $_POST['randomcheck']==$_SESSION['rand']){
             // $send_email_action = false;
 
             if($_POST['postAction'] == 'approve'){
                 //get the product id and number requested, and update inventory when request is completed. 
-                //write function to check if everything is in stock
-
-
-                //query to find the items id and qty requested in one request
              
+                //query to find the items id and qty requested in one request
                 $sql_checkstock = "SELECT Pawtrails_Request_junction.pawtrails_id, Pawtrails_Request_junction.Qty, pawtrails.amount FROM Pawtrails_Request_junction, pawtrails WHERE pawtrails.id=Pawtrails_Request_junction.pawtrails_id AND Pawtrails_Request_junction.request_id='$id' AND pawtrails.amount < Pawtrails_Request_junction.Qty";
 
                 $checkStock = mysqli_query($conn, $sql_checkstock);
@@ -80,30 +78,54 @@ if($_GET['id']) {
                         echo "<script>
                         alert('The related product inventory is updated!'); 
                         </script>";
-                        
-                        //update reqeust status 
-                        $sql_udpate = $myArr[$_POST['postAction']]['sql'];
-                        if ($conn->query($sql_udpate) === TRUE) {
-                            //alert notifications about the status change
-                            echo "<script>
-                            alert('".$myArr[$_POST['postAction']]['alert']."');
-                            </script>";
-                            
-                            //find the email receivers
-                            $receivers = array();
-                
-                            $send_email_action = $_POST['postAction'];
-        
-                        } else {
-                            echo "Error updating record: " . $conn->error;
-                        } 
 
                     } else {
                         echo "Error updating record: " . $conn->error;
                     } 
+
+                    //if approve is success change submitted to processing
+                      //update reqeust status 
+                    $sql_udpate = $myArr[$_POST['postAction']]['sql'];
+                    if ($conn->query($sql_udpate) === TRUE) {
+                        //alert notifications about the status change
+                        echo "<script>
+                        alert('".$myArr[$_POST['postAction']]['alert']."');
+                        </script>";
+                        
+                        //find the email receivers
+                        $receivers = array();
+
+                        $send_email_action = $_POST['postAction'];
+
+                    } else {
+                        echo "Error updating record: " . $conn->error;
+                    }  
                 }
+            }else{
+                 
+                //update reqeust status 
+                $sql_udpate = $myArr[$_POST['postAction']]['sql'];
+                if ($conn->query($sql_udpate) === TRUE) {
+                    //alert notifications about the status change
+                    echo "<script>
+                    alert('".$myArr[$_POST['postAction']]['alert']."');
+                    </script>";
+                    
+                    //find the email receivers
+                    $receivers = array();
+
+                    $send_email_action = $_POST['postAction'];
+
+                } else {
+                    echo "Error updating record: " . $conn->error;
+                } 
             }
         }
+
+
+    
+     
+     
 
         //get all the request details
 
