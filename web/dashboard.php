@@ -352,7 +352,7 @@ td {
                     <div class="row">
                         <div class="col-md-4 col-g-4 col-sm-4">
                             <div class="video_box">
-                                <video width="400" controls>
+                                <video width="100%" controls>
                                     <source src="mov_bbb.mp4" type="video/mp4">
                                     <source src="mov_bbb.ogg" type="video/ogg">
                                     Your browser does not support HTML5 video.
@@ -365,7 +365,7 @@ td {
 
                         <div class="col-md-4 col-g-4 col-sm-4">
                             <div class="video_box">
-                                <video width="400" controls>
+                                <video width="100%" controls>
                                     <source src="mov_bbb.mp4" type="video/mp4">
                                     <source src="mov_bbb.ogg" type="video/ogg">
                                     Your browser does not support HTML5 video.
@@ -378,7 +378,7 @@ td {
 
                         <div class="col-md-4 col-g-4 col-sm-4">
                             <div class="video_box">
-                                <video width="400" controls>
+                                <video width="100%" controls>
                                     <source src="mov_bbb.mp4" type="video/mp4">
                                     <source src="mov_bbb.ogg" type="video/ogg">
                                     Your browser does not support HTML5 video.

@@ -15,7 +15,8 @@
    if(isset($_POST['makeaction'])){
 
     if($_POST['oldVALUES']!='0') {
-        list($oCLASS,$oPID,$oCOLOR,$oSIZE)=explode('@',$_POST['oldVALUES']);
+        // list($oCLASS,$oPID,$oCOLOR,$oSIZE)=explode('@',$_POST['oldVALUES']);
+        $oPID = $_POST['oldVALUES'];
     }
 
         $doAction = true;
@@ -208,6 +209,7 @@
 
             if($v['product_id']==$id) {
                 if($op=='add') {
+                    //  alert('you are adding the same product in list, edit instead please.');
                     $_SESSION['delivery'][$k]['deliverynumber'] = $v['deliverynumber']+$am;
                     // $_SESSION['delivery'][$k]['sel_color'] = $v['sel_color'];
                     // $_SESSION['delivery'][$k]['sel_size'] = $v['sel_size'];
@@ -1040,7 +1042,8 @@ $(".previous").click(function(){
       
         $('.add_title').html('Edit the Item');
         
-        var oldValues = itemType + '@' + parseInt(productid) + '@' + selcolor + '@' +  selsize;
+        // var oldValues = itemType + '@' + parseInt(productid) + '@' + selcolor + '@' +  selsize;
+        var oldValues = parseInt(productid);
         //set the old values in the hidden field text
         $('#oldFLYER').val(oldValues);
         $('#oldPawtrails').val(oldValues);
