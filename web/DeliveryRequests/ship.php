@@ -786,6 +786,9 @@
                   
 
                     <input type="button" name="previous" class="previous cancel action-button" value="Previous" />
+                    
+                    <!--add old values hidden field for submit request -->                 
+                    <input type="hidden"  length="80" name="oldVALUES" id="oldFLYER" value="" >
 
                     <input type="hidden"  name="makeaction" value="submitRequest">
                     <button type="button" class="submitBTN" onclick="return IsTermChecked();">Submit</button>

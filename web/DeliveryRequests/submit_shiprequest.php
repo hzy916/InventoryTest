@@ -12,6 +12,10 @@ if(!isset($_SESSION['id'],$_SESSION['user_role_id']))
     $user_id = $_SESSION['id']; 
  
         $receivercompany = mysqli_real_escape_string($conn,$_POST['receivercompany']);
+
+        // print($receivercompany );
+        // exit;
+
         $fullname =  mysqli_real_escape_string($conn,$_POST['firstname']);
         $phonenumber =  mysqli_real_escape_string($conn,$_POST['phonenumber']);
         $inputAddress1 =  mysqli_real_escape_string($conn,$_POST['inputAddress1']);
@@ -23,7 +27,7 @@ if(!isset($_SESSION['id'],$_SESSION['user_role_id']))
         $receiverEmail =  mysqli_real_escape_string($conn,$_POST['receiverEmail']);
 
         //check if company field is empty
-        if (!empty($company)) {
+        if (!empty($receivercompany)) {
             $sql = "INSERT INTO Receiver (company_name, first_name, phone, address1, address2, address3, city, country, postalcode, receiver_email ) VALUES ('$receivercompany', '$fullname',  '$phonenumber', '$inputAddress1', '$inputAddress2','$inputAddress3', '$inputCity', '$inputCountry', '$inputPostcode', '$receiverEmail')";
        
         } else {
@@ -63,12 +67,7 @@ if(!isset($_SESSION['id'],$_SESSION['user_role_id']))
                     if($conn->query($sql_four) === TRUE) {
                         //clear the data in the session
                         unset($_SESSION['delivery']);
-                
-                   
-                     
-                        // echo "<script>
-                        // alert('New Request Successfully Submitted.');
-                        // </script>";
+  
                         include ('shipmentSuccess.php');
                       
 
