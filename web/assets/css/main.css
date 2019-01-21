@@ -16,6 +16,10 @@ body{
     color: #a8acb2;
 }
 
+.card-login{
+    border:none!important;
+}
+
 /*****Dashboard style********/
 
 .sidebar .nav li .nav-link p, body>.navbar-collapse .nav li .nav-link p {

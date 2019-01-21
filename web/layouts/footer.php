@@ -6,10 +6,10 @@ body {
 }
 
 
-      #customlinklist{
-        text-align:right;
-    }
-
+#customlinklist{
+    text-align:right;
+}
+/* 
 @media (max-width: 768px){
     #customlinklist{
         padding-inline-start: 0px!important;
@@ -17,7 +17,7 @@ body {
     #customlinklist{
         text-align:left;
     }
-}
+} */
 
   #customlinklist li a {
       color: #525a65!important;
@@ -33,16 +33,33 @@ body {
     }
   }
 
+/***flexbox footer*/
+  .flex-grid {
+  display: flex;
+}
+.col_hzy {
+  flex: 1;
+}
+
+@media (max-width: 400px) {
+  .flex-grid {
+    display: block;
+  }
+}
+/***remove the space under footer, to put text in the vertical center***/
+#customlinklist{
+    margin-bottom:0!important;
+}
   </style>
     
       </div>
          <footer class="footer">
               <div class="container custom_container_large">
-                  <div class="row">  
+                  <!-- <div class="row">  
                     <div class="column_half col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <!-- <div class="copyright-text"> -->
-                          <p class="footerleft">Staff Portal V.2.0 |  Copyright © 2018 Attitude Technologies Ltd.  All rights reserved.  </p>
-                        <!-- </div> -->
+                         
+                        <!-- </div> 
                       </div>
                     <div class="column_half col-lg-6 col-md-6 col-sm-12 col-xs-12">				
                         <ul id="customlinklist">
@@ -52,7 +69,18 @@ body {
                           <li><a href="">Help</a></li>
                         </ul>							
                     </div> 
-                  </div> 
+                  </div>  -->
+                  <div class="flex-grid">
+                    <div class="col_hzy"> <p class="footerleft">Staff Portal V.2.0 |  Copyright © 2018 Attitude Technologies Ltd.  All rights reserved.  </p></div>
+                    <div class="col_hzy">    
+                          <ul id="customlinklist">
+                          <li><a href="">Privacy Policy |</a></li>						
+                          <li><a href="">Terms of Use |</a></li>
+                          <li><a href="">PawTrails Website | </a></li>
+                          <li><a href="">Help</a></li>
+                        </ul>	
+                    </div>
+                </div>
               </div>
           </footer>
  
