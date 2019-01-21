@@ -142,9 +142,9 @@
     if(isset($_SESSION['delivery']) && !empty($_SESSION['delivery'])){
         $NoItemDivView='none';
         $ItemDivView='block';   
-        $disable='';  
+        $disable='display:block;';  
     } else{
-        $disable='disabled';  
+        $disable='display:none;';  
     }
 
     $rand=rand();
@@ -337,10 +337,22 @@
         display:none;
     }
     
-    .editItem, .removeItem{
+    .editItem, .removeItem,  .btn-1{
         cursor: pointer;
     }
+   
 
+    .confirmLabel{
+        font-weight:300;
+        color: #a8acb2;
+    }
+
+    .form-control{
+        -moz-box-sizing:border-box;
+        -webkit-box-sizing:border-box;
+        box-sizing:border-box;
+        width:220px;
+    }
 </style>
 
   <link href="/assets/css/shipment.css" rel="stylesheet" />
@@ -358,9 +370,9 @@
 
                 <div class="selectBox">
                     
-                    <div class="form-group">
-                        <label class="fieldLabel col-xs-2">Item Type</label>
-                        <div class="col-xs-10 oneline redNote">
+                    <div class="form-group row">
+                        <label class="fieldLabel col-xs-2 confirmLabel">Item Type</label>
+                        <div class="col-xs-10 oneline redNote ">
                             <select id="itemtypeSelect" class="form-control" onChange="handleSelection(value)">
                                 <option value="" selected="selected">Please select type</option>
                                 <option value="flyerForm">Flyer or Poster</option>
@@ -395,8 +407,8 @@
                     <!--set random number to check resumbit on refresh -->
                     <input type="hidden"  name="flyerToken" value="<?php echo $rand; ?>">
 
-                    <div class="form-group">    
-                        <label class="fieldLabel col-xs-2" for="deliveryProduct">Item</label>
+                    <div class="form-group row">    
+                        <label class="fieldLabel col-xs-2 confirmLabel" for="deliveryProduct">Item</label>
                         
                         <div class="col-xs-10 oneline redNote">
                             <select name="sel_product" id="sel_product" class="form-control" onchange="checkStock();" required>
@@ -418,21 +430,27 @@
                     </div>
 
                     <!-- stock number-->
-                    <div class="form-group">    
-                        <label class="fieldLabel col-xs-2" for="stocknumber">Stock Number</label>
+                    <div class="form-group row">    
+                        <label class="fieldLabel col-xs-2 confirmLabel" for="stocknumber">Stock Number</label>
                         <div class="col-xs-10 oneline">
                             <span id="stocknumber"><?php echo $thisNumber; ?>
                             </span>
                         </div>
                     </div>
 
-                    <div class="form-group">   
-                        <label class="fieldLabel col-xs-2" for="deliverynumber">Number</label>
+                    <div class="form-group row">   
+                        <label class="fieldLabel col-xs-2 confirmLabel" for="deliverynumber">Number</label>
+                    
                         <div class="col-xs-10 oneline redNote">
-                            <input type="number" class="form-control" name="deliverynumber" id="deliverynumber" placeholder="number"  min="1" >		
+                            <input type="number" class="form-control" name="deliverynumber" id="deliverynumber" placeholder="number"  min="1" >	
                         </div>
+                      
                     </div>  
-                        <button type="button" name="AddProduct" id="addnow1" onclick="checkBeforeSubmit('flyerForm');" class="addBtn mt-5 mb-3">Add Now</button>
+
+      
+                        
+                 
+                    <button type="button" name="AddProduct" id="addnow1" onclick="checkBeforeSubmit('flyerForm');" class="addBtn mt-5 mb-3">Add Now</button>
                 </form>
         
             <!-- The Form for pawtrails all in one -->
@@ -444,40 +462,47 @@
                     <!--set random number to check resumbit on refresh -->
                     <input type="hidden"  name="pawtrailsToken" value="<?php echo $rand; ?>">
                     
-                    <label class="fieldLabel" for="deliveryProduct">Color</label>
+                    <div class="form-group row"> 
+                        <label class="fieldLabel confirmLabel" for="deliveryProduct">Color</label>
+                        
+                        <div class="oneline redNote">
+                            <select name="sel_color" id="sel_color" class="form-control" onchange="checkPawtrailsStock();">
+                                    <option value="0" selected disabled hidden>Choose here</option>
+                                    <option value="red">red</option>
+                                    <option value="black">black</option>
+                            </select>
+                        </div>
+                    </div>
                     
-                    <div class="oneline redNote">
-                        <select name="sel_color" id="sel_color" class="form-control" onchange="checkPawtrailsStock();">
+                    <div class="form-group row"> 
+                        <label class="fieldLabel confirmLabel" for="deliverynumber">Size</label>
+                        
+                        <div class="oneline redNote">
+                            <select name="sel_size" id="sel_size" class="form-control" onchange="checkPawtrailsStock();">
                                 <option value="0" selected disabled hidden>Choose here</option>
-                                <option value="red">red</option>
-                                <option value="black">black</option>
-                        </select>
+                                <option value="small">small</option>
+                                <option value="medium">medium</option>
+                                <option value="large">large</option>
+                            </select>
+                        </div>
                     </div>
-                    
-                    <label class="fieldLabel" for="deliverynumber">Size</label>
-                    
-                    <div class="oneline redNote">
-                        <select name="sel_size" id="sel_size" class="form-control" onchange="checkPawtrailsStock();">
-                            <option value="0" selected disabled hidden>Choose here</option>
-                            <option value="small">small</option>
-                            <option value="medium">medium</option>
-                            <option value="large">large</option>
-                        </select>
-                    </div>
-                    
 
-                    <label class="fieldLabel" for="deliverynumber">Stock Number</label>
-                    
-                    <div class="oneline">
-                        <span id="pawtrails_stock"></span>
+                    <div class="form-group row"> 
+                        <label class="fieldLabel confirmLabel" for="deliverynumber">Stock Number</label>
+                        
+                        <div class="oneline">
+                            <span id="pawtrails_stock"></span>
+                        </div>
                     </div>
                     
-                    <label class="fieldLabel" for="deliverynumber">Number</label>       
-            
-                    <div class="oneline redNote">
-                        <input type="number" class="form-control" name="deliverynumber" id="deliverynumber2" placeholder="number"  min="1" required>		
-                    </div>  
-                    
+                    <div class="form-group row"> 
+                        <label class="fieldLabel confirmLabel" for="deliverynumber">Number</label>       
+                
+                        <div class="oneline redNote">
+                            <input type="number" class="form-control" name="deliverynumber" id="deliverynumber2" placeholder="number"  min="1" required>		
+                        </div>  
+                    </div>
+
                     <button type="button" name="AddProduct" id="addnow2" onclick="checkBeforeSubmit('pawtrails_form');" class="mt-5 mb-3 addBtn">Add Now</button>
                 </form>
             </div>
@@ -592,7 +617,7 @@
                         <hr class="seperateLine">
                         <button name="cancel" onclick="getConfirmation();" class="cancel btn">Cancel</button>
                         
-                        <input id="next1" type="button" name="next" class="next action-button" value="Next" <?php echo $disable;  ?> />
+                        <input id="next1" type="button" name="next" class="next action-button" value="Next" style="<?php echo $disable; ?>" />
                     </div>
                 </div>
                 <!-- Wizard STEP 1 END -->
@@ -760,8 +785,6 @@
                                                     foreach($_SESSION['delivery'] as $i=> $k) {
                                                         echo "<div class='col-md-4'>
                                                                 <p class='itemlist'>".$k['productname']." ".$k['sel_color']." ".$k['sel_size'].    "             x           ".$k['deliverynumber']."</p>
-                                                            
-                                                               
                                                             </div>";
                                                             $i++;
                                                         }  
@@ -1023,7 +1046,7 @@ $(".previous").click(function(){
         // When the user clicks the add product button, open the modal 
         $(".addProductBTN").on("click", function(){
             modal.style.display = "block";
-            $('.add_title').html('Add the Item');
+            $('.add_title').html('Add Item into Shipment');
             var oldValues = 0;
             //set the old values in the hidden field text
             $('#oldFLYER').val(oldValues);
@@ -1103,7 +1126,7 @@ $(".previous").click(function(){
         function getConfirmation(){
             var retVal = confirm("Do you want to cancel this request, your input form data will not be saved.");
                if( retVal == true ){
-                   alert('true');
+            
                    //clear the item session and redirect to dashboard
                     $.ajax({
                         type: 'POST',
@@ -1118,11 +1141,6 @@ $(".previous").click(function(){
                         }
                     });
                 return true;
-               }
-               else{
-                // alert('false');
-                //   return false;
-                //   window.location.href = './DeliveryRequests/ship.php';
                }
         }
 

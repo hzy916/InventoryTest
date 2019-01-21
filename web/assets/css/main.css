@@ -187,7 +187,6 @@ body>.navbar-collapse .nav li.active .nav-link {
 /******/
 .redNote {
     position: relative;
-  
 }
 .redNote:after {
     content: "";

@@ -92,15 +92,13 @@
     width: 25px;
 }    
 
-
+.statusIcon{
+    margin-right:5px;
+}
 </style>
 
 <div class="sidebar">
-            <!--
-        Tip 1: You can change the color of the sidebar using: data-color="purple | blue | green | orange | red"
-
-        Tip 2: you can also add an image using data-image tag
-    -->
+   
             <div class="sidebar-wrapper">
                 <div class="logo">
                     <a href="http://www.attitudetech.ie" class="simple-text mb-3">
