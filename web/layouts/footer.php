@@ -76,7 +76,7 @@ body {
                           <ul id="customlinklist">
                           <li><a href="">Privacy Policy |</a></li>						
                           <li><a href="">Terms of Use |</a></li>
-                          <li><a href="">PawTrails Website | </a></li>
+                          <li><a href="http://www.pawtrails.com">PawTrails Website | </a></li>
                           <li><a href="">Help</a></li>
                         </ul>	
                     </div>

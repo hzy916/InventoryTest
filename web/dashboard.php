@@ -116,6 +116,26 @@ td {
     margin-right: 20px;
 }
 
+.responsive_table{
+    overflow-x:auto;
+}
+.stock_div{
+    text-align:center; 
+    padding: 6px 20px; 
+    color: #fff;
+    width:120px;
+}
+
+.status_div{
+    color:#ffffff; 
+    margin-right:10px;
+    text-align:center; 
+    background-color:#f5a623;  
+    padding: 6px 10px;
+    width:120px;
+    float:right;
+}
+
 </style>
       <!-- Breadcrumbs-->
     <div class="full_width">
@@ -168,7 +188,7 @@ td {
                                                     echo 
                                                     "<tr>
                                                         <td class='Companyrow'>".$row['fullname']."</td>
-                                                        <td class='td-actions text-right Companyrow'><span style='color:#ffffff; margin-right:10px;text-align:center; background-color:#f5a623;  padding: 6px 10px;'>".$row['status_name']."</span></td>
+                                                        <td class='td-actions text-right Companyrow'><div class='status_div'>".$row['status_name']."</div></td>
                                                     </tr>";
                                                 }
                                             } else {
@@ -219,7 +239,7 @@ td {
                                                     echo 
                                                     "<tr>
                                                         <td class='Companyrow'>".$row['companyName']."</td>
-                                                        <td class='td-actions text-right Companyrow'><span style='color:#ffffff; text-align:center; margin-right:10px; padding: 6px 10px;background-color:#f5a623;'>".$row['status_name']."</span></td>
+                                                        <td class='td-actions text-right Companyrow'><div class='status_div'>".$row['status_name']."</div></td>
                                                     </tr>";
                                                 }
                                             } else {
@@ -248,46 +268,80 @@ td {
                         </table>
                     </div>
                     <div class="card-body ">
-                        <div class="table-full-width">
-                        <table class="table table_bottom_custom">
-                            <tbody>
-                                <tr class="grey_title">
-                                    <td class="td-actions  requestTitle">Product Name</td>
-                                    <td class="td-actions  requestTitle">
-                                        Color
-                                    </td>
-                                    <td class="td-actions requestTitle">
-                                        Size
-                                    </td>
-                                    <td class="td-actions  requestTitle">
-                                    Stock on Hand
-                                    </td>
-                                    <td class="td-actions requestTitle">
-                                    Status
-                                    </td>
-                                </tr>
+                        <div class="table-full-width responsive_table">
+                            <table class="table table_bottom_custom">
+                                <tbody>
+                                    <tr class="grey_title">
+                                        <td class="td-actions  requestTitle">Product Name</td>
+                                        <td class="td-actions  requestTitle">
+                                            Color
+                                        </td>
+                                        <td class="td-actions requestTitle">
+                                            Size
+                                        </td>
+                                        <td class="td-actions  requestTitle">
+                                        Stock on Hand
+                                        </td>
+                                        <td class="td-actions requestTitle">
+                                        Status
+                                        </td>
+                                    </tr>
 
-                                <tr>
-                                    <td class="td-actions Companyrow">PawTrails All in One</td>
-                                    <td class="td-actions Companyrow">
-                                        Red
-                                    </td>
-                                    <td class="td-actions Companyrow">
-                                        Small
-                                    </td>
-                                    <td class="td-actions Companyrow">
+                                    <tr>
+                                        <td class="td-actions Companyrow">PawTrails All in One</td>
+                                        <td class="td-actions Companyrow">
+                                            Red
+                                        </td>
+                                        <td class="td-actions Companyrow">
+                                            Small
+                                        </td>
+                                        <td class="td-actions Companyrow">
+                                            <?php
+                                                    $sql = "SELECT * FROM pawtrails WHERE id = 27";
+                                                    $result = $conn->query($sql);
+                                            
+                                                    if($result->num_rows > 0) {
+                                                        while($row = $result->fetch_assoc()) {
+                                                            // set styles the way you want
+                                                            if($row['amount'] > 0) {
+                                                                $tdStyle='background-color:#8ac44a;';
+                                                                $stocktext = 'In Stock';
+                                                            } else {
+                                                                $tdStyle='background-color:#d4143d';
+                                                                $stocktext = 'Out of Stock';
+                                                            }
+                                                            echo  $row['amount'];
+                                                        }
+                                                    } else {
+                                                            echo "No Data Avaliable";
+                                                    }
+                                                    ?>
+                                            </td>
+                                            <td class="td-actions">
+                                                <div class="stock_div" style="<?php echo $tdStyle; ?>"><?php echo $stocktext; ?></div>
+                                            </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td-actions Companyrow">PawTrails All in One</td>
+                                        <td class="td-actions Companyrow">
+                                            Black
+                                        </td>
+                                        <td class="td-actions Companyrow">
+                                            Small
+                                        </td>
+                                        <td class="td-actions Companyrow">
                                         <?php
-                                                $sql = "SELECT * FROM pawtrails WHERE id = 27";
+                                                $sql = "SELECT * FROM pawtrails WHERE id = 28";
                                                 $result = $conn->query($sql);
                                         
                                                 if($result->num_rows > 0) {
                                                     while($row = $result->fetch_assoc()) {
                                                         // set styles the way you want
                                                         if($row['amount'] > 0) {
-                                                            $tdStyle='background-color:#8ac44a;';
+                                                            $tdStyle='background-color:#8ac44a; ';
                                                             $stocktext = 'In Stock';
                                                         } else {
-                                                            $tdStyle='background-color:#d4143d';
+                                                            $tdStyle='background-color:#d4143d;';
                                                             $stocktext = 'Out of Stock';
                                                         }
                                                         echo  $row['amount'];
@@ -297,47 +351,13 @@ td {
                                                 }
                                                 ?>
                                         </td>
-                                        <td class="td-actions">
-                                            <span style="text-align:center; padding: 6px 20px; color: #fff; <?php echo $tdStyle; ?>"><?php echo $stocktext; ?></span>
+                                        <td class="td-actions Companyrow">
+                                            <div class="stock_div" style="<?php echo $tdStyle; ?>"><?php echo $stocktext; ?></div>
                                         </td>
-                                </tr>
-                                <tr>
-                                    <td class="td-actions Companyrow">PawTrails All in One</td>
-                                    <td class="td-actions Companyrow">
-                                        Black
-                                    </td>
-                                    <td class="td-actions Companyrow">
-                                        Small
-                                    </td>
-                                    <td class="td-actions Companyrow">
-                                    <?php
-                                            $sql = "SELECT * FROM pawtrails WHERE id = 28";
-                                            $result = $conn->query($sql);
-                                    
-                                            if($result->num_rows > 0) {
-                                                while($row = $result->fetch_assoc()) {
-                                                    // set styles the way you want
-                                                    if($row['amount'] > 0) {
-                                                        $tdStyle='background-color:#8ac44a; ';
-                                                        $stocktext = 'In Stock';
-                                                    } else {
-                                                        $tdStyle='background-color:#d4143d;';
-                                                        $stocktext = 'Out of Stock';
-                                                    }
-                                                    echo  $row['amount'];
-                                                }
-                                            } else {
-                                                    echo "No Data Avaliable";
-                                            }
-                                            ?>
-                                    </td>
-                                    <td class="td-actions Companyrow">
-                                        <span style="text-align:center; padding: 6px 20px; color: #fff;  <?php echo $tdStyle; ?>"><?php echo $stocktext; ?></span>
-                                    </td>
-                                </tr>
+                                    </tr>
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

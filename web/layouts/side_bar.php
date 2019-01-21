@@ -85,9 +85,13 @@
     position:relative!important;
 }
 
-.statusIcon{
-    margin-right:5px;
-}
+
+/*******Side bar Style**********/
+.inventoryIcon{
+    margin-right: 15px;
+    width: 25px;
+}    
+
 
 </style>
 
@@ -165,7 +169,7 @@
 
                     <li>
                         <a class="nav-link" href="/inventory/inventory.php">
-                            <img class="statusIcon" src="/assets/img/inventory.svg">
+                            <img class="inventoryIcon" src="/assets/img/inventory.svg">
                             <p>Inventory</p>
                         </a>
                     </li>

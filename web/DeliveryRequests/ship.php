@@ -15,7 +15,7 @@
    if(isset($_POST['makeaction'])){
 
     if($_POST['oldVALUES']!='0') {
-        // list($oCLASS,$oPID,$oCOLOR,$oSIZE)=explode('@',$_POST['oldVALUES']);
+     
         $oPID = $_POST['oldVALUES'];
     }
 
@@ -523,6 +523,9 @@
 
                                     <!-- form to remove selected product from the session-->
                                 <form id="productDelete" method="POST">
+                                    <!-- setting old values for delete products-->
+                                    <input type="hidden"  length="80" name="oldVALUES" id="oldFLYER" value="" >
+
                                     <input type="hidden"  name="makeaction" value="productDelete">
                                     <input id="prod2del" type="hidden"  name="prod2del" value="">
                                 </form> 
