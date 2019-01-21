@@ -590,7 +590,7 @@
                   
                     <div class="col-sm-12 topline">
                         <hr class="seperateLine">
-                        <button name="cancel" onclick="getConfirmation();" class="cancel previous btn">Cancel</button>
+                        <button name="cancel" onclick="getConfirmation();" class="cancel btn">Cancel</button>
                         
                         <input id="next1" type="button" name="next" class="next action-button" value="Next" <?php echo $disable;  ?> />
                     </div>
@@ -1100,6 +1100,7 @@ $(".previous").click(function(){
         function getConfirmation(){
             var retVal = confirm("Do you want to cancel this request, your input form data will not be saved.");
                if( retVal == true ){
+                   alert('true');
                    //clear the item session and redirect to dashboard
                     $.ajax({
                         type: 'POST',
@@ -1116,9 +1117,9 @@ $(".previous").click(function(){
                 return true;
                }
                else{
-                  
-                  return false;
-                  window.location.href = './DeliveryRequests/ship.php';
+                // alert('false');
+                //   return false;
+                //   window.location.href = './DeliveryRequests/ship.php';
                }
         }
 

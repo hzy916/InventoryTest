@@ -26,6 +26,7 @@
 		background-color: #f2f2f2;
 		text-transform: uppercase;
 		font-size:13px;
+		float: left;
 	}
 
 	.submitBTN, .next{
