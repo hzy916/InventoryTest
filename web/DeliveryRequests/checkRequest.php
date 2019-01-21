@@ -347,8 +347,8 @@ if($_GET['id']) {
 
                     ?>
         <?php  } ?> 
-                    <!-- <td><a href="shipment_list.php"><button type="button" class="btn btn-primary">Back</button></a></td> -->
-                    <td><a href="javascript:history.go(-1)"><button type="button" class="btn btn-primary">Back</button></a></td>
+                  
+                    <td><a href="shipment_list.php?mystatus=<?php echo strtolower($data['status_name']);?>"><button type="button" class="btn btn-primary">Back</button></a></td>
                    
                 </form>
 
