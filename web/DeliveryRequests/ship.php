@@ -23,7 +23,10 @@
 
         switch($_POST['makeaction']) {
             case 'flyerForm': 
+        
                 list($pId,$pName,$maxAmount) = explode('-', $_POST['sel_product']);
+                /****change pName - back before use */
+                $pName=str_replace('%2D','-',$pName);
 
                 if(isSet($oPID) && $oPID!=$pId){
                     //delete the product in the session
@@ -31,7 +34,7 @@
                 } 
 
                 $dNumber = intval($_POST['deliverynumber']);
-
+          
                 switch(true) {
                     case ($dNumber == 0):
                         echo '<script> alert("You have to enter a valid number");</script>';
@@ -52,6 +55,7 @@
                             if(isSet($oPID) && $oPID==$pId){
                                 $myOp='upd';
                             }
+
                             OperateOnProductSessionflyerForm($pId,$myOp,$dNumber,$pName);
                         }
                       
@@ -417,7 +421,9 @@
                                         if($j == 0 ){
                                             $thisNumber = $row['amount'];
                                         }
-                                        echo "<option myId='".$row['id']."' amount='".$row['amount']."' value='".$row['id']." - ".$row['itemname']." - ".$row['amount']."'>" . $row['itemname'] . "</option>";
+                                        /****if there is - in the flyer name, replace it with %2D, because later I split the variable using - *** */
+                                        $encName=str_replace('-','%2D',$row['itemname']);
+                                        echo "<option myId='".$row['id']."' amount='".$row['amount']."' value='".$row['id']." - ".$encName." - ".$row['amount']."'>" . $row['itemname'] . "</option>";
                                         $j++;
                                     }
                                 ?>
@@ -1174,10 +1180,12 @@ $(".previous").click(function(){
                     var maxQty = document.getElementById('pawtrails_stock').value;
                 break;
             }
+
             if(qty > maxQty){
-                alert('Out of Stock');
-                return false;
+                alert('Out of Stock!');
+                // return false;
             }else{
+              
                 document.getElementById(myForm).submit();
             }
             return;
