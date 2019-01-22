@@ -33,7 +33,7 @@
   <div class="content-wrapper">
     <div class="container-fluid">
  
-      <h1>Delivery request table</h1>
+      <h1>Shipment request table</h1>
       <hr>
       <p><?php echo getUserName($_SESSION['id']); ?>  are login as <strong><?php echo getUserAccessRoleByID($_SESSION['user_role_id']); ?></strong></p>
 

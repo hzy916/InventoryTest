@@ -157,7 +157,7 @@ td {
                             <table class="table table-full-width custom_table_bottom">
                                 <tr>
                                     <td class="no_top_border"><h4 class="card-title text_color">Un-Completed Shipment Request</h4></td>
-                                    <td class="no_top_border text_right"><a href="./DesignRequests/design_request_table.php" class="card-category">See all Requests  →</a></td>
+                                    <td class="no_top_border text_right"><a href="./DeliveryRequests/shipment_list.php" class="card-category">See all Requests  →</a></td>
                                 </tr>
                             </table>
                         </div>

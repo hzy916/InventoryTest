@@ -117,7 +117,7 @@
                 
 
                     <li>
-                        <a class="nav-link" href="/Dashboard.php">
+                        <a class="nav-link" href="./dashboard.php">
                             <img class="inventoryIcon" src="/assets/img/inventory.svg">
                             <p>Dashboard</p>
                         </a>
