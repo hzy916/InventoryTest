@@ -372,39 +372,30 @@ td {
                     <div class="row">
                         <div class="col-md-4 col-g-4 col-sm-4">
                             <div class="video_box">
-                                <video width="100%" controls>
-                                    <source src="https://www.youtube.com/watch?v=hT7DSOh3mHM" type="video/mp4">
-                                    <source src="https://www.youtube.com/watch?v=hT7DSOh3mHM" type="video/ogg">
-                                    Your browser does not support HTML5 video.
-                                </video>
+                                <iframe width="100%" height="250" src="https://www.youtube.com/embed/_X9dmWPA-dw" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
                                 <p class="text_color">
-                                    How to register a new member?
+                                    Putting the PawTrails harness on your dog?
                                 </p>
                             </div>
                         </div>
 
                         <div class="col-md-4 col-g-4 col-sm-4">
                             <div class="video_box">
-                                <video width="100%" controls>
-                                    <source src="https://www.youtube.com/watch?v=QIcuS2HWAuY" type="video/mp4">
-                                    <source src="https://www.youtube.com/watch?v=QIcuS2HWAuY" type="video/ogg">
-                                    Your browser does not support HTML5 video.
-                                </video>
+                                <iframe width="100%" height="250" src="https://www.youtube.com/embed/QIcuS2HWAuY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
                                 <p class="text_color">
-                                    How to register a new member?
+                                    How to connect your GPS dog tracking device?
                                 </p>
                             </div>
                         </div>
 
                         <div class="col-md-4 col-g-4 col-sm-4">
                             <div class="video_box">
-                                <video width="100%" controls>
-                                    <source src="https://www.youtube.com/watch?v=_X9dmWPA-dw" type="video/mp4">
-                                    <source src="https://www.youtube.com/watch?v=_X9dmWPA-dw" type="video/ogg">
-                                    Your browser does not support HTML5 video.
-                                </video>
+                                <iframe width="100%" height="250" src="https://www.youtube.com/embed/RreOTQsN6K0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
                                 <p class="text_color">
-                                    How to register a new member?
+                                    Lead attachment to the PawTrails collar or harness?
                                 </p>
                             </div>
                         </div>    

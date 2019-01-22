@@ -803,8 +803,9 @@
                 
                     <!--checkbox for user to confirm-->
                     <div class="checkboxlabel">
-                        <input class="form-check-input" type="checkbox" name="checkbox" id="gridCheck" required>
+                       
                         <label id="confirmLabel" class="form-check-label" for="gridCheck">
+                            <input class="form-check-input" type="checkbox" name="checkbox" id="gridCheck" required>
                             I confirm all the data submitted are correct.
                         </label>    
                     </div>

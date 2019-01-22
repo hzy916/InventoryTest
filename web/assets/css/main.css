@@ -4,6 +4,9 @@ body{
     margin:0;
   }
 
+/******check request page*******/
+
+
 /**Login Page Style*/
 .login_header{
     color: #525a65;
@@ -168,6 +171,20 @@ body>.navbar-collapse .nav li.active .nav-link {
 
 
 /*******Form input and labels style**********/
+
+/**step 3***/
+
+ /* [type="checkbox"]{
+     vertical-align:middle;
+ } */
+
+/**step 2***/
+
+.errorMessage{
+    color: #DC143C;
+ }
+
+
 .confirmLabel{
     display: inline-block;
     text-align: right;

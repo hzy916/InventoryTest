@@ -229,20 +229,23 @@ if($_GET['id']) {
                     <p><?php echo $msg ?></p>
                     <div class="table-responsive">
                         <table class="table table-bordered" id="requestProductTable" width="100%" cellspacing="0">
-                                <thead>
-                                    <tr>
-                                        <th>item id</th>
-                                        <th>item Name</th>
-                                        <th>size</th>
-                                        <th>color</th>
-                                        <th>Quantity</th>
-                                      
-                                    </tr>
-                                </thead>
+                          
                                 <tbody>
                                 <?php
                                     $doButtonOperation=false;
                                     if($result_three->num_rows > 0) {
+                                        echo "
+                                        <thead>
+                                            <tr>
+                                                <th>item id</th>
+                                                <th>item Name</th>
+                                                <th>size</th>
+                                                <th>color</th>
+                                                <th>Quantity</th>
+                                            
+                                            </tr>
+                                        </thead>";
+
                                         $doButtonOperation=true;
                                         while($row_three = $result_three->fetch_assoc()) {
                                             echo 
@@ -258,7 +261,7 @@ if($_GET['id']) {
                                             </tr>";
                                         }
                                     }else {
-                                        echo "<tr>No data available</tr>";
+                                        echo "<tr><span class='errorMessage'>No data available</span></tr>";
                                         // echo "Error " . $sql_three . ' ' . $conn->connect_error;
                                     }	
                                 ?>
@@ -313,8 +316,8 @@ if($_GET['id']) {
                                             </div>";
                                         }
                                     }else {
-
-                                        echo "Error " . $sql_two . ' ' . $conn->connect_error;
+                                        echo "<tr><span class='errorMessage'>No data available</span></tr>";
+                                        // echo "Error " . $sql_two . ' ' . $conn->connect_error;
                                     }	
                                 ?>
             
