@@ -88,9 +88,9 @@ if($_GET['id']) {
                 }
             }else{
                 $myUpdate=true;
-         
             }
 
+            //update request status and alert user about the status change
             if($myUpdate) {
                 //update reqeust status 
                 $sql_udpate = $myArr[$_POST['postAction']]['sql'];
@@ -114,7 +114,7 @@ if($_GET['id']) {
 
         //get all the request details
 
-        $sql = "SELECT Request.RequestID, Request.RequestDate, Request.ShipDate, Request_status.status_name, tbl_users.user_name,tbl_users.email FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id WHERE Request.RequestID = '{$id}'";
+        $sql = "SELECT Request.RequestID, Request.RequestDate, Request_status.status_name, tbl_users.user_name,tbl_users.email FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id WHERE Request.RequestID = '{$id}'";
 
         $result = $conn->query($sql);
         
@@ -168,16 +168,18 @@ if($_GET['id']) {
     $rand=rand();
     $_SESSION['rand']=$rand;
 ?>
-
+     <!-- Breadcrumbs-->
+     <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="/dashboard.php">Dashboard<i class="fa fa-angle-right"></i></a>
+        </li> 
+        <br>
+        <li class="breadcrumb-item active"> Request Details</li>
+      </ol>
 
   <div class="content-wrapper">
     <div class="container-fluid">
-      <!-- Breadcrumbs-->
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <a href="/dashboard.php">Dashboard</a>
-        </li> 
-      </ol>
+ 
       <h2>Process Delivery Request</h2>
   
 	<!-- DataTables Example -->
@@ -191,7 +193,7 @@ if($_GET['id']) {
 						<tr>
 							<th>Request ID</th>
 							<th>Submit date</th>
-							<th>Ship date</th>
+						
                             <th>Employee</th>
 							<th>Status</th>
 						</tr>
@@ -203,7 +205,6 @@ if($_GET['id']) {
                                     "<tr>
                                         <td>".$data['RequestID']."</td>
                                         <td>".$data['RequestDate']."</td>
-                                        <td>".$data['ShipDate']."</td>
                                         <td>".$data['user_name']."</td>
                                         <td>
                                         ".$data['status_name']."
