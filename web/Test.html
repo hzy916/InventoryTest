@@ -1,54 +1,60 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Dialog - Modal confirmation</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( "#dialog-confirm" ).dialog({
+      resizable: false,
+      height: "auto",
+      width: 400,
+      modal: true,
+      buttons: {
+        "No, Keep Me": function() {
+          $( this ).dialog( "close" );
+        },
+        Cancel: function() {
+          $( this ).dialog( "close" );
+        }
+      }
+    });
+  } );
+  </script>
 </head>
 <body>
-		<style>
-	
+ <!-- Button trigger modal -->
+ 
+	 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+		Launch demo modal
+	  </button>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+			  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			  </button>
+			</div>
+			<div class="modal-body">
+			  ...
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			  <button type="button" class="btn btn-primary">Save changes</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+ 
 
-
-			html,body{width:100%;margin:0}
-
-			.col {
-				width:100%;
-				display:table;
-			}
-			.ttl { width: 50%; background: red; }
-			.otr { width: 50%; background: blue;}
-
-			.ttl, .otr {
-			margin-left:20px;
-			padding:20px;
-			display: table-cell;
-			}
-		</style>
-
-			<div class="col">
-					<div class="ttl">
-						<p style="margin:10px;padding:10px;">Column 1 Content Column 1 Content.......
-						sdfkdhfkdskfjsadkfjh.
-							sdfkdhfkdskfjsadkfjh.
-							sdfkdhfkdskfjsadkfjh.
-							sdfkdhfkdskfjsadkfjh.
-							sdfkdhfkdskfjsadkfjh.
-							sdfkdhfkdskfjsadkfjh.
-						asdfhksadhfkjsahdkfsadkjfh
-									sdfkdhfkdskfjsadkfjh.
-							sdfkdhfkdskfjsadkfjh.
-							sdfkdhfkdskfjsadkfjh.
-							sdfkdhfkdskfjsadkfjh.
-							sdfkdhfkdskfjsadkfjh.
-							sdfkdhfkdskfjsadkfjh.
-						asdfhksadhfkjsahdkfsadkjfh
-						asdjhfksadfksahdfkjsahdkjh</p>
-					</div>
-					<div class="otr">
-						<p>Column 2</p>
-					</div>
-				</div>
+ 
 </body>
 </html>

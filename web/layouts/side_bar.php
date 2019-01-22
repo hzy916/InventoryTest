@@ -114,7 +114,16 @@
                </div>
 
                 <ul class="nav">
+                
 
+                    <li>
+                        <a class="nav-link" href="/Dashboard.php">
+                            <img class="inventoryIcon" src="/assets/img/inventory.svg">
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+
+                    <hr style="border-top: 1px solid #6b7077;">
 <!-- ***********Dropdown Menu with sub tab********** -->
                     <li class="dropdown multiSide">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">

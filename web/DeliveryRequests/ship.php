@@ -342,10 +342,6 @@
     }
    
 
-    .confirmLabel{
-        font-weight:300;
-        color: #a8acb2;
-    }
 
     .form-control{
         -moz-box-sizing:border-box;
@@ -522,7 +518,7 @@
      <!-- END of  Breadcrumbs-->
 
 <div class="content-wrapper">
-    <div class="container-fluid">
+    <!-- <div class="container-fluid"> -->
 
     <!-- MultiStep Form -->
         <div class="Customcontainer"> 
@@ -586,8 +582,8 @@
                                                 foreach($_SESSION['delivery'] as $i=> $k) {
                                                     echo "<tr>
                                                         <td>".$k['productname']."</td>
-                                                        <td>".$k['sel_color']."</td>
                                                         <td>".$k['sel_size']."</td>
+                                                        <td>".$k['sel_color']."</td>
                                                         <td>".$k['deliverynumber']."</td>
                                                         <td class='OperationColumn'>
                                                         
@@ -821,7 +817,7 @@
             <!-- Wizard STEP 3 END -->
         </div> 
     </div>
-</div>
+<!-- </div> -->
 
 <!-- jQuery easing plugin -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js" type="text/javascript"></script>
@@ -977,7 +973,7 @@ $(".next").click(function(){
 			current_fs.css({'transform': 'scale('+scale+')'});
 			next_fs.css({'left': left, 'opacity': opacity});
 		}, 
-		duration: 500, 
+		duration: 200, /***change the time for next button animation*** */
 		complete: function(){
 			current_fs.hide();
 			animating = false;
@@ -1047,6 +1043,8 @@ $(".previous").click(function(){
         $(".addProductBTN").on("click", function(){
             modal.style.display = "block";
             $('.add_title').html('Add Item into Shipment');
+            $('#addnow1').html('Add Now');
+            $('#addnow2').html('Add Now');
             var oldValues = 0;
             //set the old values in the hidden field text
             $('#oldFLYER').val(oldValues);

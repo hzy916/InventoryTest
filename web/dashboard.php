@@ -156,7 +156,7 @@ td {
                         <div class="card-header ">
                             <table class="table table-full-width custom_table_bottom">
                                 <tr>
-                                    <td class="no_top_border"><h4 class="card-title text_color">Un-Completed Design Request</h4></td>
+                                    <td class="no_top_border"><h4 class="card-title text_color">Un-Completed Shipment Request</h4></td>
                                     <td class="no_top_border text_right"><a href="./DesignRequests/design_request_table.php" class="card-category">See all Requests  →</a></td>
                                 </tr>
                             </table>
@@ -293,11 +293,11 @@ td {
                                             Red
                                         </td>
                                         <td class="td-actions Companyrow">
-                                            Small
+                                            Medium
                                         </td>
                                         <td class="td-actions Companyrow">
                                             <?php
-                                                    $sql = "SELECT * FROM pawtrails WHERE id = 27";
+                                                    $sql = "SELECT * FROM pawtrails WHERE color = 'red' AND size = 'medium'";
                                                     $result = $conn->query($sql);
                                             
                                                     if($result->num_rows > 0) {
@@ -331,7 +331,7 @@ td {
                                         </td>
                                         <td class="td-actions Companyrow">
                                         <?php
-                                                $sql = "SELECT * FROM pawtrails WHERE id = 28";
+                                                $sql = "SELECT * FROM pawtrails WHERE color = 'black' AND size = 'small'";
                                                 $result = $conn->query($sql);
                                         
                                                 if($result->num_rows > 0) {

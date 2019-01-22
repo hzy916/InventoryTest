@@ -39,6 +39,8 @@
 		float:right;
 		font-size:13px;
 		font-weight: 200;
+		cursor:pointer;
+		border:none;
 	}
 
 	.submitBTN:hover{
