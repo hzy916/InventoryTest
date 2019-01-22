@@ -116,10 +116,14 @@ if($_GET['id']) {
 
         $sql = "SELECT Request.RequestID, Request.RequestDate, Request_status.status_name, tbl_users.user_name,tbl_users.email FROM Request JOIN Request_status ON Request.RequestStatusID = Request_status.status_id JOIN tbl_users ON  Request.RequestEmployeeID = tbl_users.id WHERE Request.RequestID = '{$id}'";
 
+        //error handling method
         $result = $conn->query($sql);
-        
-        $data = $result->fetch_assoc();
-
+        if($result->num_rows > 0) {
+            $data = $result->fetch_assoc();
+        } else{
+            $data = "No data available";
+        }
+ 
         $msg = "";
 
         //get receiver details
@@ -130,6 +134,7 @@ if($_GET['id']) {
         $sql_three = "SELECT pawtrails.itemname as name, pawtrails.id as id, pawtrails.color as color, pawtrails.size as size,  Pawtrails_Request_junction.Qty as quantity FROM pawtrails, Pawtrails_Request_junction WHERE Pawtrails_Request_junction.request_id = '{$id}' AND Pawtrails_Request_junction.pawtrails_id = pawtrails.id" ;
     
         $result_three = $conn->query($sql_three);  
+      
 
         //send email after getting info
         if($send_email_action){
@@ -210,6 +215,7 @@ if($_GET['id']) {
                                         ".$data['status_name']."
                                         </td>
                                     </tr>";
+                               
 							?>
 
 							<form id="displayRequest" method="POST">
@@ -234,8 +240,10 @@ if($_GET['id']) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <?php    
+                                <?php
+                                    $doButtonOperation=false;
                                     if($result_three->num_rows > 0) {
+                                        $doButtonOperation=true;
                                         while($row_three = $result_three->fetch_assoc()) {
                                             echo 
                                             "<tr>
@@ -250,7 +258,8 @@ if($_GET['id']) {
                                             </tr>";
                                         }
                                     }else {
-                                        echo "Error " . $sql_three . ' ' . $conn->connect_error;
+                                        echo "<tr>No data available</tr>";
+                                        // echo "Error " . $sql_three . ' ' . $conn->connect_error;
                                     }	
                                 ?>
                         </tbody>
@@ -304,6 +313,7 @@ if($_GET['id']) {
                                             </div>";
                                         }
                                     }else {
+
                                         echo "Error " . $sql_two . ' ' . $conn->connect_error;
                                     }	
                                 ?>
@@ -325,25 +335,34 @@ if($_GET['id']) {
 
                 <?php 
                 //if the request status is not submitted and processing, then don't show approve, 
-             
-                    if($data['status_name'] == 'Submitted'){
-                       echo "
-                       <input type='button' class='btn btn-success operateBTN' value='Approve' onclick=\"JavaScript:makeMyAction('approve')\">
-                       <input type='button' class='btn btn-danger operateBTN' value='Decline' onclick=\"JavaScript:makeMyAction('decline')\">
-                       <input type='button' class='btn btn-warning operateBTN' value='Delay' onclick=\"JavaScript:makeMyAction('delay')\">        
-                       ";
-                    } else if($data['status_name'] == 'Delayed'){
-                        echo "
-                        <input type='button' class='btn btn-success operateBTN' value='Approve' onclick=\"JavaScript:makeMyAction('approve')\">
-                        <input type='button' class='btn btn-danger operateBTN' value='Decline' onclick=\"JavaScript:makeMyAction('decline')\">";
-                    } else if($data['status_name'] == 'Processing'){
-                        echo "
-                        <input type='button' class='btn btn-danger operateBTN' value='Finish' onclick=\"JavaScript:makeMyAction('finish')\">
-                         ";
-                    }else if($data['status_name'] == 'Completed'){
-                        echo "
-                        <input type='button' class='btn btn-info operateBTN' value='Archive' onclick=\"JavaScript:makeMyAction('archive')\">
-                         ";
+                    switch($data['status_name']) {
+                        case 'Submitted':
+                            //if there is query error on sql_three, then there is no item in the item list, we only allow admin to decline or delay the request
+                            if($doButtonOperation) {
+                                echo "<input type='button' class='btn btn-success operateBTN' value='Approve' onclick=\"JavaScript:makeMyAction('approve')\">";
+                            }
+                            echo "
+                            <input type='button' class='btn btn-danger operateBTN' value='Decline' onclick=\"JavaScript:makeMyAction('decline')\">
+                            <input type='button' class='btn btn-warning operateBTN' value='Delay' onclick=\"JavaScript:makeMyAction('delay')\">        
+                            ";
+                        break;
+
+                        case 'Delayed': 
+                            if($doButtonOperation) { 
+                                echo "<input type='button' class='btn btn-success operateBTN' value='Approve' onclick=\"JavaScript:makeMyAction('approve')\">";
+                            }
+                            echo "<input type='button' class='btn btn-danger operateBTN' value='Decline' onclick=\"JavaScript:makeMyAction('decline')\">";
+                        break;
+
+                        case 'Processing':  
+                            if($doButtonOperation) { 
+                                echo "<input type='button' class='btn btn-danger operateBTN' value='Finish' onclick=\"JavaScript:makeMyAction('finish')\">";
+                            }
+                        break;
+
+                        case 'Completed':    
+                            echo "<input type='button' class='btn btn-info operateBTN' value='Archive' onclick=\"JavaScript:makeMyAction('archive')\">";
+                        break; 
                     }
 
                     ?>
