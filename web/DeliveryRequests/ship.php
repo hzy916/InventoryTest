@@ -561,7 +561,7 @@
                                 <!-- table to show selected product from the session -->
                             <div id="ItemDiv"  style="display:<?php echo $ItemDivView ?>">
                                 <div class="shipcontent">
-                                    <h4>Shipment Contents</h4>
+                                    <h2 class="fs-title">Shipment Contents</h2>
                                     <hr class="seperateLine">
                                  
                                 </div>
@@ -617,7 +617,7 @@
                   
                     <div class="col-sm-12 topline">
                         <hr class="seperateLine">
-                        <button name="cancel" onclick="getConfirmation();" class="cancel btn">Cancel</button>
+                        <button name="cancel" onclick="getConfirmation();" class="cancel">Cancel</button>
                         
                         <input id="next1" type="button" name="next" class="next action-button" value="Next" style="<?php echo $disable; ?>" />
                     </div>
@@ -669,7 +669,7 @@
                                 
                             </div> 
                             
-                            <h2 class="fs-title">Shipping ADDRESS</h2>
+                            <h2 class="fs-title">Shipping Address</h2>
                             <hr class="seperateLine">
                             
 

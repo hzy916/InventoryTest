@@ -53,23 +53,7 @@ body {
   </style>
     
       </div>
-         <footer class="footer">
-              <div class="container custom_container_large">
-                  <!-- <div class="row">  
-                    <div class="column_half col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                        <!-- <div class="copyright-text"> -->
-                         
-                        <!-- </div> 
-                      </div>
-                    <div class="column_half col-lg-6 col-md-6 col-sm-12 col-xs-12">				
-                        <ul id="customlinklist">
-                          <li><a href="">Privacy Policy |</a></li>						
-                          <li><a href="">Terms of Use |</a></li>
-                          <li><a href="">PawTrails Website | </a></li>
-                          <li><a href="">Help</a></li>
-                        </ul>							
-                    </div> 
-                  </div>  -->
+         <footer class="footer Customcontainer">
                   <div class="flex-grid">
                     <div class="col_hzy"> <p class="footerleft">Staff Portal V.2.0 |  Copyright © 2018 Attitude Technologies Ltd.  All rights reserved.  </p></div>
                     <div class="col_hzy">    
@@ -81,14 +65,23 @@ body {
                         </ul>	
                     </div>
                 </div>
-              </div>
           </footer>
- 
-    </div>
-    
+         <!-- <footer class="footer Customcontainer">
+                  <div class="row">
+                    <div class="col-md-6 col-lg-6"> <p class="footerleft">Staff Portal V.2.0 |  Copyright © 2018 Attitude Technologies Ltd.  All rights reserved.  </p></div>
+                    <div class="col-md-6 col-lg-6">   
+                          <ul id="customlinklist">
+                          <li><a href="">Privacy Policy |</a></li>						
+                          <li><a href="">Terms of Use |</a></li>
+                          <li><a href="http://www.pawtrails.com">PawTrails Website | </a></li>
+                          <li><a href="">Help</a></li>
+                        </ul>	
+                    </div>
+                </div>
+          </footer> -->
 
+    </div>
  
-     
 </body>
 <!--   Core JS Files   -->
 

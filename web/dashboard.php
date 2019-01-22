@@ -40,7 +40,6 @@ td {
     padding: 10px;
 }
 .tablecontent{
-  font-family: Montserrat;
   font-size: 13px;
   font-weight: normal;
   font-style: normal;
@@ -51,7 +50,6 @@ td {
 }
 .Companyrow{
   color: #525a65;
-  font-family: Montserrat;
   font-size: 13px!important;
   text-transform:none!important;
 }
