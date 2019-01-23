@@ -1,4 +1,4 @@
-# InventoryTest
+# Inventory Management System
 Inventory System for products RBAC(Role based access control system)
 
 Functionalities:
